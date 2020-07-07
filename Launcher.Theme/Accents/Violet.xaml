@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="PrimaryDark900Color">#51009C</Color>
+    <Color x:Key="PrimaryDark800Color">#7400A7</Color>
+    <Color x:Key="PrimaryDark700Color">#8600AE</Color>
+    <Color x:Key="BasePrimaryColor">#9A00B5</Color>
+    <Color x:Key="PrimaryLight500Color">#A900BA</Color>
+    <Color x:Key="PrimaryLight400Color">#B73BC5</Color>
+    <Color x:Key="PrimaryLight300Color">#C462CF</Color>
+    <Color x:Key="PrimaryLight200Color">#D590DD</Color>
+    <Color x:Key="PrimaryLight100Color">#E6BDEA</Color>
+    <Color x:Key="PrimaryLight50Color">#F5E4F6</Color>
+
+    <Color x:Key="ComplementaryColor">#1BB500</Color>
+    <SolidColorBrush x:Key="ComplementaryBrush" Color="{StaticResource ComplementaryColor}" />
+
+    <SolidColorBrush x:Key="PrimaryDark900Brush" Color="{StaticResource PrimaryDark900Color}" />
+    <SolidColorBrush x:Key="PrimaryDark800Brush" Color="{StaticResource PrimaryDark800Color}" />
+    <SolidColorBrush x:Key="PrimaryDark700Brush" Color="{StaticResource PrimaryDark700Color}" />
+    <SolidColorBrush x:Key="BasePrimaryBrush" Color="{StaticResource BasePrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryLight500Brush" Color="{StaticResource PrimaryLight500Color}" />
+    <SolidColorBrush x:Key="PrimaryLight400Brush" Color="{StaticResource PrimaryLight400Color}" />
+    <SolidColorBrush x:Key="PrimaryLight300Brush" Color="{StaticResource PrimaryLight300Color}" />
+    <SolidColorBrush x:Key="PrimaryLight200Brush" Color="{StaticResource PrimaryLight200Color}" />
+    <SolidColorBrush x:Key="PrimaryLight100Brush" Color="{StaticResource PrimaryLight100Color}" />
+    <SolidColorBrush x:Key="PrimaryLight50Brush" Color="{StaticResource PrimaryLight50Color}" />
+
+</ResourceDictionary>

@@ -1,0 +1,138 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Shared  -->
+    <system:String x:Key="shared_GameRun">Game run</system:String>
+    <system:String x:Key="shared_Events">Events</system:String>
+    <system:String x:Key="shared_CleanupAll">Cleanup all</system:String>
+    <system:String x:Key="shared_Close">Close</system:String>
+    <system:String x:Key="shared_SaveSettingsHeader">Save settings</system:String>
+    <system:String x:Key="shared_SaveSettings">Cannot save settings.</system:String>
+    <system:String x:Key="shared_SelectZClientPathHeader">Select ZClient.exe file</system:String>
+    <system:String x:Key="shared_DetectingZClientProcessHeader">Detecting ZClient process</system:String>
+    <system:String x:Key="shared_DetectingZClientProcess">ZClient process not detected. Please run it and try again.</system:String>
+    <system:String x:Key="shared_SelectImageHeader">Select image</system:String>
+    <system:String x:Key="shared_CannotSetImageHeader">Cannot set image</system:String>
+    <system:String x:Key="shared_CannotSetImage">The image file does not meet the specified limits or an unknown error has occurred.</system:String>
+
+    <!--  HomeView  -->
+    <system:String x:Key="homeView_GettingStats">Getting statistics</system:String>
+    <system:String x:Key="homeView_EventLauncherDisconnectedServers">Cannot view servers when launcher disconnected</system:String>
+    <system:String x:Key="homeView_EventLauncherDisconnectedRun">Cannot run game when launcher disconnected</system:String>
+    <system:String x:Key="homeView_StatsView">Stats view</system:String>
+    <system:String x:Key="homeView_EventLauncherDisconnectedStats">Cannot view stats when launcher disconnected</system:String>
+    <system:String x:Key="homeView_EventNoobStats">Cannot view stats. First, play a couple of games. Because now, there’s nothing to look at.</system:String>
+    <system:String x:Key="homeView_TipSingleplayer">Singleplayer</system:String>
+    <system:String x:Key="homeView_TipMultiplayer">Multiplayer</system:String>
+    <system:String x:Key="homeView_TipCoop">CoOp</system:String>
+    <system:String x:Key="homeView_TipStats">Stats</system:String>
+    <system:String x:Key="homeView_TipSettings">Settings</system:String>
+    <system:String x:Key="homeView_TipPlayground">Test range</system:String>
+
+    <!--  WindowView  -->
+    <system:String x:Key="wndView_TipMenu">Menu</system:String>
+    <system:String x:Key="wndView_TipHome">Home</system:String>
+    <system:String x:Key="wndView_TipSettings">Settings</system:String>
+    <system:String x:Key="wndView_TipBackNav">Go back</system:String>
+    <system:String x:Key="wndView_TipConnect">Connect launcher to ZClient</system:String>
+    <system:String x:Key="wndView_TipRestart">Restart launcher</system:String>
+    <system:String x:Key="wndView_HeaderCopyId">Copy user ID</system:String>
+    <system:String x:Key="wndView_Connect">CONNECT</system:String>
+    <system:String x:Key="wndView_UnknownUser">Unknown user</system:String>
+    <system:String x:Key="wndView_CannotRestart">Cannot restart</system:String>
+    <system:String x:Key="wndView_DialogCannotRestart">Cannot restart launcher when download update</system:String>
+    <system:String x:Key="wndView_MyId">My ID:</system:String>
+    <system:String x:Key="wndView_RunZClient">Run ZClient</system:String>
+    <system:String x:Key="wndView_About">About</system:String>
+    <system:String x:Key="wndView_Forum">Forum</system:String>
+
+    <!--  Settings view  -->
+    <system:String x:Key="settView_ThemesHeader">Themes</system:String>
+    <system:String x:Key="settView_BackgroundImage">Background image:</system:String>
+    <system:String x:Key="settView_Set">Set</system:String>
+    <system:String x:Key="settView_Reset">Reset</system:String>
+    <system:String x:Key="settView_Theme">Theme</system:String>
+    <system:String x:Key="settView_Accent">Accent</system:String>
+    <system:String x:Key="settView_MainHeader">Main</system:String>
+    <system:String x:Key="settView_Language">Language</system:String>
+    <system:String x:Key="settView_PathToZClient">Path to ZClient:</system:String>
+    <system:String x:Key="settView_ManuallySetZClientTip">Click to select a path manually</system:String>
+    <system:String x:Key="settView_DetectFromProcess">Detect</system:String>
+    <system:String x:Key="settView_DetectFromProcessTip">Click if ZClient is already running and the launcher will automatically determine its location</system:String>
+    <system:String x:Key="settView_AutorunZClient">Autorun ZClient when launcher start</system:String>
+    <system:String x:Key="settView_Unfold">Unfold game window automatically</system:String>
+    <system:String x:Key="settView_UseDiscordPresence">Use Discord presence</system:String>
+    <system:String x:Key="settView_EnableTryToConnectHeader">Warning!</system:String>
+    <system:String x:Key="settView_EnableTryToConnect">Due to many factors, this option in no way guarantees that the launcher will be connected successfully.</system:String>
+    <system:String x:Key="settView_TryToConnect">Try connect when launcher start</system:String>
+    <system:String x:Key="settView_GameCardOpacity">Menu opacity</system:String>
+
+    <!--  Servers View  -->
+    <system:String x:Key="sbView_ServerName">Server name</system:String>
+    <system:String x:Key="sbView_Players">Players</system:String>
+    <system:String x:Key="sbView_GameModeMap">Game mode/Map</system:String>
+    <system:String x:Key="sbView_Ping">Ping</system:String>
+    <system:String x:Key="sbView_MapRotationPlayers">Map rotations\Players</system:String>
+    <system:String x:Key="sbView_CopyText">Copy text</system:String>
+    <system:String x:Key="sbView_JOIN">JOIN</system:String>
+    <system:String x:Key="sbView_MapImage">Map image</system:String>
+    <system:String x:Key="sbView_Country">Country:</system:String>
+    <system:String x:Key="sbView_Region">Region:</system:String>
+    <system:String x:Key="sbView_Preset">Preset:</system:String>
+    <system:String x:Key="sbView_PunkBuster">PunkBuster:</system:String>
+    <system:String x:Key="sbView_PBVersion">PB Version:</system:String>
+    <system:String x:Key="sbView_ServersFilter">Servers filter</system:String>
+    <system:String x:Key="sbView_EmptyServers">Empty servers</system:String>
+    <system:String x:Key="sbView_NotEmptyServers">Not empty servers</system:String>
+    <system:String x:Key="sbView_Map">Map</system:String>
+    <system:String x:Key="sbView_GameMode">Game mode</system:String>
+    <system:String x:Key="sbView_ResetFilter">Reset filter</system:String>
+    <system:String x:Key="sbView_Spectator">SPECTATOR</system:String>
+    <system:String x:Key="sbView_Type">Type:</system:String>
+
+    <!--  Coop View  -->
+    <system:String x:Key="cpView_Mission">Mission</system:String>
+    <system:String x:Key="cpView_MissionImage">Mission image</system:String>
+    <system:String x:Key="cpView_HostSettings">Host settings</system:String>
+    <system:String x:Key="cpView_Difficulty">Difficulty</system:String>
+    <system:String x:Key="cpView_HostGame">Host game</system:String>
+    <system:String x:Key="cpView_JoinSettings">Join settings</system:String>
+    <system:String x:Key="cpView_EnterFriendId">Enter Friend Id</system:String>
+    <system:String x:Key="cpView_JoinGame">Join game</system:String>
+
+    <!--  Stats View  -->
+    <system:String x:Key="sView_Kills">Kills</system:String>
+    <system:String x:Key="sView_Headshots">Headshots</system:String>
+    <system:String x:Key="sView_Time">Time</system:String>
+    <system:String x:Key="sView_Accuracy">Accuracy</system:String>
+    <system:String x:Key="sView_OpenZloLog">Open ZloLog</system:String>
+    <system:String x:Key="sView_GamesPlayed">Games played</system:String>
+    <system:String x:Key="sView_Deaths">Deaths</system:String>
+    <system:String x:Key="sView_KillAssists">Kill assists</system:String>
+    <system:String x:Key="sView_Wins">Wins</system:String>
+    <system:String x:Key="sView_Losses">Losses</system:String>
+    <system:String x:Key="sView_LongestHeadshot">Longest headshot</system:String>
+    <system:String x:Key="sView_Shots">Shots</system:String>
+    <system:String x:Key="sView_Hits">Hits</system:String>
+    <system:String x:Key="sView_Repairs">Repairs</system:String>
+    <system:String x:Key="sView_Saved">Saved</system:String>
+    <system:String x:Key="sView_Heals">Heals</system:String>
+    <system:String x:Key="sView_VehicleKills">Vehicle kills</system:String>
+    <system:String x:Key="sView_DogTagsTaken">Dog-tags taken</system:String>
+    <system:String x:Key="sView_VehicleDestroyed">Vehicle destroyed</system:String>
+    <system:String x:Key="sView_VehicleDestroyingAssists">Vehicle destroying assists</system:String>
+    <system:String x:Key="sView_HighestKillStreak">Highest kill streak</system:String>
+    <system:String x:Key="sView_NemesisKills">Nemesis kills</system:String>
+    <system:String x:Key="sView_HighestNemesisStreak">Highest nemesis streak</system:String>
+    <system:String x:Key="sView_MCOMDestroyed">MCOM Destroyed</system:String>
+    <system:String x:Key="sView_MCOMDefendKills">MCOM defend kills</system:String>
+    <system:String x:Key="sView_FlagCaptured">Flag captured</system:String>
+    <system:String x:Key="sView_DefendedFlags">Defended flags</system:String>
+    <system:String x:Key="sView_SaviorKills">Savior kills</system:String>
+    <system:String x:Key="sView_SuppressionAssists">Suppression assists</system:String>
+    <system:String x:Key="sView_AvengerKills">Avenger kills</system:String>
+    <system:String x:Key="sView_Resupplies">Resupplies</system:String>
+
+</ResourceDictionary>

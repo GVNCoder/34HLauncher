@@ -1,0 +1,276 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="CCS_AccentChangedHeader">Accent color was changed</system:String>
+    <system:String x:Key="CCS_AccentChanged">To complete the accent color change, the launcher will be restarted.</system:String>
+    <system:String x:Key="CCS_AccentScheme">Accent color scheme</system:String>
+
+    <system:String x:Key="SAI_SupportedMaps">Supported maps</system:String>
+    <system:String x:Key="SAI_Players">Players</system:String>
+    <system:String x:Key="SAI_Empty">Empty</system:String>
+
+    <system:String x:Key="SL_ServerName">Server name</system:String>
+    <system:String x:Key="SL_Players">Players</system:String>
+    <system:String x:Key="SL_Map">Map</system:String>
+    <system:String x:Key="SL_GameMode">Game mode</system:String>
+    <system:String x:Key="SL_Ping">Ping</system:String>
+    <system:String x:Key="SL_SortTip">Click to sort</system:String>
+
+    <system:String x:Key="SD_Message">Message</system:String>
+    <system:String x:Key="SD_Description">Description</system:String>
+    <system:String x:Key="SD_Mod">Mod</system:String>
+
+    <system:String x:Key="SV_ServersOnline">Servers online:</system:String>
+    <system:String x:Key="SV_EmptyServers">Empty servers</system:String>
+    <system:String x:Key="SV_NotEmptyServers">Not empty servers</system:String>
+    <system:String x:Key="SV_ResetFilter">Reset filter</system:String>
+    <system:String x:Key="SV_RefreshServerList">Refresh server list</system:String>
+    <system:String x:Key="SV_Join">JOIN</system:String>
+    <system:String x:Key="SV_Spectrator">SPECTATOR</system:String>
+    <system:String x:Key="SV_RefreshingServerListBusy">Refreshing server list</system:String>
+
+    <system:String x:Key="ST_RankSkill">Rank/Skill</system:String>
+    <system:String x:Key="ST_Kills">Kills</system:String>
+    <system:String x:Key="ST_Accuracy">Accuracy</system:String>
+    <system:String x:Key="ST_Headshots">Headshots</system:String>
+    <system:String x:Key="ST_Time">Time</system:String>
+    <system:String x:Key="ST_MoreStatistics">More statistics</system:String>
+    <system:String x:Key="ST_GamesPlayed">Games played</system:String>
+    <system:String x:Key="ST_Deaths">Deaths</system:String>
+    <system:String x:Key="ST_KillAssists">Kill assists</system:String>
+    <system:String x:Key="ST_Wins">Wins</system:String>
+    <system:String x:Key="ST_Losses">Losses</system:String>
+    <system:String x:Key="ST_LongestHeadshot">Longest headshot</system:String>
+    <system:String x:Key="ST_Shots">Shots</system:String>
+    <system:String x:Key="ST_Hits">Hits</system:String>
+    <system:String x:Key="ST_Repairs">Repairs</system:String>
+    <system:String x:Key="ST_Saved">Saved</system:String>
+    <system:String x:Key="ST_Heals">Heals</system:String>
+    <system:String x:Key="ST_VehicleKills">Vehicle kills</system:String>
+    <system:String x:Key="ST_DogTagsTaken">Dog-tags taken</system:String>
+    <system:String x:Key="ST_VehicleDestroyed">Vehicle destroyed</system:String>
+    <system:String x:Key="ST_VehicleDestroyingAssists">Vehicle destroying assists</system:String>
+    <system:String x:Key="ST_HighestKillStreak">Highest kill streak</system:String>
+    <system:String x:Key="ST_NemesisKills">Nemesis kills</system:String>
+    <system:String x:Key="ST_HighestNemesisStreak">Highest nemesis streak</system:String>
+    <system:String x:Key="ST_MCOMDestroyed">MCOM Destroyed</system:String>
+    <system:String x:Key="ST_MCOMDefendKills">MCOM defend kills</system:String>
+    <system:String x:Key="ST_FlagCaptured">Flag captured</system:String>
+    <system:String x:Key="ST_DefendedFlags">Defended flags</system:String>
+    <system:String x:Key="ST_SaviorKills">Savior kills</system:String>
+    <system:String x:Key="ST_SuppressionAssists">Suppression assists</system:String>
+    <system:String x:Key="ST_AvengerKills">Avenger kills</system:String>
+    <system:String x:Key="ST_Resupplies">Resupplies</system:String>
+    <system:String x:Key="ST_Title">Your stats</system:String>
+
+    <system:String x:Key="CEW_LauncherCrashed">Launcher was crashed</system:String>
+    <system:String x:Key="CEW_Text1">The launcher folder has a &quot;log.txt&quot; file.</system:String>
+    <system:String x:Key="CEW_Text2">It is also desirable:</system:String>
+    <system:String x:Key="CEW_Text3">- under what circumstances did this happen?</system:String>
+    <system:String x:Key="CEW_Text4">- what you did ?</system:String>
+    <system:String x:Key="CEW_Text5">- can you have taken the screenshots?</system:String>
+    <system:String x:Key="CEW_Text6">SendRequestAsync everything to Email:</system:String>
+    <system:String x:Key="CEW_Text7">Crash reason</system:String>
+
+    <system:String x:Key="GL_Stop">Stop</system:String>
+    <system:String x:Key="GL_StopTip">Stops the game loading and go back</system:String>
+    <system:String x:Key="GL_GameExpand">The game window will maximized automatically! So just wait, ok?</system:String>
+    <system:String x:Key="GL_Title">Joins</system:String>
+    <system:String x:Key="GL_CantStartGameHeader">Unknown error</system:String>
+    <system:String x:Key="GL_CantStartGame">For some reason, the game was not started during the allotted time. (25 sec)</system:String>
+
+
+
+    <system:String x:Key="HV_Multiplayer">Multiplayer</system:String>
+    <system:String x:Key="HV_Singleplayer">Singleplayer</system:String>
+    <system:String x:Key="HV_TestRange">Test range</system:String>
+    <system:String x:Key="HV_GameProfileChangingBusy">Game profile changing</system:String>
+    <system:String x:Key="HV_SomeErrorHeader">Some error</system:String>
+    <system:String x:Key="HV_CheckStatus">Check the status of the application. There may be problems there.</system:String>
+    <system:String x:Key="HV_Title">Home</system:String>
+    <system:String x:Key="HV_CoopTempMassageHeader">!!! Basic support for the COOP mode !!!</system:String>
+    <system:String x:Key="HV_CoopTempMassage">Warning! This solution is temporary and does not yet have a final look. In the future, it will change many times. Thank you for understanding.</system:String>
+
+
+    <system:String x:Key="MWV_HomeTip">Home</system:String>
+    <system:String x:Key="MWV_SettingsTip">Settings</system:String>
+    <system:String x:Key="MWV_FAQTip">FAQ</system:String>
+    <system:String x:Key="MWV_AboutTip">About it</system:String>
+    <system:String x:Key="MWV_UpdatesAvailable">Update available &gt;</system:String>
+    <system:String x:Key="MWV_UpdatesTip">Update launcher</system:String>
+    <system:String x:Key="MWV_RestartLauncherTip">Restart launcher</system:String>
+    <system:String x:Key="MWV_GoBackTip">Go back</system:String>
+    <system:String x:Key="MWV_MyStatisticsTip">My statistics</system:String>
+    <system:String x:Key="MWV_StatusTip">Show launcher status</system:String>
+    <system:String x:Key="MWV_CheckStatusHeader">Check launcher STATUS</system:String>
+    <system:String x:Key="MWV_CheckStatus">STATUS changed to red! Click on it to find out what the problem is.</system:String>
+    <system:String x:Key="MWV_MonolithDisconnectedHeader">Monolith disconnected</system:String>
+    <system:String x:Key="MWV_MonolithDisconnected">Check ZClient connection with Monolith.</system:String>
+    <system:String x:Key="MWV_DisconnectedFromGameHeader">Disconnected from the game</system:String>
+    <system:String x:Key="MWV_InternetLostHeader">Internet connection lost</system:String>
+    <system:String x:Key="MWV_InternetLost">You have lost your internet connection! Restore it to continue.</system:String>
+    <system:String x:Key="MWV_ZLOriginPathErrorHeader">ZLOrigin path error</system:String>
+    <system:String x:Key="MWV_ZLOriginRebootFailedHeader">ZLOrigin reboot failed</system:String>
+    <system:String x:Key="MWV_ZLOriginRebootFailed">I was unable to start the process, try by hand.</system:String>
+    <system:String x:Key="WMV_LauncherStatusHeader">Launcher status</system:String>
+    <system:String x:Key="WMV_LauncherUpdateHeader">Launcher update</system:String>
+    <system:String x:Key="WMV_LauncherUpdate">Launcher will be closed and updated.</system:String>
+    <system:String x:Key="MWV_GettingStatisticsBusy">Getting statistics</system:String>
+    <system:String x:Key="MWV_CantRunZLOriginHeader">ZClient not run</system:String>
+    <system:String x:Key="MWV_CantRunZLOrigin">ZLOrigin work depends on the work ZClient. So, start ZClient first and try again.</system:String>
+
+
+
+    <system:String x:Key="UPD_ERROR_UNK">An unknown error occurred. Please try again later.</system:String>
+    <system:String x:Key="UPD_ERROR_VER">Failed to recognize version. Please try again.</system:String>
+    <system:String x:Key="UPD_ERROR_UNAU">Not enough permissions to update the application. The file system is unavailable or something is blocking me. Start the launcher as administrator.</system:String>
+    <system:String x:Key="UPD_ERROR_DBAPI">Dropbox Api error. Please try again later.</system:String>
+    <system:String x:Key="UPD_ERROR_CFUB">The service is already busy. Please try again later.</system:String>
+    <system:String x:Key="UPD_ERROR_DB">The service is already downloading updates. Try later to check for updates manually.</system:String>
+
+    <system:String x:Key="SV_ReadyToInstallHeader">Ready to install</system:String>
+    <system:String x:Key="SV_ReadyToInstall">The update is downloaded and ready for installation.</system:String>
+    <system:String x:Key="SV_UpdateServiceHeader">Update service</system:String>
+    <system:String x:Key="SV_AvailableVersion">Available version:</system:String>
+    <system:String x:Key="SV_Improvements">Improvements:</system:String>
+    <system:String x:Key="SV_WantToDownload">Want to download it?</system:String>
+    <system:String x:Key="SV_Downloading">I'm downloading updates. You can play or just wait for the appropriate indicator to indicate that the update is ready for installation.</system:String>
+
+    <system:String x:Key="SV_Automation">Automation</system:String>
+    <system:String x:Key="SV_AutorunZClient">Autorun ZClient</system:String>
+    <system:String x:Key="SV_AutorunZLOrigin">Autorun ZLOrigin</system:String>
+    <system:String x:Key="SV_RunZLOriginWhenNeed">Run ZLOrigin when need</system:String>
+    <system:String x:Key="SV_AutoDetectZLOrigin">Auto detect ZLOrigin</system:String>
+    <system:String x:Key="SV_AutocloseZClientWhenLauncherShutdown">Autoclose ZClient when launcher shutdown</system:String>
+    <system:String x:Key="SV_AutocloseZLOriginWhenLauncherShutdown">Autoclose ZLOrigin when launcher shutdown</system:String>
+    <system:String x:Key="SV_Updates">Updates</system:String>
+    <system:String x:Key="SV_AutomaticCheckForUpdates">Automatic check for updates</system:String>
+    <system:String x:Key="SV_CheckUpdates">Check updates</system:String>
+    <system:String x:Key="SV_OpenChangeLog">Open change log</system:String>
+    <system:String x:Key="SV_Theme">Theme</system:String>
+    <system:String x:Key="SV_ToDefault">To default</system:String>
+    <system:String x:Key="SV_Themes">Theme</system:String>
+    <system:String x:Key="SV_Save">Save</system:String>
+    <system:String x:Key="SV_Reset">Reset</system:String>
+    <system:String x:Key="SV_ResetAndSave">Reset and save</system:String>
+    <system:String x:Key="SV_LanguageIndexHeader">Language changed</system:String>
+    <system:String x:Key="SV_LanguageIndex">Click &quot;Save&quot; and &quot;Restart Launcher&quot; for the changes to take effect.</system:String>
+    <system:String x:Key="SV_General">General</system:String>
+    <system:String x:Key="SV_Language">Language</system:String>
+    <system:String x:Key="SV_BackgroundImage">Background image</system:String>
+    <system:String x:Key="SV_SelectZClientPath">Select ZClient file path</system:String>
+    <system:String x:Key="SV_SelectZLOriginPath">Select ZLOrigin file path</system:String>
+    <system:String x:Key="SV_Fail">Fail</system:String>
+    <system:String x:Key="SV_AutoDetectZLOriginFail">Try specifying the path manually.</system:String>
+    <system:String x:Key="SV_SettingsSave">Save</system:String>
+    <system:String x:Key="SV_SettingsSaveDone">Settings have been saved!</system:String>
+    <system:String x:Key="SV_ResetSettingsHeader">Reset settings</system:String>
+    <system:String x:Key="SV_ResetSettings">Are you sure you want to reset to default?</system:String>
+    <system:String x:Key="SV_ChangeLogErrorHeader">SocketError</system:String>
+    <system:String x:Key="SV_ChangeLogError">ChangeLog file not found</system:String>
+    <system:String x:Key="SV_CheckingUpdatesBusy">Checking updates</system:String>
+    <system:String x:Key="SV_SelectBGImage">Select Background Image</system:String>
+    <system:String x:Key="SV_BGImageError1">The file you selected is incorrect! It should be:</system:String>
+    <system:String x:Key="SV_BGImageError2">- The size is less than or equal to 7 MB</system:String>
+    <system:String x:Key="SV_BGImageError3">- the resolution is less than or equal to 2048x1080</system:String>
+    <system:String x:Key="SV_InfoHeader">Info</system:String>
+    <system:String x:Key="SV_InfoUseLatestVer">You are using the latest version.</system:String>
+    <system:String x:Key="SV_InfoUseOldVer">The update will be downloaded. You can use Launcher further.</system:String>
+    <system:String x:Key="SV_SettingsTitle">Settings</system:String>
+
+
+    <system:String x:Key="AboutContent1">34H LAUNCHER was developed and implemented as an alternative to others. I tried to make it more comfortable and understandable. Hope you like it.</system:String>
+    <system:String x:Key="AboutContent2">Special thanks to the ZLOFENIX project and bigworld12 for the API. Also a big thank you to the project administration for their help and understanding.</system:String>
+    <system:String x:Key="AboutContent3">Developed by XrIStOs_VoSkReS</system:String>
+    <system:String x:Key="AboutContent4">Assisted in the development:</system:String>
+    <system:String x:Key="AboutContent5">Donate and motivation</system:String>
+
+
+    <system:String x:Key="FAQContent1">MANUAL</system:String>
+    <system:String x:Key="FAQContent2">Interface</system:String>
+    <system:String x:Key="FAQContent3">Settings</system:String>
+    <system:String x:Key="FAQContent4">STATUS function</system:String>
+    <system:String x:Key="FAQContent5">Multiplayer &gt;</system:String>
+    <system:String x:Key="FAQContent6">Stats &gt;</system:String>
+    <system:String x:Key="FAQContent7">common problems &gt;</system:String>
+    <system:String x:Key="FAQContent8">All information is available on the ZLOEmu project website &gt;</system:String>
+
+
+    <system:String x:Key="COOP_007_desc">This is a &quot;horde&quot; mode limited to three massive waves of enemies attacking your &quot;defence targets&quot; (the High Mobility Vehicles marked by a blue dot).</system:String>
+    <system:String x:Key="COOP_006_desc">Chopper mission. Support allied fireteams and destroy enemies. BMP, Mobile AA, and HMVs. Once all enemies are destroyed, and your friendly fireteams extract your High Value Target, you will complete this mission.</system:String>
+    <system:String x:Key="COOP_009_desc">Infiltrate a building stealthily and extract the HVT under heavy fire. Thermal scopes are available on the default weapons. Shooting the security cameras and making stealth kills (or simultaneous firearms takedowns) will allow you to enter without alarms.</system:String>
+    <system:String x:Key="COOP_002_desc">This is a straight-forward mission with a straight-forward goal - get to the garage and escape the terr'ists using a French-built, petrol-burning motor vehicle. The related extra condition for this mission is Push On.</system:String>
+    <system:String x:Key="COOP_003_desc">This is a sniper team mission. The condition Bullseye is related to this mission.</system:String>
+    <system:String x:Key="COOP_010_desc">Basically, Operation Metro with a lot of noxious foul-smelling gas on the train platform. You venture down into the metro station and takedown enemies as they come.</system:String>
+
+    <system:String x:Key="COOP_Title">Battlefield 3 CoOp</system:String>
+    <system:String x:Key="COOP_Missions">Missions</system:String>
+    <system:String x:Key="COOP_Create">Create game</system:String>
+    <system:String x:Key="COOP_FriendID">Friend ID</system:String>
+    <system:String x:Key="COOP_JoinToFriend">Join to friend</system:String>
+    <system:String x:Key="COOP_IncorrectInputHeader">Incorrect input</system:String>
+    <system:String x:Key="COOP_IncorrectInput">The field is either empty or has unresolved characters</system:String>
+
+
+
+    <system:String x:Key="OnStartup_ZClientPathErrorHeader">ZClient path error</system:String>
+    <system:String x:Key="OnStartup_ZClientRunFailedHeader">ZClient run failed</system:String>
+    <system:String x:Key="OnStartup_ZClientRunFailed">Could not start ZClient process</system:String>
+
+    <system:String x:Key="OnStartup_ZLOriginPathErrorHeader">ZLOrigin path error</system:String>
+    <system:String x:Key="OnStartup_ZLOriginRunFailedHeader">ZLOrigin run failed</system:String>
+    <system:String x:Key="OnStartup_ZLOriginRunFailed">Could not start ZLOrigin process</system:String>
+
+
+
+
+    <!--<system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>-->
+
+</ResourceDictionary>

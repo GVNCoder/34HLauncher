@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ImageSource x:Key="BF3CardImageSource">pack://application:,,,/Launcher.Resources;component/Images/MainMenu/BF3MenuCardDark.png</ImageSource>
+    <ImageSource x:Key="BF4CardImageSource">pack://application:,,,/Launcher.Resources;component/Images/MainMenu/BF4MenuCardDark.png</ImageSource>
+    <ImageSource x:Key="BFHCardImageSource">pack://application:,,,/Launcher.Resources;component/Images/MainMenu/BFHMenuCardDark.png</ImageSource>
+
+</ResourceDictionary>

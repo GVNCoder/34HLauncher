@@ -1,0 +1,64 @@
+﻿<UserControl
+    x:Class="Launcher.UserControls.UpdateDownloadControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Launcher.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Height="20"
+    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=UpdateControlViewModel}"
+    FontFamily="{StaticResource OpenSans}"
+    Visibility="{Binding ControlVisibility}"
+    mc:Ignorable="d">
+
+    <Border
+        Padding="10,0,7,0"
+        Background="{DynamicResource ComplementaryBrush}"
+        CornerRadius="2">
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock
+                Margin="0,0,0,1"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Foreground="{DynamicResource WindowKeyBrush}"
+                Text="Update downloading" />
+            <TextBlock
+                Margin="5,0,0,1"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Foreground="{DynamicResource WindowKeyBrush}"
+                Text="{Binding Progress, StringFormat={}{0}%}" />
+            <controls:GlyphButton
+                x:Name="PART_CloseButton"
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Command="{Binding CancelDownloadCommand}"
+                Foreground="{DynamicResource WindowKeyBrush}"
+                Icon=""
+                IconSize="16"
+                TextOptions.TextRenderingMode="Aliased">
+                <controls:GlyphButton.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Static Cursors.Hand}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Null}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </controls:GlyphButton.Triggers>
+            </controls:GlyphButton>
+        </StackPanel>
+    </Border>
+</UserControl>

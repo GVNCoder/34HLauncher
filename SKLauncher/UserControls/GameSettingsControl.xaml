@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="Launcher.UserControls.GameSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Launcher.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="250"
+    Margin="5"
+    Foreground="{DynamicResource ThemeForegroundBrush}"
+    TextOptions.TextRenderingMode="ClearType"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <StackPanel Margin="5" Orientation="Vertical">
+            <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+                <TextBlock Margin="0,0,5,0" Text="Default game architecture:" />
+                <TextBlock Text="{Binding BaseArchitecture}" />
+            </StackPanel>
+            <CheckBox
+                Margin="0,0,0,5"
+                Content="{Binding OpposeArchitecture}"
+                IsChecked="{Binding UseAnotherArchitecture}"
+                IsEnabled="{Binding CanChangeArchitecture}" />
+            <TextBlock Margin="0,0,0,3" Text="Dll(s) for inject" />
+            <ListView
+                x:Name="PART_DllListView"
+                Height="150"
+                Background="{DynamicResource Theme800Brush}"
+                BorderThickness="0"
+                Foreground="{DynamicResource ThemeForegroundBrush}"
+                ItemsSource="{Binding Dlls}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding AddCommand}"
+                    Content="Add"
+                    Style="{DynamicResource TextDialogButton}" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding RemoveCommand}"
+                    CommandParameter="{Binding ElementName=PART_DllListView, Path=SelectedItems}"
+                    Content="Remove"
+                    Style="{DynamicResource TextDialogButton}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>

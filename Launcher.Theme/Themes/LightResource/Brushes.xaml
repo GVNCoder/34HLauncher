@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="BaseThemeColor">#FFFFFF</Color>
+    <Color x:Key="Theme850Color">#F5F5F5</Color>
+    <Color x:Key="Theme800Color">#E9E9E9</Color>
+    <Color x:Key="Theme700Color">#D9D9D9</Color>
+    <Color x:Key="Theme500Color">#C4C4C4</Color>
+    <Color x:Key="Theme400Color">#9D9D9D</Color>
+    <Color x:Key="Theme300Color">#555555</Color>
+    <Color x:Key="Theme200Color">#434343</Color>
+    <Color x:Key="Theme100Color">#262626</Color>
+    <Color x:Key="Theme50Color">#1A1A1A</Color>
+
+    <SolidColorBrush x:Key="BaseThemeBrush" Color="{StaticResource BaseThemeColor}" />
+    <SolidColorBrush x:Key="Theme850Brush" Color="{StaticResource Theme850Color}" />
+    <SolidColorBrush x:Key="Theme800Brush" Color="{StaticResource Theme800Color}" />
+    <SolidColorBrush x:Key="Theme700Brush" Color="{StaticResource Theme700Color}" />
+    <SolidColorBrush x:Key="Theme500Brush" Color="{StaticResource Theme500Color}" />
+    <SolidColorBrush x:Key="Theme400Brush" Color="{StaticResource Theme400Color}" />
+    <SolidColorBrush x:Key="Theme300Brush" Color="{StaticResource Theme300Color}" />
+    <SolidColorBrush x:Key="Theme200Brush" Color="{StaticResource Theme200Color}" />
+    <SolidColorBrush x:Key="Theme100Brush" Color="{StaticResource Theme100Color}" />
+    <SolidColorBrush x:Key="Theme50Brush" Color="{StaticResource Theme50Color}" />
+
+    <SolidColorBrush x:Key="WindowBackgroundTintBrush">#FAFAFA</SolidColorBrush>
+
+    <Color x:Key="ThemeForegroundColor">#0C0C0C</Color>
+    <SolidColorBrush x:Key="ThemeForegroundBrush" Color="{StaticResource ThemeForegroundColor}" />
+
+    <Color x:Key="ContextMenuBackgroundColor">#F3F3F3</Color>
+
+</ResourceDictionary>

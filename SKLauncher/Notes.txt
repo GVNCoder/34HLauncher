@@ -1,0 +1,84 @@
+﻿xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
+            var chrome = new WindowChrome();
+            chrome.CaptionHeight = 0d;
+            chrome.UseAeroCaptionButtons = false;
+            WindowChrome.SetWindowChrome(obj as Window, chrome);
+
+			SystemCommands.MinimizeWindow(obj as Window);
+
+			//BindingOperations.EnableCollectionSynchronization(_serverList, _serverList.SyncObject)
+
+
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+ private static extern IntPtr FindWindow(String ClassName, String WindowName);
+
+ [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        static void Main(string[] args)
+        {
+            Process[] proceses = Process.GetProcessesByName("calc");
+            foreach (Process pro in proceses)
+            {
+                try
+                {
+                    IntPtr handle = pro.Handle;
+                    ShowWindow(handle, 5);
+                    Console.ReadLine();
+                    break;
+                }
+                catch { }
+ 
+            }
+        }
+/// Показывает окно
+        /// </summary>
+        /// <param name="hWnd">Дескриптор окна, которое нужно показать</param>
+        /// <param name="nCmdShow">Определяет, как окно отображается:
+        ///SW_HIDE = 0
+        ///Скрыть окно и активизировать другое окно.
+        ///SW_MAXIMIZE = 3
+        ///Развернуть окно.
+        ///SW_MINIMIZE = 6
+        ///Свернуть окно и активизировать следующее окно в Z-порядке(следующее под свернутым окном).
+        ///SW_RESTORE = 9
+        ///Активизировать и отобразить окно.Если окно свернуто или развернуто,Windows восстанавливает его исходный размер и положение.
+        ///SW_SHOW = 5
+        ///Активизировать окно.
+        ///SW_SHOWMAXIMIZED = 3
+        ///Отобразить окно в развернутом виде.
+        ///SW_SHOWMINIMIZED = 2
+        ///Отобразить окно в свернутом виде.
+        ///SW_SHOWMINNOACTIVE = 7
+        ///Отобразить окно в свернутом виде.Активное окно остается активным.
+        ///SW_SHOWNA = 8
+        ///Отобразить окно в текущем состоянии.Активное окно остается активным.
+        ///SW_SHOWNOACTIVATE = 4
+        ///Отобразить окно в соответствии с последними значениями позиции и размера.Активное окно остается активным.
+        ///SW_SHOWNORMAL = 1
+        ///Активизировать и отобразить окно.Если окно свернуто или развернуто,Windows восстанавливает его исходный размер и положение.Приложение должно указывать этот флаг при первом отображении окна.
+
+
+
+
+
+				//[ValueConversion(typeof(List<Parameter>), typeof(List<Parameter>))]
+    //public class ApplicationStatusParametersFilter : IValueConverter
+    //{
+    //    public static ApplicationStatusParametersFilter Instance = new ApplicationStatusParametersFilter();
+
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        // check and get input value
+    //        if (!(value is List<Parameter> rawParameters))
+    //            throw new ArgumentException("Invalid cast");
+
+    //        // filtrate rawParameters
+    //        return null;
+    //    }
+
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}

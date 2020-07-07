@@ -1,0 +1,90 @@
+﻿<UserControl
+    x:Class="Launcher.UserControls.UserAbout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Launcher.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="800"
+    Height="250"
+    TextElement.FontFamily="{StaticResource OpenSans}"
+    TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
+    TextOptions.TextRenderingMode="ClearType"
+    mc:Ignorable="d">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image
+            Grid.Row="0"
+            Grid.Column="0"
+            Height="200"
+            Margin="5,0"
+            Source="pack://application:,,,/Launcher.Resources;component/Images/JesusIcon.png">
+            <Image.Effect>
+                <DropShadowEffect
+                    BlurRadius="25"
+                    Opacity=".55"
+                    ShadowDepth="15"
+                    Color="Black" />
+            </Image.Effect>
+        </Image>
+
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            TextElement.FontSize="14">
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    IsHitTestVisible="False"
+                    Text="34H">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
+                            <GradientStop Offset="-.1" Color="{DynamicResource PrimaryLight400Color}" />
+                            <GradientStop Offset="1" Color="{DynamicResource BasePrimaryColor}" />
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+                <TextBlock
+                    Margin="2,0,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Regular"
+                    IsHitTestVisible="False"
+                    Text="LAUNCHER">
+                    <TextBlock.Foreground>
+                        <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
+                            <GradientStop Offset="0" Color="{DynamicResource Theme50Color}" />
+                            <GradientStop Offset="1" Color="{DynamicResource Theme300Color}" />
+                        </LinearGradientBrush>
+                    </TextBlock.Foreground>
+                </TextBlock>
+            </StackPanel>
+            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow">
+                Launcher for the games Battlefield 3, 4 and Hardline on the&#160;<Run FontWeight="Bold" Foreground="#D34144">ZLOEmu</Run>
+                project.<LineBreak />
+                Designed and implemented for&#160;<Run FontWeight="Bold" Foreground="#D34144">ZLOEmu</Run>
+                Community.<LineBreak />
+                I express my gratitude to the people who participated in the testing:&#160;<Run FontWeight="Bold" Foreground="{DynamicResource ComplementaryBrush}">LandLord, IIIMATKO, Serega_Bubir, RevMe_kurva(Mergen), dailOr, PIONERKA, SePaHBoD, Redskier13</Run>
+                ... (if I forgot someone, write to me).<LineBreak />
+                Special thanks to&#160;<Run FontWeight="Bold" Foreground="{DynamicResource BasePrimaryBrush}">ZLOFENIX</Run>
+                for the existence of the&#160;<Run FontWeight="Bold" Foreground="#D34144">ZLOEmu</Run>
+                project! And also, thanks to the project administration!<LineBreak />
+                I wish you a pleasant use, we will meet on the battlefield)</TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

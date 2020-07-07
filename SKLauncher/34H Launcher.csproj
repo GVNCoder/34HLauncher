@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{21ECB645-C995-4D28-BAD5-4C5B9F668D8A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Launcher</RootNamespace>
+    <AssemblyName>34H Launcher</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>18AE409DC9A29E2FDB98142FFD1816EC29546BA8</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>SKLauncher_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DiscordRPC, Version=1.0.150.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiscordRichPresence.1.0.150\lib\net35\DiscordRPC.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Converters\EventLevel2ColorConverter.cs" />
+    <Compile Include="Converters\EventLevel2StringConverter.cs" />
+    <Compile Include="Converters\GameControlState2ColorConverter.cs" />
+    <Compile Include="Converters\Ping2PingEnumConverter.cs" />
+    <Compile Include="Converters\String2VisibilityConverter.cs" />
+    <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
+    <Compile Include="Core\Bases\IBlurredPage.cs" />
+    <Compile Include="Core\Bases\PageViewModelBase.cs" />
+    <Compile Include="Core\Behaviors\ButtonContextMenuBehavior.cs" />
+    <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
+    <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
+    <Compile Include="Core\Behaviors\LastClosedEventBehavior.cs" />
+    <Compile Include="Core\Data\Dialog\ContentPresenterService.cs" />
+    <Compile Include="Core\Data\Dialog\TextDialogService.cs" />
+    <Compile Include="Core\Data\EventLog\EventLogService.cs" />
+    <Compile Include="Core\Data\GameService.cs" />
+    <Compile Include="Core\Data\GameController.cs" />
+    <Compile Include="Core\Data\IGame.cs" />
+    <Compile Include="Core\Data\DetectedGame.cs" />
+    <Compile Include="Core\Data\RunningGame.cs" />
+    <Compile Include="Core\Data\Updates\UpdateControlViewModel.cs" />
+    <Compile Include="Core\Data\Updates\UpdateErrorEventArgs.cs" />
+    <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
+    <Compile Include="Core\Injection\ConstantsModule.cs" />
+    <Compile Include="Core\Injection\DependencyResolver.cs" />
+    <Compile Include="Core\Injection\IDependencyResolver.cs" />
+    <Compile Include="Core\Injection\LocatorsModule.cs" />
+    <Compile Include="Core\Interaction\DelegateCommand.cs" />
+    <Compile Include="Core\Locators\ILocatorGroup.cs" />
+    <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
+    <Compile Include="Core\Locators\IViewModelLocator.cs" />
+    <Compile Include="Core\Locators\LocatorGroup.cs" />
+    <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />
+    <Compile Include="Core\Locators\ViewModelLocator.cs" />
+    <Compile Include="Core\RPC\Discord.cs" />
+    <Compile Include="Core\RPC\DiscordConnectionChangedEventArgs.cs" />
+    <Compile Include="Core\RPC\DiscordManager.cs" />
+    <Compile Include="Core\RPC\DiscordPresence.cs" />
+    <Compile Include="Core\RPC\IDiscord.cs" />
+    <Compile Include="Core\RPC\IDiscordManager.cs" />
+    <Compile Include="Core\RPC\IDiscordPresence.cs" />
+    <Compile Include="Core\RPC\ProxyDiscord.cs" />
+    <Compile Include="Core\Services\ApplicationStateService.cs" />
+    <Compile Include="Core\Services\BusyService.cs" />
+    <Compile Include="Core\Services\Dialog\IContentPresenterService.cs" />
+    <Compile Include="Core\Services\EventLog\IEventLogService.cs" />
+    <Compile Include="Core\Services\IApplicationStateService.cs" />
+    <Compile Include="Core\Services\IBusyService.cs" />
+    <Compile Include="Core\Services\IGameService.cs" />
+    <Compile Include="Core\Services\ILauncherProcessService.cs" />
+    <Compile Include="Core\Services\IMainMenuService.cs" />
+    <Compile Include="Core\Services\INetworkAvailabilityTracker.cs" />
+    <Compile Include="Core\Services\Dialog\IOverlayDialogService.cs" />
+    <Compile Include="Core\Services\IProcessService.cs" />
+    <Compile Include="Core\Services\ISettingsService.cs" />
+    <Compile Include="Core\Services\Dialog\ITextDialogService.cs" />
+    <Compile Include="Core\Services\Updates\IUpdateControl.cs" />
+    <Compile Include="Core\Services\Updates\IUpdateService.cs" />
+    <Compile Include="Core\Services\LauncherProcessService.cs" />
+    <Compile Include="Core\Services\MainMenuService.cs" />
+    <Compile Include="Core\Services\NetworkAvailabilityTracker.cs" />
+    <Compile Include="Core\Data\Dialog\OverlayDialogService.cs" />
+    <Compile Include="Core\Services\ProcessService.cs" />
+    <Compile Include="Core\Services\SettingsService.cs" />
+    <Compile Include="Core\Services\State.cs" />
+    <Compile Include="Core\Shared\ApplicationStateArgs.cs" />
+    <Compile Include="Core\Shared\BusyViewModel.cs" />
+    <Compile Include="Core\Shared\ChangesViewModel.cs" />
+    <Compile Include="Core\Shared\ContentPresenterViewModel.cs" />
+    <Compile Include="Core\Shared\CoopMissionModel.cs" />
+    <Compile Include="Core\Shared\DialogActionEnum.cs" />
+    <Compile Include="Core\Shared\DialogControlHelper.cs" />
+    <Compile Include="Core\Shared\DialogResult.cs" />
+    <Compile Include="Core\Shared\BaseDialogViewModel.cs" />
+    <Compile Include="Core\Shared\EventLogLevel.cs" />
+    <Compile Include="Core\Shared\EventViewModel.cs" />
+    <Compile Include="Core\Shared\GameControlViewModel.cs" />
+    <Compile Include="Core\Shared\GameEventArgs.cs" />
+    <Compile Include="Core\Shared\GameEventType.cs" />
+    <Compile Include="Core\Shared\RunContext.cs" />
+    <Compile Include="Core\Shared\GameSetting.cs" />
+    <Compile Include="Core\Shared\GameSettings.cs" />
+    <Compile Include="Core\Shared\GameSettingsViewModel.cs" />
+    <Compile Include="Core\Shared\GameTabViewModel.cs" />
+    <Compile Include="Core\Shared\IGameControl.cs" />
+    <Compile Include="Core\Shared\LauncherSettings.cs" />
+    <Compile Include="Core\Shared\NetworkAvailabilityChangedEvent.cs" />
+    <Compile Include="Core\Shared\StateConstants.cs" />
+    <Compile Include="Core\Shared\TextDialogButtons.cs" />
+    <Compile Include="Core\Shared\TextDialogViewModel.cs" />
+    <Compile Include="Core\Shared\UIElementConstants.cs" />
+    <Compile Include="Helpers\Clipboard.cs" />
+    <Compile Include="Helpers\CollectionViewFiltrationExtension.cs" />
+    <Compile Include="Helpers\ContentLoader.cs" />
+    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\FilterConstant.cs" />
+    <Compile Include="Helpers\FolderConstant.cs" />
+    <Compile Include="Helpers\GenericTypes.cs" />
+    <Compile Include="Helpers\IErrorHandler.cs" />
+    <Compile Include="Helpers\ListHelper.cs" />
+    <Compile Include="Core\Shared\LauncherVersion.cs" />
+    <Compile Include="Core\Data\Updates\UpdateService.cs" />
+    <Compile Include="Converters\MapNameToImageConverter.cs" />
+    <Compile Include="Converters\RankNumberToImageSourceConverter.cs" />
+    <Compile Include="Core\Injection\ServiceModule.cs" />
+    <Compile Include="Core\Services\IUIHostService.cs" />
+    <Compile Include="Core\Services\IVersionService.cs" />
+    <Compile Include="Core\Services\IWindowContentNavigationService.cs" />
+    <Compile Include="Core\Services\UIHostService.cs" />
+    <Compile Include="Core\Services\VersionService.cs" />
+    <Compile Include="Core\Services\WindowContentNavigationService.cs" />
+    <Compile Include="Helpers\LoggingHelper.cs" />
+    <Compile Include="Helpers\ServerPingCalculator.cs" />
+    <Compile Include="Helpers\TaskExtension.cs" />
+    <Compile Include="Helpers\WebClientWithTimeout.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\Win32Methods.cs" />
+    <Compile Include="Services\StringExtension.cs" />
+    <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="Helpers\Exceptions.cs" />
+    <Compile Include="Styles\Controls\ScrollViewerAnimation\AnimatableScrollView.cs" />
+    <Compile Include="Styles\Controls\ScrollViewerAnimation\ScrollingAnimationBehavior.cs" />
+    <Compile Include="UserControls\ContentPresenterControl.xaml.cs">
+      <DependentUpon>ContentPresenterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GameControl.xaml.cs">
+      <DependentUpon>GameControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GameSettingsControl.xaml.cs">
+      <DependentUpon>GameSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UpdateDownloadControl.xaml.cs">
+      <DependentUpon>UpdateDownloadControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserAbout.xaml.cs">
+      <DependentUpon>UserAbout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UserBusyIndicator.xaml.cs">
+      <DependentUpon>UserBusyIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RotationsControl.xaml.cs">
+      <DependentUpon>RotationsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TextDialogControl.xaml.cs">
+      <DependentUpon>TextDialogControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\BF3ServerBrowserViewModel.cs" />
+    <Compile Include="ViewModel\BF3CoopViewModel.cs" />
+    <Compile Include="ViewModel\Stats\BF4StatsViewModel.cs" />
+    <Compile Include="ViewModel\BF4ServerBrowserViewModel.cs" />
+    <Compile Include="ViewModel\BFHServerBrowserViewModel.cs" />
+    <Compile Include="ViewModel\EventLogViewModel.cs" />
+    <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />
+    <Compile Include="View\BF3CoopView.xaml.cs">
+      <DependentUpon>BF3CoopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BF3MultiplayerView.xaml.cs">
+      <DependentUpon>BF3MultiplayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StatsViews\BF3StatsView.xaml.cs">
+      <DependentUpon>BF3StatsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BF4MultiplayerView.xaml.cs">
+      <DependentUpon>BF4MultiplayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StatsViews\BF4StatsView.xaml.cs">
+      <DependentUpon>BF4StatsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BFHMultiplayerView.xaml.cs">
+      <DependentUpon>BFHMultiplayerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MainWindow\WindowBottomBarPartViewModel.cs" />
+    <Compile Include="View\EventLogView.xaml.cs">
+      <DependentUpon>EventLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow\WindowBottomBarPart.xaml.cs">
+      <DependentUpon>WindowBottomBarPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow\WindowNonClientPart.xaml.cs">
+      <DependentUpon>WindowNonClientPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Stats\BF3StatsViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="View\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\Loc\en_EN.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Loc\ru_RU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\HomeViewResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ContentPresenterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GameControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GameSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UpdateDownloadControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UserAbout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UserBusyIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RotationsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TextDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BF3CoopView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BF3MultiplayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StatsViews\BF3StatsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BF4MultiplayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StatsViews\BF4StatsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BFHMultiplayerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EventLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow\WindowBottomBarPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow\WindowNonClientPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow\MainWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\MainWindow\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Launcher.Localization\Launcher.Localization.csproj">
+      <Project>{31acd8e5-391e-4782-a58b-89107cfc9fe6}</Project>
+      <Name>Launcher.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Launcher.Resources\Launcher.Resources.csproj">
+      <Project>{a33750a0-ad1b-48a1-8757-2a2f7c5804ab}</Project>
+      <Name>Launcher.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Launcher.Theme\Launcher.Theme.csproj">
+      <Project>{640fbce5-c7a3-431a-bedb-7606723d2d83}</Project>
+      <Name>Launcher.Theme</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\zlo4net\Zlo4NET.csproj">
+      <Project>{b7b8b004-cb76-442f-bcab-7f0dbcf11bdd}</Project>
+      <Name>Zlo4NET</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Resources\SplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

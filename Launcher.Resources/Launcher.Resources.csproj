@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A33750A0-AD1B-48A1-8757-2A2F7C5804AB}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>Launcher.Resources</RootNamespace>
+    <AssemblyName>Launcher.Resources</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Service\ResourceManager.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Fonts\ionicons.ttf" />
+    <Resource Include="Fonts\OpenSans-Bold.ttf" />
+    <Resource Include="Fonts\OpenSans-BoldItalic.ttf" />
+    <Resource Include="Fonts\OpenSans-ExtraBold.ttf" />
+    <Resource Include="Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <Resource Include="Fonts\OpenSans-Italic.ttf" />
+    <Resource Include="Fonts\OpenSans-Light.ttf" />
+    <Resource Include="Fonts\OpenSans-LightItalic.ttf" />
+    <Resource Include="Fonts\OpenSans-Regular.ttf" />
+    <Resource Include="Fonts\OpenSans-Semibold.ttf" />
+    <Resource Include="Fonts\OpenSans-SemiboldItalic.ttf" />
+    <Resource Include="Fonts\segmdl2.ttf" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\JesusIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\bg_default.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_AlborzMountains.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_ArmoredShield.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_AzadiPalace.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_BandarDesert.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_CaspianBorder.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_DamavandPeak.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_DeathValley.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_DonyaFortress.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_Epicenter.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_GrandBazaar.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_GulfofOman.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_KhargIsland.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_KiasarRailroad.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_MarkazMonolith.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_NebandanFlats.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_NoshahrCanals.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_Operation925.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_OperationFirestorm.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_OperationMetro.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_OperationRiverside.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_SabalanPipeline.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_Scrapmetal.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_SeineCrossing.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_SharqiPeninsula.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_StrikeatKarkand.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_TalahMarket.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_TeheranHighway.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_WakeIsland.png" />
+    <EmbeddedResource Include="Images\Maps\BF3\bf3_ZibaTower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Maps\BF3CoOp\bf3_DropEmLikeLiquid.png" />
+    <EmbeddedResource Include="Images\Maps\BF3CoOp\bf3_Exfiltration.png" />
+    <EmbeddedResource Include="Images\Maps\BF3CoOp\bf3_FireFromTheSky.png" />
+    <EmbeddedResource Include="Images\Maps\BF3CoOp\bf3_HitAndRun.png" />
+    <EmbeddedResource Include="Images\Maps\BF3CoOp\bf3_OperationExodus.png" />
+    <EmbeddedResource Include="Images\Maps\BF3CoOp\bf3_TheEleventhHour.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_AltaiRange.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_CaspianBorder2014.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_Dawnbreaker.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_DragonPass.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_DragonValley2015.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_FloodZone.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_GiantsOfKarelia.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_GolmudRailway.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_GuilinPeaks.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_GulfofOman2014.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_HainanResort.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_Hammerhead.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_Hangar21.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_LancangDam.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_LostIslands.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_LumphiniGarden.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_NanshaStrike.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_OperationFirestorm2014.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_OperationLocker.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_OperationMetro2014.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_OperationMortar.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_OperationOutbreak.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_OperationWhiteout.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_ParacelStorm.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_PearlMarket.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_Propaganda.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_RogueTransmission.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_SiegeofShanghai.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_SilkRoad.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_SunkenDragon.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_Wavebreaker.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_Zavod311.png" />
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_ZavodGraveyardShift.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Alcatraz.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Backwoods.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_BankJob.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_BlackFriday.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_BreakPointe.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Cemetery.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Chinatown.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_CodeBlue.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Derailed.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Diversion.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_DoubleCross.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Downtown.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_DustBowl.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Everglades.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Growhouse.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_HollywoodHeights.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Museum.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_NightJob.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_NightWoods.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_PacificHighway.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Precinct7.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_Riptide.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_TheBeat.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_TheBlock.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_TheDocks.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_ThinIce.png" />
+    <EmbeddedResource Include="Images\Maps\BFH\bfh_TrainDodge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Ranks\BF3\1.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\10.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\100.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\101.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\102.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\103.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\104.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\105.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\106.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\107.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\108.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\109.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\11.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\110.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\111.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\112.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\113.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\114.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\115.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\116.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\117.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\118.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\119.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\12.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\120.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\121.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\122.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\123.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\124.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\125.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\126.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\127.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\128.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\129.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\13.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\130.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\131.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\132.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\133.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\134.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\135.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\136.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\137.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\138.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\139.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\14.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\140.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\141.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\142.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\143.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\144.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\145.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\15.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\16.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\17.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\18.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\19.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\2.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\20.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\21.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\22.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\23.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\24.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\25.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\26.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\27.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\28.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\29.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\3.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\30.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\31.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\32.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\33.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\34.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\35.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\36.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\37.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\38.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\39.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\4.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\40.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\41.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\42.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\43.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\44.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\45.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\46.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\47.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\48.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\49.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\5.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\50.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\51.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\52.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\53.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\54.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\55.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\56.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\57.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\58.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\59.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\6.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\60.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\61.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\62.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\63.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\64.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\65.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\66.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\67.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\68.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\69.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\7.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\70.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\71.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\72.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\73.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\74.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\75.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\76.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\77.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\78.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\79.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\8.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\80.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\81.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\82.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\83.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\84.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\85.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\86.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\87.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\88.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\89.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\9.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\90.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\91.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\92.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\93.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\94.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\95.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\96.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\97.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\98.png" />
+    <EmbeddedResource Include="Images\Ranks\BF3\99.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Ranks\BF4\r0.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r1.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r10.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r100.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r101.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r102.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r103.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r104.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r105.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r106.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r107.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r108.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r109.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r11.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r110.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r111.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r112.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r113.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r114.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r115.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r116.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r117.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r118.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r119.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r12.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r120.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r121.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r122.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r123.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r124.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r125.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r126.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r127.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r128.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r129.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r13.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r130.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r131.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r132.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r133.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r134.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r135.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r136.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r137.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r138.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r139.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r14.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r140.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r15.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r16.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r17.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r18.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r19.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r2.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r20.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r21.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r22.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r23.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r24.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r25.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r26.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r27.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r28.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r29.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r3.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r30.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r31.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r32.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r33.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r34.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r35.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r36.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r37.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r38.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r39.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r4.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r40.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r41.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r42.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r43.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r44.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r45.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r46.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r47.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r48.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r49.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r5.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r50.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r51.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r52.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r53.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r54.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r55.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r56.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r57.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r58.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r59.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r6.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r60.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r61.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r62.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r63.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r64.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r65.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r66.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r67.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r68.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r69.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r7.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r70.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r71.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r72.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r73.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r74.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r75.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r76.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r77.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r78.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r79.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r8.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r80.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r81.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r82.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r83.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r84.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r85.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r86.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r87.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r88.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r89.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r9.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r90.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r91.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r92.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r93.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r94.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r95.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r96.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r97.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r98.png" />
+    <EmbeddedResource Include="Images\Ranks\BF4\r99.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\MainMenu\BF3MenuCardDark.png" />
+    <Resource Include="Images\MainMenu\BF3MenuCardLight.png" />
+    <Resource Include="Images\MainMenu\BF4MenuCardDark.png" />
+    <Resource Include="Images\MainMenu\BF4MenuCardLight.png" />
+    <Resource Include="Images\MainMenu\BFHMenuCardDark.png" />
+    <Resource Include="Images\MainMenu\BFHMenuCardLight.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

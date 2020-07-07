@@ -1,0 +1,142 @@
+﻿<Page
+    x:Class="Launcher.View.EventLogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
+    xmlns:converters="clr-namespace:Launcher.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Launcher.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:shared="clr-namespace:Launcher.Core.Shared"
+    Width="{StaticResource WindowWidth}"
+    Height="{StaticResource WindowContentAreaHeight}"
+    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=EventLogViewModel}"
+    TextElement.FontFamily="{StaticResource OpenSans}"
+    TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
+    TextOptions.TextRenderingMode="ClearType"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <converters:EventLevel2ColorConverter x:Key="EventLevel2ColorConverter" />
+
+        <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <controls:AcrylicPanel
+            Grid.RowSpan="2"
+            NoiseOpacity=".0075"
+            Target="{Binding WindowBackgroundContent}" />
+
+        <ListView
+            Grid.Row="0"
+            Margin="3"
+            ItemsSource="{Binding Events}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            Style="{StaticResource ListViewStyle}">
+
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DisableSelectionContainerStyle}" TargetType="{x:Type ListViewItem}">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type shared:EventViewModel}">
+                    <Border
+                        Margin="0,0,0,2"
+                        Padding="3"
+                        CornerRadius="2">
+                        <Border.Background>
+                            <SolidColorBrush Opacity=".85" Color="{DynamicResource Theme850Color}" />
+                        </Border.Background>
+                        <Grid Width="1055">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border
+                                Grid.Column="0"
+                                Width="50"
+                                Height="25"
+                                Margin="0,0,10,0"
+                                BorderThickness="1"
+                                CornerRadius="2">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{Binding Level, Converter={StaticResource EventLevel2ColorConverter}}" />
+                                </Border.BorderBrush>
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{Binding Level, Converter={StaticResource EventLevel2ColorConverter}}" />
+                                </TextBlock.Foreground>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource Ionicons}"
+                                    FontSize="18"
+                                    Text="{Binding Level, Converter={StaticResource EventLevel2StringConverter}}"
+                                    TextOptions.TextRenderingMode="Aliased" />
+                            </Border>
+
+                            <StackPanel
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock FontWeight="SemiBold" Text="{Binding Header}" />
+                                <TextBlock Text="{Binding Content}" TextWrapping="WrapWithOverflow" />
+                            </StackPanel>
+
+                            <StackPanel
+                                x:Name="PART_ControlsContainer"
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                Visibility="Hidden">
+                                <Button
+                                    Width="70"
+                                    Command="{Binding CloseCommand}"
+                                    Content="{DynamicResource shared_Close}" />
+                                <Button
+                                    Width="70"
+                                    Margin="0,3,0,0"
+                                    Command="{Binding CopyCommand}"
+                                    Content="Copy" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <Trigger Property="FrameworkElement.IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ControlsContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="1">
+            <Button
+                Grid.Column="0"
+                Command="{Binding CleanupEventsCommand}"
+                Content="{DynamicResource shared_CleanupAll}"
+                Style="{DynamicResource TextDialogButton}" />
+        </Grid>
+    </Grid>
+</Page>

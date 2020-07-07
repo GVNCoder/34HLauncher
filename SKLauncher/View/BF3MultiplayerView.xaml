@@ -1,0 +1,441 @@
+﻿<Page
+    x:Class="Launcher.View.BF3MultiplayerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:Launcher.Core.Behaviors"
+    xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
+    xmlns:converters="clr-namespace:Launcher.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Launcher.Helpers"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Launcher.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:server="clr-namespace:Zlo4NET.Api.Models.Server;assembly=Zlo4NET"
+    xmlns:shared="clr-namespace:Zlo4NET.Api.Models.Shared;assembly=Zlo4NET"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    Width="{StaticResource WindowWidth}"
+    Height="{StaticResource WindowContentAreaHeight}"
+    DataContext="{Binding Path=BF3ServerBrowserViewModel, Source={StaticResource ViewModelLocator}}"
+    TextElement.FontFamily="{StaticResource OpenSans}"
+    TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
+    TextOptions.TextRenderingMode="ClearType"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding UnloadedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+        </i:EventTrigger>
+
+    </i:Interaction.Triggers>
+
+    <Page.Resources>
+
+        <CollectionViewSource x:Key="CollectionViewSource" />
+
+        <converters:bf3MapNameToImageSourceConverter x:Key="bf3MapNameToImageSourceConverter" />
+        <converters:String2VisibilityConverter x:Key="String2VisibilityConverter" />
+        <converters:Ping2PingEnumConverter x:Key="Ping2PingEnumConverter" />
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="250" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <controls:AcrylicPanel
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            NoiseOpacity=".0075"
+            Target="{Binding BackgroundContent}"
+            TintColor="{DynamicResource Theme850Color}"
+            TintOpacity=".25" />
+
+        <Rectangle
+            Grid.Row="0"
+            Grid.Column="0"
+            Height="20">
+
+            <Rectangle.Fill>
+                <SolidColorBrush Opacity=".45" Color="{DynamicResource BaseThemeColor}" />
+            </Rectangle.Fill>
+
+        </Rectangle>
+
+        <DataGrid
+            x:Name="PART_DataGrid"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            AutoGenerateColumns="False"
+            HorizontalScrollBarVisibility="Disabled"
+            IsReadOnly="True"
+            ItemsSource="{Binding Source={StaticResource CollectionViewSource}}"
+            ScrollViewer.CanContentScroll="False"
+            SelectedItem="{Binding SelectedServer, Mode=OneWayToSource}"
+            SelectionMode="Single"
+            Style="{DynamicResource ServersListDataGridStyle}">
+
+            <DataGrid.Columns>
+
+                <DataGridTemplateColumn Width="375">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                FontSize="14"
+                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                                TextTrimming="CharacterEllipsis" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,0,0,0" Text="{DynamicResource sbView_ServerName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn
+                    Width="70"
+                    FontSize="12"
+                    Foreground="{DynamicResource Theme100Brush}"
+                    Header="{DynamicResource sbView_Players}"
+                    SortMemberPath="CurrentPlayersNumber">
+
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0}/{1}">
+
+                            <Binding Path="CurrentPlayersNumber" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="PlayersCapacity" UpdateSourceTrigger="PropertyChanged" />
+
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+
+                </DataGridTextColumn>
+
+                <DataGridTextColumn
+                    Width="320"
+                    CanUserSort="False"
+                    FontSize="12"
+                    Foreground="{DynamicResource Theme100Brush}"
+                    Header="{DynamicResource sbView_GameModeMap}">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="CurrentMap.Name" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="CurrentMap.GameModeName" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTemplateColumn Header="{DynamicResource sbView_Ping}" SortMemberPath="Ping">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <controls:PingVisualizer Value="{Binding Path=Ping, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Ping2PingEnumConverter}}" />
+                                <TextBlock
+                                    Margin="7,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Theme100Brush}"
+                                    Text="{Binding Path=Ping, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate DataType="{x:Type server:ZBF3Server}">
+                    <Grid Margin="5" TextBlock.Foreground="{DynamicResource ThemeForegroundBrush}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <TextBox
+                                Background="Transparent"
+                                Style="{DynamicResource ServerDetailsTextBox}"
+                                Text="{Binding Attributes.Message, Mode=OneTime}"
+                                Visibility="{Binding Path=Attributes.Message, Mode=OneTime, Converter={StaticResource String2VisibilityConverter}}">
+                                <TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="{x:Static helpers:Clipboard.CopyCommand}" Header="{DynamicResource sbView_CopyText}" />
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+                                <i:Interaction.Behaviors>
+                                    <behaviors:DetailsRowCopyBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
+                            <TextBox
+                                Background="Transparent"
+                                Style="{DynamicResource ServerDetailsTextBox}"
+                                Text="{Binding Attributes.Description, Mode=OneTime}"
+                                Visibility="{Binding Path=Attributes.Description, Mode=OneTime, Converter={StaticResource String2VisibilityConverter}}">
+                                <TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Command="{x:Static helpers:Clipboard.CopyCommand}" Header="{DynamicResource sbView_CopyText}" />
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>
+                                <i:Interaction.Behaviors>
+                                    <behaviors:DetailsRowCopyBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Row="1"
+                            Margin="0,10,0,0"
+                            Orientation="Horizontal">
+                            <controls:IconButton
+                                Height="25"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.ShowRotationsCommand}"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource Theme800Brush}"
+                                Icon=""
+                                IconSize="18"
+                                Style="{DynamicResource ServerDetailsButton}"
+                                Text="{DynamicResource sbView_MapRotationPlayers}" />
+                            <controls:IconButton
+                                Height="25"
+                                Margin="3,0,0,0"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.JoinCommand}"
+                                CommandParameter="{x:Static shared:ZRole.Soldier}"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource Theme800Brush}"
+                                Icon=""
+                                IconSize="16"
+                                Style="{DynamicResource JoinButton}"
+                                Text="{DynamicResource sbView_JOIN}" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+
+        </DataGrid>
+
+        <StackPanel
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Width="250"
+            HorizontalAlignment="Center"
+            Orientation="Vertical">
+
+            <StackPanel.Background>
+                <SolidColorBrush Opacity=".45" Color="{DynamicResource BaseThemeColor}" />
+            </StackPanel.Background>
+
+            <Border Margin="5,5,5,0" CornerRadius="2">
+                <Border.Background>
+                    <SolidColorBrush Opacity=".35" Color="{DynamicResource BaseThemeColor}" />
+                </Border.Background>
+
+                <StackPanel>
+                    <!--  Map image  -->
+                    <Grid Height="180" VerticalAlignment="Center">
+                        <Rectangle
+                            Height="180"
+                            Panel.ZIndex="1"
+                            RadiusX="2"
+                            RadiusY="2">
+
+                            <Rectangle.Fill>
+                                <ImageBrush ImageSource="{Binding SelectedServer.CurrentMap.Name, Converter={StaticResource bf3MapNameToImageSourceConverter}}" />
+                            </Rectangle.Fill>
+
+                        </Rectangle>
+
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock
+                                FontSize="54"
+                                FontWeight="Bold"
+                                Text="NONE">
+                                <TextBlock.Foreground>
+                                    <LinearGradientBrush StartPoint="1 1" EndPoint="0 2">
+                                        <GradientStop Offset="0" Color="#FF2400" />
+                                        <GradientStop Offset="1" Color="#FF002D" />
+                                    </LinearGradientBrush>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+
+                            <Separator Background="DimGray" />
+
+                            <TextBlock
+                                Margin="0,3,0,0"
+                                HorizontalAlignment="Right"
+                                Foreground="LightGray"
+                                Text="{DynamicResource sbView_MapImage}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Margin="5" Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Theme300Brush}"
+                                Text="{DynamicResource sbView_Country}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Text="{Binding SelectedServer.Attributes.Country}" />
+                        </Grid>
+                        <Grid Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Theme300Brush}"
+                                Text="{DynamicResource sbView_Region}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Text="{Binding SelectedServer.Attributes.Region}" />
+                        </Grid>
+                        <Grid Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Theme300Brush}"
+                                Text="{DynamicResource sbView_Preset}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Text="{Binding SelectedServer.Attributes.Preset}" />
+                        </Grid>
+                        <Grid Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Theme300Brush}"
+                                Text="{DynamicResource sbView_PunkBuster}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Text="{Binding SelectedServer.Attributes.PunkBuster}" />
+                        </Grid>
+                        <Grid Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Theme300Brush}"
+                                Text="{DynamicResource sbView_PBVersion}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Text="{Binding SelectedServer.Attributes.PunkBusterVersion}" />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+
+            </Border>
+
+            <!--#region Servers filter-->
+
+            <Border Margin="5,3,5,0" CornerRadius="2">
+                <Border.Background>
+                    <SolidColorBrush Opacity=".35" Color="{DynamicResource BaseThemeColor}" />
+                </Border.Background>
+                <StackPanel Orientation="Vertical">
+
+                    <TextBlock Margin="5,3" Text="{DynamicResource sbView_ServersFilter}" />
+
+                    <CheckBox
+                        Margin="5"
+                        Content="{DynamicResource sbView_EmptyServers}"
+                        IsChecked="{Binding ShowEmptyServers, Mode=TwoWay}" />
+
+                    <CheckBox
+                        Margin="5,0,0,5"
+                        Content="{DynamicResource sbView_NotEmptyServers}"
+                        IsChecked="{Binding ShowNotEmptyServers, Mode=TwoWay}" />
+
+                    <Grid Margin="5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource sbView_Map}" />
+
+                        <ComboBox
+                            Grid.Column="1"
+                            ItemsSource="{Binding MapNames}"
+                            SelectedIndex="{Binding SelectedMapNameIndex, Mode=TwoWay}" />
+                    </Grid>
+
+                    <Grid Margin="5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource sbView_GameMode}" />
+
+                        <ComboBox
+                            Grid.Column="1"
+                            Margin="0,5,0,0"
+                            ItemsSource="{Binding GameModeNames}"
+                            SelectedIndex="{Binding SelectedGameModeNameIndex, Mode=TwoWay}" />
+                    </Grid>
+                    <Button
+                        Margin="5,10,5,5"
+                        Command="{Binding ResetFilterCommand}"
+                        Content="{DynamicResource sbView_ResetFilter}" />
+                </StackPanel>
+            </Border>
+
+            <!--#endregion Servers filter-->
+        </StackPanel>
+    </Grid>
+</Page>

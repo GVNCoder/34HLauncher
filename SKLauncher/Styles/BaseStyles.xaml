@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  Basic style for all other styles  -->
+    <Style x:Key="BaseStyle" TargetType="{x:Type Control}">
+
+        <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+    </Style>
+
+    <!--  Basic style for buttons  -->
+    <Style
+        x:Key="BaseButtonStyle"
+        BasedOn="{StaticResource BaseStyle}"
+        TargetType="{x:Type Button}" />
+
+    <!--  Basic style for TextBlocks  -->
+    <Style x:Key="BaseTextBlockStyle" TargetType="{x:Type TextBlock}">
+
+        <Setter Property="FontFamily" Value="{StaticResource OpenSans}" />
+
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,138 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Shared  -->
+    <system:String x:Key="shared_GameRun">Запуск игры</system:String>
+    <system:String x:Key="shared_Events">События</system:String>
+    <system:String x:Key="shared_CleanupAll">Очистить все</system:String>
+    <system:String x:Key="shared_Close">Закрыть</system:String>
+    <system:String x:Key="shared_SaveSettingsHeader">Сохранение настроек</system:String>
+    <system:String x:Key="shared_SaveSettings">Невозможно сохранить настройки.</system:String>
+    <system:String x:Key="shared_SelectZClientPathHeader">Выберите файл ZClient.exe</system:String>
+    <system:String x:Key="shared_DetectingZClientProcessHeader">Обнаружение процесса ZClient</system:String>
+    <system:String x:Key="shared_DetectingZClientProcess">Процесс ZClient не был обнаружен. Пожалуйста, запустите его и попробуйте еще раз.</system:String>
+    <system:String x:Key="shared_SelectImageHeader">Выберите картинку</system:String>
+    <system:String x:Key="shared_CannotSetImageHeader">Невозможно установить картинку</system:String>
+    <system:String x:Key="shared_CannotSetImage">Данная картинка не соответствует заданным ограничениям или произошла неизвестная ошибка.</system:String>
+
+    <!--  HomeView  -->
+    <system:String x:Key="homeView_GettingStats">Получение статистики</system:String>
+    <system:String x:Key="homeView_EventLauncherDisconnectedServers">Невозможно перейти в Браузер серверов, пока лаунчер не подключен</system:String>
+    <system:String x:Key="homeView_EventLauncherDisconnectedRun">Невозможно запустить игру, пока лаунчер не подключен</system:String>
+    <system:String x:Key="homeView_StatsView">Статистика</system:String>
+    <system:String x:Key="homeView_EventLauncherDisconnectedStats">Невозможно получить статистику, пока лаунчер не подключен</system:String>
+    <system:String x:Key="homeView_EventNoobStats">Невозможно получить статистику. Сначала, сыграйте несколько игр потому, что сейчас там нечего смотреть</system:String>
+    <system:String x:Key="homeView_TipSingleplayer">Одиночная игра</system:String>
+    <system:String x:Key="homeView_TipMultiplayer">Многопользовательская игра</system:String>
+    <system:String x:Key="homeView_TipCoop">Кооперативная игра</system:String>
+    <system:String x:Key="homeView_TipStats">Статистика игрока</system:String>
+    <system:String x:Key="homeView_TipSettings">Настройки</system:String>
+    <system:String x:Key="homeView_TipPlayground">Полигон</system:String>
+
+    <!--  WindowView  -->
+    <system:String x:Key="wndView_TipMenu">Меню</system:String>
+    <system:String x:Key="wndView_TipHome">Домой</system:String>
+    <system:String x:Key="wndView_TipSettings">Настройки</system:String>
+    <system:String x:Key="wndView_TipBackNav">Назад</system:String>
+    <system:String x:Key="wndView_TipConnect">Подключить лаунчер к ZClient</system:String>
+    <system:String x:Key="wndView_TipRestart">Перезапустить лаунчер</system:String>
+    <system:String x:Key="wndView_HeaderCopyId">Копировать ID</system:String>
+    <system:String x:Key="wndView_Connect">ПОДКЛЮЧИТЬ</system:String>
+    <system:String x:Key="wndView_UnknownUser">Неизвестный пользователь</system:String>
+    <system:String x:Key="wndView_CannotRestart">Невозможно перезапустить</system:String>
+    <system:String x:Key="wndView_DialogCannotRestart">Невозможно перезапустить лаунчер, пока идет скачивание обновления</system:String>
+    <system:String x:Key="wndView_MyId">Мой ID:</system:String>
+    <system:String x:Key="wndView_RunZClient">Запустить ZClient</system:String>
+    <system:String x:Key="wndView_About">Что это</system:String>
+    <system:String x:Key="wndView_Forum">Форум</system:String>
+
+    <!--  Settings view  -->
+    <system:String x:Key="settView_ThemesHeader">Темы</system:String>
+    <system:String x:Key="settView_BackgroundImage">Фоновая картинка:</system:String>
+    <system:String x:Key="settView_Set">Указать</system:String>
+    <system:String x:Key="settView_Reset">Сбросить</system:String>
+    <system:String x:Key="settView_Theme">Тема</system:String>
+    <system:String x:Key="settView_Accent">Акцент</system:String>
+    <system:String x:Key="settView_MainHeader">Основное</system:String>
+    <system:String x:Key="settView_Language">Язык</system:String>
+    <system:String x:Key="settView_PathToZClient">Путь к ZClient:</system:String>
+    <system:String x:Key="settView_ManuallySetZClientTip">Нажмите, чтобы указать путь вручную</system:String>
+    <system:String x:Key="settView_DetectFromProcess">Обнаружить</system:String>
+    <system:String x:Key="settView_DetectFromProcessTip">Нажмите, если ZClient сейчас запущен, тогда лаунчер попытается определить его расположение  автоматически</system:String>
+    <system:String x:Key="settView_AutorunZClient">Запускать ZClient вместе с лаунчером</system:String>
+    <system:String x:Key="settView_Unfold">Разворачитать игровое окно автоматически</system:String>
+    <system:String x:Key="settView_UseDiscordPresence">Показывать присутствие в Discord</system:String>
+    <system:String x:Key="settView_EnableTryToConnectHeader">Предупреждение!</system:String>
+    <system:String x:Key="settView_EnableTryToConnect">В связи со множеством факторов, данная опция никоим образом не гарантирует, что лаунчер будет подключен успешно.</system:String>
+    <system:String x:Key="settView_TryToConnect">Делать попытку подключения при старте лаунчера</system:String>
+    <system:String x:Key="settView_GameCardOpacity">Прозрачность меню</system:String>
+
+    <!--  Servers View  -->
+    <system:String x:Key="sbView_ServerName">Имя сервера</system:String>
+    <system:String x:Key="sbView_Players">Игроки</system:String>
+    <system:String x:Key="sbView_GameModeMap">Режим/Карта</system:String>
+    <system:String x:Key="sbView_Ping">Пинг</system:String>
+    <system:String x:Key="sbView_MapRotationPlayers">Ротация карт\Игроки</system:String>
+    <system:String x:Key="sbView_CopyText">Копировать</system:String>
+    <system:String x:Key="sbView_JOIN">Присоединится</system:String>
+    <system:String x:Key="sbView_MapImage">Представление карты</system:String>
+    <system:String x:Key="sbView_Country">Страна:</system:String>
+    <system:String x:Key="sbView_Region">Регион:</system:String>
+    <system:String x:Key="sbView_Preset">Установки:</system:String>
+    <system:String x:Key="sbView_PunkBuster">PunkBuster:</system:String>
+    <system:String x:Key="sbView_PBVersion">PB Версия:</system:String>
+    <system:String x:Key="sbView_ServersFilter">Фильтр серверов</system:String>
+    <system:String x:Key="sbView_EmptyServers">Только пустые</system:String>
+    <system:String x:Key="sbView_NotEmptyServers">Только с игроками</system:String>
+    <system:String x:Key="sbView_Map">Карта</system:String>
+    <system:String x:Key="sbView_GameMode">Режим</system:String>
+    <system:String x:Key="sbView_ResetFilter">Сбросить фильтр</system:String>
+    <system:String x:Key="sbView_Spectator">Наблюдать</system:String>
+    <system:String x:Key="sbView_Type">Тип:</system:String>
+
+    <!--  Coop View  -->
+    <system:String x:Key="cpView_Mission">Миссия</system:String>
+    <system:String x:Key="cpView_MissionImage">Представление миссии</system:String>
+    <system:String x:Key="cpView_HostSettings">Настойки хоста</system:String>
+    <system:String x:Key="cpView_Difficulty">Сложность</system:String>
+    <system:String x:Key="cpView_HostGame">Хост</system:String>
+    <system:String x:Key="cpView_JoinSettings">Настройки клиента</system:String>
+    <system:String x:Key="cpView_EnterFriendId">Введите ID друга</system:String>
+    <system:String x:Key="cpView_JoinGame">Присоединится</system:String>
+
+    <!--  Stats View  -->
+    <system:String x:Key="sView_Kills">Убийств</system:String>
+    <system:String x:Key="sView_Headshots">Хэдшоты</system:String>
+    <system:String x:Key="sView_Time">Время</system:String>
+    <system:String x:Key="sView_Accuracy">Точность</system:String>
+    <system:String x:Key="sView_OpenZloLog">Открыть ZloLog</system:String>
+    <system:String x:Key="sView_GamesPlayed">Игр сыграно</system:String>
+    <system:String x:Key="sView_Deaths">Смертей</system:String>
+    <system:String x:Key="sView_KillAssists">Помощь в убийстве</system:String>
+    <system:String x:Key="sView_Wins">Побед</system:String>
+    <system:String x:Key="sView_Losses">Проигрышей</system:String>
+    <system:String x:Key="sView_LongestHeadshot">Дальний хэдшот</system:String>
+    <system:String x:Key="sView_Shots">Выстрелов</system:String>
+    <system:String x:Key="sView_Hits">Попаданий</system:String>
+    <system:String x:Key="sView_Repairs">Отремонтировано</system:String>
+    <system:String x:Key="sView_Saved">Спасено</system:String>
+    <system:String x:Key="sView_Heals">Вылечено</system:String>
+    <system:String x:Key="sView_VehicleKills">Убийств в технике</system:String>
+    <system:String x:Key="sView_DogTagsTaken">Жетонов сорвано</system:String>
+    <system:String x:Key="sView_VehicleDestroyed">Техники уничтожено</system:String>
+    <system:String x:Key="sView_VehicleDestroyingAssists">Помощь в уничтожении техники</system:String>
+    <system:String x:Key="sView_HighestKillStreak">Наибольший kill streak</system:String>
+    <system:String x:Key="sView_NemesisKills">Убито будучи заклятым врагом</system:String>
+    <system:String x:Key="sView_HighestNemesisStreak">Kill streak будучи заклятым врагом</system:String>
+    <system:String x:Key="sView_MCOMDestroyed">MCOM Уничтожено</system:String>
+    <system:String x:Key="sView_MCOMDefendKills">Убийств в обороне MCOM</system:String>
+    <system:String x:Key="sView_FlagCaptured">Флагов захвачено</system:String>
+    <system:String x:Key="sView_DefendedFlags">Флагов защищено</system:String>
+    <system:String x:Key="sView_SaviorKills">Спаситель</system:String>
+    <system:String x:Key="sView_SuppressionAssists">Помощь в подавлении</system:String>
+    <system:String x:Key="sView_AvengerKills">Мститель</system:String>
+    <system:String x:Key="sView_Resupplies">Поддержка патронами</system:String>
+
+</ResourceDictionary>

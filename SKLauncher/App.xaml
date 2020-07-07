@@ -1,0 +1,41 @@
+<Application
+    x:Class="Launcher.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Launcher.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:inject="clr-namespace:Launcher.Core.Locators"
+    xmlns:local="clr-namespace:Launcher"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    d1p1:Ignorable="d"
+    StartupUri="View\MainWindow\MainWindowView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--#region Constants-->
+            <system:Double x:Key="WindowWidth">1100</system:Double>
+            <system:Double x:Key="WindowHeight">600</system:Double>
+            <system:Double x:Key="WindowNonClientHeight">30</system:Double>
+            <system:Double x:Key="WindowBottomBarHeight">30</system:Double>
+            <system:Double x:Key="WindowContentAreaHeight">540</system:Double>
+            <GridLength x:Key="WindowNonClientHeightGrid">30</GridLength>
+            <GridLength x:Key="WindowBottomBarHeightGrid">30</GridLength>
+            <!--#endregion-->
+            <!--  Service locator  -->
+            <converters:EventLevel2StringConverter x:Key="EventLevel2StringConverter" />
+            <BooleanToVisibilityConverter x:Key="b2vConverter" />
+            <!--  ToolTip Popup animation  -->
+            <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Slide</PopupAnimation>
+            <!--  Using for building (binding) server list view  -->
+            <CollectionViewSource x:Key="ServersListView" />
+            <!--  Release  -->
+            <inject:ViewModelLocator x:Key="ViewModelLocator" />
+            <inject:UserControlViewModelLocator x:Key="UserControlViewModelLocator" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Launcher.Resources;component/Fonts.xaml" />
+                <!--  Release  -->
+                <ResourceDictionary Source="Styles/HomeViewResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

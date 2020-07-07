@@ -1,0 +1,279 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="CCS_AccentChangedHeader">Акцентный цвет изменен</system:String>
+    <system:String x:Key="CCS_AccentChanged">Для завершения изменения акцентного цвета, лаунчер будет перезапущен.</system:String>
+    <system:String x:Key="CCS_AccentScheme">Акцентный цвет</system:String>
+
+    <system:String x:Key="SAI_SupportedMaps">Поддерживаемые карты</system:String>
+    <system:String x:Key="SAI_Players">Игроки</system:String>
+    <system:String x:Key="SAI_Empty">Пусто</system:String>
+
+    <system:String x:Key="SL_ServerName">Имя сервера</system:String>
+    <system:String x:Key="SL_Players">Игроки</system:String>
+    <system:String x:Key="SL_Map">Карта</system:String>
+    <system:String x:Key="SL_GameMode">Режим игры</system:String>
+    <system:String x:Key="SL_Ping">Пинг</system:String>
+    <system:String x:Key="SL_SortTip">Кликните для сортировки</system:String>
+
+
+    <system:String x:Key="SD_Message">Сообщение</system:String>
+    <system:String x:Key="SD_Description">Описание</system:String>
+    <system:String x:Key="SD_Mod">Мод</system:String>
+
+    <system:String x:Key="SV_ServersOnline">Серверов онлайн:</system:String>
+    <system:String x:Key="SV_EmptyServers">Пустые сервера</system:String>
+    <system:String x:Key="SV_NotEmptyServers">Не пустые сервера</system:String>
+    <system:String x:Key="SV_ResetFilter">Сбросить фильтр</system:String>
+    <system:String x:Key="SV_RefreshServerList">Обновить список серверов</system:String>
+    <system:String x:Key="SV_Join">ВОЙТИ</system:String>
+    <system:String x:Key="SV_Spectrator">НАБЛЮДАТЕЛЬ</system:String>
+    <system:String x:Key="SV_RefreshingServerListBusy">Обновление списка серверов</system:String>
+
+
+    <system:String x:Key="ST_RankSkill">Ранг/Скилл</system:String>
+    <system:String x:Key="ST_Kills">Убийств</system:String>
+    <system:String x:Key="ST_Accuracy">Точность</system:String>
+    <system:String x:Key="ST_Headshots">Хэдшоты</system:String>
+    <system:String x:Key="ST_Time">Время</system:String>
+    <system:String x:Key="ST_MoreStatistics">Больше статистики</system:String>
+    <system:String x:Key="ST_GamesPlayed">Игр сыграно</system:String>
+    <system:String x:Key="ST_Deaths">Смертей</system:String>
+    <system:String x:Key="ST_KillAssists">Помощь в убийстве</system:String>
+    <system:String x:Key="ST_Wins">Побед</system:String>
+    <system:String x:Key="ST_Losses">Проигрышей</system:String>
+    <system:String x:Key="ST_LongestHeadshot">Дальний хэдшот</system:String>
+    <system:String x:Key="ST_Shots">Выстрелов</system:String>
+    <system:String x:Key="ST_Hits">Попаданий</system:String>
+    <system:String x:Key="ST_Repairs">Починок</system:String>
+    <system:String x:Key="ST_Saved">Спасенных</system:String>
+    <system:String x:Key="ST_Heals">Лечений</system:String>
+    <system:String x:Key="ST_VehicleKills">Убийств в технике</system:String>
+    <system:String x:Key="ST_DogTagsTaken">Жетонов сорвано</system:String>
+    <system:String x:Key="ST_VehicleDestroyed">Техники уничтожено</system:String>
+    <system:String x:Key="ST_VehicleDestroyingAssists">Помощь в уничтожении техники</system:String>
+    <system:String x:Key="ST_HighestKillStreak">Наибольшый kill streak</system:String>
+    <system:String x:Key="ST_NemesisKills">Убито будучи заклятым врагом</system:String>
+    <system:String x:Key="ST_HighestNemesisStreak">Kill streak будучи заклятым врагом</system:String>
+    <system:String x:Key="ST_MCOMDestroyed">Уничтожено передатчиков</system:String>
+    <system:String x:Key="ST_MCOMDefendKills">Убийства в обороне передатчика</system:String>
+    <system:String x:Key="ST_FlagCaptured">Флагов захвачено</system:String>
+    <system:String x:Key="ST_DefendedFlags">Флагов защищено</system:String>
+    <system:String x:Key="ST_SaviorKills">Спаситель</system:String>
+    <system:String x:Key="ST_SuppressionAssists">Помощь в подавлении</system:String>
+    <system:String x:Key="ST_AvengerKills">Мститель</system:String>
+    <system:String x:Key="ST_Resupplies">Поддержка патронами</system:String>
+    <system:String x:Key="ST_Title">Ваша статистика</system:String>
+
+
+    <system:String x:Key="CEW_LauncherCrashed">Launcher здох</system:String>
+    <system:String x:Key="CEW_Text1">Папка с лаунчером содержит файл &quot;log.txt&quot;.</system:String>
+    <system:String x:Key="CEW_Text2">Также желательно:</system:String>
+    <system:String x:Key="CEW_Text3">- при каких обстоятельствах это произошло?</system:String>
+    <system:String x:Key="CEW_Text4">- что вы делали ?</system:String>
+    <system:String x:Key="CEW_Text5">- возможно у вас есть screenshots?</system:String>
+    <system:String x:Key="CEW_Text6">Отправьте все на электронную почту:</system:String>
+    <system:String x:Key="CEW_Text7">Причина</system:String>
+
+    <system:String x:Key="GL_Stop">Стоп</system:String>
+    <system:String x:Key="GL_StopTip">Останавить загрузку игры</system:String>
+    <system:String x:Key="GL_GameExpand">Окно игры будет развернуто автоматически. Так что подождите, ок?</system:String>
+    <system:String x:Key="GL_Title">Вход</system:String>
+    <system:String x:Key="GL_CantStartGameHeader">Неизвестная ошыбка</system:String>
+    <system:String x:Key="GL_CantStartGame">По какой то причине, игра не была запущена за выделенное время. (25 сек)</system:String>
+
+
+    <system:String x:Key="HV_Multiplayer">Multiplayer</system:String>
+    <system:String x:Key="HV_Singleplayer">Singleplayer</system:String>
+    <system:String x:Key="HV_TestRange">Test range</system:String>
+    <system:String x:Key="HV_GameProfileChangingBusy">Смена игрового профиля</system:String>
+    <system:String x:Key="HV_SomeErrorHeader">Имеется проблема</system:String>
+    <system:String x:Key="HV_CheckStatus">Проверте статус лаунчера. Возможно проблема там.</system:String>
+    <system:String x:Key="HV_Title">Дом</system:String>
+    <system:String x:Key="HV_CoopTempMassageHeader">!!!Базовая поддержка режима COOP!!!</system:String>
+    <system:String x:Key="HV_CoopTempMassage">Внимание! Данное решение является временным и пока не имеет финального вида. В будущем оно будет многократно меняться. Спасибо за понимание.</system:String>
+
+
+    <system:String x:Key="MWV_HomeTip">Дом</system:String>
+    <system:String x:Key="MWV_SettingsTip">Настройки</system:String>
+    <system:String x:Key="MWV_FAQTip">FAQ</system:String>
+    <system:String x:Key="MWV_AboutTip">Об этом</system:String>
+    <system:String x:Key="MWV_UpdatesAvailable">Доступно обновление &gt;</system:String>
+    <system:String x:Key="MWV_UpdatesTip">Обновить лаунчер</system:String>
+    <system:String x:Key="MWV_RestartLauncherTip">Рестарт лаунчера</system:String>
+    <system:String x:Key="MWV_GoBackTip">Вернутся</system:String>
+    <system:String x:Key="MWV_MyStatisticsTip">Моя статистика</system:String>
+    <system:String x:Key="MWV_StatusTip">Показать статус лаунчера</system:String>
+    <system:String x:Key="MWV_CheckStatusHeader">Проверте STATUS лаунчера</system:String>
+    <system:String x:Key="MWV_CheckStatus">STATUS изменен на КРАСНЫЙ! Кликните по нему, чтобы узнать в чем проблема.</system:String>
+    <system:String x:Key="MWV_MonolithDisconnectedHeader">Monolith отсоединен</system:String>
+    <system:String x:Key="MWV_MonolithDisconnected">Проверьте соединение ZClient с Monolith.</system:String>
+    <system:String x:Key="MWV_DisconnectedFromGameHeader">Отключен от игры</system:String>
+    <system:String x:Key="MWV_InternetLostHeader">Потеряно соединение с Интернет</system:String>
+    <system:String x:Key="MWV_InternetLost">Вы потеряли соединение с сетью интернет! Восстановите его для продолжения.</system:String>
+    <system:String x:Key="MWV_ZLOriginPathErrorHeader">ZLOrigin ошибка пути</system:String>
+    <system:String x:Key="MWV_ZLOriginRebootFailedHeader">ZLOrigin неудачный запуск</system:String>
+    <system:String x:Key="MWV_ZLOriginRebootFailed">Не могу запустить процесс. Попробуйте вручную.</system:String>
+    <system:String x:Key="WMV_LauncherStatusHeader">Статус лаунчера</system:String>
+    <system:String x:Key="WMV_LauncherUpdateHeader">Обновление</system:String>
+    <system:String x:Key="WMV_LauncherUpdate">Лаунчер будет закрыт и обновлен.</system:String>
+    <system:String x:Key="MWV_GettingStatisticsBusy">Получение статистики</system:String>
+    <system:String x:Key="MWV_CantRunZLOriginHeader">ZClient не запущен</system:String>
+    <system:String x:Key="MWV_CantRunZLOrigin">Работа ZLOrigin зависит от работы ZClient. Так что, сначала запустите ZClient и попробуйте снова.</system:String>
+
+
+
+    <system:String x:Key="UPD_ERROR_UNK">Произошла неизвестная ошибка. Пожалуйста, попробуйте позже.</system:String>
+    <system:String x:Key="UPD_ERROR_VER">Не удалось распознать версию. Пожалуйста, попробуйте еще раз.</system:String>
+    <system:String x:Key="UPD_ERROR_UNAU">Недостаточно прав для обновления приложения. Файловая система недоступна или что-то блокирует меня. Запустите лаунчер от имени администратора.</system:String>
+    <system:String x:Key="UPD_ERROR_DBAPI">Ошибка Dropbox Api. Пожалуйста, попробуйте позже.</system:String>
+    <system:String x:Key="UPD_ERROR_CFUB">Сервис уже занят. Пожалуйста, попробуйте позже.</system:String>
+    <system:String x:Key="UPD_ERROR_DB">Сервис уже загружает обновления. Попробуйте  проверить наличие обновлений позже.</system:String>
+
+    <system:String x:Key="SV_ReadyToInstallHeader">Готов к установке</system:String>
+    <system:String x:Key="SV_ReadyToInstall">Обновление загружено и готово к установке.</system:String>
+    <system:String x:Key="SV_UpdateServiceHeader">Update service</system:String>
+    <system:String x:Key="SV_AvailableVersion">Доступная версия:</system:String>
+    <system:String x:Key="SV_Improvements">Улучшения:</system:String>
+    <system:String x:Key="SV_WantToDownload">Хотите скачать?</system:String>
+    <system:String x:Key="SV_Downloading">Я загружаю обновления. Вы можете поиграть или просто подождать, пока соответствующий индикатор покажет, что обновление готово к установке.</system:String>
+
+    <system:String x:Key="SV_Automation">Автоматизация</system:String>
+    <system:String x:Key="SV_AutorunZClient">Автозапуск ZClient</system:String>
+    <system:String x:Key="SV_AutorunZLOrigin">Автозапуск ZLOrigin</system:String>
+    <system:String x:Key="SV_RunZLOriginWhenNeed">Запускать ZLOrigin по надобности</system:String>
+    <system:String x:Key="SV_AutoDetectZLOrigin">Обнаружить ZLOrigin</system:String>
+    <system:String x:Key="SV_AutocloseZClientWhenLauncherShutdown">Автозакрытие ZClient вместе с лаунчером</system:String>
+    <system:String x:Key="SV_AutocloseZLOriginWhenLauncherShutdown">Автозакрытие ZLOrigin вместе с лаунчером</system:String>
+    <system:String x:Key="SV_Updates">Обновления</system:String>
+    <system:String x:Key="SV_AutomaticCheckForUpdates">Автоматически проверять обновления</system:String>
+    <system:String x:Key="SV_CheckUpdates">Проверить обновления</system:String>
+    <system:String x:Key="SV_OpenChangeLog">Открыть change log</system:String>
+    <system:String x:Key="SV_Theme">Темы</system:String>
+    <system:String x:Key="SV_ToDefault">К стандартной</system:String>
+    <system:String x:Key="SV_Themes">Тема</system:String>
+    <system:String x:Key="SV_Save">Сохранить</system:String>
+    <system:String x:Key="SV_Reset">Сбросить</system:String>
+    <system:String x:Key="SV_ResetAndSave">Сбросить и сохранить</system:String>
+    <system:String x:Key="SV_LanguageIndexHeader">Язык изменен</system:String>
+    <system:String x:Key="SV_LanguageIndex">Нажмите &quot;Сохранить&quot; и перезапустите лаунчер, нажав &quot;Рестарт лаунчера&quot;, чтобы именения вступили в силу.</system:String>
+    <system:String x:Key="SV_General">Общие</system:String>
+    <system:String x:Key="SV_Language">Язык</system:String>
+    <system:String x:Key="SV_BackgroundImage">Фоновая картинка</system:String>
+    <system:String x:Key="SV_SelectZClientPath">Выберите путь к ZClient</system:String>
+    <system:String x:Key="SV_SelectZLOriginPath">Выберите путь к ZLOrigin</system:String>
+    <system:String x:Key="SV_Fail">Неудача</system:String>
+    <system:String x:Key="SV_AutoDetectZLOriginFail">Попробуйте указать путь вручную.</system:String>
+    <system:String x:Key="SV_SettingsSave">Сохранение</system:String>
+    <system:String x:Key="SV_SettingsSaveDone">Настройки сохранены!</system:String>
+    <system:String x:Key="SV_ResetSettingsHeader">Сброс настроек</system:String>
+    <system:String x:Key="SV_ResetSettings">Вы уверены, что хотите сбросить настройки до стандартных?</system:String>
+    <system:String x:Key="SV_ChangeLogErrorHeader">Ошибка</system:String>
+    <system:String x:Key="SV_ChangeLogError">Файл ChangeLog не найден.</system:String>
+    <system:String x:Key="SV_CheckingUpdatesBusy">Проверка обновлений</system:String>
+    <system:String x:Key="SV_SelectBGImage">Выберите картинку</system:String>
+    <system:String x:Key="SV_BGImageError1">Вы выбрали неверный файл. Он долежн быть:</system:String>
+    <system:String x:Key="SV_BGImageError2">- Размер не должен превышать 7 MB</system:String>
+    <system:String x:Key="SV_BGImageError3">- Разрешение не должно превышать 2048x1080</system:String>
+    <system:String x:Key="SV_InfoHeader">Инфо</system:String>
+    <system:String x:Key="SV_InfoUseLatestVer">Вы используете последнюю версию.</system:String>
+    <system:String x:Key="SV_InfoUseOldVer">Обновление будет загружено. Вы можете использовать Launcher дальше.</system:String>
+    <system:String x:Key="SV_SettingsTitle">Настройки</system:String>
+
+
+
+    <system:String x:Key="AboutContent1">34H LAUNCHER был разработан и реализован в качестве альтернативы другим. Я пытался сделать его более удобным и понятным. Надеюсь вам понравится.</system:String>
+    <system:String x:Key="AboutContent2">Специальная благодарность проекту ZLOFENIX и bigworld12 за API. Также большое спасибо администрации проекта за помощь и понимание.</system:String>
+    <system:String x:Key="AboutContent3">Реализовано XrIStOs_VoSkReS</system:String>
+    <system:String x:Key="AboutContent4">Помогали в разработке и тестировании:</system:String>
+    <system:String x:Key="AboutContent5">Помощь и мотивация</system:String>
+
+
+    <system:String x:Key="FAQContent1">ПОСОБИЕ</system:String>
+    <system:String x:Key="FAQContent2">Интерфейс</system:String>
+    <system:String x:Key="FAQContent3">Настройки</system:String>
+    <system:String x:Key="FAQContent4">Функция STATUS</system:String>
+    <system:String x:Key="FAQContent5">Мультиплеер</system:String>
+    <system:String x:Key="FAQContent6">Статистика</system:String>
+    <system:String x:Key="FAQContent7">общие проблемы &gt;</system:String>
+    <system:String x:Key="FAQContent8">Вся информация доступна на сайте проекта ZLOEmu &gt;</system:String>
+
+
+    <system:String x:Key="COOP_007_desc">Это режим «орды», ограниченный тремя массивными волнами врагов, атакующих ваши «цели защиты» (транспортные средства высокой мобильности, отмеченные синей точкой).</system:String>
+    <system:String x:Key="COOP_006_desc">Чоппер миссия. Поддерживайте союзные огневые команды и уничтожайте врагов. BMP, мобильные AA и HMV. Как только все враги будут уничтожены, и ваши дружественные огневые команды извлекут вашу Ценную цель, вы завершите эту миссию.</system:String>
+    <system:String x:Key="COOP_009_desc">Скрытно проникните в здание и извлеките HVT под сильным огнем. Тепловизоры доступны для оружия по умолчанию. Стрельба по камерам видеонаблюдения и скрытные убийства (или одновременное снятие врагов оружия) позволят вам войти без сигналов тревоги.</system:String>
+    <system:String x:Key="COOP_002_desc">Это прямолинейная миссия с простой целью - добраться до гаража и убежать от терристов с помощью французского автомобиля, работающего на бензине. Связанное дополнительное условие для этой миссии - Push On.</system:String>
+    <system:String x:Key="COOP_003_desc">Это миссия снайперской команды. Условие, связано с этой миссией - стрелять прям в яблочко.</system:String>
+    <system:String x:Key="COOP_010_desc">В основном, операция Метро с большим количеством ядовитого дурно пахнущего газа на платформе поезда. Вы рискнете спуститься на станцию и уничтожить врагов, когда они придут.</system:String>
+
+    <system:String x:Key="COOP_Title">Battlefield 3 Кооператив</system:String>
+    <system:String x:Key="COOP_Missions">Миссии</system:String>
+    <system:String x:Key="COOP_Create">Создать игру</system:String>
+    <system:String x:Key="COOP_FriendID">ID Друга</system:String>
+    <system:String x:Key="COOP_JoinToFriend">Присоединиться к другу</system:String>
+    <system:String x:Key="COOP_IncorrectInputHeader">Неверный ввод</system:String>
+    <system:String x:Key="COOP_IncorrectInput">Поле либо пустое, либо содержит неразрешенные символы</system:String>
+
+
+    <system:String x:Key="OnStartup_ZClientPathErrorHeader">ZClient path error</system:String>
+    <system:String x:Key="OnStartup_ZClientRunFailedHeader">ZClient run failed</system:String>
+    <system:String x:Key="OnStartup_ZClientRunFailed">Could not start ZClient process</system:String>
+
+    <system:String x:Key="OnStartup_ZLOriginPathErrorHeader">ZLOrigin path error</system:String>
+    <system:String x:Key="OnStartup_ZLOriginRunFailedHeader">ZLOrigin run failed</system:String>
+    <system:String x:Key="OnStartup_ZLOriginRunFailed">Could not start ZLOrigin process</system:String>
+
+
+
+
+
+    <!--<system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>
+    <system:String x:Key=""></system:String>-->
+
+</ResourceDictionary>

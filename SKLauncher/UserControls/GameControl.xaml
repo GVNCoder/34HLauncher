@@ -1,0 +1,100 @@
+﻿<UserControl
+    x:Class="Launcher.UserControls.GameControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
+    xmlns:converters="clr-namespace:Launcher.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Launcher.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    Height="20"
+    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=GameControlViewModel}"
+    Foreground="{DynamicResource Theme800Brush}"
+    ToolTip="{Binding ToolTipContent}"
+    ToolTipService.InitialShowDelay="0"
+    ToolTipService.Placement="Top"
+    ToolTipService.ShowDuration="{x:Static system:Int32.MaxValue}"
+    Visibility="{Binding GameControlVisibility}"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:GameControlState2ColorConverter x:Key="GameControlState2ColorConverter" />
+    </UserControl.Resources>
+
+    <Border Padding="10,0,5,0" CornerRadius="2">
+        <Border.Background>
+            <SolidColorBrush Opacity="1" Color="{Binding InLoadingState, Converter={StaticResource GameControlState2ColorConverter}}" />
+        </Border.Background>
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock
+                Margin="0,0,0,1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource OpenSans}"
+                FontWeight="Bold"
+                Foreground="{DynamicResource WindowKeyBrush}"
+                Text="{Binding Text}" />
+            <TextBlock
+                x:Name="PART_Loading"
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource Ionicons}"
+                FontSize="14"
+                RenderTransformOrigin=".5 .5"
+                Text=""
+                TextOptions.TextHintingMode="Animated"
+                Visibility="{Binding InLoadingState, Converter={StaticResource b2vConverter}}">
+                <TextBlock.RenderTransform>
+                    <RotateTransform />
+                </TextBlock.RenderTransform>
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard DesiredFrameRate="16">
+                                <DoubleAnimation
+                                    RepeatBehavior="Forever"
+                                    Storyboard.TargetName="PART_Loading"
+                                    Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(RotateTransform.Angle)"
+                                    From="0"
+                                    To="360"
+                                    Duration="0:0:1.5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
+            <controls:GlyphButton
+                x:Name="PART_CloseButton"
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Command="{Binding CloseCommand}"
+                Foreground="{DynamicResource WindowKeyBrush}"
+                Icon=""
+                IconSize="16"
+                TextOptions.TextRenderingMode="Aliased"
+                Visibility="{Binding CanClose, Converter={StaticResource b2vConverter}}">
+                <controls:GlyphButton.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Static Cursors.Hand}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Null}" />
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </controls:GlyphButton.Triggers>
+            </controls:GlyphButton>
+        </StackPanel>
+    </Border>
+</UserControl>
