@@ -81,23 +81,26 @@ namespace Launcher.Core.RPC
         {
             _discordPresence = application.DependencyResolver.Resolver.Get<IDiscordPresence>();
             _discordPresence.ConnectionChanged += _discordConnectionChangedHandler;
+
+            _pagePresence = _AFKRichPresence;
         }
 
         private void _discordConnectionChangedHandler(object sender, DiscordConnectionChangedEventArgs e)
         {
-            if (e.IsConnected)
-            {
-                UpdateAFK();
-            }
+            if (! e.IsConnected) return;
+            
+            _updatePresence(_useGamePresence ? _gamePresence : _pagePresence);
         }
 
-        private string _GetTitleFullName(ZGame game) => _BFTitles[(int) game];
+        private string _GetTitleNameByGame(ZGame game) => _BFTitles[(int) game];
+
+        private string _GetLargeImageKeyByGame(ZGame game) => $"{game.ToString().ToLower()}_large_logo";
 
         public void UpdateServerBrowser(ZGame game)
         {
-            var titleName = _GetTitleFullName(game);
+            var titleName = _GetTitleNameByGame(game);
             _ServerBrowserRichPresence.Assets.LargeImageText = titleName;
-            _ServerBrowserRichPresence.Assets.LargeImageKey = $"{game.ToString().ToLower()}_large_logo";
+            _ServerBrowserRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(game);
 
             _updatePresence(_ServerBrowserRichPresence);
         }
@@ -109,21 +112,10 @@ namespace Launcher.Core.RPC
 
         public void UpdateStats(ZGame game)
         {
-            switch (game)
-            {
-                case ZGame.BF3:
-                    _StatsRichPresence.Assets.LargeImageText = "Battlefield 3";
-                    break;
-                case ZGame.BF4:
-                    _StatsRichPresence.Assets.LargeImageText = "Battlefield 4";
-                    break;
-                case ZGame.BFH:
-                case ZGame.None:
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(game), game, null);
-            }
+            var titleName = _GetTitleNameByGame(game);
+            _StatsRichPresence.Assets.LargeImageText = titleName;
+            _StatsRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(game);
 
-            _StatsRichPresence.Assets.LargeImageKey = $"{game.ToString().ToLower()}_large_logo";
             _updatePresence(_StatsRichPresence);
         }
 
@@ -155,6 +147,11 @@ namespace Launcher.Core.RPC
         public void Stop()
         {
             _discordPresence.StopPresence();
+        }
+
+        public void DisablePlay()
+        {
+
         }
 
         private void _updatePresence(RichPresence presence)

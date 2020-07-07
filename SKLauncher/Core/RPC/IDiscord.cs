@@ -24,6 +24,8 @@ namespace Launcher.Core.RPC
         void UpdateCoop(ZPlayMode mode, CoopMissionModel model);
         void UpdateSingle(ZGame game, ZPlayMode mode);
 
+        void DisablePlay();
+
         #endregion
     }
 }
