@@ -166,8 +166,7 @@ namespace Launcher.Core.RPC
         public void UpdateServer(ZServerBase server)
         {
             _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
-            _ServerRichPresence.Assets.LargeImageText =
-                $"{server.Game.ToString()} | {server.CurrentMap.Name} | {string.Concat(server.CurrentMap.GameModeName.Where(char.IsUpper))}";
+            _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server);
             _ServerRichPresence.Details = server.Name;
             _ServerRichPresence.State = "In Game";
             _ServerRichPresence.Party = new Party
@@ -185,17 +184,17 @@ namespace Launcher.Core.RPC
             _updateUnit = new ServerDiscordUnit(server);
             _updateUnit.ServerModelUpdated += (sender, e) =>
             {
-                var serv = (ZServerBase) sender;
-
-                _ServerRichPresence.Assets.LargeImageText =
-                    $"{serv.Game.ToString()} | {serv.CurrentMap.Name} | {string.Concat(serv.CurrentMap.GameModeName.Where(char.IsUpper))}";
+                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server);
                 _ServerRichPresence.Details = server.Name;
-                _ServerRichPresence.Party.Size = serv.CurrentPlayersNumber;
+                _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
 
                 _gamePresence = _ServerRichPresence;
                 _updatePresence();
             };
         }
+
+        private string _BuildServerLargeImageText(ZServerBase server) =>
+            $"{server.Game.ToString()} | {server.CurrentMap.Name} | {string.Concat(server.CurrentMap.GameModeName.Where(char.IsUpper))}";
 
         #endregion
 
@@ -205,7 +204,7 @@ namespace Launcher.Core.RPC
 
             if (mode == ZPlayMode.CooperativeHost)
             {
-                _CoopRichPresence.Assets.LargeImageText = $"Host | {model.Name} | Unknown ...";
+                _CoopRichPresence.Assets.LargeImageText = $"Host | {model.Name} | {model.Difficulty}";
             }
             else
             {

@@ -7,5 +7,6 @@ namespace Launcher.Core.Shared
         public string Name { get; set; }
         public string Description { get; set; }
         public ZCoopLevels Level { get; set; }
+        public ZCoopDifficulty Difficulty { get; set; }
     }
 }
