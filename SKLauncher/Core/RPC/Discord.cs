@@ -91,6 +91,7 @@ namespace Launcher.Core.RPC
         private RichPresence _pagePresence;
         private RichPresence _gamePresence;
         private bool _useGamePresence;
+        private ServerDiscordUnit _updateUnit;
 
         public Discord(App application, ISettingsService settingsService)
         {
@@ -151,6 +152,7 @@ namespace Launcher.Core.RPC
             _ServerRichPresence.Assets.LargeImageText =
                 $"{server.Game.ToString()} | {server.CurrentMap.Name} | {string.Concat(server.CurrentMap.GameModeName.Where(char.IsUpper))}";
             _ServerRichPresence.Details = server.Name;
+            _ServerRichPresence.State = "In Game";
             _ServerRichPresence.Party = new Party
             {
                 ID = Secrets.CreateFriendlySecret(new Random()),
@@ -159,11 +161,23 @@ namespace Launcher.Core.RPC
             };
             _ServerRichPresence.Timestamps = Timestamps.Now;
 
-            server.PropertyChanged += (sender, e) => { }; // append global handler
-            server.CurrentMap.PropertyChanged += (sender, e) => { }; // append global handler
+            _gamePresence = _ServerRichPresence;
+            _useGamePresence = true;
+            _updatePresence();
 
-            // TODO: How to unsubscribe?
-            // TODO: Create ServerPresenceUpdateUnit with saving self state
+            _updateUnit = new ServerDiscordUnit(server);
+            _updateUnit.ServerModelUpdated += (sender, e) =>
+            {
+                var serv = (ZServerBase) sender;
+
+                _ServerRichPresence.Assets.LargeImageText =
+                    $"{serv.Game.ToString()} | {serv.CurrentMap.Name} | {string.Concat(serv.CurrentMap.GameModeName.Where(char.IsUpper))}";
+                _ServerRichPresence.Details = server.Name;
+                _ServerRichPresence.Party.Size = serv.CurrentPlayersNumber;
+
+                _gamePresence = _ServerRichPresence;
+                _updatePresence();
+            };
         }
 
         #endregion
@@ -199,6 +213,8 @@ namespace Launcher.Core.RPC
         public void DisablePlay()
         {
             _useGamePresence = false;
+            _updateUnit?.Destroy();
+
             _updatePresence();
         }
 

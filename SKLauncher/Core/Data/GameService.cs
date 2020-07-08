@@ -281,6 +281,8 @@ namespace Launcher.Core.Data
                     _gameControl.SetText("Joining server");
                     _gameControl.SetToolTipText($"{server.Name} | {server.CurrentMap.Name} | {server.CurrentMap.GameModeName}");
 
+                    _discord.UpdateServer(server);
+
                     break;
                 case ZPlayMode.CooperativeHost:
                     _gameControl.SetText("Host room");
