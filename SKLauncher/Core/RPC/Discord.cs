@@ -35,7 +35,7 @@ namespace Launcher.Core.RPC
             }
         };
 
-        private readonly RichPresence _CoopRichPresence = new RichPresence
+        private readonly RichPresence _CoopBrowserRichPresence = new RichPresence
         {
             Details = "Browse COOP missions",
             Assets = new Assets
@@ -69,6 +69,23 @@ namespace Launcher.Core.RPC
         private readonly RichPresence _SingleRichPresence = new RichPresence
         {
             State = "In Game",
+            Assets = new Assets
+            {
+                SmallImageKey = "small_logo",
+                SmallImageText = "ZLOEmu"
+            }
+        };
+
+        private readonly RichPresence _CoopRichPresence = new RichPresence
+        {
+            Details = "Cooperative",
+            State = "In Game",
+            Party = new Party
+            {
+                ID = Secrets.CreateFriendlySecret(new Random()),
+                Max = 2,
+                Size = 2
+            },
             Assets = new Assets
             {
                 SmallImageKey = "small_logo",
@@ -124,7 +141,7 @@ namespace Launcher.Core.RPC
 
         public void UpdateCoopBrowser()
         {
-            _pagePresence = _CoopRichPresence;
+            _pagePresence = _CoopBrowserRichPresence;
             _updatePresence();
         }
 
@@ -184,7 +201,22 @@ namespace Launcher.Core.RPC
 
         public void UpdateCoop(ZPlayMode mode, CoopMissionModel model)
         {
-            throw new System.NotImplementedException();
+            _CoopRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(ZGame.BF3);
+
+            if (mode == ZPlayMode.CooperativeHost)
+            {
+                _CoopRichPresence.Assets.LargeImageText = $"Host | {model.Name} | Unknown ...";
+            }
+            else
+            {
+                _CoopRichPresence.Assets.LargeImageText = $"In lobby on my friend";
+            }
+
+            _CoopRichPresence.Timestamps = Timestamps.Now;
+
+            _gamePresence = _CoopRichPresence;
+            _useGamePresence = true;
+            _updatePresence();
         }
 
         public void UpdateSingle(ZGame game, ZPlayMode mode)

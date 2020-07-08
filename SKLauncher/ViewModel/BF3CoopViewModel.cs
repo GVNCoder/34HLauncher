@@ -166,7 +166,8 @@ namespace Launcher.ViewModel
                 Difficulty = difficulty,
                 Level = SelectedMission.Level,
                 Target = ZGame.BF3,
-                Mode = ZPlayMode.CooperativeHost
+                Mode = ZPlayMode.CooperativeHost,
+                Mission = SelectedMission
             };
 
             _gameService.Run(context);

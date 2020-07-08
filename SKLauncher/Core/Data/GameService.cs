@@ -288,10 +288,14 @@ namespace Launcher.Core.Data
                     _gameControl.SetText("Host room");
                     _gameControl.SetToolTipText("Host CoOp room");
 
+                    _discord.UpdateCoop(context.Mode, context.Mission);
+
                     break;
                 case ZPlayMode.CooperativeClient:
                     _gameControl.SetText("Joining friend");
                     _gameControl.SetToolTipText("Playing CoOp with friend");
+
+                    _discord.UpdateCoop(context.Mode, context.Mission);
 
                     break;
                 case ZPlayMode.TestRange:
