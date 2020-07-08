@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{21ECB645-C995-4D28-BAD5-4C5B9F668D8A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Launcher</RootNamespace>
     <AssemblyName>34H Launcher</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>

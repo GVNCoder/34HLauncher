@@ -29,7 +29,7 @@ namespace Launcher.Core.Data
 
         private readonly IEventLogService _eventLogService;
         private readonly ISettingsService _settingsService;
-        private readonly IDiscord _discordManager;
+        private readonly IDiscord _discord;
         private readonly IGameControl _gameControl;
         private readonly IZGameFactory _runService;
         private readonly ILog _log;
@@ -62,7 +62,7 @@ namespace Launcher.Core.Data
             _eventLogService = eventLogService;
             _settingsService = settingsService;
             _log = application.Logger;
-            _discordManager = discord;
+            _discord = discord;
         }
 
         public void TryDetect()
@@ -239,6 +239,8 @@ namespace Launcher.Core.Data
             _game.Pipe -= _pipeHandler;
             _pipeContent = string.Empty;
             _Reset();
+
+            _discord.DisablePlay();
         }
 
         private void _AppendPipeContent(string content)
@@ -270,6 +272,8 @@ namespace Launcher.Core.Data
                     _gameControl.SetText("Resume campaign");
                     _gameControl.SetToolTipText("Campaign");
 
+                    _discord.UpdateSingle(context.Target, ZPlayMode.Singleplayer);
+
                     break;
                 case ZPlayMode.Multiplayer:
                     var server = context.Server;
@@ -291,6 +295,8 @@ namespace Launcher.Core.Data
                 case ZPlayMode.TestRange:
                     _gameControl.SetText("Playground");
                     _gameControl.SetToolTipText("Test range");
+
+                    _discord.UpdateSingle(context.Target, ZPlayMode.TestRange);
 
                     break;
                 default:

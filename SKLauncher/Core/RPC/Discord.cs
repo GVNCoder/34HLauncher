@@ -66,6 +66,16 @@ namespace Launcher.Core.RPC
             }
         };
 
+        private readonly RichPresence _SingleRichPresence = new RichPresence
+        {
+            State = "In Game",
+            Assets = new Assets
+            {
+                SmallImageKey = "small_logo",
+                SmallImageText = "ZLOEmu"
+            }
+        };
+
         #endregion
 
         private readonly string[] _BFTitles =
@@ -156,8 +166,6 @@ namespace Launcher.Core.RPC
             // TODO: Create ServerPresenceUpdateUnit with saving self state
         }
 
-        
-
         #endregion
 
         public void UpdateCoop(ZPlayMode mode, CoopMissionModel model)
@@ -167,7 +175,15 @@ namespace Launcher.Core.RPC
 
         public void UpdateSingle(ZGame game, ZPlayMode mode)
         {
-            throw new System.NotImplementedException();
+            _SingleRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(game);
+            _SingleRichPresence.Assets.LargeImageText = _GetTitleNameByGame(game);
+            _SingleRichPresence.Details = mode == ZPlayMode.Singleplayer ? "Singleplayer" : "Playground";
+            _SingleRichPresence.Timestamps = Timestamps.Now;
+
+            _gamePresence = _SingleRichPresence;
+            _useGamePresence = true;
+
+            _updatePresence();
         }
 
         public void Start()
@@ -183,6 +199,7 @@ namespace Launcher.Core.RPC
         public void DisablePlay()
         {
             _useGamePresence = false;
+            _updatePresence();
         }
 
         private void _updatePresence()
