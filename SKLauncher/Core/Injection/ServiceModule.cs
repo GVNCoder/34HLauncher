@@ -61,9 +61,6 @@ namespace Launcher.Core.Injection
             Kernel.Bind<IDiscord>()
                 .To<Discord>()
                 .InSingletonScope();
-            Kernel.Bind<IDiscordManager>()
-                .To<DiscordManager>()
-                .InSingletonScope();
         }
     }
 }

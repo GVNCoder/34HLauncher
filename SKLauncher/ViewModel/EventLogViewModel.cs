@@ -21,7 +21,7 @@ namespace Launcher.ViewModel
         public EventLogViewModel(
             IUIHostService hostService,
             IWindowContentNavigationService navigationService,
-            IDiscordManager discord) : base(discord)
+            IDiscord discord) : base(discord)
         {
             _hostService = hostService;
             _navigationService = navigationService;
@@ -48,7 +48,6 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            base.OnLoadedImpl();
             _discord.UpdateAFK();
         });
 

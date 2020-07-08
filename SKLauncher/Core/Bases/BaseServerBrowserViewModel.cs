@@ -128,7 +128,7 @@ namespace Launcher.Core.Bases
             IGameService gameService,
             IEventLogService eventLogService,
             IContentPresenterService modalContentPresenterService,
-            IDiscordManager discordManager) : base(discordManager)
+            IDiscord discord) : base(discord)
         {
             _api = api;
             _gameService = gameService;
@@ -200,8 +200,6 @@ namespace Launcher.Core.Bases
 
         protected void OnLoadImpl(ZGame game, Page ui)
         {
-            base.OnLoadedImpl();
-
             _collectionViewSource = _ExtractCollectionViewSource(ui);
             _serversService = _api.CreateServersListService(game);
             _serversService.InitialSizeReached += _serverListInitialSizeReached;

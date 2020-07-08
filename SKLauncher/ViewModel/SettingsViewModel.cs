@@ -18,7 +18,7 @@ using Launcher.Localization.Loc;
 using Launcher.XamlThemes.Theming;
 
 using Microsoft.Win32;
-using Ninject;
+
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 using LM = Launcher.Localization.Loc.LocManager;
 using TM = Launcher.XamlThemes.Theming.ThemeManager;
@@ -30,7 +30,6 @@ namespace Launcher.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly IEventLogService _eventLogService;
         private readonly ITextDialogService _dialogService;
-        private readonly IDiscord _realDiscordService;
 
         private LauncherSettings _launcherSettings;
         private bool _isLoaded;
@@ -56,13 +55,11 @@ namespace Launcher.ViewModel
             IEventLogService eventLogService,
             IUIHostService hostService,
             ITextDialogService dialogService,
-            IDiscordManager discordManager,
-            IDiscord discord) : base(discordManager)
+            IDiscord discord) : base(discord)
         {
             _settingsService = settingsService;
             _eventLogService = eventLogService;
             _dialogService = dialogService;
-            _realDiscordService = discord;
 
             WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
 
@@ -200,11 +197,11 @@ namespace Launcher.ViewModel
 
             if (value)
             {
-                viewModel._realDiscordService.Start();
+                viewModel._discord.Start();
             }
             else
             {
-                viewModel._realDiscordService.Stop();
+                viewModel._discord.Stop();
             }
 
             viewModel._launcherSettings.UseDiscordPresence = value;
@@ -265,8 +262,6 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            base.OnLoadedImpl();
-
             _settingsService.SetGlobalLock();
             _launcherSettings = _settingsService.GetLauncherSettings();
 

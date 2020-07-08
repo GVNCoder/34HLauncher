@@ -6,18 +6,11 @@ namespace Launcher.Core.Bases
 {
     public abstract class PageViewModelBase : DependencyObject
     {
-        protected readonly IDiscordManager _discordManager;
+        protected readonly IDiscord _discord;
 
-        protected IDiscord _discord;
-
-        protected PageViewModelBase(IDiscordManager discordManager)
+        protected PageViewModelBase(IDiscord discord)
         {
-            _discordManager = discordManager;
-        }
-
-        protected void OnLoadedImpl()
-        {
-            _discord = _discordManager.GetDiscordService();
+            _discord = discord;
         }
 
         public abstract ICommand LoadedCommand { get; }

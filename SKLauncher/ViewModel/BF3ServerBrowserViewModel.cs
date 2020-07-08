@@ -23,7 +23,7 @@ namespace Launcher.ViewModel
             IContentPresenterService presenterService,
             IEventLogService eventLogService,
             IGameService gameService,
-            IDiscordManager discord)
+            IDiscord discord)
             : base(api, hostService, gameService, eventLogService, presenterService, discord)
         {
             MapNames = new [] { "All" }

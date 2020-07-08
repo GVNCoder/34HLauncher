@@ -171,12 +171,9 @@
     <Compile Include="Core\Locators\ViewModelLocator.cs" />
     <Compile Include="Core\RPC\Discord.cs" />
     <Compile Include="Core\RPC\DiscordConnectionChangedEventArgs.cs" />
-    <Compile Include="Core\RPC\DiscordManager.cs" />
     <Compile Include="Core\RPC\DiscordPresence.cs" />
     <Compile Include="Core\RPC\IDiscord.cs" />
-    <Compile Include="Core\RPC\IDiscordManager.cs" />
     <Compile Include="Core\RPC\IDiscordPresence.cs" />
-    <Compile Include="Core\RPC\ProxyDiscord.cs" />
     <Compile Include="Core\Services\ApplicationStateService.cs" />
     <Compile Include="Core\Services\BusyService.cs" />
     <Compile Include="Core\Services\Dialog\IContentPresenterService.cs" />

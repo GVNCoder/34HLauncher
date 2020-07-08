@@ -29,7 +29,7 @@ namespace Launcher.Core.Data
 
         private readonly IEventLogService _eventLogService;
         private readonly ISettingsService _settingsService;
-        private readonly IDiscordManager _discordManager;
+        private readonly IDiscord _discordManager;
         private readonly IGameControl _gameControl;
         private readonly IZGameFactory _runService;
         private readonly ILog _log;
@@ -47,7 +47,7 @@ namespace Launcher.Core.Data
             App application,
             IEventLogService eventLogService,
             ISettingsService settingsService,
-            IDiscordManager discordManager)
+            IDiscord discord)
         {
             //_canExecuteOperation = true;
 
@@ -62,7 +62,7 @@ namespace Launcher.Core.Data
             _eventLogService = eventLogService;
             _settingsService = settingsService;
             _log = application.Logger;
-            _discordManager = discordManager;
+            _discordManager = discord;
         }
 
         public void TryDetect()

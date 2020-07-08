@@ -18,7 +18,7 @@ namespace Launcher.ViewModel.Stats
     {
         private readonly IZApi _api;
 
-        public BF3StatsViewModel(IUIHostService hostService, IZApi api, IDiscordManager discord) : base(discord)
+        public BF3StatsViewModel(IUIHostService hostService, IZApi api, IDiscord discord) : base(discord)
         {
             _api = api;
             WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
@@ -37,8 +37,6 @@ namespace Launcher.ViewModel.Stats
 
         private void _LoadedExec(object obj)
         {
-            base.OnLoadedImpl();
-
             Stats = (ZBF3Stats) State.Storage["stats_BF3"];
             _discord.UpdateStats(ZGame.BF3);
         }

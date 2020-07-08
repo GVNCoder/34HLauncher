@@ -35,7 +35,7 @@ namespace Launcher.ViewModel
             ISettingsService settingsService,
             IZApi api,
             IBusyService busyService,
-            IDiscordManager discord) : base(discord)
+            IDiscord discord) : base(discord)
         {
             _navigationService = navigationService;
             _eventLogService = eventLogService;
@@ -77,8 +77,6 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            base.OnLoadedImpl();
-
             var settings = _settingsService.GetLauncherSettings();
 
             // TODO: Wait one two weeks and remove ?:

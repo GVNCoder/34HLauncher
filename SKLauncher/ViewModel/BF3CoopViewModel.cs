@@ -23,7 +23,7 @@ namespace Launcher.ViewModel
         public BF3CoopViewModel(
             IUIHostService hostService,
             IGameService gameService,
-            IDiscordManager discord) : base(discord)
+            IDiscord discord) : base(discord)
         {
             WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             DifficultyEnumerable = Enum.GetNames(typeof(ZCoopDifficulty));
@@ -142,8 +142,6 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            base.OnLoadedImpl();
-
             var ui = (Page) obj;
             _collectionViewSource = (CollectionViewSource) ui.Resources["CollectionViewSource"];
             _collectionViewSource.Source = _missions;

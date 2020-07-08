@@ -12,7 +12,7 @@ namespace Launcher.ViewModel.Stats
 {
     public class BF4StatsViewModel : PageViewModelBase
     {
-        public BF4StatsViewModel(IUIHostService hostService, IDiscordManager discordManager) : base(discordManager)
+        public BF4StatsViewModel(IUIHostService hostService, IDiscord discord) : base(discord)
         {
             WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }
@@ -22,8 +22,6 @@ namespace Launcher.ViewModel.Stats
 
         private void _LoadedExec(object obj)
         {
-            base.OnLoadedImpl();
-
             Stats = (ZBF4Stats) State.Storage["stats_BF4"];
             _discord.UpdateStats(ZGame.BF4);
         }
