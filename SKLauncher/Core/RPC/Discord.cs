@@ -118,10 +118,10 @@ namespace Launcher.Core.RPC
         private readonly IDiscordPresence _discordPresence;
         private readonly LauncherSettings _settings;
 
+        private ServerDiscordUnit _updateUnit;
         private RichPresence _pagePresence;
         private RichPresence _gamePresence;
         private bool _useGamePresence;
-        private ServerDiscordUnit _updateUnit;
 
         public Discord(App application, ISettingsService settingsService)
         {
@@ -206,22 +206,16 @@ namespace Launcher.Core.RPC
         }
 
         private string _BuildServerLargeImageText(ZServerBase server) =>
-            $"{server.Game.ToString()} | {server.CurrentMap.Name} | {string.Concat(server.CurrentMap.GameModeName.Where(char.IsUpper))}";
+            $"{server.CurrentMap.Name} | {string.Concat(server.CurrentMap.GameModeName.Where(char.IsUpper))}";
 
         #endregion
 
         public void UpdateCoop(ZPlayMode mode, CoopMissionModel model)
         {
             _CoopRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(ZGame.BF3);
-
-            if (mode == ZPlayMode.CooperativeHost)
-            {
-                _CoopRichPresence.Assets.LargeImageText = $"Host | {model.Name} | {model.Difficulty}";
-            }
-            else
-            {
-                _CoopRichPresence.Assets.LargeImageText = $"In lobby on my friend";
-            }
+            _CoopRichPresence.Assets.LargeImageText = mode == ZPlayMode.CooperativeHost
+                ? _CoopRichPresence.Assets.LargeImageText = $"Host | {model.Name} | {model.Difficulty}"
+                : _CoopRichPresence.Assets.LargeImageText = $"In lobby on my friend";
 
             _CoopRichPresence.Timestamps = Timestamps.Now;
 
@@ -266,8 +260,6 @@ namespace Launcher.Core.RPC
 
             _updatePresence();
         }
-
-        
 
         private void _updatePresence()
         {
