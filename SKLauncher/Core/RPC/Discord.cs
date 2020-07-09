@@ -93,6 +93,19 @@ namespace Launcher.Core.RPC
             }
         };
 
+        private readonly RichPresence _UnknownGamePresence = new RichPresence
+        {
+            Details = "Unknown mode",
+            State = "Playing",
+            Assets = new Assets
+            {
+                LargeImageKey = "unknown_logo",
+                LargeImageText = "Battlefield",
+                SmallImageKey = "small_logo",
+                SmallImageText = "ZLOEmu"
+            }
+        };
+
         #endregion
 
         private readonly string[] _BFTitles =
@@ -116,7 +129,6 @@ namespace Launcher.Core.RPC
             _discordPresence.ConnectionChanged += _discordConnectionChangedHandler;
 
             _settings = settingsService.GetLauncherSettings();
-
             _pagePresence = _AFKRichPresence;
         }
 
@@ -227,7 +239,13 @@ namespace Launcher.Core.RPC
 
             _gamePresence = _SingleRichPresence;
             _useGamePresence = true;
+            _updatePresence();
+        }
 
+        public void UpdateUnknown()
+        {
+            _gamePresence = _UnknownGamePresence;
+            _useGamePresence = true;
             _updatePresence();
         }
 
@@ -248,6 +266,8 @@ namespace Launcher.Core.RPC
 
             _updatePresence();
         }
+
+        
 
         private void _updatePresence()
         {

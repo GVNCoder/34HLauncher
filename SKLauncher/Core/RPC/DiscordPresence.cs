@@ -38,7 +38,7 @@ namespace Launcher.Core.RPC
             if (_isInitialized) return;
 
             _client = _BuildRpcClient(_token);
-            _client.Logger = new ConsoleLogger(LogLevel.Trace, true);
+            //_client.Logger = new ConsoleLogger(LogLevel.Error, true);
             _SubscribeHandlers(_client);
             _client.Initialize();
             _updatePresenceTimer.Start();

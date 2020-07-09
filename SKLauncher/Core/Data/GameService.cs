@@ -73,6 +73,8 @@ namespace Launcher.Core.Data
                 tracker.ProcessDetected -= __ProcessDetected;
 
                 _gameControl.SetCanClose(true);
+
+                _discord.UpdateUnknown();
             }
 
             void __ProcessLost(object sender, EventArgs e)
@@ -82,6 +84,8 @@ namespace Launcher.Core.Data
 
                 _gameControl.CloseClick -= __OnCloseClickHandler;
                 _gameControl.Hide();
+
+                _discord.DisablePlay();
             }
 
             void __OnCloseClickHandler(object sender, EventArgs e)
