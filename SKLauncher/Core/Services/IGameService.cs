@@ -9,6 +9,6 @@ namespace Launcher.Core.Services
         Task Run(RunContext context);
         void TryDetect();
 
-        event EventHandler<GameEventArgs> GameEvent;
+        //event EventHandler<GameEventArgs> GameEvent;
     }
 }
