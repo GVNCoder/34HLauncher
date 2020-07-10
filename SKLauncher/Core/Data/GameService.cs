@@ -9,8 +9,10 @@ using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
+
 using Ninject;
 using Ninject.Parameters;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
@@ -108,7 +110,7 @@ namespace Launcher.Core.Data
 
         private void _CreateGameAssistant(ref IGameHelper gameHelperRef, Type implType, IParameter[] parameters)
         {
-            gameHelperRef = _BuildGameHelper(typeof(RunningGameImpl), parameters);
+            gameHelperRef = _BuildGameHelper(implType, parameters);
             gameHelperRef.Close += _OnWorkCompeteHandler;
             gameHelperRef.BeginWork();
         }
