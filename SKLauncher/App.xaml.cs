@@ -83,8 +83,8 @@ namespace Launcher
         {
             // call base implementation
             base.OnExit(e);
-            var saveResult = SettingsService.Save();
 
+            var saveResult = SettingsService.Save();
             if (!saveResult)
             {
                 Logger.Warn("Cannot save launcher settings.");

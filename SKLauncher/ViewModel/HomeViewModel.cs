@@ -78,9 +78,8 @@ namespace Launcher.ViewModel
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
             var settings = _settingsService.GetLauncherSettings();
+            CardTransparency = settings.CardTransparency;
 
-            // TODO: Wait one two weeks and remove ?:
-            CardTransparency = Math.Abs(settings.CardTransparency) < .1d ? .1d : settings.CardTransparency;
             _discord.UpdateAFK();
         });
 

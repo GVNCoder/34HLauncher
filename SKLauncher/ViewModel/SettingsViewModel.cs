@@ -205,11 +205,14 @@ namespace Launcher.ViewModel
             }
 
             viewModel._launcherSettings.UseDiscordPresence = value;
+            if (viewModel._isLoaded) await _WaitToggleAsync(viewModel);
+        }
 
-            // TODO: Refactoring
-            viewModel.CanUseDiscordPresence = false;
-            if (viewModel._isLoaded) await Task.Delay((int) TimeSpan.FromSeconds(7).TotalMilliseconds);
-            viewModel.CanUseDiscordPresence = true;
+        private static async Task _WaitToggleAsync(SettingsViewModel vm)
+        {
+            vm.CanUseDiscordPresence = false;
+            await Task.Delay((int) TimeSpan.FromSeconds(7).TotalMilliseconds);
+            vm.CanUseDiscordPresence = true;
         }
 
         public int GameCardOpacity
@@ -275,11 +278,7 @@ namespace Launcher.ViewModel
             AutorunZClient = _launcherSettings.RunZClient;
             UseDiscordPresence = _launcherSettings.UseDiscordPresence;
             TryToConnect = _launcherSettings.TryToConnect;
-
-            // TODO: Wait one two weeks and remove ?:
-            var x = (Math.Abs(_launcherSettings.CardTransparency) < .1d ? .1d : _launcherSettings.CardTransparency);
-            var b = x * 100;
-            GameCardOpacity = (int) b;
+            GameCardOpacity = (int) _launcherSettings.CardTransparency * 100;
 
             _discord.UpdateAFK();
             _isLoaded = true;
