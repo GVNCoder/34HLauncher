@@ -130,7 +130,7 @@ namespace Launcher.ViewModel.MainWindow
 
         private void _appStateChanged(object sender, ApplicationStateArgs e)
         {
-            if (!e.State)
+            if (! e.State)
             {
                 _navigationService.NavigateTo("View\\HomeView.xaml");
             }
@@ -175,13 +175,12 @@ namespace Launcher.ViewModel.MainWindow
                         _eventLogService.Log(EventLogLevel.Warning, "ZClient path", "ZClient not detected");
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     _eventLogService.Log(EventLogLevel.Error, "ZClient path", "An error occurred while trying to get the path to ZClient.");
                 }
             }
 
-            // TODO: Test feature
             if (_settingsService.GetLauncherSettings().TryToConnect)
             {
                 _apiConnection.Connect();

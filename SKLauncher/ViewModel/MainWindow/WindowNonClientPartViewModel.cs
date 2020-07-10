@@ -93,11 +93,8 @@ namespace Launcher.ViewModel.MainWindow
                 Dispatcher.Invoke(() => CanBackNavigation = true);
             }
 
-            if (e.Key == StateConstants.Monolith)
-            {
-                var visibility = e.State ? Visibility.Collapsed : Visibility.Visible;
-                Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
-            }
+            var visibility = _appStateService.AllGood() ? Visibility.Collapsed : Visibility.Visible;
+            Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
         }
 
         private void _handler(object sender, ZConnectionChangedArgs e)
