@@ -13,6 +13,8 @@ namespace Launcher.Core.Data
         private const string __GameLoading = "GameLoading";
         private const string __WaitForPeerClient = "WaitForPeerClient";
         private const string __GameWaiting = "GameWaiting";
+        private const string __GameRunning = "GameRunning";
+        private const string __GameError = "Error";
 
         private readonly ISettingsService _settingsService;
         private readonly GameSetting _gameSettings;
@@ -71,7 +73,11 @@ namespace Launcher.Core.Data
         private void _pipeHandler(object sender, ZGamePipeArgs e)
         {
             _AppendPipeContent(e.FullMessage);
-            _view.SetCanClose(true); // TODO: Quick button visibility
+
+            if (e.SecondPart.Contains(__GameRunning))
+            {
+                _view.SetCanClose(true);
+            }
 
             if (e.SecondPart.Contains(__GameLoading) || e.SecondPart.Contains(__WaitForPeerClient))
             {

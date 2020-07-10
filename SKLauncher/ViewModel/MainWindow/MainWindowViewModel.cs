@@ -93,8 +93,6 @@ namespace Launcher.ViewModel.MainWindow
             NonClientDataContext = kernel.Get<WindowNonClientPartViewModel>();
             BottomBarDataContext = kernel.Get<WindowBottomBarPartViewModel>();
 
-            //_gameService.GameEvent += _gameEventHandler;
-
             api.Logger.OnMessage += ApiOnMessageMessageOccuredHandler;
             _apiConnection.ConnectionChanged += _apiConnectionConnectionChangedHandler;
 
@@ -126,27 +124,6 @@ namespace Launcher.ViewModel.MainWindow
 
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
         }
-
-        //private void _gameEventHandler(object sender, GameEventArgs e)
-        //{
-        //    switch (e.EventType)
-        //    {
-        //        case GameEventType.LevelLoading:
-        //            var launcherSettings = _settingsService.GetLauncherSettings();
-        //            if (launcherSettings.UnfoldGameWindow) e.Game.TryUnfoldGameWindow();
-
-        //            break;
-        //        case GameEventType.Waiting:
-        //            if (!_settingsService.GlobalBlock)
-        //                _api.InjectDll(e.Settings.Game, e.Settings.Dlls.ToArray());
-
-        //            break;
-        //        case GameEventType.Close:
-        //            _eventLogService.Log(EventLogLevel.Message, SLM.GameRun, e.PipeContent);
-
-        //            break;
-        //    }
-        //}
 
         private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
             => _eventLogService.Log(EventLogLevel.Error, "Update service", e.Message);
