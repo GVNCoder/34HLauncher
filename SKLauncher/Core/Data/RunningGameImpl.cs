@@ -14,7 +14,6 @@ namespace Launcher.Core.Data
         private const string __WaitForPeerClient = "WaitForPeerClient";
         private const string __GameWaiting = "GameWaiting";
         private const string __GameRunning = "GameRunning";
-        private const string __GameError = "Error";
 
         private readonly ISettingsService _settingsService;
         private readonly GameSetting _gameSettings;
@@ -74,17 +73,19 @@ namespace Launcher.Core.Data
         {
             _AppendPipeContent(e.FullMessage);
 
+            // can close game button visibility
             if (e.SecondPart.Contains(__GameRunning))
             {
                 _view.SetCanClose(true);
             }
-
+            // unfold game window
             if (e.SecondPart.Contains(__GameLoading) || e.SecondPart.Contains(__WaitForPeerClient))
             {
                 var launcherSettings = _settingsService.GetLauncherSettings();
-                if (launcherSettings.UnfoldGameWindow) _game.TryUnfoldGameWindow();
+                if (launcherSettings.UnfoldGameWindow)
+                    _game.TryUnfoldGameWindow();
             }
-
+            // dll injection
             if (e.FirstPart == __GameWaiting)
             {
                 if (!_settingsService.GlobalBlock)
@@ -94,11 +95,12 @@ namespace Launcher.Core.Data
             }
 
             if (_game.IsRun) return;
+            
+            // game closed
+            _view.CloseClick -= _OnCloseRequestedHandler;
+            _game.Pipe -= _pipeHandler;
 
             _view.Hide();
-            _view.CloseClick -= _OnCloseRequestedHandler;
-
-            _game.Pipe -= _pipeHandler;
             _discord.DisablePlay();
             _OnClose(_pipeContent);
         }
