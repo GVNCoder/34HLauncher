@@ -45,7 +45,7 @@ namespace Launcher.Core.Data
             var viewModelLocator = application
                 .DependencyResolver
                 .Locators
-                .ViewModelLocator;
+                .UserControlViewModelLocator;
             _gameControl = viewModelLocator.GameControlViewModel;
 
             _kernel = application.DependencyResolver.Resolver;

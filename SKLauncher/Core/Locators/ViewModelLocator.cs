@@ -23,7 +23,6 @@ namespace Launcher.Core.Locators
         private readonly Lazy<BF3CoopViewModel> _bf3CoopViewModel;
         private readonly Lazy<EventLogViewModel> _eventLogViewModel;
         private readonly Lazy<SettingsViewModel> _settingsViewModel;
-        private readonly Lazy<GameControlViewModel> _gameControlViewModel;
         private readonly Lazy<UpdateControlViewModel> _updateControlViewModel;
 
         private readonly Lazy<BF3StatsViewModel> _bf3StatsViewModel;
@@ -46,7 +45,6 @@ namespace Launcher.Core.Locators
             _bf3CoopViewModel = new Lazy<BF3CoopViewModel>(() => kernel.Get<BF3CoopViewModel>());
             _eventLogViewModel = new Lazy<EventLogViewModel>(() => kernel.Get<EventLogViewModel>());
             _settingsViewModel = new Lazy<SettingsViewModel>(() => kernel.Get<SettingsViewModel>());
-            _gameControlViewModel = new Lazy<GameControlViewModel>(() => kernel.Get<GameControlViewModel>());
             _updateControlViewModel = new Lazy<UpdateControlViewModel>(() => kernel.Get<UpdateControlViewModel>());
             _homeViewModel = new Lazy<HomeViewModel>(() => kernel.Get<HomeViewModel>());
 
@@ -66,7 +64,6 @@ namespace Launcher.Core.Locators
         public BF3CoopViewModel BF3CoopViewModel => _bf3CoopViewModel.Value;
         public EventLogViewModel EventLogViewModel => _eventLogViewModel.Value;
         public SettingsViewModel SettingsViewModel => _settingsViewModel.Value;
-        public GameControlViewModel GameControlViewModel => _gameControlViewModel.Value;
         public UpdateControlViewModel UpdateControlViewModel => _updateControlViewModel.Value;
 
         public BF3StatsViewModel BF3StatsViewModel => _bf3StatsViewModel.Value;
