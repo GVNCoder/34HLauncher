@@ -64,13 +64,9 @@ namespace Launcher.Core.Data
             if (process == null) return;
 
             _canExecuteOperation = false;
+            var constructorArguments = _BuildConstructorParameters(new[] {"view", "process"}, _gameControl, process);
 
-            var viewArgument = new ConstructorArgument("view", _gameControl);
-            var processArgument = new ConstructorArgument("process", process);
-
-            _gameHelper = _kernel.Get<DetectedGameImpl>(viewArgument, processArgument);
-            _gameHelper.Close += _OnWorkCompeteHandler;
-            _gameHelper.BeginWork();
+            _CreateGameAssistant(ref _gameHelper, typeof(DetectedGameImpl), constructorArguments);
         }
 
         public async Task Run(RunContext context)
@@ -83,34 +79,50 @@ namespace Launcher.Core.Data
                 var gameSettings = _GetGameSettings(context.Target);
                 var game = await _GetGameForRunAsync(context, gameSettings);
 
-                var gameArgument = new ConstructorArgument("game", game);
-                var gameSettingsArgument = new ConstructorArgument("gameSettings", gameSettings);
-                var contextArgument = new ConstructorArgument("context", context);
-                var viewArgument = new ConstructorArgument("view", _gameControl);
+                var constructorParams = _BuildConstructorParameters(new[] {"game", "gameSettings", "context", "view"},
+                    game, gameSettings, context, _gameControl);
 
-                _gameHelper = _kernel.Get<RunningGameImpl>(gameArgument, gameSettingsArgument, contextArgument, viewArgument);
-                _gameHelper.Close += _OnWorkCompeteHandler;
-                _gameHelper.BeginWork();
+                _CreateGameAssistant(ref _gameHelper, typeof(RunningGameImpl), constructorParams);
 
                 var runResult = await game.RunAsync();
                 if (runResult != ZRunResult.Success)
                 {
-                    _eventLogService.Log(EventLogLevel.Warning, "Game run error", "Cannot run game for unknown reason.");
-                    _canExecuteOperation = true;
+                    throw new Exception("Cannot run game for unknown reason.");
                 }
             }
             catch (Exception e)
             {
                 _log.Error(LoggingHelper.GetMessage(e));
                 _eventLogService.Log(EventLogLevel.Warning, "Game run error", e.Message);
+
                 _canExecuteOperation = true;
+                _DestroyGameAssistant(ref _gameHelper);
             }
+        }
+
+        private IGameHelper _BuildGameHelper(Type implType, IParameter[] parameters)
+            => (IGameHelper) _kernel.Get(implType, parameters);
+
+        private IParameter[] _BuildConstructorParameters(IEnumerable<string> paramNames, params object[] values)
+            => paramNames.Select((t, i) => new ConstructorArgument(t, values[i])).Cast<IParameter>().ToArray();
+
+        private void _CreateGameAssistant(ref IGameHelper gameHelperRef, Type implType, IParameter[] parameters)
+        {
+            gameHelperRef = _BuildGameHelper(typeof(RunningGameImpl), parameters);
+            gameHelperRef.Close += _OnWorkCompeteHandler;
+            gameHelperRef.BeginWork();
+        }
+
+        private void _DestroyGameAssistant(ref IGameHelper gameHelperRef)
+        {
+            gameHelperRef.Close -= _OnWorkCompeteHandler;
+            gameHelperRef = null;
         }
 
         private void _OnWorkCompeteHandler(object sender, GameCloseEventArgs e)
         {
             _canExecuteOperation = true;
-            _gameHelper.Close -= _OnWorkCompeteHandler;
+            _DestroyGameAssistant(ref _gameHelper);
 
             if (!string.IsNullOrEmpty(e.PipeContent))
             {
