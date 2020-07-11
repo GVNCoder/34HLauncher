@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+
 using Launcher.Core.Bases;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
@@ -278,7 +279,7 @@ namespace Launcher.ViewModel
             AutorunZClient = _launcherSettings.RunZClient;
             UseDiscordPresence = _launcherSettings.UseDiscordPresence;
             TryToConnect = _launcherSettings.TryToConnect;
-            GameCardOpacity = (int) _launcherSettings.CardTransparency * 100;
+            GameCardOpacity = (int) (_launcherSettings.CardTransparency * 100);
 
             _discord.UpdateAFK();
             _isLoaded = true;

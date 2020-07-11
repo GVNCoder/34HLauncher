@@ -69,7 +69,7 @@ namespace Launcher.ViewModel
             set => SetValue(CardTransparencyProperty, value);
         }
         public static readonly DependencyProperty CardTransparencyProperty =
-            DependencyProperty.Register("CardTransparency", typeof(double), typeof(HomeViewModel), new PropertyMetadata(.0d));
+            DependencyProperty.Register("CardTransparency", typeof(double), typeof(HomeViewModel), new PropertyMetadata(.1d));
 
         #endregion
 
