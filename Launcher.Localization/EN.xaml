@@ -55,7 +55,7 @@
     <system:String x:Key="settView_Reset">Reset</system:String>
     <system:String x:Key="settView_Theme">Theme</system:String>
     <system:String x:Key="settView_Accent">Accent</system:String>
-    <system:String x:Key="settView_MainHeader">Main</system:String>
+    <system:String x:Key="settView_MainHeader">General</system:String>
     <system:String x:Key="settView_Language">Language</system:String>
     <system:String x:Key="settView_PathToZClient">Path to ZClient</system:String>
     <system:String x:Key="settView_ManuallySetZClientTip">Click to select a path manually</system:String>

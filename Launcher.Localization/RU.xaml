@@ -55,7 +55,7 @@
     <system:String x:Key="settView_Reset">Сбросить</system:String>
     <system:String x:Key="settView_Theme">Тема</system:String>
     <system:String x:Key="settView_Accent">Акцент</system:String>
-    <system:String x:Key="settView_MainHeader">Основное</system:String>
+    <system:String x:Key="settView_MainHeader">Общие</system:String>
     <system:String x:Key="settView_Language">Язык</system:String>
     <system:String x:Key="settView_PathToZClient">Путь к ZClient</system:String>
     <system:String x:Key="settView_ManuallySetZClientTip">Нажмите, чтобы указать путь вручную</system:String>
