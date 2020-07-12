@@ -10,13 +10,13 @@ using Launcher.Core.Shared;
 
 namespace Launcher.ViewModel
 {
-    public class EventLogViewModel : PageViewModelBase
+    public class EventLogViewModel : PageViewModelBase, IBlurredPage
     {
         private readonly IUIHostService _hostService;
         private readonly IWindowContentNavigationService _navigationService;
 
         public ObservableCollection<EventViewModel> Events { get; }
-        public Grid WindowBackgroundContent { get; private set; }
+        public Grid BackgroundContent { get; private set; }
 
         public EventLogViewModel(
             IUIHostService hostService,
@@ -37,7 +37,7 @@ namespace Launcher.ViewModel
             var wnd = (Window) sender;
             wnd.Loaded -= _wndLoadedHandler;
 
-            WindowBackgroundContent = _hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
+            BackgroundContent = _hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }
 
         public ICommand CleanupEventsCommand => new DelegateCommand(obj =>

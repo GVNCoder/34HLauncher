@@ -42,7 +42,7 @@
         <controls:AcrylicPanel
             Grid.RowSpan="2"
             NoiseOpacity=".0075"
-            Target="{Binding WindowBackgroundContent}" />
+            Target="{Binding BackgroundContent}" />
 
         <ListView
             Grid.Row="0"

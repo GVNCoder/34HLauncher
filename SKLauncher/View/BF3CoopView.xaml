@@ -182,7 +182,7 @@
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             NoiseOpacity=".0075"
-            Target="{Binding WindowBackgroundContent}"
+            Target="{Binding BackgroundContent}"
             TintColor="{DynamicResource Theme850Color}"
             TintOpacity=".25" />
 

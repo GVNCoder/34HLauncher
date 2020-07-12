@@ -14,7 +14,7 @@ using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.ViewModel
 {
-    public class BF3CoopViewModel : PageViewModelBase
+    public class BF3CoopViewModel : PageViewModelBase, IBlurredPage
     {
         private CollectionViewSource _collectionViewSource;
         private readonly IEnumerable<CoopMissionModel> _missions;
@@ -25,7 +25,7 @@ namespace Launcher.ViewModel
             IGameService gameService,
             IDiscord discord) : base(discord)
         {
-            WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
+            BackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             DifficultyEnumerable = Enum.GetNames(typeof(ZCoopDifficulty));
 
             _gameService = gameService;
@@ -78,7 +78,7 @@ namespace Launcher.ViewModel
 
         #region Public properties
 
-        public Grid WindowBackgroundContent { get; }
+        public Grid BackgroundContent { get; }
         public IEnumerable<string> DifficultyEnumerable { get; }
 
         public string DifficultyName
