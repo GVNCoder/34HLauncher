@@ -50,14 +50,14 @@
 
     <!--  Settings view  -->
     <system:String x:Key="settView_ThemesHeader">Themes</system:String>
-    <system:String x:Key="settView_BackgroundImage">Background image:</system:String>
+    <system:String x:Key="settView_BackgroundImage">Background image</system:String>
     <system:String x:Key="settView_Set">Set</system:String>
     <system:String x:Key="settView_Reset">Reset</system:String>
     <system:String x:Key="settView_Theme">Theme</system:String>
     <system:String x:Key="settView_Accent">Accent</system:String>
     <system:String x:Key="settView_MainHeader">Main</system:String>
     <system:String x:Key="settView_Language">Language</system:String>
-    <system:String x:Key="settView_PathToZClient">Path to ZClient:</system:String>
+    <system:String x:Key="settView_PathToZClient">Path to ZClient</system:String>
     <system:String x:Key="settView_ManuallySetZClientTip">Click to select a path manually</system:String>
     <system:String x:Key="settView_DetectFromProcess">Detect</system:String>
     <system:String x:Key="settView_DetectFromProcessTip">Click if ZClient is already running and the launcher will automatically determine its location</system:String>

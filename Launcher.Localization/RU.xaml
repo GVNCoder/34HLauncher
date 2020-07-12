@@ -50,14 +50,14 @@
 
     <!--  Settings view  -->
     <system:String x:Key="settView_ThemesHeader">Темы</system:String>
-    <system:String x:Key="settView_BackgroundImage">Фоновая картинка:</system:String>
+    <system:String x:Key="settView_BackgroundImage">Фоновая картинка</system:String>
     <system:String x:Key="settView_Set">Указать</system:String>
     <system:String x:Key="settView_Reset">Сбросить</system:String>
     <system:String x:Key="settView_Theme">Тема</system:String>
     <system:String x:Key="settView_Accent">Акцент</system:String>
     <system:String x:Key="settView_MainHeader">Основное</system:String>
     <system:String x:Key="settView_Language">Язык</system:String>
-    <system:String x:Key="settView_PathToZClient">Путь к ZClient:</system:String>
+    <system:String x:Key="settView_PathToZClient">Путь к ZClient</system:String>
     <system:String x:Key="settView_ManuallySetZClientTip">Нажмите, чтобы указать путь вручную</system:String>
     <system:String x:Key="settView_DetectFromProcess">Обнаружить</system:String>
     <system:String x:Key="settView_DetectFromProcessTip">Нажмите, если ZClient сейчас запущен, тогда лаунчер попытается определить его расположение  автоматически</system:String>

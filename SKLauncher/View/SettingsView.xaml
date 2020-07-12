@@ -96,7 +96,10 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{DynamicResource settView_BackgroundImage}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource settView_BackgroundImage}" />
                         <Button
                             Grid.Column="1"
                             Margin="5,0,5,0"
@@ -229,6 +232,7 @@
                         <TextBlock
                             Grid.Column="0"
                             Margin="0,0,5,0"
+                            VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource settView_Language}" />
 
@@ -250,7 +254,10 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{DynamicResource settView_PathToZClient}" />
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource settView_PathToZClient}" />
                         <Button
                             Grid.Column="1"
                             Margin="5,0,5,0"
