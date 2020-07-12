@@ -2039,6 +2039,8 @@
         </Setter>
     </Style>
 
+    <converters:SliderValue2OpacityConverter x:Key="SliderValue2OpacityConverter" />
+
     <!--  Template when the orientation of the Slider is Horizontal.  -->
     <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
         <Border
@@ -2106,7 +2108,11 @@
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Slider}, Path=Value, StringFormat={}{0}%}"
-                    TextAlignment="Right" />
+                    TextAlignment="Right">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Slider}, Path=Value, Converter={StaticResource SliderValue2OpacityConverter}}" Color="{StaticResource Theme50Color}" />
+                    </TextBlock.Foreground>
+                </TextBlock>
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
