@@ -72,7 +72,7 @@
         <controls1:AcrylicPanel
             Grid.ColumnSpan="2"
             NoiseOpacity=".0075"
-            Target="{Binding WindowBackgroundContent}"
+            Target="{Binding BackgroundContent}"
             TintColor="{DynamicResource Theme850Color}"
             TintOpacity=".15" />
 
@@ -85,7 +85,19 @@
             Margin="5,5,3,5"
             Orientation="Vertical">
 
-            <controls1:FlatGroup Header="{DynamicResource settView_ThemesHeader}" HeaderIcon="">
+            <controls1:FlatGroup
+                DataContext="{Binding ThemeSectionViewModel}"
+                Header="{DynamicResource settView_ThemesHeader}"
+                HeaderIcon="">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unloaded">
+                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
                 <StackPanel Orientation="Vertical" TextElement.FontSize="14">
 
@@ -219,7 +231,19 @@
             Margin="3,5,5,3"
             Orientation="Vertical">
 
-            <controls1:FlatGroup Header="{DynamicResource settView_MainHeader}" HeaderIcon="">
+            <controls1:FlatGroup
+                DataContext="{Binding GeneralSectionViewModel}"
+                Header="{DynamicResource settView_MainHeader}"
+                HeaderIcon="">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unloaded">
+                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
                 <StackPanel Orientation="Vertical" TextElement.FontSize="14">
 

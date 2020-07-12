@@ -198,6 +198,9 @@
     <Compile Include="Core\Services\ProcessService.cs" />
     <Compile Include="Core\Services\SettingsService.cs" />
     <Compile Include="Core\Services\State.cs" />
+    <Compile Include="Core\SettingsViewModelParts\GeneralSectionViewModel.cs" />
+    <Compile Include="Core\SettingsViewModelParts\ThemesSectionViewModel.cs" />
+    <Compile Include="Core\SettingsViewModelParts\UIBaseViewModel.cs" />
     <Compile Include="Core\Shared\ApplicationStateArgs.cs" />
     <Compile Include="Core\Shared\BusyViewModel.cs" />
     <Compile Include="Core\Shared\ChangesViewModel.cs" />
@@ -246,6 +249,7 @@
     <Compile Include="Core\Services\WindowContentNavigationService.cs" />
     <Compile Include="Helpers\LoggingHelper.cs" />
     <Compile Include="Helpers\ServerPingCalculator.cs" />
+    <Compile Include="Helpers\SettingsDialogHelper.cs" />
     <Compile Include="Helpers\TaskExtension.cs" />
     <Compile Include="Helpers\WebClientWithTimeout.cs">
       <SubType>Component</SubType>
