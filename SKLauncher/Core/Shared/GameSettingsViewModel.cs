@@ -52,8 +52,8 @@ namespace Launcher.Core.Shared
 
         private static void _architectureChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var viewModel = (GameSettingsViewModel)d;
-            var value = (bool)e.NewValue;
+            var viewModel = (GameSettingsViewModel) d;
+            var value = (bool) e.NewValue;
 
             switch (viewModel._defaultArchitecture)
             {
