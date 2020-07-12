@@ -13,12 +13,14 @@ using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
+using Launcher.Styles.PlayerRotation;
 using Launcher.UserControls;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
+using Zlo4NET.Core.Data;
 
 namespace Launcher.Core.Bases
 {
@@ -128,12 +130,14 @@ namespace Launcher.Core.Bases
             IGameService gameService,
             IEventLogService eventLogService,
             IContentPresenterService modalContentPresenterService,
-            IDiscord discord) : base(discord)
+            IDiscord discord,
+            Application application) : base(discord)
         {
             _api = api;
             _gameService = gameService;
             _eventLogService = eventLogService;
             _modalContentService = modalContentPresenterService;
+            _application = application;
 
             BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
         }
@@ -142,6 +146,7 @@ namespace Launcher.Core.Bases
 
         protected readonly IZApi _api;
         protected readonly IGameService _gameService;
+        protected readonly Application _application;
         protected readonly IEventLogService _eventLogService;
         protected readonly IContentPresenterService _modalContentService;
         
@@ -261,7 +266,8 @@ namespace Launcher.Core.Bases
             {
                 Players = players,
                 Maps = maps,
-                PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed
+                PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed,
+                StyleSelector = new PlayerListViewStyleSelector(_api.Connection.AuthorizedUser.Id, _application.Resources)
             };
 
             await _modalContentService.Show<RotationsControl>(viewModel);

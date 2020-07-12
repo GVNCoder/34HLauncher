@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -8,7 +9,8 @@ using Launcher.Core.RPC;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
-
+using Launcher.Styles.PlayerRotation;
+using Ninject;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
 using Zlo4NET.Api;
@@ -23,8 +25,9 @@ namespace Launcher.ViewModel
             IContentPresenterService presenterService,
             IEventLogService eventLogService,
             IGameService gameService,
-            IDiscord discord)
-            : base(api, hostService, gameService, eventLogService, presenterService, discord)
+            IDiscord discord,
+            App application)
+            : base(api, hostService, gameService, eventLogService, presenterService, discord, application)
         {
             MapNames = new [] { "All" }
                 .Concat(ZResource.GetBF3MapNames())

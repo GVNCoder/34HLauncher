@@ -76,13 +76,24 @@
             Grid.Column="1"
             Background="{x:Null}"
             BorderThickness="0"
-            ItemContainerStyle="{StaticResource DisableSelectionContainerStyle}"
+            ItemContainerStyleSelector="{Binding StyleSelector}"
             ItemsSource="{Binding Players}"
             ScrollViewer.CanContentScroll="False"
             ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type extras:ZPlayer}">
-                    <TextBlock Foreground="{DynamicResource ThemeForegroundBrush}" Text="{Binding Name}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            Text="{Binding Id}" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
