@@ -131,7 +131,7 @@ namespace Launcher.Core.Data
                     var server = context.Server;
 
                     _view.SetText("Joining server");
-                    _view.SetToolTipText($"{server.Name} | {server.CurrentMap.Name} | {server.CurrentMap.GameModeName}");
+                    //_view.SetToolTipText($"{server.Name} | {server.CurrentMap.Name} | {server.CurrentMap.GameModeName}");
 
                     _discord.UpdateServer(server);
 

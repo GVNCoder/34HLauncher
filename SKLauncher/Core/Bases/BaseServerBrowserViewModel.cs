@@ -180,8 +180,8 @@ namespace Launcher.Core.Bases
             
             _viewFiltration.AddFilter(FilterConstant.Empty, s => s.CurrentPlayersNumber == 0, false);
             _viewFiltration.AddFilter(FilterConstant.NotEmpty, s => s.CurrentPlayersNumber != 0, false);
-            _viewFiltration.AddFilter(FilterConstant.MapName, s => s.CurrentMap.Name == MapNames[SelectedMapNameIndex], false);
-            _viewFiltration.AddFilter(FilterConstant.GameModeName, s => s.CurrentMap.GameModeName == GameModeNames[SelectedGameModeNameIndex], false);
+            //_viewFiltration.AddFilter(FilterConstant.MapName, s => s.CurrentMap.Name == MapNames[SelectedMapNameIndex], false);
+            //_viewFiltration.AddFilter(FilterConstant.GameModeName, s => s.CurrentMap.GameModeName == GameModeNames[SelectedGameModeNameIndex], false);
 
             _viewFiltration.Enabled = true;
         }
@@ -260,12 +260,12 @@ namespace Launcher.Core.Bases
         public ICommand ShowRotationsCommand => new DelegateCommand(async obj =>
         {
             var players = (IList<ZPlayer>) SelectedServer.Players ?? ListHelper.Empty<ZPlayer>();
-            var maps = (IList<ZMap>) SelectedServer.SupportedMaps ?? ListHelper.Empty<ZMap>();
+            //var maps = (IList<ZMap>) SelectedServer.SupportedMaps ?? ListHelper.Empty<ZMap>();
 
             var viewModel = new
             {
                 Players = players,
-                Maps = maps,
+                //Maps = maps,
                 PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed,
                 StyleSelector = new PlayerListViewStyleSelector(_api.Connection.AuthorizedUser.Id, _application.Resources)
             };

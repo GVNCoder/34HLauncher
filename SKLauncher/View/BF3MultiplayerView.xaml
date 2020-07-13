@@ -130,8 +130,8 @@
                     Header="{DynamicResource sbView_GameModeMap}">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0} - {1}">
-                            <Binding Path="CurrentMap.Name" UpdateSourceTrigger="PropertyChanged" />
-                            <Binding Path="CurrentMap.GameModeName" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="MapRotation.Current.Name" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="MapRotation.Current.GameModeName" UpdateSourceTrigger="PropertyChanged" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>

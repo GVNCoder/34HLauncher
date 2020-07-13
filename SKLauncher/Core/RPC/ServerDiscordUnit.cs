@@ -16,12 +16,12 @@ namespace Launcher.Core.RPC
             _serverModel = serverModel;
 
             _serverModel.PropertyChanged += _ServerUpdatedHandler;
-            _serverModel.CurrentMap.PropertyChanged += _MapUpdatedHandler;
+            //_serverModel.CurrentMap.PropertyChanged += _MapUpdatedHandler;
         }
 
         public void Destroy()
         {
-            _serverModel.CurrentMap.PropertyChanged -= _MapUpdatedHandler;
+            //_serverModel.CurrentMap.PropertyChanged -= _MapUpdatedHandler;
             _serverModel.PropertyChanged -= _ServerUpdatedHandler;
         }
 
