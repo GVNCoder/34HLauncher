@@ -88,23 +88,22 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Rectangle
+                        <!--<Rectangle
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Fill="Transparent" />
+                            Fill="Transparent" />-->
 
                         <TextBlock Grid.Column="0" Text="{Binding Name}" />
                         <TextBlock
                             x:Name="PART_IdPresenter"
                             Grid.Column="1"
                             HorizontalAlignment="Right"
-                            Text="{Binding Id}"
-                            Visibility="Collapsed" />
+                            Text="{Binding Id}" />
                     </Grid>
                     <DataTemplate.Triggers>
-                        <Trigger Property="FrameworkElement.IsMouseOver" Value="True">
+                        <!--<Trigger Property="FrameworkElement.IsMouseOver" Value="True">
                             <Setter TargetName="PART_IdPresenter" Property="FrameworkElement.Visibility" Value="Visible" />
-                        </Trigger>
+                        </Trigger>-->
                     </DataTemplate.Triggers>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -261,9 +261,7 @@
     <Compile Include="Styles\Controls\ScrollViewerAnimation\AnimatableScrollView.cs" />
     <Compile Include="Styles\Controls\ScrollViewerAnimation\ScrollingAnimationBehavior.cs" />
     <Compile Include="Styles\PlayerRotation\PlayerListViewStyleSelector.cs" />
-    <Compile Include="Styles\PlayerRotation\PlayerSelectorType.cs" />
-    <Compile Include="Styles\PlayerRotation\PlayerViewModel.cs" />
-    <Compile Include="Styles\RotationsViewModel.cs" />
+    <Compile Include="Styles\PlayerRotation\RotationsViewModel.cs" />
     <Compile Include="UserControls\ContentPresenterControl.xaml.cs">
       <DependentUpon>ContentPresenterControl.xaml</DependentUpon>
     </Compile>

@@ -259,15 +259,16 @@ namespace Launcher.Core.Bases
 
         public ICommand ShowRotationsCommand => new DelegateCommand(async obj =>
         {
-            var players = (IList<ZPlayer>) SelectedServer.Players ?? ListHelper.Empty<ZPlayer>();
-            //var maps = (IList<ZMap>) SelectedServer.SupportedMaps ?? ListHelper.Empty<ZMap>();
+            var players = SelectedServer.Players;
+            var maps = (IList<ZMap>) SelectedServer.MapRotation.Rotation ?? ListHelper.Empty<ZMap>();
 
             var viewModel = new
             {
                 Players = players,
-                //Maps = maps,
                 PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed,
-                StyleSelector = new PlayerListViewStyleSelector(_api.Connection.AuthorizedUser.Id, _application.Resources)
+
+                Maps = maps,
+                StyleSelector = new PlayerListViewStyleSelector(_application.Resources)
             };
 
             await _modalContentService.Show<RotationsControl>(viewModel);
