@@ -260,14 +260,14 @@ namespace Launcher.Core.Bases
         public ICommand ShowRotationsCommand => new DelegateCommand(async obj =>
         {
             var players = SelectedServer.Players;
-            var maps = (IList<ZMap>) SelectedServer.MapRotation.Rotation ?? ListHelper.Empty<ZMap>();
+            var maps = SelectedServer.MapRotation.Rotation;
 
             var viewModel = new
             {
                 Players = players,
                 PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed,
-
                 Maps = maps,
+
                 StyleSelector = new PlayerListViewStyleSelector(_application.Resources)
             };
 

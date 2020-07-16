@@ -9,8 +9,8 @@ namespace Launcher.Styles.PlayerRotation
     public class RotationsViewModel
     {
         public ObservableCollection<ZPlayer> Players { get; set; }
+        public ObservableCollection<ZMap> Maps { get; set; }
 
-        public IList<ZMap> Maps { get; set; }
         public Visibility PlayersVisibility { get; set; }
         public StyleSelector StyleSelector { get; set; }
     }
