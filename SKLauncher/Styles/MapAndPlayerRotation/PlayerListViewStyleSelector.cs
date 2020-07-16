@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 
-namespace Launcher.Styles.PlayerRotation
+namespace Launcher.Styles.MapAndPlayerRotation
 {
     public class PlayerListViewStyleSelector : StyleSelector
     {

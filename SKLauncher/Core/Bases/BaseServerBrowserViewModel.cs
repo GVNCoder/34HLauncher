@@ -13,14 +13,13 @@ using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
-using Launcher.Styles.PlayerRotation;
+using Launcher.Styles.MapAndPlayerRotation;
 using Launcher.UserControls;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
-using Zlo4NET.Core.Data;
 
 namespace Launcher.Core.Bases
 {
@@ -180,8 +179,8 @@ namespace Launcher.Core.Bases
             
             _viewFiltration.AddFilter(FilterConstant.Empty, s => s.CurrentPlayersNumber == 0, false);
             _viewFiltration.AddFilter(FilterConstant.NotEmpty, s => s.CurrentPlayersNumber != 0, false);
-            //_viewFiltration.AddFilter(FilterConstant.MapName, s => s.CurrentMap.Name == MapNames[SelectedMapNameIndex], false);
-            //_viewFiltration.AddFilter(FilterConstant.GameModeName, s => s.CurrentMap.GameModeName == GameModeNames[SelectedGameModeNameIndex], false);
+            _viewFiltration.AddFilter(FilterConstant.MapName, s => s.MapRotation.Current.Name == MapNames[SelectedMapNameIndex], false);
+            _viewFiltration.AddFilter(FilterConstant.GameModeName, s => s.MapRotation.Current.GameModeName == GameModeNames[SelectedGameModeNameIndex], false);
 
             _viewFiltration.Enabled = true;
         }
@@ -262,13 +261,14 @@ namespace Launcher.Core.Bases
             var players = SelectedServer.Players;
             var maps = SelectedServer.MapRotation.Rotation;
 
-            var viewModel = new
+            var viewModel = new RotationsViewModel
             {
                 Players = players,
                 PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed,
                 Maps = maps,
 
-                StyleSelector = new PlayerListViewStyleSelector(_application.Resources)
+                PlayerStyleSelector = new PlayerListViewStyleSelector(_application.Resources),
+                MapStyleSelector = new MapListViewStyleSelector(_application.Resources)
             };
 
             await _modalContentService.Show<RotationsControl>(viewModel);

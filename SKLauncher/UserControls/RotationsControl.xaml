@@ -42,7 +42,7 @@
             Grid.Column="0"
             Background="{x:Null}"
             BorderThickness="0"
-            ItemContainerStyle="{StaticResource DisableSelectionContainerStyle}"
+            ItemContainerStyleSelector="{Binding MapStyleSelector}"
             ItemsSource="{Binding Maps}"
             ScrollViewer.CanContentScroll="False"
             ScrollViewer.VerticalScrollBarVisibility="Visible">
@@ -76,7 +76,7 @@
             Grid.Column="1"
             Background="{x:Null}"
             BorderThickness="0"
-            ItemContainerStyleSelector="{Binding StyleSelector}"
+            ItemContainerStyleSelector="{Binding PlayerStyleSelector}"
             ItemsSource="{Binding Players}"
             ScrollViewer.CanContentScroll="False"
             ScrollViewer.VerticalScrollBarVisibility="Visible">
