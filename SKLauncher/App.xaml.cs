@@ -12,8 +12,8 @@ using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
 
-[assembly: AssemblyVersion("0.120.1224.0")]
-[assembly: AssemblyFileVersion("0.120.1224.0")]
+[assembly: AssemblyVersion("0.121.1226.0")]
+[assembly: AssemblyFileVersion("0.121.1226.0")]
 
 namespace Launcher
 {
