@@ -139,6 +139,9 @@
     <Compile Include="Converters\EventLevel2StringConverter.cs" />
     <Compile Include="Converters\GameControlState2ColorConverter.cs" />
     <Compile Include="Converters\Ping2PingEnumConverter.cs" />
+    <Compile Include="Converters\Rotations\MapRole2ColorConverter.cs" />
+    <Compile Include="Converters\Rotations\MapRole2StringConverter.cs" />
+    <Compile Include="Converters\Rotations\MapRole2VisibilityConverter.cs" />
     <Compile Include="Converters\String2VisibilityConverter.cs" />
     <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
     <Compile Include="Core\Bases\IBlurredPage.cs" />

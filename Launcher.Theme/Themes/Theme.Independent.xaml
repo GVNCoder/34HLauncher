@@ -207,6 +207,15 @@
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".05" Color="{DynamicResource Theme50Color}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -215,11 +224,11 @@
     <Style x:Key="PlayerSelectionContainerStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Opacity=".2" Color="LimeGreen" />
+                <SolidColorBrush Opacity=".2" Color="{DynamicResource BasePrimaryColor}" />
             </Setter.Value>
         </Setter>
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Foreground" Value="LimeGreen" />
+        <Setter Property="Foreground" Value="{DynamicResource BasePrimaryBrush}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
@@ -236,26 +245,29 @@
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".05" Color="{DynamicResource BasePrimaryColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="CurrentMapSelectionContainerStyle" TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Opacity=".05" Color="White" />
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="MapSelectionContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <!--<Setter Property="Foreground" Value="LimeGreen" />-->
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Border
                         Name="Border"
-                        Padding="2"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -265,35 +277,15 @@
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="NextMapSelectionContainerStyle" TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Opacity=".05" Color="Red" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <!--<Setter Property="Foreground" Value="LimeGreen" />-->
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border
-                        Name="Border"
-                        Padding="2"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="2 0 0 2">
-                        <ContentPresenter
-                            Margin="{TemplateBinding Padding}"
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}" />
-                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Opacity=".05" Color="{DynamicResource Theme50Color}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

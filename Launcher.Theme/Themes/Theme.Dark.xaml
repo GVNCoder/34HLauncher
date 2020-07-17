@@ -989,7 +989,7 @@
                 <Track.Thumb>
                     <Thumb
                         Margin="1"
-                        Background="{DynamicResource ColorABrush}"
+                        Background="{StaticResource Theme400Brush}"
                         Style="{DynamicResource ScrollBarThumb}" />
                 </Track.Thumb>
             </Track>
@@ -1232,7 +1232,7 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontFamily="{StaticResource Ionicons}"
-                                Foreground="{DynamicResource PrimaryLight500Brush}"
+                                Foreground="{StaticResource Theme400Brush}"
                                 Text=""
                                 Visibility="Hidden" />
                         </Grid>
@@ -1293,7 +1293,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Background="{DynamicResource BasePrimaryBrush}" CornerRadius="2" />
+                    <Border Background="{StaticResource Theme500Brush}" CornerRadius="2" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

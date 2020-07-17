@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
@@ -258,19 +257,11 @@ namespace Launcher.Core.Bases
 
         public ICommand ShowRotationsCommand => new DelegateCommand(async obj =>
         {
-            var players = SelectedServer.Players;
-            var maps = SelectedServer.MapRotation.Rotation;
-
-            var viewModel = new RotationsViewModel
-            {
-                Players = players,
-                PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed,
-                Maps = maps,
-
-                PlayerStyleSelector = new PlayerListViewStyleSelector(_application.Resources),
-                MapStyleSelector = new MapListViewStyleSelector(_application.Resources)
-            };
-
+            var viewModel =
+                new RotationsViewModel(
+                    SelectedServer.Players,
+                    SelectedServer.MapRotation.Rotation,
+                    new PlayerListViewStyleSelector(_application.Resources));
             await _modalContentService.Show<RotationsControl>(viewModel);
         });
 
