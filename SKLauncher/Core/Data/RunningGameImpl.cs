@@ -129,9 +129,10 @@ namespace Launcher.Core.Data
                     break;
                 case ZPlayMode.Multiplayer:
                     var server = context.Server;
+                    var currentMap = server.MapRotation.Current;
 
                     _view.SetText("Joining server");
-                    //_view.SetToolTipText($"{server.Name} | {server.CurrentMap.Name} | {server.CurrentMap.GameModeName}");
+                    _view.SetToolTipText($"{server.Name} | {currentMap.Name} | {currentMap.GameModeName}");
 
                     _discord.UpdateServer(server);
 

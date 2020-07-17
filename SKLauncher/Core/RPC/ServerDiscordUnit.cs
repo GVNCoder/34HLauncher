@@ -8,6 +8,7 @@ namespace Launcher.Core.RPC
     {
         private const string __Name = "Name";
         private const string __CurrentPlayersNumber = "CurrentPlayersNumber";
+        private const string __CurrentMap = "Current";
 
         private readonly ZServerBase _serverModel;
 
@@ -16,12 +17,12 @@ namespace Launcher.Core.RPC
             _serverModel = serverModel;
 
             _serverModel.PropertyChanged += _ServerUpdatedHandler;
-            //_serverModel.CurrentMap.PropertyChanged += _MapUpdatedHandler;
+            _serverModel.MapRotation.PropertyChanged += _MapUpdatedHandler;
         }
 
         public void Destroy()
         {
-            //_serverModel.CurrentMap.PropertyChanged -= _MapUpdatedHandler;
+            _serverModel.MapRotation.PropertyChanged -= _MapUpdatedHandler;
             _serverModel.PropertyChanged -= _ServerUpdatedHandler;
         }
 
@@ -34,7 +35,7 @@ namespace Launcher.Core.RPC
 
         private void _MapUpdatedHandler(object sender, PropertyChangedEventArgs e)
         {
-            ServerModelUpdated?.Invoke(_serverModel, EventArgs.Empty);
+            if (e.PropertyName == __CurrentMap) ServerModelUpdated?.Invoke(_serverModel, EventArgs.Empty);
         }
     }
 }
