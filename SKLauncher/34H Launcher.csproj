@@ -263,7 +263,6 @@
     <Compile Include="Helpers\Exceptions.cs" />
     <Compile Include="Styles\Controls\ScrollViewerAnimation\AnimatableScrollView.cs" />
     <Compile Include="Styles\Controls\ScrollViewerAnimation\ScrollingAnimationBehavior.cs" />
-    <Compile Include="Styles\MapAndPlayerRotation\MapListViewStyleSelector.cs" />
     <Compile Include="Styles\MapAndPlayerRotation\PlayerListViewStyleSelector.cs" />
     <Compile Include="Styles\MapAndPlayerRotation\RotationsViewModel.cs" />
     <Compile Include="UserControls\ContentPresenterControl.xaml.cs">
