@@ -115,7 +115,7 @@
 
                             <Binding Path="CurrentPlayersNumber" UpdateSourceTrigger="PropertyChanged" />
                             <Binding Path="PlayersCapacity" UpdateSourceTrigger="PropertyChanged" />
-                            <Binding Path="SpectatorsCapacity" />
+                            <Binding Path="SpectatorsCapacity" UpdateSourceTrigger="PropertyChanged" />
 
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
@@ -130,8 +130,8 @@
                     Header="{DynamicResource sbView_GameModeMap}">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0} - {1}">
-                            <Binding Path="CurrentMap.Name" UpdateSourceTrigger="PropertyChanged" />
-                            <Binding Path="CurrentMap.GameModeName" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="MapRotation.Current.Name" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="MapRotation.Current.GameModeName" UpdateSourceTrigger="PropertyChanged" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
@@ -155,7 +155,7 @@
             </DataGrid.Columns>
 
             <DataGrid.RowDetailsTemplate>
-                <DataTemplate DataType="{x:Type server:ZBF3Server}">
+                <DataTemplate DataType="{x:Type server:ZBF4Server}">
                     <Grid Margin="5" TextBlock.Foreground="{DynamicResource ThemeForegroundBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -166,7 +166,7 @@
                                 Background="Transparent"
                                 Style="{DynamicResource ServerDetailsTextBox}"
                                 Text="{Binding Attributes.Message, Mode=OneTime}"
-                                Visibility="{Binding Path=Attributes.Message, Mode=OneTime, Converter={StaticResource String2VisibilityConverter}}">
+                                Visibility="{Binding Path=Attributes.Message, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource String2VisibilityConverter}}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="{x:Static helpers:Clipboard.CopyCommand}" Header="{DynamicResource sbView_CopyText}" />
@@ -180,7 +180,7 @@
                                 Background="Transparent"
                                 Style="{DynamicResource ServerDetailsTextBox}"
                                 Text="{Binding Attributes.Description, Mode=OneTime}"
-                                Visibility="{Binding Path=Attributes.Description, Mode=OneTime, Converter={StaticResource String2VisibilityConverter}}">
+                                Visibility="{Binding Path=Attributes.Description, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource String2VisibilityConverter}}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="{x:Static helpers:Clipboard.CopyCommand}" Header="{DynamicResource sbView_CopyText}" />
@@ -271,7 +271,7 @@
                             RadiusY="2">
 
                             <Rectangle.Fill>
-                                <ImageBrush ImageSource="{Binding SelectedServer.CurrentMap.Name, Converter={StaticResource bf4MapNameToImageSourceConverter}}" />
+                                <ImageBrush ImageSource="{Binding SelectedServer.MapRotation.Current.Name, Converter={StaticResource bf4MapNameToImageSourceConverter}}" />
                             </Rectangle.Fill>
 
                         </Rectangle>

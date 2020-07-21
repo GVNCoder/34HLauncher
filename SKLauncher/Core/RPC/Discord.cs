@@ -178,7 +178,7 @@ namespace Launcher.Core.RPC
         public void UpdateServer(ZServerBase server)
         {
             _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
-            _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server);
+            _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
             _ServerRichPresence.Details = server.Name;
             _ServerRichPresence.State = "In Game";
             _ServerRichPresence.Party = new Party
@@ -196,7 +196,7 @@ namespace Launcher.Core.RPC
             _updateUnit = new ServerDiscordUnit(server);
             _updateUnit.ServerModelUpdated += (sender, e) =>
             {
-                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server);
+                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
                 _ServerRichPresence.Details = server.Name;
                 _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
 
@@ -205,8 +205,8 @@ namespace Launcher.Core.RPC
             };
         }
 
-        private string _BuildServerLargeImageText(ZServerBase server) =>
-            $"{server.CurrentMap.Name} | {string.Concat(server.CurrentMap.GameModeName.Where(char.IsUpper))}";
+        private string _BuildServerLargeImageText(ZMap map) =>
+            $"{map.Name} | {string.Concat(map.GameModeName.Where(char.IsUpper))}";
 
         #endregion
 

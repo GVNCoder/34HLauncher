@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +12,7 @@ using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
+using Launcher.Styles.MapAndPlayerRotation;
 using Launcher.UserControls;
 
 using Zlo4NET.Api;
@@ -128,12 +128,14 @@ namespace Launcher.Core.Bases
             IGameService gameService,
             IEventLogService eventLogService,
             IContentPresenterService modalContentPresenterService,
-            IDiscord discord) : base(discord)
+            IDiscord discord,
+            Application application) : base(discord)
         {
             _api = api;
             _gameService = gameService;
             _eventLogService = eventLogService;
             _modalContentService = modalContentPresenterService;
+            _application = application;
 
             BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
         }
@@ -142,6 +144,7 @@ namespace Launcher.Core.Bases
 
         protected readonly IZApi _api;
         protected readonly IGameService _gameService;
+        protected readonly Application _application;
         protected readonly IEventLogService _eventLogService;
         protected readonly IContentPresenterService _modalContentService;
         
@@ -175,8 +178,8 @@ namespace Launcher.Core.Bases
             
             _viewFiltration.AddFilter(FilterConstant.Empty, s => s.CurrentPlayersNumber == 0, false);
             _viewFiltration.AddFilter(FilterConstant.NotEmpty, s => s.CurrentPlayersNumber != 0, false);
-            _viewFiltration.AddFilter(FilterConstant.MapName, s => s.CurrentMap.Name == MapNames[SelectedMapNameIndex], false);
-            _viewFiltration.AddFilter(FilterConstant.GameModeName, s => s.CurrentMap.GameModeName == GameModeNames[SelectedGameModeNameIndex], false);
+            _viewFiltration.AddFilter(FilterConstant.MapName, s => s.MapRotation.Current.Name == MapNames[SelectedMapNameIndex], false);
+            _viewFiltration.AddFilter(FilterConstant.GameModeName, s => s.MapRotation.Current.GameModeName == GameModeNames[SelectedGameModeNameIndex], false);
 
             _viewFiltration.Enabled = true;
         }
@@ -254,16 +257,11 @@ namespace Launcher.Core.Bases
 
         public ICommand ShowRotationsCommand => new DelegateCommand(async obj =>
         {
-            var players = (IList<ZPlayer>) SelectedServer.Players ?? ListHelper.Empty<ZPlayer>();
-            var maps = (IList<ZMap>) SelectedServer.SupportedMaps ?? ListHelper.Empty<ZMap>();
-
-            var viewModel = new
-            {
-                Players = players,
-                Maps = maps,
-                PlayersVisibility = players.Count == 0 ? Visibility.Visible : Visibility.Collapsed
-            };
-
+            var viewModel =
+                new RotationsViewModel(
+                    SelectedServer.Players,
+                    SelectedServer.MapRotation.Rotation,
+                    new PlayerListViewStyleSelector(_application.Resources));
             await _modalContentService.Show<RotationsControl>(viewModel);
         });
 

@@ -82,3 +82,11 @@
     //        throw new NotImplementedException();
     //    }
     //}
+
+	//if (model.Id == 6238)
+                //{
+                // url regex
+                //    model.Name = Regex.Replace(model.Name,
+                //        @"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)",
+                //        string.Empty);
+                //}
