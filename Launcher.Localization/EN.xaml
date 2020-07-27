@@ -68,6 +68,10 @@
     <system:String x:Key="settView_EnableTryToConnect">Due to many factors, this option in no way guarantees that the launcher will be connected successfully.</system:String>
     <system:String x:Key="settView_TryToConnect">Try connect when launcher start</system:String>
     <system:String x:Key="settView_GameCardOpacity">Menu opacity</system:String>
+    <system:String x:Key="settView_UpdatesHeader">Updates</system:String>
+    <system:String x:Key="settView_Changelog">Changelog</system:String>
+    <system:String x:Key="settView_DeleteCache">Delete cache</system:String>
+    <system:String x:Key="settView_DisableChangelogAutoOpen">Don't open changelog after update</system:String>
 
     <!--  Servers View  -->
     <system:String x:Key="sbView_ServerName">Server name</system:String>

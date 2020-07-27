@@ -219,6 +219,47 @@
                     </Grid>
                 </StackPanel>
             </controls1:FlatGroup>
+
+            <controls1:FlatGroup
+                Margin="0,5,0,0"
+                DataContext="{Binding UpdatesSectionViewModel}"
+                Header="{DynamicResource settView_UpdatesHeader}"
+                HeaderIcon="">
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unloaded">
+                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
+
+                    <!--  Background image  -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            Command="{Binding OpenChangelogCommand}"
+                            Content="{DynamicResource settView_Changelog}" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding DeleteCacheCommand}"
+                            Content="{DynamicResource settView_DeleteCache}" />
+                    </Grid>
+
+                    <CheckBox
+                        Margin="0,5,0,0"
+                        Content="{DynamicResource settView_DisableChangelogAutoOpen}"
+                        IsChecked="{Binding DisableChangelogAutoOpen}" />
+                </StackPanel>
+            </controls1:FlatGroup>
         </StackPanel>
 
         <!--#endregion Left panel-->

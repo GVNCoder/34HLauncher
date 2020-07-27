@@ -68,6 +68,10 @@
     <system:String x:Key="settView_EnableTryToConnect">В связи со множеством факторов, данная опция никоим образом не гарантирует, что лаунчер будет подключен успешно.</system:String>
     <system:String x:Key="settView_TryToConnect">Делать попытку подключения при старте лаунчера</system:String>
     <system:String x:Key="settView_GameCardOpacity">Прозрачность меню</system:String>
+    <system:String x:Key="settView_UpdatesHeader">Обновления</system:String>
+    <system:String x:Key="settView_Changelog">Изменения</system:String>
+    <system:String x:Key="settView_DeleteCache">Удалить кэш</system:String>
+    <system:String x:Key="settView_DisableChangelogAutoOpen">Не открывать изменения после обновления</system:String>
 
     <!--  Servers View  -->
     <system:String x:Key="sbView_ServerName">Имя сервера</system:String>

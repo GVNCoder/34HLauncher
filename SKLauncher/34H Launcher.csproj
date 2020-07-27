@@ -204,6 +204,7 @@
     <Compile Include="Core\SettingsViewModelParts\GeneralSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\ThemesSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\UIBaseViewModel.cs" />
+    <Compile Include="Core\SettingsViewModelParts\UpdatesSectionViewModel.cs" />
     <Compile Include="Core\Shared\ApplicationStateArgs.cs" />
     <Compile Include="Core\Shared\BusyViewModel.cs" />
     <Compile Include="Core\Shared\ChangesViewModel.cs" />

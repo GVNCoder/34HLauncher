@@ -19,6 +19,7 @@ namespace Launcher.ViewModel
     {
         public ThemesSectionViewModel ThemeSectionViewModel { get; }
         public GeneralSectionViewModel GeneralSectionViewModel { get; }
+        public UpdatesSectionViewModel UpdatesSectionViewModel { get; }
 
         private readonly ISettingsService _settingsService;
         private readonly IEventLogService _eventLogService;
@@ -36,6 +37,7 @@ namespace Launcher.ViewModel
             // vm parts
             ThemeSectionViewModel = kernel.Get<ThemesSectionViewModel>();
             GeneralSectionViewModel = kernel.Get<GeneralSectionViewModel>();
+            UpdatesSectionViewModel = kernel.Get<UpdatesSectionViewModel>();
 
             BackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }

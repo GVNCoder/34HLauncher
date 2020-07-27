@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -45,8 +46,8 @@ namespace Launcher.Core.Services
             if (commandArgs.Length == 0 || commandArgs.Last() != UPDATE_FLAG) return;
 
             // open change log
-            var fileName = $"changeLog_{settings.Localization}.txt";
-            if (File.Exists(fileName)) Process.Start(fileName);
+            var fileName = $"ChangeLog_{settings.Localization}.txt";
+            if (File.Exists(fileName) && !settings.DisableChangelogAutoOpen) Process.Start(fileName);
             // delete update.exe
             var uProcess = Process.GetProcessesByName(_updaterName).FirstOrDefault();
             void __delUpdate()
@@ -59,6 +60,14 @@ namespace Launcher.Core.Services
             {
                 uProcess.EnableRaisingEvents = true;
                 uProcess.Exited += (sender, args) => __delUpdate();
+                try
+                {
+                    uProcess.Kill();
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
             }
             else
             {
