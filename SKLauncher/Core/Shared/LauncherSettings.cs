@@ -20,6 +20,7 @@ namespace Launcher.Core.Shared
         public bool UseDiscordPresence { get; set; }
         public double CardTransparency { get; set; }
         public bool TryToConnect { get; set; }
+        public bool DisableChangelogAutoOpen { get; set; }
 
         public bool IsDefault { get => _isDefault; private set => _isDefault = value; }
 
@@ -36,7 +37,8 @@ namespace Launcher.Core.Shared
                 UseDiscordPresence = false,
                 CardTransparency = .1d,
                 TryToConnect = false,
-                IsDefault = true
+                IsDefault = true,
+                DisableChangelogAutoOpen = false,
             };
         }
 
