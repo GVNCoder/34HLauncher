@@ -8,9 +8,14 @@ using Ninject;
 
 using Launcher.Core.Injection;
 using Launcher.Core.Services;
+using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
+using Ninject.Syntax;
+using Zlo4NET.Api;
+using Zlo4NET.Api.Models.Shared;
+using Zlo4NET.Core.Data;
 
 [assembly: AssemblyVersion("0.121.1226.0")]
 [assembly: AssemblyFileVersion("0.121.1226.0")]
@@ -61,7 +66,8 @@ namespace Launcher
             Resources["UserControlViewModelLocator"] = DependencyResolver.Locators.UserControlViewModelLocator;
 
             _SetupVars();
-            _GenerateDirs();
+            _SetupDirectories();
+            _SetupLoggers(ZApi.Instance, Logger);
 
             SettingsService.LoadLauncherSettings();
             SettingsService.LoadGameSettings();
@@ -103,12 +109,22 @@ namespace Launcher
             State.Storage["connection"] = false;
         }
 
-        private static void _GenerateDirs()
+        private static void _SetupDirectories()
         {
             Directory.CreateDirectory(FolderConstant.UpdateFolder);
             Directory.CreateDirectory(FolderConstant.ResourcesFolder);
             Directory.CreateDirectory(FolderConstant.LogFolder);
             Directory.CreateDirectory(FolderConstant.SettingsFolder);
+        }
+
+        private static void _SetupLoggers(IZApi instance, ILog applicationLoggerInstance)
+        {
+            // setup API logger
+            var logger = instance.Logger;
+            logger.SetMessageFilter(ZLogLevel.Error | ZLogLevel.Warning);
+            logger.OnMessage += (sender, e) => applicationLoggerInstance.Info($"Zlo4NET: {e.Message}");
+
+            // set other loggers
         }
 
         private void _logUnhandledExceptions(object sender, UnhandledExceptionEventArgs e)

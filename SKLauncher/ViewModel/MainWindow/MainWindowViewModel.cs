@@ -93,7 +93,7 @@ namespace Launcher.ViewModel.MainWindow
             NonClientDataContext = kernel.Get<WindowNonClientPartViewModel>();
             BottomBarDataContext = kernel.Get<WindowBottomBarPartViewModel>();
 
-            api.Logger.OnMessage += ApiOnMessageMessageOccuredHandler;
+            //api.Logger.OnMessage += ApiOnMessageMessageOccuredHandler;
             _apiConnection.ConnectionChanged += _apiConnectionConnectionChangedHandler;
 
             _zClientProcessTracker = new ZProcessTracker(_ZClientProcessName, TimeSpan.FromSeconds(3), true, processes => processes
@@ -192,8 +192,8 @@ namespace Launcher.ViewModel.MainWindow
             _appStateService.ChangeState(StateConstants.Monolith, e.IsConnected);
         }
 
-        private void ApiOnMessageMessageOccuredHandler(object sender, ZLogMessageArgs e) =>
-            _log.Info($"Zlo4NET: {e.Message}");
+        //private void ApiOnMessageMessageOccuredHandler(object sender, ZLogMessageArgs e) =>
+        //    _log.Info($"Zlo4NET: {e.Message}");
 
         private void _runZClient(string path)
         {
@@ -226,7 +226,7 @@ namespace Launcher.ViewModel.MainWindow
             _appStateService.AddState(StateConstants.ZClient, true);
             _appStateService.AddState(StateConstants.Monolith, true);
 
-            _api.Logger.SetMessageFilter(ZLogLevel.Error | ZLogLevel.Warning);
+            //_api.Logger.SetMessageFilter(ZLogLevel.Error | ZLogLevel.Warning);
 
             var settings = _settingsService.GetLauncherSettings();
             if (settings.RunZClient)
