@@ -8,11 +8,9 @@ using Ninject;
 
 using Launcher.Core.Injection;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
-using Ninject.Syntax;
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
