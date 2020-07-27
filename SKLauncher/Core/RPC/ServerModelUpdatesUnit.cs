@@ -32,6 +32,8 @@ namespace Launcher.Core.RPC
 
         public event EventHandler ServerModelUpdated;
 
+        public ZServerBase Model => _serverModel;
+
         private void _EventLink(ZServerBase model, bool subscribe)
         {
             if (subscribe)
