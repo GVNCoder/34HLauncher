@@ -192,10 +192,8 @@ namespace Launcher.ViewModel.MainWindow
             _appStateService.ChangeState(StateConstants.Monolith, e.IsConnected);
         }
 
-        private void ApiOnMessageMessageOccuredHandler(object sender, ZLogMessageArgs e)
-        {
-            _log.Warn($@"LVL: {e.Level} MSG: {e.Message}");
-        }
+        private void ApiOnMessageMessageOccuredHandler(object sender, ZLogMessageArgs e) =>
+            _log.Info($"Zlo4NET: {e.Message}");
 
         private void _runZClient(string path)
         {
@@ -227,6 +225,8 @@ namespace Launcher.ViewModel.MainWindow
 
             _appStateService.AddState(StateConstants.ZClient, true);
             _appStateService.AddState(StateConstants.Monolith, true);
+
+            _api.Logger.SetMessageFilter(ZLogLevel.Error | ZLogLevel.Warning);
 
             var settings = _settingsService.GetLauncherSettings();
             if (settings.RunZClient)
