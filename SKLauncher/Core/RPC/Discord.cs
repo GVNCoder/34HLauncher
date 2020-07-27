@@ -118,7 +118,7 @@ namespace Launcher.Core.RPC
         private readonly IDiscordPresence _discordPresence;
         private readonly LauncherSettings _settings;
 
-        private ServerDiscordUnit _updateUnit;
+        private ServerModelUpdatesUnit _updateUnit;
         private RichPresence _pagePresence;
         private RichPresence _gamePresence;
         private bool _useGamePresence;
@@ -193,7 +193,7 @@ namespace Launcher.Core.RPC
             _useGamePresence = true;
             _updatePresence();
 
-            _updateUnit = new ServerDiscordUnit(server);
+            _updateUnit = new ServerModelUpdatesUnit(server);
             _updateUnit.ServerModelUpdated += (sender, e) =>
             {
                 _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
