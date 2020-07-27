@@ -187,22 +187,31 @@ namespace Launcher.Core.RPC
                 Max = server.PlayersCapacity,
                 Size = server.CurrentPlayersNumber
             };
-            _ServerRichPresence.Timestamps = Timestamps.Now;
+
+            // create new Unit
+            if (_updateUnit == null || _updateUnit.Model.Game == server.Game || _updateUnit.Model.Id != server.Id)
+            {
+                _ServerRichPresence.Timestamps = Timestamps.Now;
+                _updateUnit = new ServerModelUpdatesUnit(server);
+                _updateUnit.ServerModelUpdated += (sender, e) =>
+                {
+                    _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
+                    _ServerRichPresence.Details = server.Name;
+                    _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
+
+                    _gamePresence = _ServerRichPresence;
+                    _updatePresence();
+                };
+
+            }
+            else // Update data Relink Unit
+            {
+                _updateUnit.Relink(server);
+            }
 
             _gamePresence = _ServerRichPresence;
             _useGamePresence = true;
             _updatePresence();
-
-            _updateUnit = new ServerModelUpdatesUnit(server);
-            _updateUnit.ServerModelUpdated += (sender, e) =>
-            {
-                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-                _ServerRichPresence.Details = server.Name;
-                _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
-
-                _gamePresence = _ServerRichPresence;
-                _updatePresence();
-            };
         }
 
         private string _BuildServerLargeImageText(ZMap map) =>
