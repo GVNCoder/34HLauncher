@@ -1,10 +1,12 @@
 ﻿using System;
+
 using Launcher.Core.RPC;
-using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using Launcher.Core.Services;
+
 using Zlo4NET.Api;
-using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
+using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Core.Data
 {
