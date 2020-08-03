@@ -150,6 +150,8 @@
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
     <Compile Include="Core\Behaviors\LastClosedEventBehavior.cs" />
+    <Compile Include="Core\Data\BaseJoinParams.cs" />
+    <Compile Include="Core\Data\CoopJoinParams.cs" />
     <Compile Include="Core\Data\DetectedGameImpl.cs" />
     <Compile Include="Core\Data\Dialog\ContentPresenterService.cs" />
     <Compile Include="Core\Data\Dialog\TextDialogService.cs" />
@@ -157,7 +159,10 @@
     <Compile Include="Core\Data\GameCloseEventArgs.cs" />
     <Compile Include="Core\Data\GameService.cs" />
     <Compile Include="Core\Data\IGameHelper.cs" />
+    <Compile Include="Core\Data\MultiplayerJoinParams.cs" />
     <Compile Include="Core\Data\RunningGameImpl.cs" />
+    <Compile Include="Core\Data\SingleplayerJoinParams.cs" />
+    <Compile Include="Core\Data\TestRangeJoinParams.cs" />
     <Compile Include="Core\Data\Updates\UpdateControlViewModel.cs" />
     <Compile Include="Core\Data\Updates\UpdateErrorEventArgs.cs" />
     <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
