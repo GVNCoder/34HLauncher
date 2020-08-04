@@ -4,11 +4,11 @@ namespace Launcher.Core.Data
 {
     public class GameCloseEventArgs : EventArgs
     {
-        public string PipeContent { get; }
+        public string PipeLog { get; }
 
-        public GameCloseEventArgs(string pipeContent)
+        public GameCloseEventArgs(string pipeLog)
         {
-            PipeContent = pipeContent;
+            PipeLog = pipeLog;
         }
     }
 }

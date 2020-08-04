@@ -4,7 +4,6 @@ namespace Launcher.Core.Data
 {
     public class BaseJoinParams
     {
-        public ZGameArchitecture Architecture { get; set; }
         public ZGame Game { get; set; }
     }
 }

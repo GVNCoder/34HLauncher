@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-
+using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Services;
@@ -168,8 +168,17 @@ namespace Launcher.Core.Bases
 
         protected void _JoinGame(ZServerBase server, ZRole role)
         {
-            var context = new RunContext { Mode = ZPlayMode.Multiplayer, Target = server.Game, ServerId = server.Id, Role = role, Server = server };
-            _gameService.Run(context);
+            // check can run game
+            if (! _gameService.CanRun) return;
+            // create run params
+            var runParams = new MultiplayerJoinParams
+            {
+                Game = server.Game,
+                PlayerRole = role,
+                ServerModel = server
+            };
+            // run game
+            _gameService.RunMultiplayer(runParams);
         }
 
         protected void _BuildViewFiltration(CollectionViewSource viewSource)

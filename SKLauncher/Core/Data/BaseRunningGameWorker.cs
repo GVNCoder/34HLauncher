@@ -10,7 +10,7 @@ using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Core.Data
 {
-    public class RunningGameImpl : IGameHelper
+    public abstract class BaseRunningGameWorker : BaseGameWorker
     {
         private const string __GameLoading = "GameLoading";
         private const string __WaitForPeerClient = "WaitForPeerClient";
@@ -19,45 +19,37 @@ namespace Launcher.Core.Data
 
         private readonly ISettingsService _settingsService;
         private readonly GameSetting _gameSettings;
-        private readonly IGameControl _view;
-        private readonly IDiscord _discord;
         private readonly IZRunGame _game;
         private readonly IZApi _api;
 
         private string _pipeContent;
 
-        public RunningGameImpl(
+        protected BaseRunningGameWorker(
             IZRunGame game,
             GameSetting gameSettings,
-            RunContext context,
+            BaseJoinParams param,
             IGameControl view,
             IZApi api,
             ISettingsService settingsService,
-            IDiscord discord)
+            IDiscord discord) : base(discord, view)
         {
             _settingsService = settingsService;
             _gameSettings = gameSettings;
-            _discord = discord;
             _game = game;
-            _view = view;
             _api = api;
 
             _view.CloseClick += _OnCloseRequestedHandler;
 
             _game.Pipe += _pipeHandler;
-            _SetGameVisual(context);
+            _SetGameVisual(param);
         }
 
-        public void BeginWork()
+        public override void BeginWork()
         {
             _view.Show();
         }
 
-        public event EventHandler<GameCloseEventArgs> Close;
-
         #region Private methods
-
-        private void _OnClose(string pipeContent) => Close?.Invoke(this, new GameCloseEventArgs(pipeContent));
 
         private void _OnCloseRequestedHandler(object sender, EventArgs e)
         {
@@ -97,71 +89,28 @@ namespace Launcher.Core.Data
             }
 
             if (_game.IsRun) return;
-            
+
             // game closed
             _view.CloseClick -= _OnCloseRequestedHandler;
             _game.Pipe -= _pipeHandler;
 
             _view.Hide();
             _discord.DisablePlay();
-            _OnClose(_pipeContent);
+            _OnWorkDone(_pipeContent);
         }
 
         private void _AppendPipeContent(string content)
             => _pipeContent += string.IsNullOrEmpty(_pipeContent) ? content : $"\n{content}";
 
-        private void _SetGameVisual(RunContext context)
+        private void _SetGameVisual(BaseJoinParams param)
         {
-            _SetContextVisual(context);
+            _SetContextVisual(param);
 
             _view.SetState(true);
             _view.SetCanClose(false);
         }
 
-        private void _SetContextVisual(RunContext context)
-        {
-            switch (context.Mode)
-            {
-                case ZPlayMode.Singleplayer:
-                    _view.SetText("Resume campaign");
-                    _view.SetToolTipText("Campaign");
-
-                    _discord.UpdateSingle(context.Target, ZPlayMode.Singleplayer);
-
-                    break;
-                case ZPlayMode.Multiplayer:
-                    var server = context.Server;
-                    var currentMap = server.MapRotation.Current;
-
-                    _view.SetText("Joining server");
-                    _view.SetToolTipText($"{server.Name} | {currentMap.Name} | {currentMap.GameModeName}");
-
-                    _discord.UpdateServer(server);
-
-                    break;
-                case ZPlayMode.CooperativeHost:
-                    _view.SetText("Host room");
-                    _view.SetToolTipText("Host CoOp room");
-
-                    _discord.UpdateCoop(context.Mode, context.Mission);
-
-                    break;
-                case ZPlayMode.CooperativeClient:
-                    _view.SetText("Joining friend");
-                    _view.SetToolTipText("Playing CoOp with friend");
-
-                    _discord.UpdateCoop(context.Mode, context.Mission);
-
-                    break;
-                case ZPlayMode.TestRange:
-                    _view.SetText("Playground");
-                    _view.SetToolTipText("Test range");
-
-                    _discord.UpdateSingle(context.Target, ZPlayMode.TestRange);
-
-                    break;
-            }
-        }
+        protected abstract void _SetContextVisual(BaseJoinParams param);
 
         private void _SetPlayingVisual()
         {

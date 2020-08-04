@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Launcher.Core.Bases;
+using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Services;
@@ -104,8 +105,8 @@ namespace Launcher.ViewModel
         {
             var parameters = (obj as string)
                 .Split('.');
-            var game = Enum.Parse(typeof(ZGame), parameters[0]);
-            var playMode = Enum.Parse(typeof(ZPlayMode), parameters[1]);
+            var game = _parseEnum<ZGame>(parameters[0]);
+            var playMode = _parseEnum<ZPlayMode>(parameters[1]);
 
             var connected = (bool)State.Storage["connection"];
             if (!connected)
@@ -136,12 +137,30 @@ namespace Launcher.ViewModel
             }
             else
             {
-                var context = new RunContext
+                //var context = new RunContext
+                //{
+                //    Target = (ZGame) game,
+                //    Mode = (ZPlayMode) playMode
+                //};
+                //_gameService.Run(context);
+
+                // check can run game
+                if (! _gameService.CanRun) return;
+
+                if (playMode == ZPlayMode.Singleplayer)
                 {
-                    Target = (ZGame) game,
-                    Mode = (ZPlayMode) playMode
-                };
-                _gameService.Run(context);
+                    // create run params
+                    var param = new SingleplayerJoinParams { Game = game };
+                    // run game
+                    _gameService.RunSingleplayer(param);
+                }
+                else
+                {
+                    // create run params
+                    var param = new TestRangeJoinParams { Game = game };
+                    // run game
+                    _gameService.RunPlayground(param);
+                }
             }
         }
 

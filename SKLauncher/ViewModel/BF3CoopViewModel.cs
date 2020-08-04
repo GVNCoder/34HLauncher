@@ -5,10 +5,12 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Launcher.Core.Bases;
+using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using Launcher.Helpers;
 using Launcher.Services;
 using Zlo4NET.Api.Models.Shared;
 
@@ -169,29 +171,57 @@ namespace Launcher.ViewModel
         public ICommand HostCommand => new DelegateCommand(obj =>
         {
             var difficulty = (ZCoopDifficulty) Enum.Parse(typeof(ZCoopDifficulty), DifficultyName);
-            var context = new RunContext
-            {
-                Difficulty = difficulty,
-                Level = SelectedMission.Level,
-                Target = ZGame.BF3,
-                Mode = ZPlayMode.CooperativeHost,
-                Mission = SelectedMission
-            };
+            SelectedMission.Difficulty = difficulty;
+            //var context = new RunContext
+            //{
+            //    Difficulty = difficulty,
+            //    Level = SelectedMission.Level,
+            //    Target = ZGame.BF3,
+            //    Mode = ZPlayMode.CooperativeHost,
+            //    Mission = SelectedMission
+            //};
 
-            _gameService.Run(context);
+            //_gameService.Run(context);
+
+            // check can run game
+            if (! _gameService.CanRun) return;
+
+            // create run params
+            var param = new CoopJoinParams
+            {
+                CoopMission = SelectedMission,
+                Game = ZGame.BF3,
+                Mode = ZPlayMode.CooperativeHost
+            };
+            // run game
+            _gameService.RunCoop(param).Forget();
         });
 
         public ICommand JoinCommand => new DelegateCommand(obj =>
         {
             var friendId = uint.Parse(FriendId);
-            var context = new RunContext
-            {
-                FriendId = friendId,
-                Target = ZGame.BF3,
-                Mode = ZPlayMode.CooperativeClient
-            };
+            //var context = new RunContext
+            //{
+            //    FriendId = friendId,
+            //    Target = ZGame.BF3,
+            //    Mode = ZPlayMode.CooperativeClient
+            //};
 
-            _gameService.Run(context);
+            //_gameService.Run(context);
+
+            // check can run game
+            if (!_gameService.CanRun) return;
+
+            // create run params
+            var param = new CoopJoinParams
+            {
+                CoopMission = SelectedMission,
+                Game = ZGame.BF3,
+                Mode = ZPlayMode.CooperativeClient,
+                FriendId = friendId
+            };
+            // run game
+            _gameService.RunCoop(param).Forget();
         });
 
         #endregion

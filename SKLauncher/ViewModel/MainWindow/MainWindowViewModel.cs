@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 
 using log4net;
+using Launcher.Core.Data;
 using Microsoft.Win32;
 using Ninject;
 
@@ -20,6 +21,7 @@ using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
+using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
 
@@ -122,6 +124,20 @@ namespace Launcher.ViewModel.MainWindow
             _updateService.Error += _updateServiceErrorHandler;
 
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
+
+            _gameService.GameClose += _GameCloseHandler;
+            _gameService.GameRunError += _GameRunErrorHandler;
+        }
+
+        private void _GameRunErrorHandler(object sender, GameRunErrorEventArgs e)
+        {
+            _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun, e.Error.Message);
+            _log.Error(LoggingHelper.GetMessage(e.Error));
+        }
+
+        private void _GameCloseHandler(object sender, GameCloseEventArgs e)
+        {
+            _eventLogService.Log(EventLogLevel.Message, SLM.GameRun, e.PipeLog);
         }
 
         private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
