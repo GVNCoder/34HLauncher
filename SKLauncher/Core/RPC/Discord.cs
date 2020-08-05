@@ -189,7 +189,7 @@ namespace Launcher.Core.RPC
             };
 
             // create new Unit
-            if (_updateUnit == null || _updateUnit.Model.Game == server.Game || _updateUnit.Model.Id != server.Id)
+            if (_updateUnit == null)
             {
                 _ServerRichPresence.Timestamps = Timestamps.Now;
                 _updateUnit = new ServerModelUpdatesUnit(server);
@@ -266,6 +266,7 @@ namespace Launcher.Core.RPC
         {
             _useGamePresence = false;
             _updateUnit?.Destroy();
+            _updateUnit = null;
 
             _updatePresence();
         }

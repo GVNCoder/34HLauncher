@@ -85,6 +85,8 @@ namespace Launcher.Core.Data
                 _OnGameRunError(exc);
                 // allow to run
                 CanRun = true;
+                // reset current play mode
+                CurrentPlayMode = null;
             }
         }
 
@@ -118,6 +120,8 @@ namespace Launcher.Core.Data
                 _OnGameRunError(exc);
                 // allow to run
                 CanRun = true;
+                // reset current play mode
+                CurrentPlayMode = null;
             }
         }
 
@@ -151,6 +155,8 @@ namespace Launcher.Core.Data
                 _OnGameRunError(exc);
                 // allow to run
                 CanRun = true;
+                // reset current play mode
+                CurrentPlayMode = null;
             }
         }
 
@@ -201,6 +207,8 @@ namespace Launcher.Core.Data
                 _OnGameRunError(exc);
                 // allow to run
                 CanRun = true;
+                // reset current play mode
+                CurrentPlayMode = null;
             }
         }
 
@@ -279,6 +287,8 @@ namespace Launcher.Core.Data
         private void _OnWorkCompeteHandler(object sender, GameCloseEventArgs e)
         {
             CanRun = true;
+            // reset current play mode
+            CurrentPlayMode = null;
 
             _DestroyGameAssistant(ref _gameWorker);
             if (!string.IsNullOrEmpty(e.PipeLog))

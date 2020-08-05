@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -257,10 +258,26 @@ namespace Launcher.Core.Bases
 
         private void _serverListInitialSizeReached(object sender, EventArgs e)
         {
-            _serversService.InitialSizeReached -= _serverListInitialSizeReached;
-            _serversService.ServersCollection.CollectionChanged += _collectionChangedHandler;
+            var collection = _serversService.ServersCollection;
 
+            _serversService.InitialSizeReached -= _serverListInitialSizeReached;
+            collection.CollectionChanged += _collectionChangedHandler;
+
+            // begin ping calculation
             _collectionChangedHandler(null, null);
+            // trying to restore discord server updates
+            if (_gameService.CurrentPlayMode == ZPlayMode.Multiplayer)
+            {
+                var param = (MultiplayerJoinParams) _gameService.CurrentGame.Params;
+                var currentGame = (MultiplayerGameWorker) _gameService.CurrentGame;
+                var serverModel = param.ServerModel;
+                var compatibleServerModel =
+                    collection.FirstOrDefault(s => s.Game == param.Game && s.Id == serverModel.Id);
+
+                if (compatibleServerModel == null) return;
+
+                currentGame.RelinkServer(compatibleServerModel);
+            }
         }
 
         #endregion

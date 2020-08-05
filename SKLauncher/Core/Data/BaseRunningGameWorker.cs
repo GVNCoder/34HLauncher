@@ -42,6 +42,8 @@ namespace Launcher.Core.Data
 
             _game.Pipe += _pipeHandler;
             _SetGameVisual(param);
+
+            Params = param;
         }
 
         public override void BeginWork()
