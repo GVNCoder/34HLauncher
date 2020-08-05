@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Launcher.Core.Shared;
 
 namespace Launcher.Core.Services
 {

@@ -21,6 +21,7 @@ namespace Launcher.Core.Shared
         public double CardTransparency { get; set; }
         public bool TryToConnect { get; set; }
         public bool DisableChangelogAutoOpen { get; set; }
+        public bool DisableAskServerBrowserDiscordLeave { get; set; }
 
         public bool IsDefault { get => _isDefault; private set => _isDefault = value; }
 
@@ -39,6 +40,7 @@ namespace Launcher.Core.Shared
                 TryToConnect = false,
                 IsDefault = true,
                 DisableChangelogAutoOpen = false,
+                DisableAskServerBrowserDiscordLeave = false,
             };
         }
 
