@@ -147,14 +147,14 @@ namespace Launcher.ViewModel
                     // create run params
                     var param = new SingleplayerJoinParams { Game = game };
                     // run game
-                    _gameService.RunSingleplayer(param);
+                    _gameService.RunSingleplayer(param).Forget();
                 }
                 else
                 {
                     // create run params
                     var param = new TestRangeJoinParams { Game = game };
                     // run game
-                    _gameService.RunPlayground(param);
+                    _gameService.RunPlayground(param).Forget();
                 }
             }
         }
