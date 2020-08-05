@@ -55,7 +55,7 @@ namespace Launcher.Core.Data
             _updateServerUnit = new ServerModelUpdatesUnit(server);
             _updateServerUnit.ServerModelUpdated += (sender, e) =>
             {
-                _view.SetToolTipText($"{server.Name} | {currentMap.Name} | {currentMap.GameModeName}");
+                _view.SetToolTipText($"{e.Model.Name} | {e.Model.MapRotation.Current.Name} | {e.Model.MapRotation.Current.GameModeName}");
             };
         }
     }

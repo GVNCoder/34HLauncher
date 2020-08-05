@@ -260,6 +260,11 @@ namespace Launcher.ViewModel.MainWindow
             _appStateService.ChangeState(StateConstants.Monolith, _apiConnection.IsConnected);
         }
 
+        public ICommand UnloadedCommand => new DelegateCommand(obj =>
+        {
+            _discordPresence.Stop();
+        });
+
         public ICommand OpenForumCommand => new DelegateCommand(obj =>
         {
             _menuService.Close();

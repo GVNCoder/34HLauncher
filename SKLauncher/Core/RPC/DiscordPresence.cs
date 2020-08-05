@@ -76,6 +76,7 @@ namespace Launcher.Core.RPC
         private void _DestroyRpc()
         {
             _UnsubscribeHandlers(_client);
+            _client.ClearPresence();
             _client.Dispose();
             _client = null;
         }

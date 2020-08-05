@@ -30,7 +30,7 @@ namespace Launcher.Core.RPC
             _EventLink(_serverModel, false);
         }
 
-        public event EventHandler ServerModelUpdated;
+        public event EventHandler<ServerModelUpdatedEventArgs> ServerModelUpdated;
 
         public ZServerBase Model => _serverModel;
 
@@ -48,14 +48,16 @@ namespace Launcher.Core.RPC
             }
         }
 
+        private void _OnServerModelUpdated() => ServerModelUpdated?.Invoke(_serverModel, new ServerModelUpdatedEventArgs(_serverModel));
+
         private void _ServerUpdatedHandler(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == __Name || e.PropertyName == __CurrentPlayersNumber) ServerModelUpdated?.Invoke(_serverModel, EventArgs.Empty);
+            if (e.PropertyName == __Name || e.PropertyName == __CurrentPlayersNumber) _OnServerModelUpdated();
         }
 
         private void _MapUpdatedHandler(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == __CurrentMap) ServerModelUpdated?.Invoke(_serverModel, EventArgs.Empty);
+            if (e.PropertyName == __CurrentMap) _OnServerModelUpdated();
         }
     }
 }

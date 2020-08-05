@@ -139,7 +139,7 @@ namespace Launcher.Core.RPC
 
         private string _GetTitleNameByGame(ZGame game) => _BFTitles[(int) game];
 
-        private string _GetLargeImageKeyByGame(ZGame game) => $"{game.ToString().ToLower()}_large_logo";
+        private static string _GetLargeImageKeyByGame(ZGame game) => $"{game.ToString().ToLower()}_large_logo";
 
         public void UpdateServerBrowser(ZGame game)
         {
@@ -177,35 +177,37 @@ namespace Launcher.Core.RPC
 
         public void UpdateServer(ZServerBase server)
         {
-            _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
-            _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-            _ServerRichPresence.Details = server.Name;
-            _ServerRichPresence.State = "In Game";
-            _ServerRichPresence.Party = new Party
-            {
-                ID = Secrets.CreateFriendlySecret(new Random()),
-                Max = server.PlayersCapacity,
-                Size = server.CurrentPlayersNumber
-            };
-
             // create new Unit
             if (_updateUnit == null)
             {
+                _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
+                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
+                _ServerRichPresence.Details = server.Name;
+                _ServerRichPresence.State = "In Game";
+                _ServerRichPresence.Party = new Party
+                {
+                    ID = Secrets.CreateFriendlySecret(new Random()),
+                    Max = server.PlayersCapacity,
+                    Size = server.CurrentPlayersNumber
+                };
                 _ServerRichPresence.Timestamps = Timestamps.Now;
                 _updateUnit = new ServerModelUpdatesUnit(server);
                 _updateUnit.ServerModelUpdated += (sender, e) =>
                 {
-                    _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-                    _ServerRichPresence.Details = server.Name;
-                    _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
+                    _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(e.Model.MapRotation.Current);
+                    _ServerRichPresence.Details = e.Model.Name;
+                    _ServerRichPresence.Party.Size = e.Model.CurrentPlayersNumber;
 
                     _gamePresence = _ServerRichPresence;
                     _updatePresence();
                 };
 
             }
-            else // Update data Relink Unit
+            else // Update data int UpdatesUnit
             {
+                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
+                _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
+
                 _updateUnit.Relink(server);
             }
 
@@ -214,7 +216,7 @@ namespace Launcher.Core.RPC
             _updatePresence();
         }
 
-        private string _BuildServerLargeImageText(ZMap map) =>
+        private static string _BuildServerLargeImageText(ZMap map) =>
             $"{map.Name} | {string.Concat(map.GameModeName.Where(char.IsUpper))}";
 
         #endregion

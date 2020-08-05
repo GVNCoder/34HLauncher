@@ -187,6 +187,7 @@
     <Compile Include="Core\RPC\DiscordPresence.cs" />
     <Compile Include="Core\RPC\IDiscord.cs" />
     <Compile Include="Core\RPC\IDiscordPresence.cs" />
+    <Compile Include="Core\RPC\ServerModelUpdatedEventArgs.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatesUnit.cs" />
     <Compile Include="Core\Services\ApplicationStateService.cs" />
     <Compile Include="Core\Services\BusyService.cs" />
