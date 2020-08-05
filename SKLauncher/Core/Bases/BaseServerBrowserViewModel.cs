@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
@@ -178,7 +179,7 @@ namespace Launcher.Core.Bases
                 ServerModel = server
             };
             // run game
-            _gameService.RunMultiplayer(runParams);
+            _gameService.RunMultiplayer(runParams).Forget();
         }
 
         protected void _BuildViewFiltration(CollectionViewSource viewSource)
@@ -239,7 +240,9 @@ namespace Launcher.Core.Bases
         protected void OnJoinImpl(ZRole role)
         {
             if (SelectedServer == null) return;
-            if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber) _eventLogService.Log(EventLogLevel.Warning, "Cannot join", "No slots available");
+            if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber)
+                _eventLogService.Log(EventLogLevel.Warning, "Cannot join", "No slots available");
+
             _JoinGame(SelectedServer, role);
         }
 

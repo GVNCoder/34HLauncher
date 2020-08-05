@@ -244,6 +244,7 @@
     <Compile Include="Helpers\Clipboard.cs" />
     <Compile Include="Helpers\CollectionViewFiltrationExtension.cs" />
     <Compile Include="Helpers\ContentLoader.cs" />
+    <Compile Include="Helpers\EnumUtil.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\FilterConstant.cs" />
     <Compile Include="Helpers\FolderConstant.cs" />

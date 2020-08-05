@@ -12,6 +12,7 @@ using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Services;
+
 using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.ViewModel
@@ -170,21 +171,12 @@ namespace Launcher.ViewModel
 
         public ICommand HostCommand => new DelegateCommand(obj =>
         {
-            var difficulty = (ZCoopDifficulty) Enum.Parse(typeof(ZCoopDifficulty), DifficultyName);
-            SelectedMission.Difficulty = difficulty;
-            //var context = new RunContext
-            //{
-            //    Difficulty = difficulty,
-            //    Level = SelectedMission.Level,
-            //    Target = ZGame.BF3,
-            //    Mode = ZPlayMode.CooperativeHost,
-            //    Mission = SelectedMission
-            //};
-
-            //_gameService.Run(context);
-
             // check can run game
-            if (! _gameService.CanRun) return;
+            if (!_gameService.CanRun) return;
+
+            // parse difficulty enum and assign for selected mission
+            var difficulty = EnumUtil.Parse<ZCoopDifficulty>(DifficultyName);
+            SelectedMission.Difficulty = difficulty;
 
             // create run params
             var param = new CoopJoinParams
@@ -199,23 +191,13 @@ namespace Launcher.ViewModel
 
         public ICommand JoinCommand => new DelegateCommand(obj =>
         {
-            var friendId = uint.Parse(FriendId);
-            //var context = new RunContext
-            //{
-            //    FriendId = friendId,
-            //    Target = ZGame.BF3,
-            //    Mode = ZPlayMode.CooperativeClient
-            //};
-
-            //_gameService.Run(context);
-
             // check can run game
             if (!_gameService.CanRun) return;
 
             // create run params
+            var friendId = uint.Parse(FriendId);
             var param = new CoopJoinParams
             {
-                CoopMission = SelectedMission,
                 Game = ZGame.BF3,
                 Mode = ZPlayMode.CooperativeClient,
                 FriendId = friendId

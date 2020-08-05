@@ -51,53 +51,6 @@ namespace Launcher.Core.Data
             CanRun = true;
         }
 
-        private BaseGameWorker _BuildGameWorker(Type implType, IParameter[] parameters)
-            => (BaseGameWorker) _kernel.Get(implType, parameters);
-
-        private IParameter[] _BuildConstructorParameters(IEnumerable<string> paramNames, params object[] values)
-            => paramNames.Select((t, i) => new ConstructorArgument(t, values[i])).Cast<IParameter>().ToArray();
-
-        private void _CreateGameWorker(ref BaseGameWorker gameWorkerRef, Type implType, IParameter[] parameters)
-        {
-            gameWorkerRef = _BuildGameWorker(implType, parameters);
-            gameWorkerRef.Done += _OnWorkCompeteHandler;
-            gameWorkerRef.BeginWork();
-        }
-
-        private void _DestroyGameAssistant(ref BaseGameWorker gameWorkerRef)
-        {
-            gameWorkerRef.Done -= _OnWorkCompeteHandler;
-            gameWorkerRef = null;
-        }
-
-        private void _OnWorkCompeteHandler(object sender, GameCloseEventArgs e)
-        {
-            CanRun = true;
-
-            _DestroyGameAssistant(ref _gameWorker);
-            if (!string.IsNullOrEmpty(e.PipeLog))
-            {
-                _OnGameClose(e);
-            }
-        }
-
-        private Process _GetAnyGameProcess(IEnumerable<Process> processes)
-        {
-            bool __IsAGameProcess(Process process) => process.ProcessName.StartsWith("bf", StringComparison.OrdinalIgnoreCase);
-            bool __IsX64GameProcess(Process process) => process.ProcessName.Length == __x64ProcessNameLength;
-            bool __IsX86GameProcess(Process process) => process.ProcessName.Length == __x86ProcessNameLength &&
-                                                        process.ProcessName.EndsWith("_x86", StringComparison.OrdinalIgnoreCase);
-            return processes
-                // ReSharper disable once ConvertClosureToMethodGroup
-                .Where(p => __IsAGameProcess(p))
-                .FirstOrDefault(p => __IsX64GameProcess(p) || __IsX86GameProcess(p));
-        }
-
-        private GameSetting _GetGameSettings(ZGame target)
-            => _settingsService
-                .GetGameSettings()
-                .Settings[(int) target];
-
         #region IGameService
 
         public async Task RunMultiplayer(MultiplayerJoinParams param)
@@ -211,14 +164,28 @@ namespace Launcher.Core.Data
             // get game setting
             var settings = _GetGameSettings(param.Game);
             // create run params
-            var runParams = new ZCoopParams
+            ZCoopParams runParams = null;
+            if (param.Mode == ZPlayMode.CooperativeClient)
             {
-                PreferredArchitecture = settings.PreferredArchitecture,
-                Difficulty = param.CoopMission.Difficulty,
-                Level = param.CoopMission.Level,
-                Mode = param.Mode,
-                FriendId = param.FriendId
-            };
+                runParams = new ZCoopParams
+                {
+                    PreferredArchitecture = settings.PreferredArchitecture,
+                    Mode = param.Mode,
+                    FriendId = param.FriendId
+                };
+            }
+            else
+            {
+                runParams = new ZCoopParams
+                {
+                    PreferredArchitecture = settings.PreferredArchitecture,
+                    Difficulty = param.CoopMission.Difficulty,
+                    Level = param.CoopMission.Level,
+                    Mode = param.Mode,
+                    FriendId = param.FriendId
+                };
+            }
+
             try
             {
                 // create game for run
@@ -288,6 +255,54 @@ namespace Launcher.Core.Data
 
             return exception;
         }
+
+        private BaseGameWorker _BuildGameWorker(Type implType, IParameter[] parameters)
+            => (BaseGameWorker)_kernel.Get(implType, parameters);
+
+        private static IParameter[] _BuildConstructorParameters(IEnumerable<string> paramNames, params object[] values)
+            => paramNames.Select((t, i) => new ConstructorArgument(t, values[i])).Cast<IParameter>().ToArray();
+
+        // ReSharper disable once RedundantAssignment
+        private void _CreateGameWorker(ref BaseGameWorker gameWorkerRef, Type implType, IParameter[] parameters)
+        {
+            gameWorkerRef = _BuildGameWorker(implType, parameters);
+            gameWorkerRef.Done += _OnWorkCompeteHandler;
+            gameWorkerRef.BeginWork();
+        }
+
+        private void _DestroyGameAssistant(ref BaseGameWorker gameWorkerRef)
+        {
+            gameWorkerRef.Done -= _OnWorkCompeteHandler;
+            gameWorkerRef = null;
+        }
+
+        private void _OnWorkCompeteHandler(object sender, GameCloseEventArgs e)
+        {
+            CanRun = true;
+
+            _DestroyGameAssistant(ref _gameWorker);
+            if (!string.IsNullOrEmpty(e.PipeLog))
+            {
+                _OnGameClose(e);
+            }
+        }
+
+        private static Process _GetAnyGameProcess(IEnumerable<Process> processes)
+        {
+            bool __IsAGameProcess(Process process) => process.ProcessName.StartsWith("bf", StringComparison.OrdinalIgnoreCase);
+            bool __IsX64GameProcess(Process process) => process.ProcessName.Length == __x64ProcessNameLength;
+            bool __IsX86GameProcess(Process process) => process.ProcessName.Length == __x86ProcessNameLength &&
+                                                        process.ProcessName.EndsWith("_x86", StringComparison.OrdinalIgnoreCase);
+            return processes
+                // ReSharper disable once ConvertClosureToMethodGroup
+                .Where(p => __IsAGameProcess(p))
+                .FirstOrDefault(p => __IsX64GameProcess(p) || __IsX86GameProcess(p));
+        }
+
+        private GameSetting _GetGameSettings(ZGame target)
+            => _settingsService
+                .GetGameSettings()
+                .Settings[(int)target];
 
         #endregion
     }

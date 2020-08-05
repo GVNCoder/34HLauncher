@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+
 using Launcher.Core.Bases;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
@@ -9,7 +11,9 @@ using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
+using Launcher.Helpers;
 using Launcher.UserControls;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
@@ -47,7 +51,7 @@ namespace Launcher.ViewModel
             _busyService = busyService;
         }
 
-        private bool _isOnline(object playMode)
+        private static bool _isOnline(object playMode)
         {
             switch (playMode)
             {
@@ -90,7 +94,7 @@ namespace Launcher.ViewModel
 
         private void _OpenSettingsExec(object obj)
         {
-            var targetGame = (ZGame) Enum.Parse(typeof(ZGame), (string) obj);
+            var targetGame = EnumUtil.Parse<ZGame>((string) obj);
             var settings = _settingsService.GetGameSettings().Settings[(int) targetGame];
             var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame != ZGame.BF3);
 
@@ -99,26 +103,20 @@ namespace Launcher.ViewModel
 
         public ICommand JoinGameCommand => new DelegateCommand(_JoinGameCommandExec);
 
-        private static T _parseEnum<T>(string value) => (T) Enum.Parse(typeof(T), value);
-
         private void _JoinGameCommandExec(object obj)
         {
-            var parameters = (obj as string)
-                .Split('.');
-            var game = _parseEnum<ZGame>(parameters[0]);
-            var playMode = _parseEnum<ZPlayMode>(parameters[1]);
+            // extract useful data
+            var stringObj = (string) obj;
+            var parameters = stringObj.Split('.');
+            var game = EnumUtil.Parse<ZGame>(parameters.First());
+            var playMode = EnumUtil.Parse<ZPlayMode>(parameters.Last());
+            var connected = (bool) State.Storage["connection"];
 
-            var connected = (bool)State.Storage["connection"];
-            if (!connected)
+            // check connection
+            if (! connected)
             {
-                if (_isOnline(playMode))
-                {
-                    _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun, HLM.EventLauncherDisconnectedServers);
-                }
-                else
-                {
-                    _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun, HLM.EventLauncherDisconnected);
-                }
+                _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun,
+                    _isOnline(playMode) ? HLM.EventLauncherDisconnectedServers : HLM.EventLauncherDisconnected);
 
                 return;
             }
@@ -133,17 +131,14 @@ namespace Launcher.ViewModel
                     case ZPlayMode.CooperativeClient:
                         _navigationService.NavigateTo("View\\BF3CoopView.xaml");
                         break;
+                    case ZPlayMode.Singleplayer:
+                    case ZPlayMode.TestRange:
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
             else
             {
-                //var context = new RunContext
-                //{
-                //    Target = (ZGame) game,
-                //    Mode = (ZPlayMode) playMode
-                //};
-                //_gameService.Run(context);
-
                 // check can run game
                 if (! _gameService.CanRun) return;
 
@@ -169,7 +164,7 @@ namespace Launcher.ViewModel
         private async void _ViewStatsCommandExec(object obj)
         {
             var connected = (bool)State.Storage["connection"];
-            if (!connected)
+            if (! connected)
             {
                 _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventLauncherDisconnectedStats);
                 return;
