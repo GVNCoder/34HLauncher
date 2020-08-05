@@ -18,7 +18,7 @@ namespace Launcher.Core.Data.Dialog
         public OverlayDialogService(UIHostService hostService)
         {
             _hostService = hostService;
-            // wain for load window for HOST initialization
+            // wait for load window for HOST initialization
             Application.Current.MainWindow.Loaded += _mWndLoadedHandler;
             _dispatcher = Dispatcher.CurrentDispatcher;
         }
@@ -31,7 +31,7 @@ namespace Launcher.Core.Data.Dialog
             _overlayContainer = _hostService.GetHostContainer(UIElementConstants.HostOverlayContainer);
         }
 
-        private void _UIInjector(bool injectionMode, UIElement element = null)
+        private void _UIInjector(bool injectionMode, UIElement element)
         {
             if (injectionMode) _overlayContainer.Children.Add(element);
             else _overlayContainer.Children.Remove(element);

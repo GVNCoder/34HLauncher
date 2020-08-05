@@ -236,6 +236,9 @@ namespace Launcher.Core.Bases
             _viewFiltration = null;
 
             SelectedServer = null;
+
+            // handle discord leave server browser
+            _modalContentService.Show<ServerBrowserLeaveControl>(null).Forget();
         }
 
         protected void OnJoinImpl(ZRole role)
