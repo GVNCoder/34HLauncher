@@ -23,8 +23,10 @@ namespace Launcher.ViewModel
             IEventLogService eventLogService,
             IGameService gameService,
             IDiscord discord,
-            App application)
-            : base(api, hostService, gameService, eventLogService, presenterService, discord, application)
+            App application,
+            IWindowContentNavigationService navigationService,
+            ISettingsService settingsService)
+            : base(api, hostService, gameService, eventLogService, presenterService, discord, application, navigationService, settingsService)
         {
             MapNames = new[] { "All" }
                 .Concat(ZResource.GetBF4MapNames())

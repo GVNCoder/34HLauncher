@@ -139,4 +139,11 @@
     <system:String x:Key="sView_AvengerKills">Avenger kills</system:String>
     <system:String x:Key="sView_Resupplies">Resupplies</system:String>
 
+    <!--  UserControls  -->
+    <system:String x:Key="uc_ServerBrowserLeaveMainText">
+        You have the Discord Presence option enabled.
+        Therefore, if you leave the server browser, your friends will not be able to see up-to-date information about the location of your game.
+    </system:String>
+    <system:String x:Key="uc_ServerBrowserLeaveCheckBox">Do not show this message again</system:String>
+
 </ResourceDictionary>

@@ -131,13 +131,17 @@ namespace Launcher.Core.Bases
             IEventLogService eventLogService,
             IContentPresenterService modalContentPresenterService,
             IDiscord discord,
-            Application application) : base(discord)
+            Application application,
+            IWindowContentNavigationService navigationService,
+            ISettingsService settingsService) : base(discord)
         {
             _api = api;
             _gameService = gameService;
             _eventLogService = eventLogService;
             _modalContentService = modalContentPresenterService;
             _application = application;
+            _navigationService = navigationService;
+            _settingsInstance = settingsService.GetLauncherSettings();
 
             BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
         }
@@ -148,7 +152,9 @@ namespace Launcher.Core.Bases
         protected readonly IGameService _gameService;
         protected readonly Application _application;
         protected readonly IEventLogService _eventLogService;
+        protected readonly LauncherSettings _settingsInstance;
         protected readonly IContentPresenterService _modalContentService;
+        protected readonly IWindowContentNavigationService _navigationService;
         
         protected IZServersListService _serversService;
         protected CollectionViewSource _collectionViewSource;
@@ -221,6 +227,8 @@ namespace Launcher.Core.Bases
             _BuildViewFiltration(_collectionViewSource);
             _AssignCollectionViewSource(_serversService.ServersCollection);
             _serversService.StartReceiving();
+
+            _navigationService.Navigation += _LeaveServerBrowserInitiated;
         }
 
         protected void OnUnloadedImpl()
@@ -236,9 +244,6 @@ namespace Launcher.Core.Bases
             _viewFiltration = null;
 
             SelectedServer = null;
-
-            // handle discord leave server browser
-            _modalContentService.Show<ServerBrowserLeaveControl>(null).Forget();
         }
 
         protected void OnJoinImpl(ZRole role)
@@ -280,6 +285,19 @@ namespace Launcher.Core.Bases
                 if (compatibleServerModel == null) return;
 
                 currentGame.RelinkServer(compatibleServerModel);
+            }
+        }
+
+        private void _LeaveServerBrowserInitiated(object sender, EventArgs e)
+        {
+            _navigationService.Navigation -= _LeaveServerBrowserInitiated;
+
+            var playingCurrently = _gameService.CurrentPlayMode == ZPlayMode.Multiplayer;
+            if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)
+            {
+                // handle discord leave server browser
+                var viewModel = new ServerBrowserLeaveViewModel(_settingsInstance);
+                _modalContentService.Show<ServerBrowserLeaveControl>(viewModel).Forget();
             }
         }
 

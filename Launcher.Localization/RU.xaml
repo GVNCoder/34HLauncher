@@ -139,4 +139,11 @@
     <system:String x:Key="sView_AvengerKills">Мститель</system:String>
     <system:String x:Key="sView_Resupplies">Поддержка патронами</system:String>
 
+    <!--  UserControls  -->
+    <system:String x:Key="uc_ServerBrowserLeaveMainText">
+        У вас включена опция Присутствия в Дискорд.
+        Потому, если вы покините браузер серверов, ваши друзья не смогут ивидеть актуальную информацию о месте вашей игры.
+    </system:String>
+    <system:String x:Key="uc_ServerBrowserLeaveCheckBox">Больше не показывать это сообщение</system:String>
+
 </ResourceDictionary>

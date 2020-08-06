@@ -5,8 +5,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="100"
-    Height="50"
+    Width="450"
+    Padding="10"
     mc:Ignorable="d">
-    <Grid />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Text="{DynamicResource uc_ServerBrowserLeaveMainText}"
+            TextWrapping="WrapWithOverflow" />
+        <CheckBox
+            Grid.Row="1"
+            Margin="5"
+            Content="{DynamicResource uc_ServerBrowserLeaveCheckBox}"
+            IsChecked="{Binding DisableAsk, Mode=TwoWay}" />
+    </Grid>
 </UserControl>

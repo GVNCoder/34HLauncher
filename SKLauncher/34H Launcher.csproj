@@ -238,6 +238,7 @@
     <Compile Include="Core\Shared\IGameControl.cs" />
     <Compile Include="Core\Shared\LauncherSettings.cs" />
     <Compile Include="Core\Shared\NetworkAvailabilityChangedEvent.cs" />
+    <Compile Include="Core\Shared\ServerBrowserLeaveViewModel.cs" />
     <Compile Include="Core\Shared\StateConstants.cs" />
     <Compile Include="Core\Shared\TextDialogButtons.cs" />
     <Compile Include="Core\Shared\TextDialogViewModel.cs" />
