@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+
 using Launcher.Core.Bases;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
@@ -90,15 +91,7 @@ namespace Launcher.ViewModel
             set => SetValue(DifficultyNameProperty, value);
         }
         public static readonly DependencyProperty DifficultyNameProperty =
-            DependencyProperty.Register("DifficultyName", typeof(string), typeof(BF3CoopViewModel), new PropertyMetadata(string.Empty, _DifficultyChangedHandler));
-
-        private static void _DifficultyChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var vm = (BF3CoopViewModel) d;
-            var value = (string) e.NewValue;
-
-            vm.SelectedMission.Difficulty = (ZCoopDifficulty) Enum.Parse(typeof(ZCoopDifficulty), value);
-        }
+            DependencyProperty.Register("DifficultyName", typeof(string), typeof(BF3CoopViewModel), new PropertyMetadata(string.Empty));
 
         public string FriendId
         {
