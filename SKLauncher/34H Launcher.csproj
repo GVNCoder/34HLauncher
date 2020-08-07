@@ -492,6 +492,10 @@
     <Resource Include="Notes.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Launcher.Core\Launcher.Core.csproj">
+      <Project>{43735012-549c-4c5e-a42d-dade29c497b6}</Project>
+      <Name>Launcher.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Launcher.Localization\Launcher.Localization.csproj">
       <Project>{31acd8e5-391e-4782-a58b-89107cfc9fe6}</Project>
       <Name>Launcher.Localization</Name>
