@@ -20,6 +20,7 @@
             <e p="IBlurredPage.cs" t="Include" />
             <e p="IUIHostDependecny.cs" t="Include" />
           </e>
+          <e p="IDiscord.cs" t="Include" />
         </e>
       </e>
       <e p="Launcher.Localization" t="IncludeRecursive">

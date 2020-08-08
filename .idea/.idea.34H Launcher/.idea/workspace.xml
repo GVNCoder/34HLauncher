@@ -20,7 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd7362a8-9fb6-42fb-86a4-660d2e991463" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Launcher.Core/Launcher.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Launcher.Core/Launcher.Core.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SKLauncher/Core/RPC/IDiscord.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SKLauncher/Core/RPC/IDiscord.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +38,9 @@
     <setting file="file://$PROJECT_DIR$/Launcher.Theme/Controls/AcrylicPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Launcher.Core/Service/Base/DiscordPresencePageViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Launcher.Core/Service/Base/BasePageViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Launcher.Core/Service/IDiscord.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Launcher.Core/Service/Base/BaseViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/SKLauncher/Core/RPC/IDiscord.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Launcher.Core/Service/Base/IBlurredPage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Launcher.Core/Service/Base/IUIHostDependecny.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/SKLauncher/Core/Bases/IBlurredPage.cs" root0="FORCE_HIGHLIGHTING" />
@@ -50,6 +56,8 @@
         <option value="$PROJECT_DIR$/Launcher.Core/Service/DiscordPresencePageViewModel.cs" />
         <option value="$PROJECT_DIR$/Launcher.Core/Service/Base/DiscordPresencePageViewModel.cs" />
         <option value="$PROJECT_DIR$/Launcher.Core/Service/Base/BasePageViewModel.cs" />
+        <option value="$PROJECT_DIR$/SKLauncher/Core/RPC/IDiscord.cs" />
+        <option value="$PROJECT_DIR$/Launcher.Core/Service/IDiscord.cs" />
       </list>
     </option>
   </component>
@@ -98,7 +106,7 @@
       <option name="presentableId" value="Default" />
       <updated>1596823217201</updated>
       <workItem from="1596823223615" duration="5315000" />
-      <workItem from="1596879420107" duration="2856000" />
+      <workItem from="1596879420107" duration="4270000" />
     </task>
     <servers />
   </component>

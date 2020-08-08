@@ -50,6 +50,7 @@
     <Compile Include="Service\Base\DiscordPresencePageViewModel.cs" />
     <Compile Include="Service\Base\IBlurredPage.cs" />
     <Compile Include="Service\Base\IUIHostDependecny.cs" />
+    <Compile Include="Service\IDiscord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\zlo4net\Zlo4NET.csproj">
