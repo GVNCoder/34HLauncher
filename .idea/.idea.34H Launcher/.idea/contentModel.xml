@@ -5,6 +5,23 @@
     <e p="C:\Users\Тимчасовий\AppData\Local\JetBrains\Rider2020.1\resharper-host\Local\Transient\ReSharperHost\v201\SolutionCaches\_34H Launcher.-1542979510.00" t="ExcludeRecursive" />
     <e p="E:\Stas\Desktop\34HLauncher" t="IncludeFlat">
       <e p="34H Launcher.sln" t="IncludeFlat" />
+      <e p="Launcher.Core" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Launcher.Core.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Service" t="Include">
+          <e p="Base" t="Include">
+            <e p="BasePageViewModel.cs" t="Include" />
+            <e p="BaseViewModel.cs" t="Include" />
+            <e p="DiscordPresencePageViewModel.cs" t="Include" />
+            <e p="IBlurredPage.cs" t="Include" />
+            <e p="IUIHostDependecny.cs" t="Include" />
+          </e>
+        </e>
+      </e>
       <e p="Launcher.Localization" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="EN.xaml" t="Include" />
