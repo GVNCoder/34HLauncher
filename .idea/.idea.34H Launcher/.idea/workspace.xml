@@ -20,10 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bd7362a8-9fb6-42fb-86a4-660d2e991463" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.34H Launcher/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Launcher.Core/Launcher.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Launcher.Core/Launcher.Core.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1596823217201</updated>
       <workItem from="1596823223615" duration="5315000" />
-      <workItem from="1596879420107" duration="1859000" />
+      <workItem from="1596879420107" duration="2856000" />
     </task>
     <servers />
   </component>
