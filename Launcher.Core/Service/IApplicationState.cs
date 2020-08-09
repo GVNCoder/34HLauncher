@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Windows;
-using Launcher.Core.Data.Event;
+using Launcher.Core.Data.Model.Event;
 
 namespace Launcher.Core.Service
 {

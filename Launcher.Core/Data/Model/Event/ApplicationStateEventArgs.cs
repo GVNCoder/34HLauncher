@@ -1,7 +1,7 @@
 using System;
 using Launcher.Core.Service;
 
-namespace Launcher.Core.Data.Event
+namespace Launcher.Core.Data.Model.Event
 {
     /// <summary>
     /// Defines an argument for <see cref="IApplicationState"/> events
