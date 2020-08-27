@@ -49,6 +49,6 @@ namespace Launcher.Core.Service
         /// <param name="defaultValue">A standard value that will be returned in case of some failure.</param>
         /// <typeparam name="TCast">Desired type.</typeparam>
         /// <returns>Casted state value.</returns>
-        TCast GetState<TCast>(string key, TCast defaultValue);
+        TCast GetState<TCast>(string key, TCast defaultValue = default(TCast));
     }
 }
