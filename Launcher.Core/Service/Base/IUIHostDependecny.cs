@@ -11,6 +11,6 @@ namespace Launcher.Core.Service.Base
         /// Initializes an element with a UI element.
         /// </summary>
         /// <param name="element">The UI element (host).</param>
-        void Init(FrameworkElement element);
+        void SetDependency(FrameworkElement element);
     }
 }

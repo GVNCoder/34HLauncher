@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using log4net;
@@ -15,7 +16,7 @@ using Ninject;
 
 using Launcher.Core.Data.Updates;
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -29,7 +30,7 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
 using Zlo4NET.Core.Data;
-
+using IDiscord = Launcher.Core.RPC.IDiscord;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
 namespace Launcher.ViewModel.MainWindow
@@ -61,6 +62,8 @@ namespace Launcher.ViewModel.MainWindow
         private readonly IGameService _gameService;
         private readonly IDiscord _discordPresence;
 
+        private readonly IPageNavigator _navigator;
+
         public MainWindowViewModel(
             IApplicationStateService appStateService,
             IZApi api,
@@ -75,8 +78,12 @@ namespace Launcher.ViewModel.MainWindow
             IMainMenuService menuService,
             IUpdateService updateService,
             IGameService gameService,
-            IDiscord discordPresence)
+            IDiscord discordPresence,
+            
+            IPageNavigator navigator)
         {
+            _navigator = navigator;
+            
             _textDialogService = dialogService;
             _contentPresenterService = contentPresenterService;
             _eventLogService = eventLogService;
@@ -147,7 +154,7 @@ namespace Launcher.ViewModel.MainWindow
         {
             if (! e.State)
             {
-                _navigationService.NavigateTo("View\\HomeView.xaml");
+                // _navigationService.NavigateTo("View\\HomeView.xaml");
             }
 
             State.Storage["connection"] = _appStateService.AllGood();
@@ -234,6 +241,15 @@ namespace Launcher.ViewModel.MainWindow
 
             _navigationService.Initialize(iWnd.HOST_Content);
             _navigationService.NavigateTo("View\\HomeView.xaml");
+
+            // setup ui dependencies
+            ((PageNavigator) _navigator).SetDependency(iWnd.HOST_Content);
+
+
+
+
+
+            _navigator.Navigate("View\\HomeView.xaml");
 
             _appStateService.AddState(StateConstants.ZClient, true);
             _appStateService.AddState(StateConstants.Monolith, true);

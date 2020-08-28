@@ -3,11 +3,13 @@ using Launcher.Core.Data.Dialog;
 using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
 using Launcher.Core.RPC;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Ninject.Modules;
+using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Injection
 {
@@ -60,6 +62,11 @@ namespace Launcher.Core.Injection
                 .To<DiscordPresence>();
             Kernel.Bind<IDiscord>()
                 .To<Discord>()
+                .InSingletonScope();
+            
+            
+            // Add singleton
+            Kernel.Bind<IPageNavigator>().To<PageNavigator>()
                 .InSingletonScope();
         }
     }
