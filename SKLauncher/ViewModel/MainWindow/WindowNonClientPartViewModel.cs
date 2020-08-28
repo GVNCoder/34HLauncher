@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Launcher.Core.Interaction;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
@@ -25,18 +26,23 @@ namespace Launcher.ViewModel.MainWindow
         private readonly ILauncherProcessService _launcherProcessService;
         private readonly IUpdateService _updateService;
 
+        private readonly IPageNavigator _navigator;
+
         private ZUser _authorizedUser;
 
         public WindowNonClientPartViewModel(IUIHostService uiHostService,
             IApplicationStateService appStateService,
             IMainMenuService mainMenuService,
-            IWindowContentNavigationService navigationService,
+            //IWindowContentNavigationService navigationService,
+            IPageNavigator navigator,
             IZApi api,
             IUpdateService updateService)
         {
+            _navigator = navigator;
+
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
-            Navigation = navigationService;
-            Navigation.Navigation += _navigationInitiatedHandler;
+            //Navigation = navigationService;
+            _navigator.NavigationInitiated += _navigationInitiatedHandler;
             var application = Application.Current as App;
 
             _wnd = application.MainWindow;
@@ -106,7 +112,7 @@ namespace Launcher.ViewModel.MainWindow
         #region Public members
 
         public Grid WindowBackgroundContent { get; }
-        public IWindowContentNavigationService Navigation { get; }
+        //public IWindowContentNavigationService Navigation { get; }
 
         public string UserName
         {
@@ -150,6 +156,14 @@ namespace Launcher.ViewModel.MainWindow
 
         public ICommand ToggleMainMenuCommand => new DelegateCommand(obj => _mainMenuService.Toggle());
 
+        public ICommand NavigateToCommand => new DelegateCommand(obj =>
+        {
+            var navigationTarget = (string) obj;
+            _navigator.Navigate(navigationTarget);
+        });
+
+        public ICommand NavigateBackCommand => new DelegateCommand(obj => _navigator.NavigateBack());
+
         public ICommand RestartApplicationCommand => new DelegateCommand(obj =>
         {
             if (!_updateService.InDownloadStage)
@@ -174,6 +188,7 @@ namespace Launcher.ViewModel.MainWindow
         {
             // disable button
             ConnectIsEnabled = false;
+
             // try connect
             _api.Connection.Connect();
             _api.Connection.ConnectionChanged += _handler;

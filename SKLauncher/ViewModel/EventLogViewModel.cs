@@ -4,27 +4,34 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Launcher.Core.Bases;
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.ViewModel
 {
     public class EventLogViewModel : PageViewModelBase, IBlurredPage
     {
+        private readonly IPageNavigator _navigator;
+
         private readonly IUIHostService _hostService;
-        private readonly IWindowContentNavigationService _navigationService;
+        //private readonly IWindowContentNavigationService _navigationService;
+        
 
         public ObservableCollection<EventViewModel> Events { get; }
         public Grid BackgroundContent { get; private set; }
 
         public EventLogViewModel(
             IUIHostService hostService,
-            IWindowContentNavigationService navigationService,
-            IDiscord discord) : base(discord)
+            //IWindowContentNavigationService navigationService,
+            IDiscord discord,
+            IPageNavigator navigator) : base(discord)
         {
+            _navigator = navigator;
+
             _hostService = hostService;
-            _navigationService = navigationService;
+            //_navigationService = navigationService;
 
             var wnd = Application.Current.MainWindow;
             wnd.Loaded += _wndLoadedHandler;
@@ -43,7 +50,9 @@ namespace Launcher.ViewModel
         public ICommand CleanupEventsCommand => new DelegateCommand(obj =>
         {
             Events.Clear();
-            _navigationService.GoBack();
+
+            //_navigationService.GoBack();
+            _navigator.NavigateBack();
         });
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>

@@ -39,12 +39,12 @@ namespace Launcher.ViewModel.MainWindow
     {
         private const string _ZClientProcessName = "ZClient";
 
-        #region Lazy services
+        //#region Lazy services
 
-        private readonly Lazy<IWindowContentNavigationService> __lazyWindowNavigationService;
-        private IWindowContentNavigationService _navigationService => __lazyWindowNavigationService.Value;
+        //private readonly Lazy<IWindowContentNavigationService> __lazyWindowNavigationService;
+        //private IWindowContentNavigationService _navigationService => __lazyWindowNavigationService.Value;
 
-        #endregion
+        //#endregion
 
         private readonly IApplicationStateService _appStateService;
         private readonly ZProcessTracker _zClientProcessTracker;
@@ -112,8 +112,8 @@ namespace Launcher.ViewModel.MainWindow
 
             _appStateService.StateChanged += _appStateChanged;
 
-            __lazyWindowNavigationService = new Lazy<IWindowContentNavigationService>(() =>
-                kernel.Get<IWindowContentNavigationService>());
+            //__lazyWindowNavigationService = new Lazy<IWindowContentNavigationService>(() =>
+            //    kernel.Get<IWindowContentNavigationService>());
 
             _updateService.CancelDownloadResolver = async () =>
             {
@@ -239,8 +239,8 @@ namespace Launcher.ViewModel.MainWindow
         {
             var iWnd = (MainWindowView) obj;
 
-            _navigationService.Initialize(iWnd.HOST_Content);
-            _navigationService.NavigateTo("View\\HomeView.xaml");
+            //_navigationService.Initialize(iWnd.HOST_Content);
+            //_navigationService.NavigateTo("View\\HomeView.xaml");
 
             // setup ui dependencies
             ((PageNavigator) _navigator).SetDependency(iWnd.HOST_Content);

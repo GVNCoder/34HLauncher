@@ -39,7 +39,7 @@
             <controls:GlyphButton
                 Width="25"
                 Height="26"
-                Command="{Binding Navigation.Navigate}"
+                Command="{Binding NavigateToCommand}"
                 CommandParameter="View/HomeView.xaml"
                 Icon=""
                 IconSize="18"
@@ -49,7 +49,7 @@
             <controls:GlyphButton
                 Width="25"
                 Height="26"
-                Command="{Binding Navigation.Navigate}"
+                Command="{Binding NavigateToCommand}"
                 CommandParameter="View/SettingsView.xaml"
                 Icon=""
                 IconSize="18"
@@ -59,7 +59,7 @@
             <controls:GlyphButton
                 Width="25"
                 Height="26"
-                Command="{Binding Navigation.Back}"
+                Command="{Binding NavigateBackCommand}"
                 Icon=""
                 IconSize="20"
                 IsEnabled="{Binding CanBackNavigation}"

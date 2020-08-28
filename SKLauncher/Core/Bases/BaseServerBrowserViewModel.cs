@@ -5,10 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-
+using System.Windows.Navigation;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -21,6 +21,7 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
+using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Bases
 {
@@ -132,15 +133,18 @@ namespace Launcher.Core.Bases
             IContentPresenterService modalContentPresenterService,
             IDiscord discord,
             Application application,
-            IWindowContentNavigationService navigationService,
-            ISettingsService settingsService) : base(discord)
+            //IWindowContentNavigationService navigationService,
+            ISettingsService settingsService,
+            IPageNavigator navigator) : base(discord)
         {
+            _navigator = navigator;
+
             _api = api;
             _gameService = gameService;
             _eventLogService = eventLogService;
             _modalContentService = modalContentPresenterService;
             _application = application;
-            _navigationService = navigationService;
+            //_navigationService = navigationService;
             _settingsInstance = settingsService.GetLauncherSettings();
 
             BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
@@ -148,13 +152,15 @@ namespace Launcher.Core.Bases
 
         #region Protected members
 
+        protected readonly IPageNavigator _navigator;
+
         protected readonly IZApi _api;
         protected readonly IGameService _gameService;
         protected readonly Application _application;
         protected readonly IEventLogService _eventLogService;
         protected readonly LauncherSettings _settingsInstance;
         protected readonly IContentPresenterService _modalContentService;
-        protected readonly IWindowContentNavigationService _navigationService;
+        //protected readonly IWindowContentNavigationService _navigationService;
         
         protected IZServersListService _serversService;
         protected CollectionViewSource _collectionViewSource;
@@ -228,7 +234,8 @@ namespace Launcher.Core.Bases
             _AssignCollectionViewSource(_serversService.ServersCollection);
             _serversService.StartReceiving();
 
-            _navigationService.Navigation += _LeaveServerBrowserInitiated;
+            //_navigationService.Navigation += _LeaveServerBrowserInitiated;
+            _navigator.NavigationInitiated += _LeaveServerBrowserInitiated_New;
         }
 
         protected void OnUnloadedImpl()
@@ -290,7 +297,21 @@ namespace Launcher.Core.Bases
 
         private void _LeaveServerBrowserInitiated(object sender, EventArgs e)
         {
-            _navigationService.Navigation -= _LeaveServerBrowserInitiated;
+            //_navigationService.Navigation -= _LeaveServerBrowserInitiated;
+
+            var playingCurrently = _gameService.CurrentPlayMode == ZPlayMode.Multiplayer;
+            if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)
+            {
+                // handle discord leave server browser
+                var viewModel = new ServerBrowserLeaveViewModel(_settingsInstance);
+                _modalContentService.Show<ServerBrowserLeaveControl>(viewModel).Forget();
+            }
+        }
+
+        private void _LeaveServerBrowserInitiated_New(object sender, NavigatingCancelEventArgs e)
+        {
+
+            _navigator.NavigationInitiated -= _LeaveServerBrowserInitiated_New;
 
             var playingCurrently = _gameService.CurrentPlayMode == ZPlayMode.Multiplayer;
             if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)

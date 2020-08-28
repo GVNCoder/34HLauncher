@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 using Launcher.Core.Interaction;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
@@ -15,6 +16,7 @@ namespace Launcher.ViewModel.MainWindow
     {
         private readonly IApplicationStateService _applicationStateService;
         private readonly IEventLogService _eventLogService;
+        private readonly IPageNavigator _navigator;
 
         private EventViewModel _zClientEvent;
         private EventViewModel _connectionEvent;
@@ -23,13 +25,16 @@ namespace Launcher.ViewModel.MainWindow
             IUIHostService uiHostService,
             IVersionService versionService,
             IApplicationStateService applicationStateService,
-            IWindowContentNavigationService navigationService,
+            //IWindowContentNavigationService navigationService,
             IEventLogService eventLogService,
+            IPageNavigator navigator,
             App application)
         {
+            _navigator = navigator;
+
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             VersionString = versionService.GetLauncherVersion().ToString();
-            NavigationService = navigationService;
+            //NavigationService = navigationService;
 
             _applicationStateService = applicationStateService;
             _applicationStateService.StateChanged += _applicationStateChangedHandler;
@@ -101,7 +106,7 @@ namespace Launcher.ViewModel.MainWindow
 
         public Grid WindowBackgroundContent { get; }
         public string VersionString { get; }
-        public IWindowContentNavigationService NavigationService { get; }
+        //public IWindowContentNavigationService NavigationService { get; }
 
         public bool HasEvents
         {
@@ -119,8 +124,10 @@ namespace Launcher.ViewModel.MainWindow
 
         private void _openLogCommandExec(object obj)
         {
-            if (!_eventLogService.HasEvents) return;
-            NavigationService.NavigateTo("View/EventLogView.xaml");
+            if (! _eventLogService.HasEvents) return;
+
+            //NavigationService.NavigateTo("View/EventLogView.xaml");
+            _navigator.Navigate("View/EventLogView.xaml");
         }
 
         #endregion

@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Launcher.Core.Bases;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -18,13 +18,16 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
 using HLM = Launcher.Localization.Loc.inCodeLocalizationMap.HomeViewLocalizationMap;
+using IDiscord = Launcher.Core.RPC.IDiscord;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
 namespace Launcher.ViewModel
 {
     public class HomeViewModel : PageViewModelBase
     {
-        private readonly IWindowContentNavigationService _navigationService;
+        private readonly IPageNavigator _navigator;
+
+        //private readonly IWindowContentNavigationService _navigationService;
         private readonly IEventLogService _eventLogService;
         private readonly IGameService _gameService;
         private readonly IContentPresenterService _presenterService;
@@ -33,16 +36,19 @@ namespace Launcher.ViewModel
         private readonly IBusyService _busyService;
 
         public HomeViewModel(
-            IWindowContentNavigationService navigationService,
+            //IWindowContentNavigationService navigationService,
             IEventLogService eventLogService,
             IGameService gameService,
             IContentPresenterService presenterService,
             ISettingsService settingsService,
             IZApi api,
             IBusyService busyService,
-            IDiscord discord) : base(discord)
+            IDiscord discord,
+            IPageNavigator navigator) : base(discord)
         {
-            _navigationService = navigationService;
+            _navigator = navigator;
+
+            //_navigationService = navigationService;
             _eventLogService = eventLogService;
             _gameService = gameService;
             _presenterService = presenterService;
@@ -125,11 +131,13 @@ namespace Launcher.ViewModel
             {
                 switch (playMode)
                 {
-                    case ZPlayMode.Multiplayer: _navigationService.NavigateTo($"View\\{game}MultiplayerView.xaml");
+                    case ZPlayMode.Multiplayer: /*_navigationService.NavigateTo($"View\\{game}MultiplayerView.xaml");*/
+                        _navigator.Navigate($"View\\{game}MultiplayerView.xaml");
                         break;
                     case ZPlayMode.CooperativeHost:
                     case ZPlayMode.CooperativeClient:
-                        _navigationService.NavigateTo("View\\BF3CoopView.xaml");
+                        //_navigationService.NavigateTo("View\\BF3CoopView.xaml");
+                        _navigator.Navigate("View\\BF3CoopView.xaml");
                         break;
                     case ZPlayMode.Singleplayer:
                     case ZPlayMode.TestRange:
@@ -187,9 +195,10 @@ namespace Launcher.ViewModel
             switch (game)
             {
                 case ZGame.BF3:
-                    _navigationService.NavigateTo("View\\StatsViews\\BF3StatsView.xaml"); break;
+                    //_navigationService.NavigateTo("View\\StatsViews\\BF3StatsView.xaml"); break;
                 case ZGame.BF4:
-                    _navigationService.NavigateTo("View\\StatsViews\\BF4StatsView.xaml"); break;
+                    //_navigationService.NavigateTo("View\\StatsViews\\BF4StatsView.xaml"); break;
+                    _navigator.Navigate($"View\\StatsViews\\{game}StatsView.xaml"); break;
                 case ZGame.BFH:
                     //_navigationService.NavigateTo("View\\StatsViews\\BFHStatsView.xaml"); break;
                 case ZGame.None:
