@@ -26,8 +26,8 @@ namespace Launcher.ViewModel
     public class HomeViewModel : PageViewModelBase
     {
         private readonly IPageNavigator _navigator;
+        private readonly IApplicationState _state;
 
-        //private readonly IWindowContentNavigationService _navigationService;
         private readonly IEventLogService _eventLogService;
         private readonly IGameService _gameService;
         private readonly IContentPresenterService _presenterService;
@@ -36,7 +36,6 @@ namespace Launcher.ViewModel
         private readonly IBusyService _busyService;
 
         public HomeViewModel(
-            //IWindowContentNavigationService navigationService,
             IEventLogService eventLogService,
             IGameService gameService,
             IContentPresenterService presenterService,
@@ -44,11 +43,12 @@ namespace Launcher.ViewModel
             IZApi api,
             IBusyService busyService,
             IDiscord discord,
-            IPageNavigator navigator) : base(discord)
+            IPageNavigator navigator,
+            IApplicationState state) : base(discord)
         {
             _navigator = navigator;
+            _state = state;
 
-            //_navigationService = navigationService;
             _eventLogService = eventLogService;
             _gameService = gameService;
             _presenterService = presenterService;
@@ -116,7 +116,7 @@ namespace Launcher.ViewModel
             var parameters = stringObj.Split('.');
             var game = EnumUtil.Parse<ZGame>(parameters.First());
             var playMode = EnumUtil.Parse<ZPlayMode>(parameters.Last());
-            var connected = (bool) State.Storage["connection"];
+            var connected = _state.GetState<bool>(Constants.ZCLIENT_CONNECTION);
 
             // check connection
             if (! connected)
@@ -131,12 +131,11 @@ namespace Launcher.ViewModel
             {
                 switch (playMode)
                 {
-                    case ZPlayMode.Multiplayer: /*_navigationService.NavigateTo($"View\\{game}MultiplayerView.xaml");*/
+                    case ZPlayMode.Multiplayer:
                         _navigator.Navigate($"View\\{game}MultiplayerView.xaml");
                         break;
                     case ZPlayMode.CooperativeHost:
                     case ZPlayMode.CooperativeClient:
-                        //_navigationService.NavigateTo("View\\BF3CoopView.xaml");
                         _navigator.Navigate("View\\BF3CoopView.xaml");
                         break;
                     case ZPlayMode.Singleplayer:
@@ -171,7 +170,7 @@ namespace Launcher.ViewModel
 
         private async void _ViewStatsCommandExec(object obj)
         {
-            var connected = (bool)State.Storage["connection"];
+            var connected = _state.GetState<bool>(Constants.ZCLIENT_CONNECTION);
             if (! connected)
             {
                 _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventLauncherDisconnectedStats);
@@ -182,8 +181,9 @@ namespace Launcher.ViewModel
 
             var game = (ZGame) Enum.Parse(typeof(ZGame), (string) obj);
             var stats = await _api.GetStatsAsync(game);
+            var gameKey = game.ToString().ToLower();
 
-            State.Storage[$"stats_{game}"] = stats;
+            _state.SetState($"stats_{gameKey}", stats);
 
             if (stats.Rank == 0)
             {
@@ -195,12 +195,9 @@ namespace Launcher.ViewModel
             switch (game)
             {
                 case ZGame.BF3:
-                    //_navigationService.NavigateTo("View\\StatsViews\\BF3StatsView.xaml"); break;
                 case ZGame.BF4:
-                    //_navigationService.NavigateTo("View\\StatsViews\\BF4StatsView.xaml"); break;
                     _navigator.Navigate($"View\\StatsViews\\{game}StatsView.xaml"); break;
                 case ZGame.BFH:
-                    //_navigationService.NavigateTo("View\\StatsViews\\BFHStatsView.xaml"); break;
                 case ZGame.None:
                     default: throw new ArgumentOutOfRangeException(nameof(game), game, @"Stats supports only in BF3 and BF4.");
             }

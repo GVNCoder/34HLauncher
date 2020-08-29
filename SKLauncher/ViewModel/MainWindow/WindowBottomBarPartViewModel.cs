@@ -3,18 +3,20 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
+using Launcher.Core;
+using Launcher.Core.Data.Model.Event;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
+using Launcher.Helpers;
 
 namespace Launcher.ViewModel.MainWindow
 {
     public class WindowBottomBarPartViewModel : DependencyObject
     {
-        private readonly IApplicationStateService _applicationStateService;
+        private readonly ZClientState _zClientState;
         private readonly IEventLogService _eventLogService;
         private readonly IPageNavigator _navigator;
 
@@ -24,20 +26,19 @@ namespace Launcher.ViewModel.MainWindow
         public WindowBottomBarPartViewModel(
             IUIHostService uiHostService,
             IVersionService versionService,
-            IApplicationStateService applicationStateService,
-            //IWindowContentNavigationService navigationService,
             IEventLogService eventLogService,
             IPageNavigator navigator,
+            ZClientState zClientState,
             App application)
         {
             _navigator = navigator;
+            _zClientState = zClientState;
 
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             VersionString = versionService.GetLauncherVersion().ToString();
             //NavigationService = navigationService;
 
-            _applicationStateService = applicationStateService;
-            _applicationStateService.StateChanged += _applicationStateChangedHandler;
+            _zClientState.StateChanged += _applicationStateChangedHandler;
             _eventLogService = eventLogService;
 
             var vmLocator = application
@@ -71,13 +72,15 @@ namespace Launcher.ViewModel.MainWindow
                 "-You did not click the Connect button\n-There is no internet connection\n-You, for whatever reason, are not logged in to ZClient\n-Running multiple processes of ZClient\n-Launcher internal error (restart the launcher and contact the developer)");
         }
 
-        private void _applicationStateChangedHandler(object sender, ApplicationStateArgs e)
+        private void _applicationStateChangedHandler(object sender, ApplicationStateEventArgs e)
         {
+            var stateValue = e.Cast<bool>();
+
             Dispatcher.Invoke(() =>
             {
-                if (e.Key == StateConstants.ZClient)
+                if (e.Key == Constants.ZCLIENT_CONNECTION)
                 {
-                    if (e.State)
+                    if (stateValue)
                     {
                         _zClientEvent?.CloseCommand.Execute(null);
                         _zClientEvent = null;
@@ -89,7 +92,7 @@ namespace Launcher.ViewModel.MainWindow
                 }
                 else
                 {
-                    if (e.State)
+                    if (stateValue)
                     {
                         _connectionEvent?.CloseCommand.Execute(null);
                         _connectionEvent = null;
@@ -106,7 +109,6 @@ namespace Launcher.ViewModel.MainWindow
 
         public Grid WindowBackgroundContent { get; }
         public string VersionString { get; }
-        //public IWindowContentNavigationService NavigationService { get; }
 
         public bool HasEvents
         {
@@ -126,7 +128,6 @@ namespace Launcher.ViewModel.MainWindow
         {
             if (! _eventLogService.HasEvents) return;
 
-            //NavigationService.NavigateTo("View/EventLogView.xaml");
             _navigator.Navigate("View/EventLogView.xaml");
         }
 

@@ -143,6 +143,7 @@
     <Compile Include="Converters\Rotations\MapRole2StringConverter.cs" />
     <Compile Include="Converters\Rotations\MapRole2VisibilityConverter.cs" />
     <Compile Include="Converters\String2VisibilityConverter.cs" />
+    <Compile Include="Core\ApplicationStateExtension.cs" />
     <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
     <Compile Include="Core\Bases\IBlurredPage.cs" />
     <Compile Include="Core\Bases\PageViewModelBase.cs" />
@@ -189,11 +190,9 @@
     <Compile Include="Core\RPC\IDiscordPresence.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatedEventArgs.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatesUnit.cs" />
-    <Compile Include="Core\Services\ApplicationStateService.cs" />
     <Compile Include="Core\Services\BusyService.cs" />
     <Compile Include="Core\Services\Dialog\IContentPresenterService.cs" />
     <Compile Include="Core\Services\EventLog\IEventLogService.cs" />
-    <Compile Include="Core\Services\IApplicationStateService.cs" />
     <Compile Include="Core\Services\IBusyService.cs" />
     <Compile Include="Core\Services\IGameService.cs" />
     <Compile Include="Core\Services\ILauncherProcessService.cs" />
@@ -211,12 +210,10 @@
     <Compile Include="Core\Data\Dialog\OverlayDialogService.cs" />
     <Compile Include="Core\Services\ProcessService.cs" />
     <Compile Include="Core\Services\SettingsService.cs" />
-    <Compile Include="Core\Services\State.cs" />
     <Compile Include="Core\SettingsViewModelParts\GeneralSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\ThemesSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\UIBaseViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\UpdatesSectionViewModel.cs" />
-    <Compile Include="Core\Shared\ApplicationStateArgs.cs" />
     <Compile Include="Core\Shared\BusyViewModel.cs" />
     <Compile Include="Core\Shared\ChangesViewModel.cs" />
     <Compile Include="Core\Shared\ContentPresenterViewModel.cs" />
@@ -243,8 +240,10 @@
     <Compile Include="Core\Shared\TextDialogButtons.cs" />
     <Compile Include="Core\Shared\TextDialogViewModel.cs" />
     <Compile Include="Core\Shared\UIElementConstants.cs" />
+    <Compile Include="Core\ZClientState.cs" />
     <Compile Include="Helpers\Clipboard.cs" />
     <Compile Include="Helpers\CollectionViewFiltrationExtension.cs" />
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\ContentLoader.cs" />
     <Compile Include="Helpers\EnumUtil.cs" />
     <Compile Include="Helpers\FileHelper.cs" />

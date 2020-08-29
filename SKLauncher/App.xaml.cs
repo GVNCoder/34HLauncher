@@ -64,7 +64,7 @@ namespace Launcher
             Resources["ViewModelLocator"] = DependencyResolver.Locators.ViewModelLocator;
             Resources["UserControlViewModelLocator"] = DependencyResolver.Locators.UserControlViewModelLocator;
 
-            _SetupVars();
+            //_SetupVars();
             _SetupDirectories();
             _SetupLoggers(ZApi.Instance, Logger);
 
@@ -102,11 +102,6 @@ namespace Launcher
         }
 
         #endregion // App startup/exit
-
-        private static void _SetupVars()
-        {
-            State.Storage["connection"] = false;
-        }
 
         private static void _SetupDirectories()
         {

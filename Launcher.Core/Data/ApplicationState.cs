@@ -23,8 +23,9 @@ namespace Launcher.Core.Data
         
         public void SetState(string key, object state, bool raiseEvent = true)
         {
-            _ThrowIfNotExists(key);
-            
+            // throw if not exists
+            if (! State.ContainsKey(key)) throw new InvalidOperationException($"The key({key}) not exists.");
+
             // set new state
             State[key] = state;
             
@@ -34,8 +35,8 @@ namespace Launcher.Core.Data
 
         public void RegisterState(string key, object initialValue, bool raiseEvent = false)
         {
-            _ThrowIfNotExists(key);
-            
+            if (State.ContainsKey(key)) throw new InvalidOperationException($"The key({key}) already exists.");
+
             // register new state
             State.Add(key, initialValue);
             
@@ -54,9 +55,9 @@ namespace Launcher.Core.Data
         private void _OnStateChanged(string key, object state)
             => StateChanged?.Invoke(this, new ApplicationStateEventArgs(key, state));
 
-        private void _ThrowIfNotExists(string key)
+        private void _ThrowIfExists(string key)
         {
-            if (! State.ContainsKey(key)) throw new InvalidOperationException($"The key({key}) already exists.");
+            if (State.ContainsKey(key)) throw new InvalidOperationException($"The key({key}) already exists.");
         }
 
         #endregion

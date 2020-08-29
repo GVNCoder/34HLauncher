@@ -19,18 +19,12 @@ namespace Launcher.Core.Injection
         {
             Kernel.Bind<IUIHostService>()
                 .To<UIHostService>();
-            Kernel.Bind<IWindowContentNavigationService>()
-                .To<WindowContentNavigationService>()
-                .InSingletonScope();
             Kernel.Bind<IVersionService>()
                 .To<VersionService>();
             Kernel.Bind<INetworkAvailabilityTracker>()
                 .To<NetworkAvailabilityTracker>();
             Kernel.Bind<IMainMenuService>()
                 .To<MainMenuService>();
-            Kernel.Bind<IApplicationStateService>()
-                .To<ApplicationStateService>()
-                .InSingletonScope();
             Kernel.Bind<IBusyService>()
                 .To<BusyService>()
                 .InSingletonScope();
@@ -67,6 +61,10 @@ namespace Launcher.Core.Injection
             
             // Add singleton
             Kernel.Bind<IPageNavigator>().To<PageNavigator>()
+                .InSingletonScope();
+            Kernel.Bind<IApplicationState>().To<ApplicationState>()
+                .InSingletonScope();
+            Kernel.Bind<ZClientState>().ToSelf()
                 .InSingletonScope();
         }
     }

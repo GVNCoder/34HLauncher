@@ -3,6 +3,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Launcher.Core;
+using Launcher.Core.Data.Model.Event;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
@@ -22,37 +24,36 @@ namespace Launcher.ViewModel.MainWindow
         private readonly Window _wnd;
         private readonly IZApi _api;
         private readonly IMainMenuService _mainMenuService;
-        private readonly IApplicationStateService _appStateService;
         private readonly ILauncherProcessService _launcherProcessService;
         private readonly IUpdateService _updateService;
+        private readonly ZClientState _zClientState;
 
         private readonly IPageNavigator _navigator;
 
         private ZUser _authorizedUser;
 
-        public WindowNonClientPartViewModel(IUIHostService uiHostService,
-            IApplicationStateService appStateService,
+        public WindowNonClientPartViewModel(
+            IUIHostService uiHostService,
             IMainMenuService mainMenuService,
-            //IWindowContentNavigationService navigationService,
             IPageNavigator navigator,
             IZApi api,
-            IUpdateService updateService)
+            IUpdateService updateService,
+            ZClientState zClientState)
         {
             _navigator = navigator;
+            _zClientState = zClientState;
 
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
-            //Navigation = navigationService;
             _navigator.NavigationInitiated += _navigationInitiatedHandler;
             var application = Application.Current as App;
 
             _wnd = application.MainWindow;
-            _appStateService = appStateService;
             _launcherProcessService = application.ProcessService;
             _mainMenuService = mainMenuService;
             _api = api;
             _updateService = updateService;
 
-            _appStateService.StateChanged += _appStateChanged;
+            _zClientState.StateChanged += _applicationStateChangedHandler;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)
@@ -72,9 +73,11 @@ namespace Launcher.ViewModel.MainWindow
             }
         }
 
-        private void _appStateChanged(object sender, ApplicationStateArgs e)
+        private void _applicationStateChangedHandler(object sender, ApplicationStateEventArgs e)
         {
-            if (! e.State)
+            var stateValue = e.Cast<bool>();
+
+            if (!stateValue)
             {
                 if (_authorizedUser == null)
                 {
@@ -88,7 +91,7 @@ namespace Launcher.ViewModel.MainWindow
                     _authorizedUser = null;
                 });
             }
-            else if (_appStateService.AllGood())
+            else if (_zClientState.AllGood)
             {
                 if (_authorizedUser != null)
                 {
@@ -99,7 +102,7 @@ namespace Launcher.ViewModel.MainWindow
                 Dispatcher.Invoke(() => CanBackNavigation = true);
             }
 
-            var visibility = _appStateService.AllGood() ? Visibility.Collapsed : Visibility.Visible;
+            var visibility = _zClientState.AllGood ? Visibility.Collapsed : Visibility.Visible;
             Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
         }
 
