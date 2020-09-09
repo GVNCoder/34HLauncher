@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 using Launcher.Core;
 using Launcher.Core.Data.Model.Event;
 using Launcher.Core.Interaction;
@@ -10,6 +11,7 @@ using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
@@ -53,7 +55,7 @@ namespace Launcher.ViewModel.MainWindow
             _api = api;
             _updateService = updateService;
 
-            _zClientState.StateChanged += _applicationStateChangedHandler;
+            //_zClientState.StateChanged += _applicationStateChangedHandler;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)
@@ -61,50 +63,47 @@ namespace Launcher.ViewModel.MainWindow
             if (_mainMenuService.CanUse) _mainMenuService.Close();
         }
 
-        private void _SetAuthorizedUser()
-        {
-            _authorizedUser = _api.Connection.AuthorizedUser;
-            if (_authorizedUser != null)
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    UserName = _authorizedUser.Name;
-                });
-            }
-        }
+        //private void _SetAuthorizedUser()
+        //{
+        //    _authorizedUser = _api.Connection.AuthorizedUser;
+        //    if (_authorizedUser != null)
+        //    {
+        //        UserName = _authorizedUser.Name;
+        //    }
+        //}
 
-        private void _applicationStateChangedHandler(object sender, ApplicationStateEventArgs e)
-        {
-            var stateValue = e.Cast<bool>();
+        //private void _applicationStateChangedHandler(object sender, ApplicationStateEventArgs e)
+        //{
+        //    var stateValue = e.Cast<bool>();
 
-            if (!stateValue)
-            {
-                if (_authorizedUser == null)
-                {
-                    return;
-                }
+        //    if (!stateValue)
+        //    {
+        //        if (_authorizedUser == null)
+        //        {
+        //            return;
+        //        }
 
-                Dispatcher.Invoke(() =>
-                {
-                    UserName = WLM.UnknownUser;
-                    CanBackNavigation = false;
-                    _authorizedUser = null;
-                });
-            }
-            else if (_zClientState.AllGood)
-            {
-                if (_authorizedUser != null)
-                {
-                    return;
-                }
+        //        Dispatcher.Invoke(() =>
+        //        {
+        //            UserName = WLM.UnknownUser;
+        //            CanBackNavigation = false;
+        //            _authorizedUser = null;
+        //        });
+        //    }
+        //    else if (_zClientState.AllGood)
+        //    {
+        //        if (_authorizedUser != null)
+        //        {
+        //            return;
+        //        }
 
-                _SetAuthorizedUser();
-                Dispatcher.Invoke(() => CanBackNavigation = true);
-            }
+        //        _SetAuthorizedUser();
+        //        Dispatcher.Invoke(() => CanBackNavigation = true);
+        //    }
 
-            var visibility = _zClientState.AllGood ? Visibility.Collapsed : Visibility.Visible;
-            Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
-        }
+        //    var visibility = _zClientState.AllGood ? Visibility.Collapsed : Visibility.Visible;
+        //    Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
+        //}
 
         private void _handler(object sender, ZConnectionChangedArgs e)
         {
@@ -115,7 +114,6 @@ namespace Launcher.ViewModel.MainWindow
         #region Public members
 
         public Grid WindowBackgroundContent { get; }
-        //public IWindowContentNavigationService Navigation { get; }
 
         public string UserName
         {
@@ -128,7 +126,7 @@ namespace Launcher.ViewModel.MainWindow
         public Visibility ConnectButtonVisibility
         {
             get => (Visibility)GetValue(ConnectButtonVisibilityProperty);
-            set => SetValue(ConnectButtonVisibilityProperty, value);
+            set => Dispatcher.Invoke(() => SetValue(ConnectButtonVisibilityProperty, value));
         }
         public static readonly DependencyProperty ConnectButtonVisibilityProperty =
             DependencyProperty.Register("ConnectButtonVisibility", typeof(Visibility), typeof(WindowNonClientPartViewModel), new PropertyMetadata(Visibility.Visible));
@@ -144,7 +142,7 @@ namespace Launcher.ViewModel.MainWindow
         public bool CanBackNavigation
         {
             get => (bool)GetValue(CanBackNavigationProperty);
-            set => SetValue(CanBackNavigationProperty, value);
+            set => Dispatcher.Invoke(() => SetValue(CanBackNavigationProperty, value));
         }
         public static readonly DependencyProperty CanBackNavigationProperty =
             DependencyProperty.Register("CanBackNavigation", typeof(bool), typeof(WindowNonClientPartViewModel), new PropertyMetadata(false));
@@ -202,6 +200,32 @@ namespace Launcher.ViewModel.MainWindow
         private void _DEBUG(object obj)
         {
             if (_api.Connection.IsConnected) _api.Connection.Disconnect();
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public void UpdateDisconnected()
+        {
+            if (_authorizedUser == null) return;
+
+            _authorizedUser = null;
+
+            UserName = WLM.UnknownUser;
+            CanBackNavigation = false;
+            ConnectButtonVisibility = Visibility.Visible;
+        }
+
+        public void UpdateConnected()
+        {
+            if (_authorizedUser != null) return;
+
+            _authorizedUser = _api.Connection.AuthorizedUser;
+
+            UserName = _authorizedUser.Name;
+            CanBackNavigation = true;
+            ConnectButtonVisibility = Visibility.Collapsed;
         }
 
         #endregion

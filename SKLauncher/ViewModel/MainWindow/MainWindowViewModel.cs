@@ -6,13 +6,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 using log4net;
 using Launcher.Core;
 using Launcher.Core.Data;
-using Launcher.Core.Data.Model.Event;
 using Microsoft.Win32;
 using Ninject;
 
@@ -27,6 +25,8 @@ using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
+
+using Ninject.Syntax;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
@@ -59,14 +59,13 @@ namespace Launcher.ViewModel.MainWindow
 
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
-        private readonly ZClientState _zClientState;
 
         public MainWindowViewModel(
             IZApi api,
             ILog logger,
             ISettingsService settingsService,
             IProcessService processService,
-            IKernel kernel,
+            IResolutionRoot kernel,
             ITextDialogService dialogService,
             IContentPresenterService contentPresenterService,
             IEventLogService eventLogService,
@@ -76,12 +75,10 @@ namespace Launcher.ViewModel.MainWindow
             IDiscord discordPresence,
             
             IPageNavigator navigator,
-            IApplicationState state,
-            ZClientState zClientState)
+            IApplicationState state)
         {
             _navigator = navigator;
             _state = state;
-            _zClientState = zClientState;
             
             _textDialogService = dialogService;
             _contentPresenterService = contentPresenterService;
@@ -107,8 +104,6 @@ namespace Launcher.ViewModel.MainWindow
                 .First());
             _zClientProcessTracker.ProcessDetected += _zClientProcessDetectedHandler;
             _zClientProcessTracker.ProcessLost += _zClientProcessLostHandler;
-
-            _zClientState.StateChanged += _applicationStateChangedHandler;
 
             _updateService.CancelDownloadResolver = async () =>
             {
@@ -145,30 +140,40 @@ namespace Launcher.ViewModel.MainWindow
         private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
             => _eventLogService.Log(EventLogLevel.Error, "Update service", e.Message);
 
-        private void _applicationStateChangedHandler(object sender, ApplicationStateEventArgs e)
+        private void _RefreshAppState()
         {
-            var value = e.Cast<bool>();
-
-            if (! value)
+            var connectionState = _zClientProcessTracker.IsRun && _apiConnection.IsConnected;
+            if (connectionState)
             {
+                // update data contexts state
+                NonClientDataContext.UpdateConnected();
+                BottomBarDataContext.UpdateConnected();
+            }
+            else
+            {
+                // update data contexts state
+                NonClientDataContext.UpdateDisconnected();
+                BottomBarDataContext.UpdateDisconnected();
+
+                // goto Home ;)
                 _navigator.Navigate("View\\HomeView.xaml");
             }
 
-            //State.Storage["connection"] = _appStateService.AllGood();
-            _zClientState.SetConnection(_zClientState.AllGood);
+            // update app state
+            _state.SetState(Constants.ZCLIENT_CONNECTION, connectionState);
         }
 
         private void _zClientProcessLostHandler(object sender, EventArgs e)
         {
-            _zClientState.SetConnection(false);
-            _zClientState.SetIsRun(false);
+            _RefreshAppState();
 
+            // reset connection
             _apiConnection.Disconnect();
         }
 
         private async void _zClientProcessDetectedHandler(object sender, Process process)
         {
-            _zClientState.SetIsRun(true);
+            _RefreshAppState();
 
             var startProcessTime = process.StartTime.ToUniversalTime();
             var currentTime = DateTime.UtcNow;
@@ -208,10 +213,7 @@ namespace Launcher.ViewModel.MainWindow
         }
 
         private void _apiConnectionConnectionChangedHandler(object sender, ZConnectionChangedArgs e)
-        {
-            //_state.SetState(Constants.ZCLIENT_CONNECTION, e.IsConnected);
-            _zClientState.SetConnection(e.IsConnected);
-        }
+            => _RefreshAppState();
 
         private void _runZClient(string path)
         {
@@ -244,10 +246,9 @@ namespace Launcher.ViewModel.MainWindow
             // setup application state vars
             _state.RegisterVars();
 
-            //_appStateService.AddState(StateConstants.ZClient, true);
-            //_appStateService.AddState(StateConstants.Monolith, true);
-
-            _navigator.Navigate("View\\HomeView.xaml");
+            // initial actions
+            _navigator.Navigate("View\\HomeView.xaml"); // default page is Home ;)
+            BottomBarDataContext.UpdateDisconnected();  // for error message showing
 
             var settings = _settingsService.GetLauncherSettings();
             if (settings.RunZClient)
