@@ -64,8 +64,6 @@ namespace Launcher.Core.Injection
                 .InSingletonScope();
             Kernel.Bind<IApplicationState>().To<ApplicationState>()
                 .InSingletonScope();
-            Kernel.Bind<ZClientState>().ToSelf()
-                .InSingletonScope();
         }
     }
 }

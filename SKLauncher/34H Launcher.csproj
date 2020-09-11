@@ -240,7 +240,6 @@
     <Compile Include="Core\Shared\TextDialogButtons.cs" />
     <Compile Include="Core\Shared\TextDialogViewModel.cs" />
     <Compile Include="Core\Shared\UIElementConstants.cs" />
-    <Compile Include="Core\ZClientState.cs" />
     <Compile Include="Helpers\Clipboard.cs" />
     <Compile Include="Helpers\CollectionViewFiltrationExtension.cs" />
     <Compile Include="Helpers\Constants.cs" />

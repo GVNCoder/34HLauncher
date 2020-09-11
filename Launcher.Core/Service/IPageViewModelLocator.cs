@@ -8,6 +8,6 @@ namespace Launcher.Core.Service
     public interface IPageViewModelLocator
     {
         // template of declaration a new viewModel in locator
-        // BasePageViewModel NameViewModel { get; }
+        BasePageViewModel NameViewModel { get; }
     }
 }

@@ -28,7 +28,6 @@ namespace Launcher.ViewModel.MainWindow
         private readonly IMainMenuService _mainMenuService;
         private readonly ILauncherProcessService _launcherProcessService;
         private readonly IUpdateService _updateService;
-        private readonly ZClientState _zClientState;
 
         private readonly IPageNavigator _navigator;
 
@@ -39,11 +38,9 @@ namespace Launcher.ViewModel.MainWindow
             IMainMenuService mainMenuService,
             IPageNavigator navigator,
             IZApi api,
-            IUpdateService updateService,
-            ZClientState zClientState)
+            IUpdateService updateService)
         {
             _navigator = navigator;
-            _zClientState = zClientState;
 
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             _navigator.NavigationInitiated += _navigationInitiatedHandler;

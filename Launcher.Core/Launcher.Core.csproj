@@ -51,6 +51,8 @@
     <Compile Include="Data\ApplicationState.cs" />
     <Compile Include="Data\Model\Event\ApplicationStateEventArgs.cs" />
     <Compile Include="Data\PageNavigator.cs" />
+    <Compile Include="Data\Resolver.cs" />
+    <Compile Include="Data\ViewModelSource.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Base\BaseControlViewModel.cs" />
@@ -62,8 +64,11 @@
     <Compile Include="Service\IApplicationState.cs" />
     <Compile Include="Service\IControlViewModelLocator.cs" />
     <Compile Include="Service\IDiscord.cs" />
+    <Compile Include="Service\Internal\Module\ServiceModule.cs" />
     <Compile Include="Service\IPageNavigator.cs" />
     <Compile Include="Service\IPageViewModelLocator.cs" />
+    <Compile Include="Service\IResolver.cs" />
+    <Compile Include="Service\IViewModelSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\zlo4net\Zlo4NET.csproj">
@@ -75,7 +80,6 @@
     <Folder Include="Data\Internal\" />
     <Folder Include="Data\Model\Internal\" />
     <Folder Include="Data\Model\Shared\" />
-    <Folder Include="Service\Internal\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

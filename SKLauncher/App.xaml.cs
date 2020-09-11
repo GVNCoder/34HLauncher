@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 
 using log4net;
+using Launcher.Core.Data;
 using Ninject;
 
 using Launcher.Core.Injection;
@@ -16,8 +17,8 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
 
-[assembly: AssemblyVersion("0.122.1231.0")]
-[assembly: AssemblyFileVersion("0.122.1231.0")]
+[assembly: AssemblyVersion("0.123.0.1")]
+[assembly: AssemblyFileVersion("0.123.0.1")]
 
 namespace Launcher
 {
@@ -56,6 +57,10 @@ namespace Launcher
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            var x = Resolver.GetInstance;
+
+
+
             ProcessService.HandleProcessInstance(this, e.Args);
 
             base.OnStartup(e);
