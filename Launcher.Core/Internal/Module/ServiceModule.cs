@@ -12,9 +12,13 @@ namespace Launcher.Core.Internal.Module
             // Service singleton
             Kernel.Bind<IViewModelSource>().To<ViewModelSource>()
                 .InSingletonScope();
+            Kernel.Bind<IPageViewModelLocator>().To<PageViewModelLocator>()
+                .InSingletonScope();
+            Kernel.Bind<IControlViewModelLocator>().To<ControlViewModelLocator>()
+                .InSingletonScope();
 
             // Global instances
-            
+
         }
     }
 }

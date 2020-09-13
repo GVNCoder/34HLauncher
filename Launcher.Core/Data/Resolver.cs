@@ -11,19 +11,25 @@ namespace Launcher.Core.Data
     public class Resolver
     {
         private static Resolver __resolverInstance;
+        private readonly IKernel __kernel;
 
-        public Resolver()
+        private Resolver()
         {
             // build needed modules
             var modules = new INinjectModule[] { new ServiceModule() };
 
             // build core
-            var core = new StandardKernel(modules);
+            __kernel = new StandardKernel(modules);
         }
 
         /// <summary>
         /// Creates and initializes the DI container
         /// </summary>
         public static void Create() => __resolverInstance = __resolverInstance ?? new Resolver();
+        /// <summary>
+        /// Gets global Kernel variable
+        /// </summary>
+        // ReSharper disable once
+        public static IKernel Kernel => __resolverInstance.__kernel;
     }
 }

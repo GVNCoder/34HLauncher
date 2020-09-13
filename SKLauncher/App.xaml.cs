@@ -8,6 +8,7 @@ using Launcher.Core.Data;
 using Ninject;
 
 using Launcher.Core.Injection;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
@@ -64,6 +65,15 @@ namespace Launcher
 
             base.OnStartup(e);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(_logUnhandledExceptions);
+
+            // resolve viewModel sources
+            var vmSource = Resolver.Kernel.Get<IViewModelSource>();
+
+            // assign instances into Xaml
+            Resources["_ViewModelLocator_"] = vmSource.PageLocator;
+            Resources["_ControlViewModelLocator_"] = vmSource.ControlLocator;
+
+            // Old code
 
             Resources["ViewModelLocator"] = DependencyResolver.Locators.ViewModelLocator;
             Resources["UserControlViewModelLocator"] = DependencyResolver.Locators.UserControlViewModelLocator;

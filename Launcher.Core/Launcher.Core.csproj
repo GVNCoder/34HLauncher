@@ -49,8 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ApplicationState.cs" />
+    <Compile Include="Data\ControlViewModelLocator.cs" />
     <Compile Include="Data\Model\Event\ApplicationStateEventArgs.cs" />
     <Compile Include="Data\PageNavigator.cs" />
+    <Compile Include="Data\PageViewModelLocator.cs" />
     <Compile Include="Data\Resolver.cs" />
     <Compile Include="Data\ViewModelSource.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />
