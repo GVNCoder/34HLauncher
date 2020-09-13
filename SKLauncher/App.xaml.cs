@@ -44,6 +44,9 @@ namespace Launcher
 
         public App()
         {
+            // initialize DI container
+            Resolver.Create();
+
             DependencyResolver = new DependencyResolver();
             ProcessService = new LauncherProcessService();
 
@@ -57,11 +60,6 @@ namespace Launcher
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // initialize DI container
-            Resolver.Create();
-
-
-
             ProcessService.HandleProcessInstance(this, e.Args);
 
             base.OnStartup(e);
@@ -70,7 +68,6 @@ namespace Launcher
             Resources["ViewModelLocator"] = DependencyResolver.Locators.ViewModelLocator;
             Resources["UserControlViewModelLocator"] = DependencyResolver.Locators.UserControlViewModelLocator;
 
-            //_SetupVars();
             _SetupDirectories();
             _SetupLoggers(ZApi.Instance, Logger);
 

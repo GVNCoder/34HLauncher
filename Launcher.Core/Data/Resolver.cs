@@ -1,6 +1,4 @@
-﻿using System;
-
-using Launcher.Core.Service.Internal.Module;
+﻿using Launcher.Core.Internal.Module;
 
 using Ninject;
 using Ninject.Modules;

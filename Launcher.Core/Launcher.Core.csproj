@@ -64,7 +64,7 @@
     <Compile Include="Service\IApplicationState.cs" />
     <Compile Include="Service\IControlViewModelLocator.cs" />
     <Compile Include="Service\IDiscord.cs" />
-    <Compile Include="Service\Internal\Module\ServiceModule.cs" />
+    <Compile Include="Internal\Module\ServiceModule.cs" />
     <Compile Include="Service\IPageNavigator.cs" />
     <Compile Include="Service\IPageViewModelLocator.cs" />
     <Compile Include="Service\IViewModelSource.cs" />
@@ -76,8 +76,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\Internal\" />
-    <Folder Include="Data\Model\Internal\" />
     <Folder Include="Data\Model\Shared\" />
   </ItemGroup>
   <ItemGroup>

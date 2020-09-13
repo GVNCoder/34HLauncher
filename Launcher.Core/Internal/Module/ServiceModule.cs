@@ -1,7 +1,9 @@
 ﻿using Launcher.Core.Data;
+using Launcher.Core.Service;
+
 using Ninject.Modules;
 
-namespace Launcher.Core.Service.Internal.Module
+namespace Launcher.Core.Internal.Module
 {
     public class ServiceModule : NinjectModule
     {
