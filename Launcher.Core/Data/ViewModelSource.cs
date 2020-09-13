@@ -6,22 +6,23 @@ using Launcher.Core.Service.Base;
 
 using Ninject;
 using Ninject.Infrastructure.Language;
+using Ninject.Syntax;
 
 namespace Launcher.Core.Data
 {
     public class ViewModelSource : IViewModelSource
     {
         private const string _vm_base_name = nameof(BaseViewModel);
-        private readonly IResolver _resolver;
+        private readonly IResolutionRoot _resolver;
 
-        public ViewModelSource(IResolver resolver)
+        public ViewModelSource(IResolutionRoot resolver)
         {
             // assign instances
             _resolver = resolver;
 
             // resolve dependencies
-            ControlLocator = _resolver.Core.Get<IControlViewModelLocator>();
-            PageLocator    = _resolver.Core.Get<IPageViewModelLocator>();
+            ControlLocator = _resolver.Get<IControlViewModelLocator>();
+            PageLocator    = _resolver.Get<IPageViewModelLocator>();
         }
 
         #region IViewModelSource
@@ -46,7 +47,7 @@ namespace Launcher.Core.Data
             if (baseType == null) throw new InvalidOperationException("You are trying to get an instance of a class that is not a representative of the BaseViewModel.");
 
             // resolve
-            return _resolver.Core.Get<TViewModel>();
+            return _resolver.Get<TViewModel>();
         }
 
         #endregion

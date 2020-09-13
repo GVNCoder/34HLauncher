@@ -12,7 +12,7 @@ namespace Launcher.Core.Service.Internal.Module
                 .InSingletonScope();
 
             // Global instances
-            Kernel.Bind<IResolver>().ToConstant(Resolver.GetInstance);
+            
         }
     }
 }

@@ -57,7 +57,8 @@ namespace Launcher
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var x = Resolver.GetInstance;
+            // initialize DI container
+            Resolver.Create();
 
 
 

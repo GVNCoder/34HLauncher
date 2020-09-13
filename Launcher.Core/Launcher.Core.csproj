@@ -67,7 +67,6 @@
     <Compile Include="Service\Internal\Module\ServiceModule.cs" />
     <Compile Include="Service\IPageNavigator.cs" />
     <Compile Include="Service\IPageViewModelLocator.cs" />
-    <Compile Include="Service\IResolver.cs" />
     <Compile Include="Service\IViewModelSource.cs" />
   </ItemGroup>
   <ItemGroup>
