@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ApplicationState.cs" />
+    <Compile Include="Data\AsyncCommand.cs" />
+    <Compile Include="Data\AsyncCommandBase.cs" />
     <Compile Include="Data\ControlViewModelLocator.cs" />
     <Compile Include="Data\Model\Event\ApplicationStateEventArgs.cs" />
     <Compile Include="Data\PageNavigator.cs" />
@@ -60,7 +62,7 @@
     <Compile Include="Service\Base\BaseControlViewModel.cs" />
     <Compile Include="Service\Base\BasePageViewModel.cs" />
     <Compile Include="Service\Base\BaseViewModel.cs" />
-    <Compile Include="Service\Base\DiscordPresencePageViewModel.cs" />
+    <Compile Include="Service\Base\IAsyncCommand.cs" />
     <Compile Include="Service\Base\IBlurredPage.cs" />
     <Compile Include="Service\Base\IUIHostDependecny.cs" />
     <Compile Include="Service\IApplicationState.cs" />
