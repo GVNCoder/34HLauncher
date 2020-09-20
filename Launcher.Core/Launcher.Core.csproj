@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7">
-      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -51,12 +47,8 @@
     <Compile Include="Data\ApplicationState.cs" />
     <Compile Include="Data\AsyncCommand.cs" />
     <Compile Include="Data\AsyncCommandBase.cs" />
-    <Compile Include="Data\ControlViewModelLocator.cs" />
     <Compile Include="Data\Model\Event\ApplicationStateEventArgs.cs" />
     <Compile Include="Data\PageNavigator.cs" />
-    <Compile Include="Data\PageViewModelLocator.cs" />
-    <Compile Include="Data\Resolver.cs" />
-    <Compile Include="Data\ViewModelSource.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Base\BaseControlViewModel.cs" />
@@ -68,9 +60,7 @@
     <Compile Include="Service\IApplicationState.cs" />
     <Compile Include="Service\IControlViewModelLocator.cs" />
     <Compile Include="Service\IDiscord.cs" />
-    <Compile Include="Internal\Module\ServiceModule.cs" />
     <Compile Include="Service\IPageNavigator.cs" />
-    <Compile Include="Service\IPageViewModelLocator.cs" />
     <Compile Include="Service\IViewModelSource.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,9 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Model\Shared\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Folder Include="Internal\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

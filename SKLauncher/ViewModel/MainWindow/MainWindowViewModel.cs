@@ -9,10 +9,9 @@ using System.Windows;
 using System.Windows.Input;
 
 using log4net;
-using Launcher.Core;
-using Launcher.Core.Data;
 using Microsoft.Win32;
-using Ninject;
+
+using Ninject.Syntax;
 
 using Launcher.Core.Data.Updates;
 using Launcher.Core.Interaction;
@@ -22,11 +21,13 @@ using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
+using Launcher.Core;
+using Launcher.Core.Data;
+using Launcher.Core.Service.Base;
 using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
-
-using Ninject.Syntax;
+using Launcher.ViewModel.MainWindow;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
@@ -36,9 +37,9 @@ using Zlo4NET.Core.Data;
 using IDiscord = Launcher.Core.RPC.IDiscord;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
-namespace Launcher.ViewModel.MainWindow
+namespace Launcher.ViewModel
 {
-    public class MainWindowViewModel : DependencyObject
+    public class MainWindowViewModel : BasePageViewModel
     {
         private const string _ZClientProcessName = "ZClient";
 
@@ -75,7 +76,8 @@ namespace Launcher.ViewModel.MainWindow
             IDiscord discordPresence,
             
             IPageNavigator navigator,
-            IApplicationState state)
+            IApplicationState state,
+            IViewModelSource viewModelSource)
         {
             _navigator = navigator;
             _state = state;
@@ -94,8 +96,8 @@ namespace Launcher.ViewModel.MainWindow
             _discordPresence = discordPresence;
             _api = api;
 
-            NonClientDataContext = kernel.Get<WindowNonClientPartViewModel>();
-            BottomBarDataContext = kernel.Get<WindowBottomBarPartViewModel>();
+            NonClientDataContext = viewModelSource.Create<WindowNonClientPartViewModel>();
+            BottomBarDataContext = viewModelSource.Create<WindowBottomBarPartViewModel>();
 
             _apiConnection.ConnectionChanged += _apiConnectionConnectionChangedHandler;
 
@@ -234,6 +236,25 @@ namespace Launcher.ViewModel.MainWindow
 
         #region Commands
 
+        public override ICommand LoadedCommand => new DelegateCommand(parameter =>
+        {
+            // awesome code here
+        });
+
+        public override ICommand UnloadedCommand => new DelegateCommand(parameter =>
+        {
+            // awesome code here
+        });
+
+
+
+
+
+
+
+
+
+
         public ICommand WindowLoadedCommand => new DelegateCommand(_windowLoadedCommandExec);
 
         private void _windowLoadedCommandExec(object obj)
@@ -241,7 +262,7 @@ namespace Launcher.ViewModel.MainWindow
             var iWnd = (MainWindowView) obj;
 
             // setup ui dependencies
-            ((PageNavigator) _navigator).SetDependency(iWnd.HOST_Content);
+            ((IUIHostDependency) _navigator).SetDependency(iWnd.HOST_Content);
 
             // setup application state vars
             _state.RegisterVars();
@@ -272,10 +293,10 @@ namespace Launcher.ViewModel.MainWindow
             _state.SetState(Constants.ZCLIENT_CONNECTION, _apiConnection.IsConnected);
         }
 
-        public ICommand UnloadedCommand => new DelegateCommand(obj =>
-        {
-            _discordPresence.Stop();
-        });
+        //public ICommand UnloadedCommand => new DelegateCommand(obj =>
+        //{
+        //    _discordPresence.Stop();
+        //});
 
         public ICommand OpenForumCommand => new DelegateCommand(obj =>
         {

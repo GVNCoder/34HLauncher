@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Launcher.Core.Bases;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
@@ -16,15 +17,17 @@ using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.ViewModel.Stats
 {
-    public class BF3StatsViewModel : PageViewModelBase
+    public class BF3StatsViewModel : BasePageViewModel
     {
         private readonly IZApi _api;
         private readonly IApplicationState _state;
+        private readonly IDiscord _discord;
 
-        public BF3StatsViewModel(IUIHostService hostService, IZApi api, IDiscord discord, IApplicationState state) : base(discord)
+        public BF3StatsViewModel(IUIHostService hostService, IZApi api, IDiscord discord, IApplicationState state)
         {
             _api = api;
             _state = state;
+            _discord = discord;
 
             WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }

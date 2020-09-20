@@ -5,6 +5,8 @@
     xmlns:converters="clr-namespace:Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="clr-namespace:Launcher.Core.Data;assembly=Launcher.Core"
+    xmlns:data1="clr-namespace:Launcher.Data"
     xmlns:inject="clr-namespace:Launcher.Core.Locators"
     xmlns:local="clr-namespace:Launcher"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -28,9 +30,13 @@
             <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Slide</PopupAnimation>
             <!--  Using for building (binding) server list view  -->
             <CollectionViewSource x:Key="ServersListView" />
+
             <!--  Release  -->
-            <inject:ViewModelLocator x:Key="ViewModelLocator" />
-            <inject:UserControlViewModelLocator x:Key="UserControlViewModelLocator" />
+            <data1:ViewModelLocator x:Key="ViewModelLocator" />
+            <!--<data:ControlViewModelLocator x:Key="_ControlViewModelLocator" />-->
+
+
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Launcher.Resources;component/Fonts.xaml" />
                 <!--  Release  -->

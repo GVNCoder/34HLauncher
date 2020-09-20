@@ -1,14 +1,23 @@
-﻿namespace Launcher.Core.Service
+﻿using Launcher.Core.Service.Base;
+
+namespace Launcher.Core.Service
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IViewModelSource
     {
-        #region Properties
-
-        IControlViewModelLocator ControlLocator { get; }
-        IPageViewModelLocator PageLocator { get; }
-
-        #endregion
-
-        TViewModel Create<TViewModel>() where TViewModel : class;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <returns></returns>
+        TViewModel Create<TViewModel>() where TViewModel : BaseViewModel;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <returns></returns>
+        TViewModel Get<TViewModel>() where TViewModel : BaseViewModel;
     }
 }

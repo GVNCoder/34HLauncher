@@ -1,5 +1,4 @@
-﻿using Launcher.Core.Internal.Module;
-
+﻿using Launcher.Data;
 using Ninject;
 using Ninject.Modules;
 
@@ -16,7 +15,7 @@ namespace Launcher.Core.Data
         private Resolver()
         {
             // build needed modules
-            var modules = new INinjectModule[] { new ServiceModule() };
+            var modules = new INinjectModule[] { new ContainerModule() };
 
             // build core
             __kernel = new StandardKernel(modules);

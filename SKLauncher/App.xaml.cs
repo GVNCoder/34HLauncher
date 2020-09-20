@@ -7,10 +7,9 @@ using log4net;
 using Launcher.Core.Data;
 using Ninject;
 
-using Launcher.Core.Injection;
-using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using Launcher.Data;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
 
@@ -31,10 +30,6 @@ namespace Launcher
         /// </summary>
         public ISettingsService SettingsService { get; }
         /// <summary>
-        /// Dependency resolver
-        /// </summary>
-        public IDependencyResolver DependencyResolver { get; }
-        /// <summary>
         /// Launcher process service
         /// </summary>
         public ILauncherProcessService ProcessService { get; }
@@ -48,11 +43,10 @@ namespace Launcher
             // initialize DI container
             Resolver.Create();
 
-            DependencyResolver = new DependencyResolver();
             ProcessService = new LauncherProcessService();
 
-            Logger = DependencyResolver.Resolver.Get<ILog>();
-            SettingsService = DependencyResolver.Resolver.Get<ISettingsService>();
+            Logger = Resolver.Kernel.Get<ILog>();
+            SettingsService = Resolver.Kernel.Get<ISettingsService>();
 
             VersionService.SetVersion(new LauncherVersion("beta"));
         }
@@ -66,17 +60,11 @@ namespace Launcher
             base.OnStartup(e);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(_logUnhandledExceptions);
 
-            // resolve viewModel sources
-            var vmSource = Resolver.Kernel.Get<IViewModelSource>();
-
             // assign instances into Xaml
-            Resources["_ViewModelLocator_"] = vmSource.PageLocator;
-            Resources["_ControlViewModelLocator_"] = vmSource.ControlLocator;
+            Resources["ViewModelLocator"] = Resolver.Kernel.Get<ViewModelLocator>();
+            //Resources["_ControlViewModelLocator_"] = Resolver.Kernel.Get<IViewModelSource>();
 
             // Old code
-
-            Resources["ViewModelLocator"] = DependencyResolver.Locators.ViewModelLocator;
-            Resources["UserControlViewModelLocator"] = DependencyResolver.Locators.UserControlViewModelLocator;
 
             _SetupDirectories();
             _SetupLoggers(ZApi.Instance, Logger);

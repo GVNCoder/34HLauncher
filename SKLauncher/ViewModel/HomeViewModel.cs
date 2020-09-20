@@ -7,6 +7,7 @@ using Launcher.Core.Bases;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -23,7 +24,7 @@ using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMa
 
 namespace Launcher.ViewModel
 {
-    public class HomeViewModel : PageViewModelBase
+    public class HomeViewModel : BasePageViewModel
     {
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
@@ -34,6 +35,7 @@ namespace Launcher.ViewModel
         private readonly ISettingsService _settingsService;
         private readonly IZApi _api;
         private readonly IBusyService _busyService;
+        private readonly IDiscord _discord;
 
         public HomeViewModel(
             IEventLogService eventLogService,
@@ -44,10 +46,11 @@ namespace Launcher.ViewModel
             IBusyService busyService,
             IDiscord discord,
             IPageNavigator navigator,
-            IApplicationState state) : base(discord)
+            IApplicationState state)
         {
             _navigator = navigator;
             _state = state;
+            _discord = discord;
 
             _eventLogService = eventLogService;
             _gameService = gameService;

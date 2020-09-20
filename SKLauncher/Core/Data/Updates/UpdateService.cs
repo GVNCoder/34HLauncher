@@ -27,14 +27,8 @@ namespace Launcher.Core.Data.Updates
         {
             _versionService = versionService;
 
-            var application = (App) Application.Current;
-            var viewModelLocator = application
-                .DependencyResolver
-                .Locators
-                .ViewModelLocator;
-
-            _updateControl = viewModelLocator.UpdateControlViewModel;
-            _updateControl.CancelRequested += _UpdateDownloadCancelRequestedHandler;
+            //_updateControl = viewModelLocator.UpdateControlViewModel;
+            //_updateControl.CancelRequested += _UpdateDownloadCancelRequestedHandler;
         }
 
         public void BeginUpdate()

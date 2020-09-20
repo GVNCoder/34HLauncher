@@ -172,10 +172,6 @@
     <Compile Include="Core\Data\Updates\UpdateControlViewModel.cs" />
     <Compile Include="Core\Data\Updates\UpdateErrorEventArgs.cs" />
     <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
-    <Compile Include="Core\Injection\ConstantsModule.cs" />
-    <Compile Include="Core\Injection\DependencyResolver.cs" />
-    <Compile Include="Core\Injection\IDependencyResolver.cs" />
-    <Compile Include="Core\Injection\LocatorsModule.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\Locators\ILocatorGroup.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
@@ -240,6 +236,9 @@
     <Compile Include="Core\Shared\TextDialogButtons.cs" />
     <Compile Include="Core\Shared\TextDialogViewModel.cs" />
     <Compile Include="Core\Shared\UIElementConstants.cs" />
+    <Compile Include="Data\ContainerModule.cs" />
+    <Compile Include="Data\ViewModelLocator.cs" />
+    <Compile Include="Data\Resolver.cs" />
     <Compile Include="Helpers\Clipboard.cs" />
     <Compile Include="Helpers\CollectionViewFiltrationExtension.cs" />
     <Compile Include="Helpers\Constants.cs" />
@@ -255,7 +254,6 @@
     <Compile Include="Core\Data\Updates\UpdateService.cs" />
     <Compile Include="Converters\MapNameToImageConverter.cs" />
     <Compile Include="Converters\RankNumberToImageSourceConverter.cs" />
-    <Compile Include="Core\Injection\ServiceModule.cs" />
     <Compile Include="Core\Services\IUIHostService.cs" />
     <Compile Include="Core\Services\IVersionService.cs" />
     <Compile Include="Core\Services\IWindowContentNavigationService.cs" />
@@ -304,11 +302,11 @@
     <Compile Include="UserControls\TextDialogControl.xaml.cs">
       <DependentUpon>TextDialogControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\BF3ServerBrowserViewModel.cs" />
-    <Compile Include="ViewModel\BF3CoopViewModel.cs" />
+    <Compile Include="ViewModel\Browser\BF3ServerBrowserViewModel.cs" />
+    <Compile Include="ViewModel\Browser\BF3CoopViewModel.cs" />
     <Compile Include="ViewModel\Stats\BF4StatsViewModel.cs" />
-    <Compile Include="ViewModel\BF4ServerBrowserViewModel.cs" />
-    <Compile Include="ViewModel\BFHServerBrowserViewModel.cs" />
+    <Compile Include="ViewModel\Browser\BF4ServerBrowserViewModel.cs" />
+    <Compile Include="ViewModel\Browser\BFHServerBrowserViewModel.cs" />
     <Compile Include="ViewModel\EventLogViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />

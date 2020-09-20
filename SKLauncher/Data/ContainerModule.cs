@@ -1,19 +1,29 @@
-﻿using Launcher.Core.Data;
+﻿using System.Windows;
+
+using log4net;
+
+using Launcher.Core.Data;
 using Launcher.Core.Data.Dialog;
 using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
+using Launcher.Core.Locators;
 using Launcher.Core.RPC;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
+
 using Ninject.Modules;
+
+using Zlo4NET.Api;
+using Zlo4NET.Core.Data;
+
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
-namespace Launcher.Core.Injection
+namespace Launcher.Data
 {
-    public class ServiceModule : NinjectModule
+    public class ContainerModule : NinjectModule
     {
         public override void Load()
         {
@@ -57,9 +67,32 @@ namespace Launcher.Core.Injection
             Kernel.Bind<IDiscord>()
                 .To<Discord>()
                 .InSingletonScope();
-            
-            
+
+            var application = (App)Application.Current;
+
+            Kernel.Bind<IZApi>()
+                .ToConstant(ZApi.Instance);
+            Kernel.Bind<ILauncherProcessService>()
+                .ToConstant(application.ProcessService);
+            Kernel.Bind<ILog>()
+                .ToConstant(LogManager.GetLogger(typeof(App)));
+            Kernel.Bind<App>()
+                .ToConstant(application);
+
+            Kernel.Bind<ILocatorGroup>()
+                .To<LocatorGroup>()
+                .InSingletonScope();
+
+            Kernel.Bind<IViewModelLocator>()
+                .To<Core.Locators.ViewModelLocator>()
+                .InSingletonScope();
+
+
+            // Release
+
             // Add singleton
+            Kernel.Bind<IViewModelSource>().To<ViewModelLocator>()
+                .InSingletonScope();
             Kernel.Bind<IPageNavigator>().To<PageNavigator>()
                 .InSingletonScope();
             Kernel.Bind<IApplicationState>().To<ApplicationState>()

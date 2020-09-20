@@ -5,34 +5,37 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-using Launcher.Core.Bases;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Services;
 
 using Zlo4NET.Api.Models.Shared;
+using IBlurredPage = Launcher.Core.Bases.IBlurredPage;
 
 namespace Launcher.ViewModel
 {
-    public class BF3CoopViewModel : PageViewModelBase, IBlurredPage
+    public class BF3CoopViewModel : BasePageViewModel, IBlurredPage
     {
         private CollectionViewSource _collectionViewSource;
         private readonly IEnumerable<CoopMissionModel> _missions;
         private readonly IGameService _gameService;
+        private readonly IDiscord _discord;
 
         public BF3CoopViewModel(
             IUIHostService hostService,
             IGameService gameService,
-            IDiscord discord) : base(discord)
+            IDiscord discord)
         {
             BackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             DifficultyEnumerable = Enum.GetNames(typeof(ZCoopDifficulty));
 
             _gameService = gameService;
+            _discord = discord;
             _missions = new[]
             {
                 new CoopMissionModel

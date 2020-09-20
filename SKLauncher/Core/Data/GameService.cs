@@ -36,13 +36,9 @@ namespace Launcher.Core.Data
             App application,
             ISettingsService settingsService)
         {
-            var viewModelLocator = application
-                .DependencyResolver
-                .Locators
-                .UserControlViewModelLocator;
-            _gameControl = viewModelLocator.GameControlViewModel;
+            //_gameControl = viewModelLocator.GameControlViewModel;
 
-            _kernel = application.DependencyResolver.Resolver;
+            //_kernel = application.DependencyResolver.Resolver;
 
             _gameFactory = api.GameFactory;
             _settingsService = settingsService;

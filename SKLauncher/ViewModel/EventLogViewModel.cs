@@ -2,18 +2,20 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Launcher.Core.Bases;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using IBlurredPage = Launcher.Core.Bases.IBlurredPage;
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.ViewModel
 {
-    public class EventLogViewModel : PageViewModelBase, IBlurredPage
+    public class EventLogViewModel : BasePageViewModel, IBlurredPage
     {
         private readonly IPageNavigator _navigator;
+        protected readonly IDiscord _discord;
 
         private readonly IUIHostService _hostService;
         //private readonly IWindowContentNavigationService _navigationService;
@@ -26,7 +28,7 @@ namespace Launcher.ViewModel
             IUIHostService hostService,
             //IWindowContentNavigationService navigationService,
             IDiscord discord,
-            IPageNavigator navigator) : base(discord)
+            IPageNavigator navigator)
         {
             _navigator = navigator;
 

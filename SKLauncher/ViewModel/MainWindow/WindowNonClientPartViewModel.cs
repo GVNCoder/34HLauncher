@@ -8,6 +8,7 @@ using Launcher.Core;
 using Launcher.Core.Data.Model.Event;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
@@ -21,7 +22,7 @@ using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMa
 
 namespace Launcher.ViewModel.MainWindow
 {
-    public class WindowNonClientPartViewModel : DependencyObject
+    public class WindowNonClientPartViewModel : BaseViewModel
     {
         private readonly Window _wnd;
         private readonly IZApi _api;
