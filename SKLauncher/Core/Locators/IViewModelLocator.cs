@@ -21,7 +21,6 @@ namespace Launcher.Core.Locators
         BF3CoopViewModel BF3CoopViewModel { get; }
         EventLogViewModel EventLogViewModel { get; }
         SettingsViewModel SettingsViewModel { get; }
-        UpdateControlViewModel UpdateControlViewModel { get; }
 
         BF3StatsViewModel BF3StatsViewModel { get; }
         BF4StatsViewModel BF4StatsViewModel { get; }

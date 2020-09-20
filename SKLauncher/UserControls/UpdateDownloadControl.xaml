@@ -7,7 +7,6 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Height="20"
-    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=UpdateControlViewModel}"
     FontFamily="{StaticResource OpenSans}"
     Visibility="{Binding ControlVisibility}"
     mc:Ignorable="d">

@@ -146,7 +146,6 @@
     <Compile Include="Core\ApplicationStateExtension.cs" />
     <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
     <Compile Include="Core\Bases\IBlurredPage.cs" />
-    <Compile Include="Core\Bases\PageViewModelBase.cs" />
     <Compile Include="Core\Behaviors\ButtonContextMenuBehavior.cs" />
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
@@ -310,6 +309,7 @@
     <Compile Include="ViewModel\EventLogViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />
+    <Compile Include="ViewModel\UpdateControlViewModel.cs" />
     <Compile Include="View\BF3CoopView.xaml.cs">
       <DependentUpon>BF3CoopView.xaml</DependentUpon>
     </Compile>

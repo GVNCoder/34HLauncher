@@ -40,8 +40,8 @@
                 Foreground="{DynamicResource ThemeForegroundBrush}"
                 HasEvents="{Binding HasEvents}"
                 Text="{DynamicResource shared_Events}" />
-            <userControls:GameControl Margin="5,0,0,0" />
-            <userControls:UpdateDownloadControl Margin="5,0,0,0" />
+            <userControls:GameControl Margin="5,0,0,0" DataContext="{Binding GameControlViewModel}" />
+            <userControls:UpdateDownloadControl Margin="5,0,0,0" DataContext="{Binding UpdateControlViewModel}" />
         </StackPanel>
 
         <!--  Author  -->

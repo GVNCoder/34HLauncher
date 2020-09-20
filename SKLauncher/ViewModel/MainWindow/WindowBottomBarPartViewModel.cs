@@ -10,16 +10,17 @@ using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
-using Launcher.Data;
 
-namespace Launcher.ViewModel.MainWindow
+namespace Launcher.ViewModel
 {
-    public class WindowBottomBarPartViewModel : BaseViewModel
+    public class WindowBottomBarPartViewModel : BaseControlViewModel
     {
         private readonly IEventLogService _eventLogService;
         private readonly IPageNavigator _navigator;
 
         private EventViewModel _disconnectedVm;
+
+        
 
         public WindowBottomBarPartViewModel(
             IUIHostService uiHostService,
@@ -30,12 +31,18 @@ namespace Launcher.ViewModel.MainWindow
         {
             _navigator = navigator;
 
+            UpdateControlViewModel = viewModelLocator.GetExisting<UpdateControlViewModel>();
+            GameControlViewModel = viewModelLocator.GetExisting<GameControlViewModel>();
+
+
+
+
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             VersionString = versionService.GetLauncherVersion().ToString();
 
             _eventLogService = eventLogService;
 
-            var obsCollection = viewModelLocator.Get<EventLogViewModel>()
+            var obsCollection = viewModelLocator.GetExisting<EventLogViewModel>()
                 .Events;
             obsCollection.CollectionChanged += _eventsCollectionChanged;
         }
@@ -50,6 +57,9 @@ namespace Launcher.ViewModel.MainWindow
         }
 
         #region Public members
+
+        public UpdateControlViewModel UpdateControlViewModel { get; }
+        public GameControlViewModel GameControlViewModel { get; }
 
         public Grid WindowBackgroundContent { get; }
         public string VersionString { get; }
@@ -67,6 +77,10 @@ namespace Launcher.ViewModel.MainWindow
         #region Commands
 
         public ICommand OpenLogCommand => new DelegateCommand(_openLogCommandExec);
+
+        public override ICommand LoadedCommand => throw new System.NotImplementedException();
+
+        public override ICommand UnloadedCommand => throw new System.NotImplementedException();
 
         private void _openLogCommandExec(object obj)
         {

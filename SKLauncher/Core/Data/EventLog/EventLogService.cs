@@ -17,7 +17,7 @@ namespace Launcher.Core.Data.EventLog
         public EventLogService(IViewModelSource viewModelLocator)
         {
             var application = Application.Current as App;
-            _events = viewModelLocator.Get<EventLogViewModel>()
+            _events = viewModelLocator.GetExisting<EventLogViewModel>()
                 .Events;
             _dispatcher = Dispatcher.CurrentDispatcher;
         }

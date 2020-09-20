@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
+using Launcher.Core.Shared;
 using Launcher.ViewModel;
 using Launcher.ViewModel.Stats;
 
@@ -36,7 +37,9 @@ namespace Launcher.Data
                 [typeof(BF3CoopViewModel)] = _BuildLazyInitializer<BF3CoopViewModel>(),
                 [typeof(BF3ServerBrowserViewModel)] = _BuildLazyInitializer<BF3ServerBrowserViewModel>(),
                 [typeof(BF4ServerBrowserViewModel)] = _BuildLazyInitializer<BF4ServerBrowserViewModel>(),
-                [typeof(BFHServerBrowserViewModel)] = _BuildLazyInitializer<BFHServerBrowserViewModel>()
+                [typeof(BFHServerBrowserViewModel)] = _BuildLazyInitializer<BFHServerBrowserViewModel>(),
+                [typeof(UpdateControlViewModel)] = _BuildLazyInitializer<UpdateControlViewModel>(),
+                [typeof(GameControlViewModel)] = _BuildLazyInitializer<GameControlViewModel>(),
             };
         }
 
@@ -65,7 +68,7 @@ namespace Launcher.Data
             => _resolver.Get<TViewModel>();
 
         /// <inheritdoc />
-        public TViewModel Get<TViewModel>() where TViewModel : BaseViewModel
+        public TViewModel GetExisting<TViewModel>() where TViewModel : BaseViewModel
             => (TViewModel) _viewModels[typeof(TViewModel)].Value;
 
         #endregion
