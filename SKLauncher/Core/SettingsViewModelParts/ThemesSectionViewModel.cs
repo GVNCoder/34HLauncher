@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Launcher.Core.Interaction;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
@@ -15,7 +16,7 @@ using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMa
 
 namespace Launcher.Core.SettingsViewModelParts
 {
-    public class ThemesSectionViewModel : UIBaseViewModel
+    public class ThemesSectionViewModel : BaseControlViewModel
     {
         private readonly ISettingsService _settingsService;
         private readonly IEventLogService _eventLog;

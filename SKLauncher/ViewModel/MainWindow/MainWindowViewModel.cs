@@ -107,20 +107,20 @@ namespace Launcher.ViewModel
             _zClientProcessTracker.ProcessDetected += _zClientProcessDetectedHandler;
             _zClientProcessTracker.ProcessLost += _zClientProcessLostHandler;
 
-            _updateService.CancelDownloadResolver = async () =>
-            {
-                var dlgResult = await _textDialogService.OpenDialog("Are you sure ?",
-                    "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
-                return dlgResult.Action == DialogActionEnum.Primary;
-            };
-            _updateService.UpdateAvailableResolver = ver =>
-            {
-                // ReSharper disable once AssignNullToNotNullAttribute
-                var dlgResult = MessageBox.Show(Application.Current.MainWindow, "Download and install it?", $"A new version is available {ver}",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-                return dlgResult == MessageBoxResult.Yes;
-            };
-            _updateService.Error += _updateServiceErrorHandler;
+            //_updateService.CancelDownloadResolver = async () =>
+            //{
+            //    var dlgResult = await _textDialogService.OpenDialog("Are you sure ?",
+            //        "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
+            //    return dlgResult.Action == DialogActionEnum.Primary;
+            //};
+            //_updateService.UpdateAvailableResolver = ver =>
+            //{
+            //    // ReSharper disable once AssignNullToNotNullAttribute
+            //    var dlgResult = MessageBox.Show(Application.Current.MainWindow, "Download and install it?", $"A new version is available {ver}",
+            //        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            //    return dlgResult == MessageBoxResult.Yes;
+            //};
+            //_updateService.Error += _updateServiceErrorHandler;
 
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
 
@@ -138,9 +138,6 @@ namespace Launcher.ViewModel
         {
             _eventLogService.Log(EventLogLevel.Message, SLM.GameRun, e.PipeLog);
         }
-
-        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
-            => _eventLogService.Log(EventLogLevel.Error, "Update service", e.Message);
 
         private void _RefreshAppState()
         {

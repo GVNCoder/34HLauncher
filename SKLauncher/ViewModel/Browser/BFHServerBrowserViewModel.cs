@@ -25,7 +25,6 @@ namespace Launcher.ViewModel
             IGameService gameService,
             IDiscord discord,
             App application,
-            //IWindowContentNavigationService navigationService,
             IPageNavigator navigator,
             ISettingsService settingsService)
             : base(api, hostService, gameService, eventLogService, presenterService, discord, application, /*navigationService,*/ settingsService, navigator)

@@ -168,9 +168,10 @@
     <Compile Include="Core\Data\SingleplayerJoinParams.cs" />
     <Compile Include="Core\Data\TestRangeGameWorker.cs" />
     <Compile Include="Core\Data\TestRangeJoinParams.cs" />
-    <Compile Include="Core\Data\Updates\UpdateControlViewModel.cs" />
+    <Compile Include="Core\Data\Updates\UpdateDownloadEventArgs.cs" />
     <Compile Include="Core\Data\Updates\UpdateErrorEventArgs.cs" />
     <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
+    <Compile Include="Core\Data\Updates\UpdateProgressEventArgs.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\Locators\ILocatorGroup.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />

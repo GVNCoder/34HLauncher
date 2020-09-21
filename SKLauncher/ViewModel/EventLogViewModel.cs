@@ -2,11 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+
 using IBlurredPage = Launcher.Core.Bases.IBlurredPage;
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
@@ -18,22 +20,18 @@ namespace Launcher.ViewModel
         protected readonly IDiscord _discord;
 
         private readonly IUIHostService _hostService;
-        //private readonly IWindowContentNavigationService _navigationService;
-        
 
         public ObservableCollection<EventViewModel> Events { get; }
         public Grid BackgroundContent { get; private set; }
 
         public EventLogViewModel(
             IUIHostService hostService,
-            //IWindowContentNavigationService navigationService,
             IDiscord discord,
             IPageNavigator navigator)
         {
             _navigator = navigator;
-
+            _discord = discord;
             _hostService = hostService;
-            //_navigationService = navigationService;
 
             var wnd = Application.Current.MainWindow;
             wnd.Loaded += _wndLoadedHandler;
@@ -53,7 +51,6 @@ namespace Launcher.ViewModel
         {
             Events.Clear();
 
-            //_navigationService.GoBack();
             _navigator.NavigateBack();
         });
 

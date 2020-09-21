@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -19,7 +20,7 @@ using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMa
 
 namespace Launcher.Core.SettingsViewModelParts
 {
-    public class GeneralSectionViewModel : UIBaseViewModel
+    public class GeneralSectionViewModel : BaseControlViewModel
     {
         private readonly ITextDialogService _dialogService;
         private readonly ISettingsService _settingsService;

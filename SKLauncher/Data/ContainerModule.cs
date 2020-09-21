@@ -83,11 +83,6 @@ namespace Launcher.Data
                 .To<LocatorGroup>()
                 .InSingletonScope();
 
-            Kernel.Bind<IViewModelLocator>()
-                .To<Core.Locators.ViewModelLocator>()
-                .InSingletonScope();
-
-
             // Release
 
             // Add singleton

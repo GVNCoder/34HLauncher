@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using log4net;
-
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 
@@ -34,11 +34,12 @@ namespace Launcher.Core.Data
         public GameService(
             IZApi api,
             App application,
-            ISettingsService settingsService)
+            ISettingsService settingsService,
+            IViewModelSource viewModelLocator)
         {
-            //_gameControl = viewModelLocator.GameControlViewModel;
+            _gameControl = viewModelLocator.GetExisting<GameControlViewModel>();
 
-            //_kernel = application.DependencyResolver.Resolver;
+            _kernel = Resolver.Kernel;
 
             _gameFactory = api.GameFactory;
             _settingsService = settingsService;

@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Height="20"
     FontFamily="{StaticResource OpenSans}"
-    Visibility="{Binding ControlVisibility}"
+    Visibility="{Binding Visibility, Mode=OneWay}"
     mc:Ignorable="d">
 
     <Border
@@ -21,7 +21,7 @@
                 VerticalAlignment="Center"
                 FontWeight="Bold"
                 Foreground="{DynamicResource WindowKeyBrush}"
-                Text="Update downloading" />
+                Text="{Binding Text, Mode=OneWay}" />
             <TextBlock
                 Margin="5,0,0,1"
                 VerticalAlignment="Center"

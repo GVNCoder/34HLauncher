@@ -5,10 +5,12 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
+using Launcher.ViewModel;
 using Newtonsoft.Json;
 
 namespace Launcher.Core.Data.Updates
@@ -19,16 +21,11 @@ namespace Launcher.Core.Data.Updates
         private readonly string _updatePath = Path.Combine(FolderConstant.UpdateFolder, "34H Update.exe");
 
         private readonly IVersionService _versionService;
-        private readonly IUpdateControl _updateControl;
-
         private WebClientWithTimeout _webClient;
 
-        public UpdateService(IVersionService versionService)
+        public UpdateService(IVersionService versionService, IViewModelSource viewModelLocator)
         {
             _versionService = versionService;
-
-            //_updateControl = viewModelLocator.UpdateControlViewModel;
-            //_updateControl.CancelRequested += _UpdateDownloadCancelRequestedHandler;
         }
 
         public void BeginUpdate()
@@ -61,12 +58,12 @@ namespace Launcher.Core.Data.Updates
                 }
                 catch (Exception ex)
                 {
-                    _ReportError(ex.Message);
+                    _RaiseError(ex.Message);
                 }
             }
             else
             {
-                _ReportError(e.Error.Message);
+                _RaiseError(e.Error.Message);
             }
             
         }
@@ -84,17 +81,17 @@ namespace Launcher.Core.Data.Updates
             _webClient.DownloadProgressChanged += _DownloadFileProgressChangedHandler;
             _webClient.DownloadFileAsync(new Uri(updateInfoObject.Link), _updatePath, updateInfoObject);
 
-            _updateControl.Show();
+            _RaiseBeginDownload();
         }
 
         private void _DownloadFileProgressChangedHandler(object sender, DownloadProgressChangedEventArgs e)
-            => _updateControl.ReportProgress(e.ProgressPercentage);
+            => _RaiseReportProgress(e.ProgressPercentage);
 
         private void _DownloadFileCompletedHandler(object sender, AsyncCompletedEventArgs e)
         {
             InDownloadStage = false;
 
-            _updateControl.Hide();
+            _RaiseEndDownload(false);
             _CloseWebClient();
 
             if (e.Cancelled) return;
@@ -112,7 +109,7 @@ namespace Launcher.Core.Data.Updates
             }
             catch (Exception ex)
             {
-                _ReportError(ex.Message);
+                _RaiseError(ex.Message);
             }
         }
 
@@ -127,10 +124,16 @@ namespace Launcher.Core.Data.Updates
         public Func<LauncherVersion, bool> UpdateAvailableResolver { get; set; }
 
         public event EventHandler<UpdateErrorEventArgs> Error;
+        public event EventHandler<UpdateProgressEventArgs> ReportProgress;
+        public event EventHandler<UpdateDownloadEventArgs> EndDownload;
+        public event EventHandler BeginDownload;
 
-        private void _ReportError(string errorMessage) => Error?.Invoke(this, new UpdateErrorEventArgs(errorMessage));
+        private void _RaiseError(string errorMessage) => Error?.Invoke(this, new UpdateErrorEventArgs(errorMessage));
+        private void _RaiseReportProgress(int value) => ReportProgress?.Invoke(this, new UpdateProgressEventArgs(value));
+        private void _RaiseBeginDownload() => BeginDownload?.Invoke(this, EventArgs.Empty);
+        private void _RaiseEndDownload(bool isCanceled) => EndDownload?.Invoke(this, new UpdateDownloadEventArgs(isCanceled));
 
-        private async void _UpdateDownloadCancelRequestedHandler(object sender, EventArgs e)
+        public async Task CancelDownload()
         {
             var resolvedValue = await CancelDownloadResolver.Invoke();
             if (resolvedValue) _CloseWebClient();

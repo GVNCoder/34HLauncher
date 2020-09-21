@@ -51,8 +51,8 @@ namespace Launcher.Data
         public BasePageViewModel BF4StatsViewModel => (BasePageViewModel) _viewModels[typeof(BF4StatsViewModel)].Value;
         public BasePageViewModel BF3CoopViewModel => (BasePageViewModel) _viewModels[typeof(BF3CoopViewModel)].Value;
         public BasePageViewModel BF3ServerBrowserViewModel => (BasePageViewModel) _viewModels[typeof(BF3ServerBrowserViewModel)].Value;
-        public BasePageViewModel BF4ServerBrowserViewModel => (BasePageViewModel)_viewModels[typeof(BF4ServerBrowserViewModel)].Value;
-        public BasePageViewModel BFHServerBrowserViewModel => (BasePageViewModel)_viewModels[typeof(BFHServerBrowserViewModel)].Value;
+        public BasePageViewModel BF4ServerBrowserViewModel => (BasePageViewModel) _viewModels[typeof(BF4ServerBrowserViewModel)].Value;
+        public BasePageViewModel BFHServerBrowserViewModel => (BasePageViewModel) _viewModels[typeof(BFHServerBrowserViewModel)].Value;
 
         #region Private helpers
 
