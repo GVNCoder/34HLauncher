@@ -6,7 +6,6 @@ using Launcher.Core.Data;
 using Launcher.Core.Data.Dialog;
 using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
-using Launcher.Core.Locators;
 using Launcher.Core.RPC;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
@@ -78,10 +77,6 @@ namespace Launcher.Data
                 .ToConstant(LogManager.GetLogger(typeof(App)));
             Kernel.Bind<App>()
                 .ToConstant(application);
-
-            Kernel.Bind<ILocatorGroup>()
-                .To<LocatorGroup>()
-                .InSingletonScope();
 
             // Release
 

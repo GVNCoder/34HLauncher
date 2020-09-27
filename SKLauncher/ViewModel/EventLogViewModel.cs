@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -17,12 +16,10 @@ namespace Launcher.ViewModel
     public class EventLogViewModel : BasePageViewModel, IBlurredPage
     {
         private readonly IPageNavigator _navigator;
-        protected readonly IDiscord _discord;
-
-        private readonly IUIHostService _hostService;
+        private readonly IDiscord _discord;
 
         public ObservableCollection<EventViewModel> Events { get; }
-        public Grid BackgroundContent { get; private set; }
+        public Grid BackgroundContent { get; }
 
         public EventLogViewModel(
             IUIHostService hostService,
@@ -31,20 +28,9 @@ namespace Launcher.ViewModel
         {
             _navigator = navigator;
             _discord = discord;
-            _hostService = hostService;
 
-            var wnd = Application.Current.MainWindow;
-            wnd.Loaded += _wndLoadedHandler;
-
+            BackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             Events = new ObservableCollection<EventViewModel>();
-        }
-
-        private void _wndLoadedHandler(object sender, RoutedEventArgs e)
-        {
-            var wnd = (Window) sender;
-            wnd.Loaded -= _wndLoadedHandler;
-
-            BackgroundContent = _hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }
 
         public ICommand CleanupEventsCommand => new DelegateCommand(obj =>

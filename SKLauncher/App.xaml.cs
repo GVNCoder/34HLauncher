@@ -5,6 +5,7 @@ using System.Reflection;
 
 using log4net;
 using Launcher.Core.Data;
+using Launcher.Core.Service;
 using Ninject;
 
 using Launcher.Core.Services;
@@ -60,12 +61,10 @@ namespace Launcher
             base.OnStartup(e);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(_logUnhandledExceptions);
 
-            // assign instances into Xaml
-            Resources["ViewModelLocator"] = Resolver.Kernel.Get<ViewModelLocator>();
-            //Resources["_ControlViewModelLocator_"] = Resolver.Kernel.Get<IViewModelSource>();
+            // assign instance into Xaml
+            Resources["ViewModelLocator"] = Resolver.Kernel.Get<IViewModelSource>();
 
             // Old code
-
             _SetupDirectories();
             _SetupLoggers(ZApi.Instance, Logger);
 

@@ -173,12 +173,8 @@
     <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
     <Compile Include="Core\Data\Updates\UpdateProgressEventArgs.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
-    <Compile Include="Core\Locators\ILocatorGroup.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
-    <Compile Include="Core\Locators\IViewModelLocator.cs" />
-    <Compile Include="Core\Locators\LocatorGroup.cs" />
     <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />
-    <Compile Include="Core\Locators\ViewModelLocator.cs" />
     <Compile Include="Core\RPC\Discord.cs" />
     <Compile Include="Core\RPC\DiscordConnectionChangedEventArgs.cs" />
     <Compile Include="Core\RPC\DiscordPresence.cs" />

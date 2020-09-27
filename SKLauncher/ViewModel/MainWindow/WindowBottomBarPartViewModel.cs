@@ -20,8 +20,6 @@ namespace Launcher.ViewModel
 
         private EventViewModel _disconnectedVm;
 
-        
-
         public WindowBottomBarPartViewModel(
             IUIHostService uiHostService,
             IVersionService versionService,
@@ -33,9 +31,6 @@ namespace Launcher.ViewModel
 
             UpdateControlViewModel = viewModelLocator.GetExisting<UpdateControlViewModel>();
             GameControlViewModel = viewModelLocator.GetExisting<GameControlViewModel>();
-
-
-
 
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             VersionString = versionService.GetLauncherVersion().ToString();

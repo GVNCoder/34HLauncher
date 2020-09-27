@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Launcher.Core.Data;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Shared;
@@ -18,12 +18,9 @@ namespace Launcher.Data
         private readonly IDictionary<Type, Lazy<BaseViewModel>> _viewModels;
         private readonly IResolutionRoot _resolver;
 
-        public ViewModelLocator() { }
-
-        [Inject]
-        public ViewModelLocator(IResolutionRoot resolver)
+        public ViewModelLocator()
         {
-            _resolver = resolver;
+            _resolver = Resolver.Kernel;
 
             // populate view model dictionary
             _viewModels = new Dictionary<Type, Lazy<BaseViewModel>>(10)
@@ -57,7 +54,7 @@ namespace Launcher.Data
         #region Private helpers
 
         private Lazy<BaseViewModel> _BuildLazyInitializer<TViewModel>() where TViewModel: BaseViewModel
-            => new Lazy<BaseViewModel>(() => _resolver.Get<TViewModel>());
+            => new Lazy<BaseViewModel>(() => _resolver.Get<TViewModel>(), true);
 
         #endregion
 
