@@ -3,16 +3,15 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
-using Launcher.Core;
-using Launcher.Core.Data.Model.Event;
+using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
-
+using Launcher.ViewModel.UserControl;
+using Ninject;
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
@@ -41,6 +40,8 @@ namespace Launcher.ViewModel.MainWindow
             IZApi api,
             IUpdateService updateService)
         {
+            PlayerPresenterViewModel = Resolver.Kernel.Get<PlayerPresenterViewModel>();
+
             _navigator = navigator;
 
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
@@ -52,56 +53,12 @@ namespace Launcher.ViewModel.MainWindow
             _mainMenuService = mainMenuService;
             _api = api;
             _updateService = updateService;
-
-            //_zClientState.StateChanged += _applicationStateChangedHandler;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)
         {
             if (_mainMenuService.CanUse) _mainMenuService.Close();
         }
-
-        //private void _SetAuthorizedUser()
-        //{
-        //    _authorizedUser = _api.Connection.AuthorizedUser;
-        //    if (_authorizedUser != null)
-        //    {
-        //        UserName = _authorizedUser.Name;
-        //    }
-        //}
-
-        //private void _applicationStateChangedHandler(object sender, ApplicationStateEventArgs e)
-        //{
-        //    var stateValue = e.Cast<bool>();
-
-        //    if (!stateValue)
-        //    {
-        //        if (_authorizedUser == null)
-        //        {
-        //            return;
-        //        }
-
-        //        Dispatcher.Invoke(() =>
-        //        {
-        //            UserName = WLM.UnknownUser;
-        //            CanBackNavigation = false;
-        //            _authorizedUser = null;
-        //        });
-        //    }
-        //    else if (_zClientState.AllGood)
-        //    {
-        //        if (_authorizedUser != null)
-        //        {
-        //            return;
-        //        }
-
-        //        _SetAuthorizedUser();
-        //        Dispatcher.Invoke(() => CanBackNavigation = true);
-        //    }
-
-        //    var visibility = _zClientState.AllGood ? Visibility.Collapsed : Visibility.Visible;
-        //    Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
-        //}
 
         private void _handler(object sender, ZConnectionChangedArgs e)
         {
@@ -111,15 +68,16 @@ namespace Launcher.ViewModel.MainWindow
 
         #region Public members
 
+        public PlayerPresenterViewModel PlayerPresenterViewModel { get; }
         public Grid WindowBackgroundContent { get; }
 
-        public string UserName
-        {
-            get => (string)GetValue(UserNameProperty);
-            set => Dispatcher.Invoke(() => SetValue(UserNameProperty, value));
-        }
-        public static readonly DependencyProperty UserNameProperty =
-            DependencyProperty.Register("UserName", typeof(string), typeof(WindowNonClientPartViewModel), new PropertyMetadata(WLM.UnknownUser));
+        //public string UserName
+        //{
+        //    get => (string)GetValue(UserNameProperty);
+        //    set => Dispatcher.Invoke(() => SetValue(UserNameProperty, value));
+        //}
+        //public static readonly DependencyProperty UserNameProperty =
+        //    DependencyProperty.Register("UserName", typeof(string), typeof(WindowNonClientPartViewModel), new PropertyMetadata(WLM.UnknownUser));
 
         public Visibility ConnectButtonVisibility
         {
@@ -178,10 +136,10 @@ namespace Launcher.ViewModel.MainWindow
             }
         });
 
-        public ICommand CopyUserIDCommand => new DelegateCommand(obj =>
-        {
-            if (_authorizedUser != null) Clipboard.CopyToClipboard($"{WLM.MyId} {_authorizedUser.Id}");
-        });
+        //public ICommand CopyUserIDCommand => new DelegateCommand(obj =>
+        //{
+        //    if (_authorizedUser != null) Clipboard.CopyToClipboard($"{WLM.MyId} {_authorizedUser.Id}");
+        //});
 
         public ICommand ConnectCommand => new DelegateCommand(obj =>
         {
@@ -210,7 +168,7 @@ namespace Launcher.ViewModel.MainWindow
 
             _authorizedUser = null;
 
-            UserName = WLM.UnknownUser;
+            PlayerPresenterViewModel.SetPlayerData(null);
             CanBackNavigation = false;
             ConnectButtonVisibility = Visibility.Visible;
         }
@@ -221,7 +179,7 @@ namespace Launcher.ViewModel.MainWindow
 
             _authorizedUser = _api.Connection.AuthorizedUser;
 
-            UserName = _authorizedUser.Name;
+            PlayerPresenterViewModel.SetPlayerData(_authorizedUser);
             CanBackNavigation = true;
             ConnectButtonVisibility = Visibility.Collapsed;
         }

@@ -13,7 +13,6 @@ using Microsoft.Win32;
 
 using Ninject.Syntax;
 
-using Launcher.Core.Data.Updates;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
@@ -235,31 +234,10 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(parameter =>
         {
-            // awesome code here
-        });
-
-        public override ICommand UnloadedCommand => new DelegateCommand(parameter =>
-        {
-            // awesome code here
-        });
-
-
-
-
-
-
-
-
-
-
-        public ICommand WindowLoadedCommand => new DelegateCommand(_windowLoadedCommandExec);
-
-        private void _windowLoadedCommandExec(object obj)
-        {
-            var iWnd = (MainWindowView) obj;
+            var iWnd = (MainWindowView) parameter;
 
             // setup ui dependencies
-            ((IUIHostDependency) _navigator).SetDependency(iWnd.HOST_Content);
+            ((IUIHostDependency)_navigator).SetDependency(iWnd.HOST_Content);
 
             // setup application state vars
             _state.RegisterVars();
@@ -288,12 +266,12 @@ namespace Launcher.ViewModel
 
             _state.SetState(Constants.ZCLIENT_IS_RUN, _zClientProcessTracker.IsRun);
             _state.SetState(Constants.ZCLIENT_CONNECTION, _apiConnection.IsConnected);
-        }
+        });
 
-        //public ICommand UnloadedCommand => new DelegateCommand(obj =>
-        //{
-        //    _discordPresence.Stop();
-        //});
+        public override ICommand UnloadedCommand => new DelegateCommand(parameter =>
+        {
+            _discordPresence.Stop();
+        });
 
         public ICommand OpenForumCommand => new DelegateCommand(obj =>
         {

@@ -7,6 +7,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.View.MainWindow"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="clr-namespace:Launcher.UserControls"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowNonClientHeight}"
     TextElement.FontFamily="{StaticResource OpenSans}"
@@ -124,31 +125,29 @@
                 </TextBlock.Foreground>
             </TextBlock>
 
-            <Border
-                Margin="5"
-                Padding="5,0"
-                Background="DimGray"
-                CornerRadius="1.5">
-                <TextBlock
-                    Margin="0,5"
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    Text="{Binding UserName}">
-                    <TextBlock.ContextMenu>
-                        <ContextMenu Foreground="{DynamicResource Theme50Brush}">
-                            <MenuItem Command="{Binding CopyUserIDCommand}" Header="{DynamicResource wndView_HeaderCopyId}" />
-                            <!--<MenuItem Command="{Binding ReLoginCommand}" Header="ReLogin" />-->
-                            <!--<MenuItem Command="{Binding DEBUG}" Header="DEBUG_DISCONNECT" />-->
-                        </ContextMenu>
-                    </TextBlock.ContextMenu>
-                    <TextBlock.Foreground>
-                        <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
-                            <GradientStop Offset="0" Color="{DynamicResource Theme50Color}" />
-                            <GradientStop Offset="1" Color="{DynamicResource Theme300Color}" />
-                        </LinearGradientBrush>
-                    </TextBlock.Foreground>
-                </TextBlock>
-            </Border>
+            <!--<TextBlock
+                Margin="0,5"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{Binding UserName}">
+                <TextBlock.ContextMenu>
+                    <ContextMenu Foreground="{DynamicResource Theme50Brush}">
+                        <MenuItem Command="{Binding CopyUserIDCommand}" Header="{DynamicResource wndView_HeaderCopyId}" />
+            -->
+            <!--
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
+                        <GradientStop Offset="0" Color="{DynamicResource Theme50Color}" />
+                        <GradientStop Offset="1" Color="{DynamicResource Theme300Color}" />
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>-->
+            <userControls:PlayerPresenter
+                Margin="0,5"
+                VerticalAlignment="Center"
+                DataContext="{Binding PlayerPresenterViewModel}" />
 
         </StackPanel>
         <StackPanel
