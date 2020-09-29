@@ -280,8 +280,8 @@
     <Compile Include="UserControls\GameSettingsControl.xaml.cs">
       <DependentUpon>GameSettingsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\PlayerPresenter.xaml.cs">
-      <DependentUpon>PlayerPresenter.xaml</DependentUpon>
+    <Compile Include="UserControls\UserPresenter.xaml.cs">
+      <DependentUpon>UserPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ServerBrowserLeaveControl.xaml.cs">
       <DependentUpon>ServerBrowserLeaveControl.xaml</DependentUpon>
@@ -310,7 +310,7 @@
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />
     <Compile Include="ViewModel\UpdateControlViewModel.cs" />
-    <Compile Include="ViewModel\UserControl\PlayerPresenterViewModel.cs" />
+    <Compile Include="ViewModel\UserControl\UserPresenterViewModel.cs" />
     <Compile Include="View\BF3CoopView.xaml.cs">
       <DependentUpon>BF3CoopView.xaml</DependentUpon>
     </Compile>
@@ -372,7 +372,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\PlayerPresenter.xaml">
+    <Page Include="UserControls\UserPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

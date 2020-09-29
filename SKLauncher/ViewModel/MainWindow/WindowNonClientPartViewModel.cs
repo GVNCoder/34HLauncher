@@ -28,7 +28,6 @@ namespace Launcher.ViewModel.MainWindow
         private readonly IMainMenuService _mainMenuService;
         private readonly ILauncherProcessService _launcherProcessService;
         private readonly IUpdateService _updateService;
-
         private readonly IPageNavigator _navigator;
 
         private ZUser _authorizedUser;
@@ -40,7 +39,8 @@ namespace Launcher.ViewModel.MainWindow
             IZApi api,
             IUpdateService updateService)
         {
-            PlayerPresenterViewModel = Resolver.Kernel.Get<PlayerPresenterViewModel>();
+            UserPresenterViewModel = Resolver.Kernel.Get<UserPresenterViewModel>();
+            UserPresenterViewModel.SetUserData(null);
 
             _navigator = navigator;
 
@@ -68,16 +68,8 @@ namespace Launcher.ViewModel.MainWindow
 
         #region Public members
 
-        public PlayerPresenterViewModel PlayerPresenterViewModel { get; }
+        public UserPresenterViewModel UserPresenterViewModel { get; }
         public Grid WindowBackgroundContent { get; }
-
-        //public string UserName
-        //{
-        //    get => (string)GetValue(UserNameProperty);
-        //    set => Dispatcher.Invoke(() => SetValue(UserNameProperty, value));
-        //}
-        //public static readonly DependencyProperty UserNameProperty =
-        //    DependencyProperty.Register("UserName", typeof(string), typeof(WindowNonClientPartViewModel), new PropertyMetadata(WLM.UnknownUser));
 
         public Visibility ConnectButtonVisibility
         {
@@ -136,11 +128,6 @@ namespace Launcher.ViewModel.MainWindow
             }
         });
 
-        //public ICommand CopyUserIDCommand => new DelegateCommand(obj =>
-        //{
-        //    if (_authorizedUser != null) Clipboard.CopyToClipboard($"{WLM.MyId} {_authorizedUser.Id}");
-        //});
-
         public ICommand ConnectCommand => new DelegateCommand(obj =>
         {
             // disable button
@@ -168,7 +155,7 @@ namespace Launcher.ViewModel.MainWindow
 
             _authorizedUser = null;
 
-            PlayerPresenterViewModel.SetPlayerData(null);
+            UserPresenterViewModel.SetUserData(null);
             CanBackNavigation = false;
             ConnectButtonVisibility = Visibility.Visible;
         }
@@ -179,7 +166,7 @@ namespace Launcher.ViewModel.MainWindow
 
             _authorizedUser = _api.Connection.AuthorizedUser;
 
-            PlayerPresenterViewModel.SetPlayerData(_authorizedUser);
+            UserPresenterViewModel.SetUserData(_authorizedUser);
             CanBackNavigation = true;
             ConnectButtonVisibility = Visibility.Collapsed;
         }
