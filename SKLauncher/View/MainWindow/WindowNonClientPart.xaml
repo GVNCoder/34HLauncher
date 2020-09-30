@@ -13,6 +13,35 @@
     TextElement.FontFamily="{StaticResource OpenSans}"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+
+        <Style x:Key="UserPresenterStyle" TargetType="{x:Type ContentControl}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border
+                            Margin="7,7,15,15"
+                            Padding="15 15 65 15"
+                            Background="#282828"
+                            BorderBrush="#1d1d1d"
+                            BorderThickness="1.5"
+                            CornerRadius="2">
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="20"
+                                    Direction="-65"
+                                    Opacity=".8"
+                                    Color="Black" />
+                            </Border.Effect>
+                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" />
+                        </Border>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -126,9 +155,77 @@
             </TextBlock>
 
             <userControls:UserPresenter
-                Margin="0,2"
+                x:Name="UserPresenter"
+                Height="{StaticResource WindowNonClientHeight}"
                 VerticalAlignment="Center"
                 DataContext="{Binding UserPresenterViewModel}" />
+            <Popup
+                AllowsTransparency="True"
+                IsOpen="True"
+                Placement="Bottom"
+                PlacementTarget="{Binding ElementName=UserPresenter}">
+                <ContentControl Style="{StaticResource UserPresenterStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  User Name Icon  -->
+                        <Ellipse
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            Width="55"
+                            Height="55"
+                            Fill="#EF4141" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Foreground="White"
+                            Text="UN" />
+
+                        <!--  User Name & Id  -->
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Bottom"
+                            FontSize="16"
+                            Foreground="#d4d4d4"
+                            Text="User Name" />
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                FontSize="14"
+                                Foreground="#6f6f6f"
+                                Text="999999" />
+                            <controls:GlyphButton
+                                Width="18"
+                                Margin="5,0,0,0"
+                                Foreground="#d4d4d4"
+                                Icon=""
+                                IconSize="18"
+                                TextOptions.TextHintingMode="Fixed"
+                                TextOptions.TextRenderingMode="Aliased"
+                                ToolTip="Copy ID" />
+                        </StackPanel>
+                    </Grid>
+                </ContentControl>
+            </Popup>
 
         </StackPanel>
         <StackPanel

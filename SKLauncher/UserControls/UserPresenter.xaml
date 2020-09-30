@@ -7,11 +7,13 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Height="{StaticResource WindowNonClientHeight}"
     FontSize="14"
     mc:Ignorable="d">
 
-    <Border Padding="5" Background="Transparent">
+    <Border
+        Margin="02"
+        Padding="5"
+        Background="Transparent">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
                 <i:InvokeCommandAction Command="{Binding MouseOverHandlerCommand}" />
@@ -34,19 +36,29 @@
             <TextBlock
                 Grid.Column="1"
                 Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Foreground="{DynamicResource Theme100Brush}"
                 Text="{Binding UserId}"
                 Visibility="{Binding UserIdVisibility}" />
             <controls:GlyphButton
                 Grid.Column="2"
                 Width="20"
                 Margin="3,0,0,0"
+                VerticalAlignment="Center"
                 Command="{Binding CopyIdCommand}"
+                Foreground="{DynamicResource Theme100Brush}"
                 Icon=""
                 IconSize="18"
                 TextOptions.TextHintingMode="Fixed"
                 TextOptions.TextRenderingMode="Aliased"
                 ToolTip="Copy ID"
                 Visibility="{Binding CopyIdButtonVisibility}" />
+            <Popup Placement="Center">
+                <Rectangle
+                    Width="100"
+                    Height="100"
+                    Fill="Red" />
+            </Popup>
         </Grid>
     </Border>
 </UserControl>
