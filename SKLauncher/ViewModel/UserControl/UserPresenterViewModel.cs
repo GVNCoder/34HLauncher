@@ -30,6 +30,14 @@ namespace Launcher.ViewModel.UserControl
 
         #region Bindable fields
 
+        public bool IsEnabled
+        {
+            get => (bool)GetValue(IsEnabledProperty);
+            set => SetValue(IsEnabledProperty, value);
+        }
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(UserPresenterViewModel), new PropertyMetadata(false));
+
         public string UserName
         {
             get => (string)GetValue(UserNameProperty);
@@ -46,21 +54,13 @@ namespace Launcher.ViewModel.UserControl
         public static readonly DependencyProperty UserIdProperty =
             DependencyProperty.Register("UserId", typeof(string), typeof(UserPresenterViewModel), new PropertyMetadata(string.Empty));
 
-        public Visibility UserIdVisibility
+        public bool PopupIsShow
         {
-            get => (Visibility)GetValue(UserIdVisibilityProperty);
-            set => SetValue(UserIdVisibilityProperty, value);
+            get => (bool)GetValue(PopupIsShowProperty);
+            set => SetValue(PopupIsShowProperty, value);
         }
-        public static readonly DependencyProperty UserIdVisibilityProperty =
-            DependencyProperty.Register("UserIdVisibility", typeof(Visibility), typeof(UserPresenterViewModel), new PropertyMetadata(Visibility.Collapsed));
-
-        public Visibility CopyIdButtonVisibility
-        {   
-            get => (Visibility)GetValue(CopyIdButtonVisibilityProperty);
-            set => SetValue(CopyIdButtonVisibilityProperty, value);
-        }
-        public static readonly DependencyProperty CopyIdButtonVisibilityProperty =
-            DependencyProperty.Register("CopyIdButtonVisibility", typeof(Visibility), typeof(UserPresenterViewModel), new PropertyMetadata(Visibility.Collapsed));
+        public static readonly DependencyProperty PopupIsShowProperty =
+            DependencyProperty.Register("PopupIsShow", typeof(bool), typeof(UserPresenterViewModel), new PropertyMetadata(false));
 
         #endregion
 
@@ -72,15 +72,14 @@ namespace Launcher.ViewModel.UserControl
             Clipboard.CopyToClipboard(UserId);
         });
 
-        public ICommand MouseOverHandlerCommand => new DelegateCommand(parameter =>
+        public ICommand MouseUpHandlerCommand => new DelegateCommand(parameter =>
         {
             // if we`re not connected, then return
             var isConnected = _state.GetState<bool>(Constants.ZCLIENT_CONNECTION);
             if (! isConnected) return;
 
-            // switch visibilities
-            UserIdVisibility = UserIdVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            CopyIdButtonVisibility = CopyIdButtonVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            // switch popup visibility
+            PopupIsShow ^= true;
         });
 
         #endregion
@@ -95,13 +94,22 @@ namespace Launcher.ViewModel.UserControl
                 // user localized string here
                 UserName = "Unauthorized user";
                 UserId = string.Empty;
+                IsEnabled = false;
+                PopupIsShow = false;
             }
             else // setup user
             {
                 UserName = user.Name;
                 UserId = user.Id.ToString();
+                IsEnabled = true;
             }
         });
+
+        #endregion
+
+        #region Private helpers
+
+        
 
         #endregion
     }

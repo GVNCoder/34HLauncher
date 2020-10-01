@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{21ECB645-C995-4D28-BAD5-4C5B9F668D8A}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Launcher</RootNamespace>
     <AssemblyName>34H Launcher</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
@@ -138,6 +138,7 @@
     <Compile Include="Converters\EventLevel2ColorConverter.cs" />
     <Compile Include="Converters\EventLevel2StringConverter.cs" />
     <Compile Include="Converters\GameControlState2ColorConverter.cs" />
+    <Compile Include="Converters\MathNegativeConverter.cs" />
     <Compile Include="Converters\Ping2PingEnumConverter.cs" />
     <Compile Include="Converters\Rotations\MapRole2ColorConverter.cs" />
     <Compile Include="Converters\Rotations\MapRole2StringConverter.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
     <Compile Include="Core\Behaviors\LastClosedEventBehavior.cs" />
+    <Compile Include="Core\Behaviors\UserPresenterPopupBehavior.cs" />
     <Compile Include="Core\Data\BaseGameWorker.cs" />
     <Compile Include="Core\Data\BaseJoinParams.cs" />
     <Compile Include="Core\Data\CoopGameWorker.cs" />

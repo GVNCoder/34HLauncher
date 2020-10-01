@@ -19,7 +19,7 @@ using Clipboard = Launcher.Helpers.Clipboard;
 using WLM = Launcher.Localization.Loc.inCodeLocalizationMap.WindowViewLocalizationMap;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
-namespace Launcher.ViewModel.MainWindow
+namespace Launcher.ViewModel
 {
     public class WindowNonClientPartViewModel : BaseViewModel
     {

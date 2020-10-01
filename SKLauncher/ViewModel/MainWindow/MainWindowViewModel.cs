@@ -26,7 +26,7 @@ using Launcher.Core.Service.Base;
 using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
-using Launcher.ViewModel.MainWindow;
+using Launcher.ViewModel;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
