@@ -34,7 +34,7 @@
                             Background="#282828"
                             BorderBrush="#1d1d1d"
                             BorderThickness="1"
-                            CornerRadius="2">
+                            CornerRadius="{StaticResource CornerRadius}">
                             <Border.Effect>
                                 <DropShadowEffect
                                     BlurRadius="20"
@@ -74,6 +74,7 @@
                 IsOpen="{Binding PopupIsShow}"
                 Placement="Relative"
                 PlacementTarget="{Binding ElementName=UserNameTextBlock}"
+                PopupAnimation="Scroll"
                 StaysOpen="False">
                 <i:Interaction.Behaviors>
                     <behaviors:UserPresenterPopupBehavior />
@@ -90,22 +91,16 @@
                         </Grid.ColumnDefinitions>
 
                         <!--  User Name Icon  -->
-                        <Ellipse
-                            Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Grid.Column="0"
-                            Width="55"
-                            Height="55"
-                            Fill="#EF4141" />
                         <TextBlock
                             Grid.Row="0"
                             Grid.RowSpan="2"
                             Grid.Column="0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="24"
-                            Foreground="White"
-                            Text="UN" />
+                            FontFamily="{StaticResource Ionicons}"
+                            FontSize="54"
+                            Foreground="#d4d4d4"
+                            Text="" />
 
                         <!--  User Name & Id  -->
                         <TextBlock

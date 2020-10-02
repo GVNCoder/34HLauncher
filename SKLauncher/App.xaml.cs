@@ -10,7 +10,6 @@ using Ninject;
 
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
-using Launcher.Data;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
 
@@ -90,7 +89,7 @@ namespace Launcher
             base.OnExit(e);
 
             var saveResult = SettingsService.Save();
-            if (!saveResult)
+            if (! saveResult)
             {
                 Logger.Warn("Cannot save launcher settings.");
             }

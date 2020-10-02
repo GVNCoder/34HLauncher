@@ -19,6 +19,12 @@
             <system:Double x:Key="WindowContentAreaHeight">540</system:Double>
             <GridLength x:Key="WindowNonClientHeightGrid">30</GridLength>
             <GridLength x:Key="WindowBottomBarHeightGrid">30</GridLength>
+            <CornerRadius
+                x:Key="CornerRadius"
+                BottomLeft="2"
+                BottomRight="2"
+                TopLeft="2"
+                TopRight="2" />
             <!--#endregion-->
             <!--  Service locator  -->
             <converters:EventLevel2StringConverter x:Key="EventLevel2StringConverter" />
