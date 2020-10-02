@@ -2,6 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using Launcher.Core.Data;
+using Launcher.Core.Service;
+using Launcher.Data;
+using Ninject;
 using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Core.Behaviors
@@ -11,10 +15,8 @@ namespace Launcher.Core.Behaviors
         protected override void OnAttached()
         {
             var app = (App) Application.Current;
-            var viewModelLocator = app
-                .DependencyResolver
-                .Locators
-                .ViewModelLocator;
+            var viewModelLocator = Resolver.Kernel
+                .Get<ViewModelLocator>();
             switch (TargetGameContext)
             {
                 case ZGame.BF3:

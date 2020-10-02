@@ -1,21 +1,20 @@
 ﻿using System.Windows.Input;
 using System.Windows.Controls;
-
-using Launcher.Core.Bases;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.SettingsViewModelParts;
 using Launcher.Core.Shared;
 
 using Ninject;
-
+using IBlurredPage = Launcher.Core.Bases.IBlurredPage;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
 namespace Launcher.ViewModel
 {
-    public class SettingsViewModel : PageViewModelBase, IBlurredPage
+    public class SettingsViewModel : BasePageViewModel, IBlurredPage
     {
         public ThemesSectionViewModel ThemeSectionViewModel { get; }
         public GeneralSectionViewModel GeneralSectionViewModel { get; }
@@ -23,16 +22,18 @@ namespace Launcher.ViewModel
 
         private readonly ISettingsService _settingsService;
         private readonly IEventLogService _eventLogService;
+        private readonly IDiscord _discord;
 
         public SettingsViewModel(
             ISettingsService settingsService,
             IEventLogService eventLogService,
             IUIHostService hostService,
             IDiscord discord,
-            IKernel kernel) : base(discord)
+            IKernel kernel)
         {
             _settingsService = settingsService;
             _eventLogService = eventLogService;
+            _discord = discord;
 
             // vm parts
             ThemeSectionViewModel = kernel.Get<ThemesSectionViewModel>();

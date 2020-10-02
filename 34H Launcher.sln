@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher.Localization", "La
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher.Theme", "Launcher.Theme\Launcher.Theme.csproj", "{640FBCE5-C7A3-431A-BEDB-7606723D2D83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher.Core", "Launcher.Core\Launcher.Core.csproj", "{43735012-549C-4C5E-A42D-DADE29C497B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{640FBCE5-C7A3-431A-BEDB-7606723D2D83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{640FBCE5-C7A3-431A-BEDB-7606723D2D83}.Release|x64.ActiveCfg = Release|Any CPU
 		{640FBCE5-C7A3-431A-BEDB-7606723D2D83}.Release|x64.Build.0 = Release|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Debug|x64.Build.0 = Debug|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{43735012-549C-4C5E-A42D-DADE29C497B6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

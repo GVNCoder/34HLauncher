@@ -9,43 +9,39 @@ using System.Windows;
 using System.Windows.Input;
 
 using log4net;
-using Launcher.Core.Data;
 using Microsoft.Win32;
-using Ninject;
 
-using Launcher.Core.Data.Updates;
+using Ninject.Syntax;
+
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
+using Launcher.Core;
+using Launcher.Core.Data;
+using Launcher.Core.Service.Base;
 using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
+using Launcher.ViewModel;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
 using Zlo4NET.Core.Data;
 
+using IDiscord = Launcher.Core.RPC.IDiscord;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
-namespace Launcher.ViewModel.MainWindow
+namespace Launcher.ViewModel
 {
-    public class MainWindowViewModel : DependencyObject
+    public class MainWindowViewModel : BasePageViewModel
     {
         private const string _ZClientProcessName = "ZClient";
 
-        #region Lazy services
-
-        private readonly Lazy<IWindowContentNavigationService> __lazyWindowNavigationService;
-        private IWindowContentNavigationService _navigationService => __lazyWindowNavigationService.Value;
-
-        #endregion
-
-        private readonly IApplicationStateService _appStateService;
         private readonly ZProcessTracker _zClientProcessTracker;
         private readonly ISettingsService _settingsService;
         private readonly IProcessService _processService;
@@ -61,28 +57,35 @@ namespace Launcher.ViewModel.MainWindow
         private readonly IGameService _gameService;
         private readonly IDiscord _discordPresence;
 
+        private readonly IPageNavigator _navigator;
+        private readonly IApplicationState _state;
+
         public MainWindowViewModel(
-            IApplicationStateService appStateService,
             IZApi api,
-            IUIHostService hostService,
             ILog logger,
             ISettingsService settingsService,
             IProcessService processService,
-            IKernel kernel,
+            IResolutionRoot kernel,
             ITextDialogService dialogService,
             IContentPresenterService contentPresenterService,
             IEventLogService eventLogService,
             IMainMenuService menuService,
             IUpdateService updateService,
             IGameService gameService,
-            IDiscord discordPresence)
+            IDiscord discordPresence,
+            
+            IPageNavigator navigator,
+            IApplicationState state,
+            IViewModelSource viewModelSource)
         {
+            _navigator = navigator;
+            _state = state;
+            
             _textDialogService = dialogService;
             _contentPresenterService = contentPresenterService;
             _eventLogService = eventLogService;
             _menuService = menuService;
 
-            _appStateService = appStateService;
             _apiConnection = api.Connection;
             _log = logger;
             _settingsService = settingsService;
@@ -92,8 +95,8 @@ namespace Launcher.ViewModel.MainWindow
             _discordPresence = discordPresence;
             _api = api;
 
-            NonClientDataContext = kernel.Get<WindowNonClientPartViewModel>();
-            BottomBarDataContext = kernel.Get<WindowBottomBarPartViewModel>();
+            NonClientDataContext = viewModelSource.Create<WindowNonClientPartViewModel>();
+            BottomBarDataContext = viewModelSource.Create<WindowBottomBarPartViewModel>();
 
             _apiConnection.ConnectionChanged += _apiConnectionConnectionChangedHandler;
 
@@ -103,25 +106,20 @@ namespace Launcher.ViewModel.MainWindow
             _zClientProcessTracker.ProcessDetected += _zClientProcessDetectedHandler;
             _zClientProcessTracker.ProcessLost += _zClientProcessLostHandler;
 
-            _appStateService.StateChanged += _appStateChanged;
-
-            __lazyWindowNavigationService = new Lazy<IWindowContentNavigationService>(() =>
-                kernel.Get<IWindowContentNavigationService>());
-
-            _updateService.CancelDownloadResolver = async () =>
-            {
-                var dlgResult = await _textDialogService.OpenDialog("Are you sure ?",
-                    "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
-                return dlgResult.Action == DialogActionEnum.Primary;
-            };
-            _updateService.UpdateAvailableResolver = ver =>
-            {
-                // ReSharper disable once AssignNullToNotNullAttribute
-                var dlgResult = MessageBox.Show(Application.Current.MainWindow, "Download and install it?", $"A new version is available {ver}",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-                return dlgResult == MessageBoxResult.Yes;
-            };
-            _updateService.Error += _updateServiceErrorHandler;
+            //_updateService.CancelDownloadResolver = async () =>
+            //{
+            //    var dlgResult = await _textDialogService.OpenDialog("Are you sure ?",
+            //        "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
+            //    return dlgResult.Action == DialogActionEnum.Primary;
+            //};
+            //_updateService.UpdateAvailableResolver = ver =>
+            //{
+            //    // ReSharper disable once AssignNullToNotNullAttribute
+            //    var dlgResult = MessageBox.Show(Application.Current.MainWindow, "Download and install it?", $"A new version is available {ver}",
+            //        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            //    return dlgResult == MessageBoxResult.Yes;
+            //};
+            //_updateService.Error += _updateServiceErrorHandler;
 
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
 
@@ -140,30 +138,40 @@ namespace Launcher.ViewModel.MainWindow
             _eventLogService.Log(EventLogLevel.Message, SLM.GameRun, e.PipeLog);
         }
 
-        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
-            => _eventLogService.Log(EventLogLevel.Error, "Update service", e.Message);
-
-        private void _appStateChanged(object sender, ApplicationStateArgs e)
+        private void _RefreshAppState()
         {
-            if (! e.State)
+            var connectionState = _zClientProcessTracker.IsRun && _apiConnection.IsConnected;
+            if (connectionState)
             {
-                _navigationService.NavigateTo("View\\HomeView.xaml");
+                // update data contexts state
+                NonClientDataContext.UpdateConnected();
+                BottomBarDataContext.UpdateConnected();
+            }
+            else
+            {
+                // update data contexts state
+                NonClientDataContext.UpdateDisconnected();
+                BottomBarDataContext.UpdateDisconnected();
+
+                // goto Home ;)
+                _navigator.Navigate("View\\HomeView.xaml");
             }
 
-            State.Storage["connection"] = _appStateService.AllGood();
+            // update app state
+            _state.SetState(Constants.ZCLIENT_CONNECTION, connectionState);
         }
 
         private void _zClientProcessLostHandler(object sender, EventArgs e)
         {
-            _appStateService.ChangeState(StateConstants.ZClient, false);
-            _appStateService.ChangeState(StateConstants.Monolith, false);
+            _RefreshAppState();
 
+            // reset connection
             _apiConnection.Disconnect();
         }
 
         private async void _zClientProcessDetectedHandler(object sender, Process process)
         {
-            _appStateService.ChangeState(StateConstants.ZClient, true);
+            _RefreshAppState();
 
             var startProcessTime = process.StartTime.ToUniversalTime();
             var currentTime = DateTime.UtcNow;
@@ -203,9 +211,7 @@ namespace Launcher.ViewModel.MainWindow
         }
 
         private void _apiConnectionConnectionChangedHandler(object sender, ZConnectionChangedArgs e)
-        {
-            _appStateService.ChangeState(StateConstants.Monolith, e.IsConnected);
-        }
+            => _RefreshAppState();
 
         private void _runZClient(string path)
         {
@@ -226,17 +232,19 @@ namespace Launcher.ViewModel.MainWindow
 
         #region Commands
 
-        public ICommand WindowLoadedCommand => new DelegateCommand(_windowLoadedCommandExec);
-
-        private void _windowLoadedCommandExec(object obj)
+        public override ICommand LoadedCommand => new DelegateCommand(parameter =>
         {
-            var iWnd = (MainWindowView) obj;
+            var iWnd = (MainWindowView) parameter;
 
-            _navigationService.Initialize(iWnd.HOST_Content);
-            _navigationService.NavigateTo("View\\HomeView.xaml");
+            // setup ui dependencies
+            ((IUIHostDependency)_navigator).SetDependency(iWnd.HOST_Content);
 
-            _appStateService.AddState(StateConstants.ZClient, true);
-            _appStateService.AddState(StateConstants.Monolith, true);
+            // setup application state vars
+            _state.RegisterVars();
+
+            // initial actions
+            _navigator.Navigate("View\\HomeView.xaml"); // default page is Home ;)
+            BottomBarDataContext.UpdateDisconnected();  // for error message showing
 
             var settings = _settingsService.GetLauncherSettings();
             if (settings.RunZClient)
@@ -256,11 +264,11 @@ namespace Launcher.ViewModel.MainWindow
             _updateService.BeginUpdate();
             _zClientProcessTracker.StartTrack();
 
-            _appStateService.ChangeState(StateConstants.ZClient, _zClientProcessTracker.IsRun);
-            _appStateService.ChangeState(StateConstants.Monolith, _apiConnection.IsConnected);
-        }
+            _state.SetState(Constants.ZCLIENT_IS_RUN, _zClientProcessTracker.IsRun);
+            _state.SetState(Constants.ZCLIENT_CONNECTION, _apiConnection.IsConnected);
+        });
 
-        public ICommand UnloadedCommand => new DelegateCommand(obj =>
+        public override ICommand UnloadedCommand => new DelegateCommand(parameter =>
         {
             _discordPresence.Stop();
         });

@@ -7,10 +7,13 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.View.MainWindow"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="clr-namespace:Launcher.UserControls"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowNonClientHeight}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     mc:Ignorable="d">
+
+    <UserControl.Resources />
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,7 +42,7 @@
             <controls:GlyphButton
                 Width="25"
                 Height="26"
-                Command="{Binding Navigation.Navigate}"
+                Command="{Binding NavigateToCommand}"
                 CommandParameter="View/HomeView.xaml"
                 Icon=""
                 IconSize="18"
@@ -49,7 +52,7 @@
             <controls:GlyphButton
                 Width="25"
                 Height="26"
-                Command="{Binding Navigation.Navigate}"
+                Command="{Binding NavigateToCommand}"
                 CommandParameter="View/SettingsView.xaml"
                 Icon=""
                 IconSize="18"
@@ -59,7 +62,7 @@
             <controls:GlyphButton
                 Width="25"
                 Height="26"
-                Command="{Binding Navigation.Back}"
+                Command="{Binding NavigateBackCommand}"
                 Icon=""
                 IconSize="20"
                 IsEnabled="{Binding CanBackNavigation}"
@@ -108,7 +111,7 @@
                 </TextBlock.Foreground>
             </TextBlock>
             <TextBlock
-                Margin="7,0,10,0"
+                Margin="7,0,5,0"
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource Ionicons}"
                 FontSize="18"
@@ -124,25 +127,11 @@
                 </TextBlock.Foreground>
             </TextBlock>
 
-            <TextBlock
-                Margin="0,5"
+            <userControls:UserPresenter
+                x:Name="UserPresenter"
+                Height="{StaticResource WindowNonClientHeight}"
                 VerticalAlignment="Center"
-                FontSize="14"
-                Text="{Binding UserName}">
-                <TextBlock.ContextMenu>
-                    <ContextMenu Foreground="{DynamicResource Theme50Brush}">
-                        <MenuItem Command="{Binding CopyUserIDCommand}" Header="{DynamicResource wndView_HeaderCopyId}" />
-                        <!--<MenuItem Command="{Binding ReLoginCommand}" Header="ReLogin" />-->
-                        <!--<MenuItem Command="{Binding DEBUG}" Header="DEBUG_DISCONNECT" />-->
-                    </ContextMenu>
-                </TextBlock.ContextMenu>
-                <TextBlock.Foreground>
-                    <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
-                        <GradientStop Offset="0" Color="{DynamicResource Theme50Color}" />
-                        <GradientStop Offset="1" Color="{DynamicResource Theme300Color}" />
-                    </LinearGradientBrush>
-                </TextBlock.Foreground>
-            </TextBlock>
+                DataContext="{Binding UserPresenterViewModel}" />
 
         </StackPanel>
         <StackPanel

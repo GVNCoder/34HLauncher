@@ -1,19 +1,28 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Launcher.Core.Bases;
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using Launcher.Helpers;
 using Zlo4NET.Api.Models.Shared;
+
+using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.ViewModel.Stats
 {
-    public class BF4StatsViewModel : PageViewModelBase
+    public class BF4StatsViewModel : BasePageViewModel
     {
-        public BF4StatsViewModel(IUIHostService hostService, IDiscord discord) : base(discord)
+        private readonly IApplicationState _state;
+        private readonly IDiscord _discord;
+
+        public BF4StatsViewModel(IUIHostService hostService, IDiscord discord, IApplicationState state)
         {
+            _state = state;
+            _discord = discord;
+
             WindowBackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }
 
@@ -22,7 +31,8 @@ namespace Launcher.ViewModel.Stats
 
         private void _LoadedExec(object obj)
         {
-            Stats = (ZBF4Stats) State.Storage["stats_BF4"];
+            Stats = _state.GetState<ZBF4Stats>(Constants.BF4_STATS);
+
             _discord.UpdateStats(ZGame.BF4);
         }
 

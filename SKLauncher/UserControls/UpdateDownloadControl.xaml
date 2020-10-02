@@ -7,9 +7,8 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Height="20"
-    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=UpdateControlViewModel}"
     FontFamily="{StaticResource OpenSans}"
-    Visibility="{Binding ControlVisibility}"
+    Visibility="{Binding Visibility, Mode=OneWay}"
     mc:Ignorable="d">
 
     <Border
@@ -22,7 +21,7 @@
                 VerticalAlignment="Center"
                 FontWeight="Bold"
                 Foreground="{DynamicResource WindowKeyBrush}"
-                Text="Update downloading" />
+                Text="{Binding Text, Mode=OneWay}" />
             <TextBlock
                 Margin="5,0,0,1"
                 VerticalAlignment="Center"

@@ -4,9 +4,10 @@ using System.IO;
 using System.Reflection;
 
 using log4net;
+using Launcher.Core.Data;
+using Launcher.Core.Service;
 using Ninject;
 
-using Launcher.Core.Injection;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
@@ -16,8 +17,8 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
 
-[assembly: AssemblyVersion("0.122.1232.0")]
-[assembly: AssemblyFileVersion("0.122.1232.0")]
+[assembly: AssemblyVersion("0.123.0.1")]
+[assembly: AssemblyFileVersion("0.123.0.1")]
 
 namespace Launcher
 {
@@ -29,10 +30,6 @@ namespace Launcher
         /// </summary>
         public ISettingsService SettingsService { get; }
         /// <summary>
-        /// Dependency resolver
-        /// </summary>
-        public IDependencyResolver DependencyResolver { get; }
-        /// <summary>
         /// Launcher process service
         /// </summary>
         public ILauncherProcessService ProcessService { get; }
@@ -43,11 +40,13 @@ namespace Launcher
 
         public App()
         {
-            DependencyResolver = new DependencyResolver();
+            // initialize DI container
+            Resolver.Create();
+
             ProcessService = new LauncherProcessService();
 
-            Logger = DependencyResolver.Resolver.Get<ILog>();
-            SettingsService = DependencyResolver.Resolver.Get<ISettingsService>();
+            Logger = Resolver.Kernel.Get<ILog>();
+            SettingsService = Resolver.Kernel.Get<ISettingsService>();
 
             VersionService.SetVersion(new LauncherVersion("beta"));
         }
@@ -61,10 +60,10 @@ namespace Launcher
             base.OnStartup(e);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(_logUnhandledExceptions);
 
-            Resources["ViewModelLocator"] = DependencyResolver.Locators.ViewModelLocator;
-            Resources["UserControlViewModelLocator"] = DependencyResolver.Locators.UserControlViewModelLocator;
+            // assign instance into Xaml
+            Resources["ViewModelLocator"] = Resolver.Kernel.Get<IViewModelSource>();
 
-            _SetupVars();
+            // Old code
             _SetupDirectories();
             _SetupLoggers(ZApi.Instance, Logger);
 
@@ -90,7 +89,7 @@ namespace Launcher
             base.OnExit(e);
 
             var saveResult = SettingsService.Save();
-            if (!saveResult)
+            if (! saveResult)
             {
                 Logger.Warn("Cannot save launcher settings.");
             }
@@ -102,11 +101,6 @@ namespace Launcher
         }
 
         #endregion // App startup/exit
-
-        private static void _SetupVars()
-        {
-            State.Storage["connection"] = false;
-        }
 
         private static void _SetupDirectories()
         {

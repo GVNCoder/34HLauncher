@@ -7,6 +7,7 @@ using DiscordRPC;
 using Launcher.Core.Services;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
+using Launcher.Core.Data;
 
 namespace Launcher.Core.RPC
 {
@@ -125,7 +126,7 @@ namespace Launcher.Core.RPC
 
         public Discord(App application, ISettingsService settingsService)
         {
-            _discordPresence = application.DependencyResolver.Resolver.Get<IDiscordPresence>();
+            _discordPresence = Resolver.Kernel.Get<IDiscordPresence>();
             _discordPresence.ConnectionChanged += _discordConnectionChangedHandler;
 
             _settings = settingsService.GetLauncherSettings();

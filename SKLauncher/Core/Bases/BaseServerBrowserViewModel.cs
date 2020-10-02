@@ -5,10 +5,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-
+using System.Windows.Navigation;
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
-using Launcher.Core.RPC;
+using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -21,10 +22,11 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
+using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Bases
 {
-    public abstract class BaseServerBrowserViewModel : PageViewModelBase, IBlurredPage
+    public abstract class BaseServerBrowserViewModel : BasePageViewModel, IBlurredPage
     {
         #region Props
 
@@ -132,15 +134,18 @@ namespace Launcher.Core.Bases
             IContentPresenterService modalContentPresenterService,
             IDiscord discord,
             Application application,
-            IWindowContentNavigationService navigationService,
-            ISettingsService settingsService) : base(discord)
+            ISettingsService settingsService,
+            IPageNavigator navigator)
         {
+            _navigator = navigator;
+            _discord = discord;
+
             _api = api;
             _gameService = gameService;
             _eventLogService = eventLogService;
             _modalContentService = modalContentPresenterService;
             _application = application;
-            _navigationService = navigationService;
+            //_navigationService = navigationService;
             _settingsInstance = settingsService.GetLauncherSettings();
 
             BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
@@ -148,13 +153,15 @@ namespace Launcher.Core.Bases
 
         #region Protected members
 
+        protected readonly IPageNavigator _navigator;
+
         protected readonly IZApi _api;
+        protected readonly IDiscord _discord;
         protected readonly IGameService _gameService;
         protected readonly Application _application;
         protected readonly IEventLogService _eventLogService;
         protected readonly LauncherSettings _settingsInstance;
         protected readonly IContentPresenterService _modalContentService;
-        protected readonly IWindowContentNavigationService _navigationService;
         
         protected IZServersListService _serversService;
         protected CollectionViewSource _collectionViewSource;
@@ -228,7 +235,7 @@ namespace Launcher.Core.Bases
             _AssignCollectionViewSource(_serversService.ServersCollection);
             _serversService.StartReceiving();
 
-            _navigationService.Navigation += _LeaveServerBrowserInitiated;
+            _navigator.NavigationInitiated += _LeaveServerBrowserInitiated;
         }
 
         protected void OnUnloadedImpl()
@@ -288,9 +295,9 @@ namespace Launcher.Core.Bases
             }
         }
 
-        private void _LeaveServerBrowserInitiated(object sender, EventArgs e)
+        private void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)
         {
-            _navigationService.Navigation -= _LeaveServerBrowserInitiated;
+            _navigator.NavigationInitiated -= _LeaveServerBrowserInitiated;
 
             var playingCurrently = _gameService.CurrentPlayMode == ZPlayMode.Multiplayer;
             if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)

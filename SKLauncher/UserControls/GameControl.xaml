@@ -10,7 +10,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     Height="20"
-    DataContext="{Binding Source={StaticResource UserControlViewModelLocator}, Path=GameControlViewModel}"
     Foreground="{DynamicResource Theme800Brush}"
     ToolTip="{Binding ToolTipContent}"
     ToolTipService.InitialShowDelay="0"

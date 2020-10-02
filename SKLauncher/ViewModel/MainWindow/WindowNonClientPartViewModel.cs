@@ -3,10 +3,15 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Launcher.Core.Data;
 using Launcher.Core.Interaction;
+using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
+using Launcher.ViewModel.UserControl;
+using Ninject;
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
@@ -14,87 +19,45 @@ using Clipboard = Launcher.Helpers.Clipboard;
 using WLM = Launcher.Localization.Loc.inCodeLocalizationMap.WindowViewLocalizationMap;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
-namespace Launcher.ViewModel.MainWindow
+namespace Launcher.ViewModel
 {
-    public class WindowNonClientPartViewModel : DependencyObject
+    public class WindowNonClientPartViewModel : BaseViewModel
     {
         private readonly Window _wnd;
         private readonly IZApi _api;
         private readonly IMainMenuService _mainMenuService;
-        private readonly IApplicationStateService _appStateService;
         private readonly ILauncherProcessService _launcherProcessService;
         private readonly IUpdateService _updateService;
+        private readonly IPageNavigator _navigator;
 
         private ZUser _authorizedUser;
 
-        public WindowNonClientPartViewModel(IUIHostService uiHostService,
-            IApplicationStateService appStateService,
+        public WindowNonClientPartViewModel(
+            IUIHostService uiHostService,
             IMainMenuService mainMenuService,
-            IWindowContentNavigationService navigationService,
+            IPageNavigator navigator,
             IZApi api,
             IUpdateService updateService)
         {
+            UserPresenterViewModel = Resolver.Kernel.Get<UserPresenterViewModel>();
+            UserPresenterViewModel.SetUserData(null);
+
+            _navigator = navigator;
+
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
-            Navigation = navigationService;
-            Navigation.Navigation += _navigationInitiatedHandler;
+            _navigator.NavigationInitiated += _navigationInitiatedHandler;
             var application = Application.Current as App;
 
             _wnd = application.MainWindow;
-            _appStateService = appStateService;
             _launcherProcessService = application.ProcessService;
             _mainMenuService = mainMenuService;
             _api = api;
             _updateService = updateService;
-
-            _appStateService.StateChanged += _appStateChanged;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)
         {
             if (_mainMenuService.CanUse) _mainMenuService.Close();
-        }
-
-        private void _SetAuthorizedUser()
-        {
-            _authorizedUser = _api.Connection.AuthorizedUser;
-            if (_authorizedUser != null)
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    UserName = _authorizedUser.Name;
-                });
-            }
-        }
-
-        private void _appStateChanged(object sender, ApplicationStateArgs e)
-        {
-            if (! e.State)
-            {
-                if (_authorizedUser == null)
-                {
-                    return;
-                }
-
-                Dispatcher.Invoke(() =>
-                {
-                    UserName = WLM.UnknownUser;
-                    CanBackNavigation = false;
-                    _authorizedUser = null;
-                });
-            }
-            else if (_appStateService.AllGood())
-            {
-                if (_authorizedUser != null)
-                {
-                    return;
-                }
-
-                _SetAuthorizedUser();
-                Dispatcher.Invoke(() => CanBackNavigation = true);
-            }
-
-            var visibility = _appStateService.AllGood() ? Visibility.Collapsed : Visibility.Visible;
-            Dispatcher.Invoke(() => ConnectButtonVisibility = visibility);
         }
 
         private void _handler(object sender, ZConnectionChangedArgs e)
@@ -105,21 +68,13 @@ namespace Launcher.ViewModel.MainWindow
 
         #region Public members
 
+        public UserPresenterViewModel UserPresenterViewModel { get; }
         public Grid WindowBackgroundContent { get; }
-        public IWindowContentNavigationService Navigation { get; }
-
-        public string UserName
-        {
-            get => (string)GetValue(UserNameProperty);
-            set => Dispatcher.Invoke(() => SetValue(UserNameProperty, value));
-        }
-        public static readonly DependencyProperty UserNameProperty =
-            DependencyProperty.Register("UserName", typeof(string), typeof(WindowNonClientPartViewModel), new PropertyMetadata(WLM.UnknownUser));
 
         public Visibility ConnectButtonVisibility
         {
             get => (Visibility)GetValue(ConnectButtonVisibilityProperty);
-            set => SetValue(ConnectButtonVisibilityProperty, value);
+            set => Dispatcher.Invoke(() => SetValue(ConnectButtonVisibilityProperty, value));
         }
         public static readonly DependencyProperty ConnectButtonVisibilityProperty =
             DependencyProperty.Register("ConnectButtonVisibility", typeof(Visibility), typeof(WindowNonClientPartViewModel), new PropertyMetadata(Visibility.Visible));
@@ -135,7 +90,7 @@ namespace Launcher.ViewModel.MainWindow
         public bool CanBackNavigation
         {
             get => (bool)GetValue(CanBackNavigationProperty);
-            set => SetValue(CanBackNavigationProperty, value);
+            set => Dispatcher.Invoke(() => SetValue(CanBackNavigationProperty, value));
         }
         public static readonly DependencyProperty CanBackNavigationProperty =
             DependencyProperty.Register("CanBackNavigation", typeof(bool), typeof(WindowNonClientPartViewModel), new PropertyMetadata(false));
@@ -149,6 +104,14 @@ namespace Launcher.ViewModel.MainWindow
         public ICommand MinimizeWindowCommand => new DelegateCommand(obj => SystemCommands.MinimizeWindow(_wnd));
 
         public ICommand ToggleMainMenuCommand => new DelegateCommand(obj => _mainMenuService.Toggle());
+
+        public ICommand NavigateToCommand => new DelegateCommand(obj =>
+        {
+            var navigationTarget = (string) obj;
+            _navigator.Navigate(navigationTarget);
+        });
+
+        public ICommand NavigateBackCommand => new DelegateCommand(obj => _navigator.NavigateBack());
 
         public ICommand RestartApplicationCommand => new DelegateCommand(obj =>
         {
@@ -165,15 +128,11 @@ namespace Launcher.ViewModel.MainWindow
             }
         });
 
-        public ICommand CopyUserIDCommand => new DelegateCommand(obj =>
-        {
-            if (_authorizedUser != null) Clipboard.CopyToClipboard($"{WLM.MyId} {_authorizedUser.Id}");
-        });
-
         public ICommand ConnectCommand => new DelegateCommand(obj =>
         {
             // disable button
             ConnectIsEnabled = false;
+
             // try connect
             _api.Connection.Connect();
             _api.Connection.ConnectionChanged += _handler;
@@ -184,6 +143,32 @@ namespace Launcher.ViewModel.MainWindow
         private void _DEBUG(object obj)
         {
             if (_api.Connection.IsConnected) _api.Connection.Disconnect();
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public void UpdateDisconnected()
+        {
+            if (_authorizedUser == null) return;
+
+            _authorizedUser = null;
+
+            UserPresenterViewModel.SetUserData(null);
+            CanBackNavigation = false;
+            ConnectButtonVisibility = Visibility.Visible;
+        }
+
+        public void UpdateConnected()
+        {
+            if (_authorizedUser != null) return;
+
+            _authorizedUser = _api.Connection.AuthorizedUser;
+
+            UserPresenterViewModel.SetUserData(_authorizedUser);
+            CanBackNavigation = true;
+            ConnectButtonVisibility = Visibility.Collapsed;
         }
 
         #endregion

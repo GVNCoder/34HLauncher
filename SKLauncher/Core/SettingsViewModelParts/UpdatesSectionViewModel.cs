@@ -5,13 +5,14 @@ using System.Windows;
 using System.Windows.Input;
 
 using Launcher.Core.Interaction;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Shared;
 
 namespace Launcher.Core.SettingsViewModelParts
 {
-    public class UpdatesSectionViewModel : UIBaseViewModel
+    public class UpdatesSectionViewModel : BaseControlViewModel
     {
         private const string __changelogFileName = "ChangeLog_";
         private const string __cacheFilePath = "update\\34H Update.exe";

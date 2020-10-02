@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using Launcher.Core.Service;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
+using Launcher.ViewModel;
 
 namespace Launcher.Core.Data.EventLog
 {
@@ -12,12 +14,9 @@ namespace Launcher.Core.Data.EventLog
         private readonly ObservableCollection<EventViewModel> _events;
         private readonly Dispatcher _dispatcher;
 
-        public EventLogService()
+        public EventLogService(IViewModelSource viewModelLocator)
         {
-            var application = Application.Current as App;
-            var viewModelLocator = application.DependencyResolver.Locators.ViewModelLocator;
-            _events = viewModelLocator
-                .EventLogViewModel
+            _events = viewModelLocator.GetExisting<EventLogViewModel>()
                 .Events;
             _dispatcher = Dispatcher.CurrentDispatcher;
         }

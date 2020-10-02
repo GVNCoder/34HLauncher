@@ -1,46 +1,43 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
+
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 using Launcher.Core.Interaction;
+using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 
-namespace Launcher.ViewModel.MainWindow
+namespace Launcher.ViewModel
 {
-    public class WindowBottomBarPartViewModel : DependencyObject
+    public class WindowBottomBarPartViewModel : BaseControlViewModel
     {
-        private readonly IApplicationStateService _applicationStateService;
         private readonly IEventLogService _eventLogService;
+        private readonly IPageNavigator _navigator;
 
-        private EventViewModel _zClientEvent;
-        private EventViewModel _connectionEvent;
+        private EventViewModel _disconnectedVm;
 
         public WindowBottomBarPartViewModel(
             IUIHostService uiHostService,
             IVersionService versionService,
-            IApplicationStateService applicationStateService,
-            IWindowContentNavigationService navigationService,
             IEventLogService eventLogService,
-            App application)
+            IPageNavigator navigator,
+            IViewModelSource viewModelLocator)
         {
+            _navigator = navigator;
+
+            UpdateControlViewModel = viewModelLocator.GetExisting<UpdateControlViewModel>();
+            GameControlViewModel = viewModelLocator.GetExisting<GameControlViewModel>();
+
             WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             VersionString = versionService.GetLauncherVersion().ToString();
-            NavigationService = navigationService;
 
-            _applicationStateService = applicationStateService;
-            _applicationStateService.StateChanged += _applicationStateChangedHandler;
             _eventLogService = eventLogService;
 
-            var vmLocator = application
-                .DependencyResolver
-                .Locators
-                .ViewModelLocator;
-            var obsCollection = vmLocator
-                .EventLogViewModel
+            var obsCollection = viewModelLocator.GetExisting<EventLogViewModel>()
                 .Events;
             obsCollection.CollectionChanged += _eventsCollectionChanged;
         }
@@ -54,54 +51,13 @@ namespace Launcher.ViewModel.MainWindow
             });
         }
 
-        private void _logZClientNotDetectedEvent()
-        {
-            _zClientEvent = _eventLogService.Log(EventLogLevel.Error, "Cannot detect ZClient. List of possible problems:",
-                "-ZClient not running\n-Internal launcher error (restart the launcher and contact the developer)");
-        }
-
-        private void _logConnectionLostEvent()
-        {
-            _connectionEvent = _eventLogService.Log(EventLogLevel.Error, "Cannot create connection. List of possible problems:",
-                "-You did not click the Connect button\n-There is no internet connection\n-You, for whatever reason, are not logged in to ZClient\n-Running multiple processes of ZClient\n-Launcher internal error (restart the launcher and contact the developer)");
-        }
-
-        private void _applicationStateChangedHandler(object sender, ApplicationStateArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (e.Key == StateConstants.ZClient)
-                {
-                    if (e.State)
-                    {
-                        _zClientEvent?.CloseCommand.Execute(null);
-                        _zClientEvent = null;
-                    }
-                    else
-                    {
-                        _logZClientNotDetectedEvent();
-                    }
-                }
-                else
-                {
-                    if (e.State)
-                    {
-                        _connectionEvent?.CloseCommand.Execute(null);
-                        _connectionEvent = null;
-                    }
-                    else
-                    {
-                        _logConnectionLostEvent();
-                    }
-                }
-            });
-        }
-
         #region Public members
+
+        public UpdateControlViewModel UpdateControlViewModel { get; }
+        public GameControlViewModel GameControlViewModel { get; }
 
         public Grid WindowBackgroundContent { get; }
         public string VersionString { get; }
-        public IWindowContentNavigationService NavigationService { get; }
 
         public bool HasEvents
         {
@@ -117,10 +73,44 @@ namespace Launcher.ViewModel.MainWindow
 
         public ICommand OpenLogCommand => new DelegateCommand(_openLogCommandExec);
 
+        public override ICommand LoadedCommand => throw new System.NotImplementedException();
+
+        public override ICommand UnloadedCommand => throw new System.NotImplementedException();
+
         private void _openLogCommandExec(object obj)
         {
-            if (!_eventLogService.HasEvents) return;
-            NavigationService.NavigateTo("View/EventLogView.xaml");
+            if (! _eventLogService.HasEvents) return;
+
+            _navigator.Navigate("View/EventLogView.xaml");
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public void UpdateConnected()
+        {
+            // check already call this method
+            if (_disconnectedVm == null) return;
+
+            // sync with UI thread
+            Dispatcher.Invoke(() =>
+            {
+                _disconnectedVm?.CloseCommand.Execute(null);
+                _disconnectedVm = null;
+            });
+        }
+
+        public void UpdateDisconnected()
+        {
+            // check already call this method
+            if (_disconnectedVm != null) return;
+
+            _disconnectedVm = _eventLogService.Log(EventLogLevel.Error,
+                "Unable to establish a connection to the ZClient for one of the following reasons:",
+                "-ZClient not running\n-You did not click the Connect button\n-There is no internet connection\n" +
+                "-You, for whatever reason, are not logged in to ZClient\n-Running multiple processes of ZClient\n" +
+                "-Launcher internal error (restart the launcher and contact the developer)");
         }
 
         #endregion

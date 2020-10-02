@@ -2,10 +2,11 @@
 using System.Windows;
 using System.Windows.Input;
 using Launcher.Core.Interaction;
+using Launcher.Core.Service.Base;
 
 namespace Launcher.Core.Shared
 {
-    public class GameControlViewModel : DependencyObject, IGameControl
+    public class GameControlViewModel : BaseControlViewModel, IGameControl
     {
         #region Dependency properties
 
@@ -58,6 +59,10 @@ namespace Launcher.Core.Shared
             CanClose = false;
             CloseClick?.Invoke(this, EventArgs.Empty);
         });
+
+        public override ICommand LoadedCommand => throw new NotImplementedException();
+
+        public override ICommand UnloadedCommand => throw new NotImplementedException();
 
         #endregion
 
