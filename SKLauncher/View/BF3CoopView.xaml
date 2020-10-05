@@ -2,6 +2,7 @@
     x:Class="Launcher.View.BF3CoopView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:Launcher.Core.Behaviors"
     xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
     xmlns:converters="clr-namespace:Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,6 +10,7 @@
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:shared="clr-namespace:Launcher.Core.Shared"
+    x:Name="VisualContainer"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Path=BF3CoopViewModel, Source={StaticResource ViewModelLocator}}"
@@ -178,13 +180,18 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <controls:AcrylicPanel
+        <i:Interaction.Behaviors>
+            <behaviors:AcrylicControlBehavior AdjustmentLevel="OnSetup" VisualContext="Page" />
+        </i:Interaction.Behaviors>
+
+        <!--<controls:AcrylicPanel
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             NoiseOpacity=".0075"
             Target="{Binding BackgroundContent}"
             TintColor="{DynamicResource Theme850Color}"
-            TintOpacity=".25" />
+            TintOpacity=".25" />-->
+
 
         <Rectangle
             Grid.Row="0"

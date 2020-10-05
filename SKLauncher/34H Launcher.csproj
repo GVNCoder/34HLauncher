@@ -147,6 +147,7 @@
     <Compile Include="Core\ApplicationStateExtension.cs" />
     <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
     <Compile Include="Core\Bases\IBlurredPage.cs" />
+    <Compile Include="Core\Behaviors\AcrylicControlBehavior.cs" />
     <Compile Include="Core\Behaviors\ButtonContextMenuBehavior.cs" />
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Core\Shared\TextDialogButtons.cs" />
     <Compile Include="Core\Shared\TextDialogViewModel.cs" />
     <Compile Include="Core\Shared\UIElementConstants.cs" />
+    <Compile Include="Core\VisualProvider.cs" />
     <Compile Include="Data\ContainerModule.cs" />
     <Compile Include="Data\ViewModelLocator.cs" />
     <Compile Include="Data\Resolver.cs" />

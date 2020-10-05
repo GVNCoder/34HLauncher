@@ -1,13 +1,14 @@
 ﻿using System.Windows;
 
 using log4net;
-
+using Launcher.Core;
 using Launcher.Core.Data;
 using Launcher.Core.Data.Dialog;
 using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
 using Launcher.Core.RPC;
 using Launcher.Core.Service;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
@@ -86,6 +87,8 @@ namespace Launcher.Data
             Kernel.Bind<IPageNavigator>().To<PageNavigator>()
                 .InSingletonScope();
             Kernel.Bind<IApplicationState>().To<ApplicationState>()
+                .InSingletonScope();
+            Kernel.Bind<IVisualProvider>().To<VisualProvider>()
                 .InSingletonScope();
         }
     }

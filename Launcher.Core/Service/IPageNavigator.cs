@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Launcher.Core.Data.Model.Event;
 
 namespace Launcher.Core.Service
 {
@@ -28,6 +27,10 @@ namespace Launcher.Core.Service
         /// Gets the current page
         /// </summary>
         Page CurrentPage { get; }
+        /// <summary>
+        /// Gets the content presenter
+        /// </summary>
+        Frame Container { get; }
         /// <summary>
         /// Occurs when navigation was initiated
         /// </summary>

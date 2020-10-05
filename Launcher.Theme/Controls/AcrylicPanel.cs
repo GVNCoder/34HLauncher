@@ -9,13 +9,13 @@ namespace Launcher.XamlThemes.Controls
 {
     public class AcrylicPanel : Control
     {
-        public FrameworkElement Target
+        public Visual Target
         {
-            get => (FrameworkElement)GetValue(TargetProperty);
+            get => (Visual)GetValue(TargetProperty);
             set => SetValue(TargetProperty, value);
         }
         public static readonly DependencyProperty TargetProperty =
-            DependencyProperty.Register("Target", typeof(FrameworkElement), typeof(AcrylicPanel), new PropertyMetadata(null));
+            DependencyProperty.Register("Target", typeof(Visual), typeof(AcrylicPanel), new PropertyMetadata(null));
 
         public FrameworkElement Source
         {

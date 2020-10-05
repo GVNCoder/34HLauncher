@@ -47,8 +47,10 @@
     <Compile Include="Data\ApplicationState.cs" />
     <Compile Include="Data\AsyncCommand.cs" />
     <Compile Include="Data\AsyncCommandBase.cs" />
+    <Compile Include="Data\Model\AcrylicAdjustmentLevel.cs" />
     <Compile Include="Data\Model\Event\ApplicationStateEventArgs.cs" />
     <Compile Include="Data\PageNavigator.cs" />
+    <Compile Include="Data\VisualContext.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Base\BaseControlViewModel.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Service\Base\IAsyncCommand.cs" />
     <Compile Include="Service\Base\IBlurredPage.cs" />
     <Compile Include="Service\Base\IUIHostDependecny.cs" />
+    <Compile Include="Service\Base\IVisualProvider.cs" />
     <Compile Include="Service\IApplicationState.cs" />
     <Compile Include="Service\IControlViewModelLocator.cs" />
     <Compile Include="Service\IDiscord.cs" />
