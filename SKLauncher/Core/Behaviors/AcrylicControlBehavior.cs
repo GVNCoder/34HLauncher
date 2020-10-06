@@ -1,21 +1,20 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
-using System.Windows.Media;
+
 using Launcher.Core.Data;
 using Launcher.Core.Data.Model;
-using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.XamlThemes.Controls;
+
 using Ninject;
 
 namespace Launcher.Core.Behaviors
 {
     public class AcrylicControlBehavior : Behavior<Grid>
     {
-        private const string _TINT_COLOR_KEY = "Theme850Color";
+        private const string TINT_COLOR_KEY = "Theme850Color";
         private IVisualProvider _visualProvider;
-        private ResourceDictionary _resources;
 
         #region Bindable properties
 
@@ -45,10 +44,7 @@ namespace Launcher.Core.Behaviors
             var kernel = Resolver.Kernel;
 
             // resolve svc
-            var appState = kernel.Get<IApplicationState>();
-
             _visualProvider = kernel.Get<IVisualProvider>();
-            _resources = appState.Application.Resources;
 
             // get visual content by context
             var vContent = _visualProvider.GetVisualContent(VisualContext);
@@ -58,16 +54,21 @@ namespace Launcher.Core.Behaviors
             {
                 Target = vContent,
                 NoiseOpacity = .0075,
-                TintColor = (Color) _resources[_TINT_COLOR_KEY],
-                TintOpacity = .25
+                TintOpacity = .25,
+                AdjustmentLevel = AdjustmentLevel
             };
 
+            // setup dynamic resource ref
+            acrylicEffect.SetResourceReference(AcrylicPanel.TintColorProperty, TINT_COLOR_KEY);
+
+            // fill all free space
             var rowCount = AssociatedObject.RowDefinitions.Count;
             var columnCount = AssociatedObject.ColumnDefinitions.Count;
 
             if (rowCount != 0) Grid.SetRowSpan(acrylicEffect, rowCount);
             if (columnCount != 0) Grid.SetColumnSpan(acrylicEffect, columnCount);
 
+            // inject to UI at first element
             AssociatedObject.Children.Insert(0, acrylicEffect);
         }
 

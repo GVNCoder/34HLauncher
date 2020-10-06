@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Launcher.Core.Data.Model;
 
 namespace Launcher.XamlThemes.Controls
 {
@@ -49,6 +50,8 @@ namespace Launcher.XamlThemes.Controls
         public static readonly DependencyProperty NoiseOpacityProperty =
             DependencyProperty.Register("NoiseOpacity", typeof(double), typeof(AcrylicPanel), new PropertyMetadata(.03d));
 
+        public AcrylicAdjustmentLevel AdjustmentLevel { get; set; }
+
         static AcrylicPanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(AcrylicPanel), new FrameworkPropertyMetadata(typeof(AcrylicPanel)));
@@ -61,34 +64,38 @@ namespace Launcher.XamlThemes.Controls
 
         bool _isChanged = false;
         private bool _actionCalled = false;
+        private UIElement rect;
+
+        #region Private helpers
+
+        private void _AdjustHandlerOnSetup(object sender, EventArgs e)
+        {
+            if (_isChanged) return;
+
+            this._isChanged = true;
+            var bindingExp = BindingOperations.GetBindingExpressionBase(rect, Rectangle.RenderTransformProperty);
+            bindingExp?.UpdateTarget();
+
+            if (!_actionCalled)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _actionCalled = true;
+                    this._isChanged = false;
+                }), System.Windows.Threading.DispatcherPriority.DataBind);
+            }
+        }
+
+        #endregion
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            var rect = this.GetTemplateChild("rect") as Rectangle;
+            rect = (UIElement) GetTemplateChild("rect");
             if (rect != null)
             {
-                rect.LayoutUpdated += (_, __) =>
-                {
-                    if (!this._isChanged)
-                    {
-                        this._isChanged = true;
-                        var bindingExp = BindingOperations.GetBindingExpressionBase(rect, Rectangle.RenderTransformProperty);
-                        if (bindingExp != null)
-                        {
-                            bindingExp.UpdateTarget();
-                        }
-
-                        if (!_actionCalled)
-                        {
-                            Dispatcher.BeginInvoke(new Action(() =>
-                            {
-                                _actionCalled = true;
-                                this._isChanged = false;
-                            }), System.Windows.Threading.DispatcherPriority.DataBind);
-                        }
-                    }
-                };
+                rect.LayoutUpdated += _AdjustHandlerOnSetup;
             }
         }
     }

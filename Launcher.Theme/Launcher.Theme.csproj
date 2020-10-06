@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AcrylicAdjustmentLevel.cs" />
     <Compile Include="Controls\AcrylicPanel.cs" />
     <Compile Include="Controls\Converters\BrushTranslationConverter.cs" />
     <Compile Include="Controls\Converters\DarkPingEnum2BrushConverter.cs" />
