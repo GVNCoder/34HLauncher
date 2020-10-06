@@ -181,7 +181,7 @@
         </Grid.RowDefinitions>
 
         <i:Interaction.Behaviors>
-            <behaviors:AcrylicControlBehavior AdjustmentLevel="OnSetup" VisualContext="Page" />
+            <behaviors:AcrylicControlBehavior AdjustmentLevel="NoAdjust" VisualContext="Page" />
         </i:Interaction.Behaviors>
 
         <!--<controls:AcrylicPanel
@@ -191,7 +191,6 @@
             Target="{Binding BackgroundContent}"
             TintColor="{DynamicResource Theme850Color}"
             TintOpacity=".25" />-->
-
 
         <Rectangle
             Grid.Row="0"

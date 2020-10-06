@@ -4,12 +4,21 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+
 using Launcher.Core.Data.Model;
 
 namespace Launcher.XamlThemes.Controls
 {
     public class AcrylicPanel : Control
     {
+        private bool _isChanged;
+        private bool _actionCalled;
+        private UIElement _acrylicRect;
+        private BindingExpressionBase _acrylicRectBindingExpression;
+
+        #region Bindable properties
+
         public Visual Target
         {
             get => (Visual)GetValue(TargetProperty);
@@ -50,7 +59,54 @@ namespace Launcher.XamlThemes.Controls
         public static readonly DependencyProperty NoiseOpacityProperty =
             DependencyProperty.Register("NoiseOpacity", typeof(double), typeof(AcrylicPanel), new PropertyMetadata(.03d));
 
+        #endregion
+
+        #region Properties
+
         public AcrylicAdjustmentLevel AdjustmentLevel { get; set; }
+
+        #endregion
+
+        #region Private helpers
+
+        // ReSharper disable once MemberCanBeMadeStatic.Local
+        private void _AdjustHandlerNoAdjust(object sender, EventArgs e)
+        {
+            // this method should be empty
+        }
+
+        private void _AdjustHandlerOnSetup(object sender, EventArgs e)
+        {
+            if (_isChanged) return;
+
+            // try to update binding for updating layout size and positioning
+            _acrylicRectBindingExpression?.UpdateTarget();
+            _isChanged = true;
+
+            // reset flags
+            if (! _actionCalled)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _actionCalled = true;
+                    _isChanged = false;
+                }), DispatcherPriority.DataBind);
+            }
+        }
+
+        private void _AdjustHandlerAlways(object sender, EventArgs e)
+        {
+            if (_isChanged) return;
+
+            // try to update binding for updating layout size and positioning
+            _acrylicRectBindingExpression?.UpdateTarget();
+            _isChanged = true;
+
+            // reset flag
+            Dispatcher.BeginInvoke(new Action(() => _isChanged = false), DispatcherPriority.DataBind);
+        }
+
+        #endregion
 
         static AcrylicPanel()
         {
@@ -59,43 +115,31 @@ namespace Launcher.XamlThemes.Controls
 
         public AcrylicPanel()
         {
-            this.Source = this;
+            Source = this;
         }
-
-        bool _isChanged = false;
-        private bool _actionCalled = false;
-        private UIElement rect;
-
-        #region Private helpers
-
-        private void _AdjustHandlerOnSetup(object sender, EventArgs e)
-        {
-            if (_isChanged) return;
-
-            this._isChanged = true;
-            var bindingExp = BindingOperations.GetBindingExpressionBase(rect, Rectangle.RenderTransformProperty);
-            bindingExp?.UpdateTarget();
-
-            if (!_actionCalled)
-            {
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    _actionCalled = true;
-                    this._isChanged = false;
-                }), System.Windows.Threading.DispatcherPriority.DataBind);
-            }
-        }
-
-        #endregion
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            rect = (UIElement) GetTemplateChild("rect");
-            if (rect != null)
+            // assign some fields
+            _acrylicRect = (UIElement) GetTemplateChild("rect");
+            // ReSharper disable once AssignNullToNotNullAttribute
+            _acrylicRectBindingExpression = BindingOperations.GetBindingExpressionBase(_acrylicRect, Rectangle.RenderTransformProperty);
+
+            // apply adjustment callback
+            switch (AdjustmentLevel)
             {
-                rect.LayoutUpdated += _AdjustHandlerOnSetup;
+                case AcrylicAdjustmentLevel.NoAdjust:
+                    _acrylicRect.LayoutUpdated += _AdjustHandlerNoAdjust;
+                    break;
+                case AcrylicAdjustmentLevel.OnSetup:
+                    _acrylicRect.LayoutUpdated += _AdjustHandlerOnSetup;
+                    break;
+                case AcrylicAdjustmentLevel.Always:
+                    _acrylicRect.LayoutUpdated += _AdjustHandlerAlways;
+                    break;
+                default: break;
             }
         }
     }
