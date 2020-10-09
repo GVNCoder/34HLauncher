@@ -56,6 +56,7 @@
     <Compile Include="Controls\Converters\LightPingEnum2BrushConverter.cs" />
     <Compile Include="Controls\Converters\LightPingEnum2IconConverter.cs" />
     <Compile Include="Controls\Converters\SliderValue2OpacityConverter.cs" />
+    <Compile Include="Controls\DialogControl.cs" />
     <Compile Include="Controls\EventsButton.cs" />
     <Compile Include="Controls\FlatGroup.cs" />
     <Compile Include="Controls\GlyphButton.cs" />

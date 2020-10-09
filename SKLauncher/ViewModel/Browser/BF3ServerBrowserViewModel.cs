@@ -12,6 +12,7 @@ using Launcher.Core.Services.EventLog;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
 using Zlo4NET.Api;
+
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.ViewModel
@@ -26,10 +27,9 @@ namespace Launcher.ViewModel
             IGameService gameService,
             IDiscord discord,
             App application,
-            //IWindowContentNavigationService navigationService,
             IPageNavigator navigator,
             ISettingsService settingsService)
-            : base(api, hostService, gameService, eventLogService, presenterService, discord, application, /*navigationService,*/ settingsService, navigator)
+            : base(api, hostService, gameService, eventLogService, presenterService, discord, application, settingsService, navigator)
         {
             MapNames = new [] { "All" }
                 .Concat(ZResource.GetBF3MapNames())

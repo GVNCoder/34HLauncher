@@ -829,7 +829,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             BorderThickness="1"
-                            CornerRadius="2"
+                            CornerRadius="3"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Border.OpacityMask>
                                 <VisualBrush>

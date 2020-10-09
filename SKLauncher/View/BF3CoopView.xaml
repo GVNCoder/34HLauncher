@@ -184,14 +184,6 @@
             <behaviors:AcrylicControlBehavior AdjustmentLevel="NoAdjust" VisualContext="Page" />
         </i:Interaction.Behaviors>
 
-        <!--<controls:AcrylicPanel
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2"
-            NoiseOpacity=".0075"
-            Target="{Binding BackgroundContent}"
-            TintColor="{DynamicResource Theme850Color}"
-            TintOpacity=".25" />-->
-
         <Rectangle
             Grid.Row="0"
             Grid.Column="0"
