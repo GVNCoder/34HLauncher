@@ -140,12 +140,12 @@
 
         <!--  Overlay container  -->
         <Grid
-            x:Name="HOST_OverlayContainer"
+            x:Name="HOST_DialogContainer"
             Grid.Row="0"
             Grid.RowSpan="3"
             Panel.ZIndex="1000"
             UseLayoutRounding="True">
-            <controls:DialogControl Name="DialogControl" />
+            <controls:DialogControl x:Name="DialogControl" />
         </Grid>
 
         <!--  Window top and bottom parts  -->

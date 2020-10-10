@@ -236,8 +236,6 @@ namespace Launcher.ViewModel
         {
             var iWnd = (MainWindowView) parameter;
 
-            //iWnd.DialogControl.IsOpen = false;
-
             //iWnd.MouseEnter += (s, e) => iWnd.DialogControl.IsOpen = true;
             //iWnd.MouseLeave += (s, e) => iWnd.DialogControl.IsOpen = false;
 

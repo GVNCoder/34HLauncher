@@ -56,7 +56,6 @@
     <Compile Include="Service\Base\BasePageViewModel.cs" />
     <Compile Include="Service\Base\BaseViewModel.cs" />
     <Compile Include="Service\Base\IAsyncCommand.cs" />
-    <Compile Include="Service\Base\IBlurredPage.cs" />
     <Compile Include="Service\Base\IUIHostDependecny.cs" />
     <Compile Include="Service\Base\IVisualProvider.cs" />
     <Compile Include="Service\IApplicationState.cs" />

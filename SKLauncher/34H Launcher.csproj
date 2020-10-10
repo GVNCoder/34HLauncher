@@ -175,6 +175,8 @@
     <Compile Include="Core\Data\Updates\UpdateErrorEventArgs.cs" />
     <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
     <Compile Include="Core\Data\Updates\UpdateProgressEventArgs.cs" />
+    <Compile Include="Core\Dialog\DialogControlManager.cs" />
+    <Compile Include="Core\Dialog\IDialogControlManager.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
     <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />

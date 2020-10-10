@@ -1,14 +1,25 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace Launcher.XamlThemes.Controls
 {
-    //[TemplatePart(Name = PartOverlayName, Type = typeof(Rectangle))]
-    //[TemplatePart(Name = PartContainerName, Type = typeof(ContentPresenter))]
     public class DialogControl : ContentControl
     {
-        //private const string PartOverlayName = "PART_Overlay";
-        //private const string PartContainerName = "PART_Container";
+        private const string PartOverlayName = "PART_Overlay";
+        private const string PartContainerName = "PART_ContentContainer";
+
+        private const int _FrameRate = 30;
+
+        private Rectangle _overlayRectangle;
+        private ContentPresenter _contentContainer;
+
+        private DoubleAnimation _iOverlayAnimation;
+        private DoubleAnimation _oOverlayAnimation;
+        private DoubleAnimation _iContentContainer;
+        private DoubleAnimation _oContentContainer;
 
         #region Bindable properties
 
@@ -18,117 +29,58 @@ namespace Launcher.XamlThemes.Controls
             set => SetValue(IsOpenProperty, value);
         }
         public static readonly DependencyProperty IsOpenProperty =
-            DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogControl), new PropertyMetadata(false));
+            DependencyProperty.Register("IsOpen", typeof(bool), typeof(DialogControl), new PropertyMetadata(false, _IsOpenPropertyChangedCallback));
+
+        // acts as a trigger, controlling animation when a property changes
+        private static void _IsOpenPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            // extract arguments
+            var control = (DialogControl) d;
+            var propertyValue = (bool) e.NewValue;
+
+            // begin animation
+            if (propertyValue) // in animation
+            {
+                control.Visibility = Visibility.Visible;
+
+                control._overlayRectangle.BeginAnimation(FrameworkElement.OpacityProperty, control._iOverlayAnimation);
+                control._contentContainer.BeginAnimation(FrameworkElement.OpacityProperty, control._iContentContainer);
+            }
+            else // out animation
+            {
+                control._overlayRectangle.BeginAnimation(FrameworkElement.OpacityProperty, control._oOverlayAnimation);
+                control._contentContainer.BeginAnimation(FrameworkElement.OpacityProperty, control._oContentContainer);
+            }
+        }
 
         #endregion
-
-        //private DoubleAnimation _overlayInAnimation;
-        //private DoubleAnimation _overlayOutAnimation;
-        //private DoubleAnimation _containerInAnimation;
-        //private DoubleAnimation _containerOutAnimation;
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            // get template part instances
-            //Overlay = (Rectangle) GetTemplateChild(PartOverlayName);
-            //ContentContainer = (ContentPresenter) GetTemplateChild(PartContainerName);
+            // get template parts
+            _overlayRectangle = (Rectangle) GetTemplateChild(PartOverlayName);
+            _contentContainer = (ContentPresenter) GetTemplateChild(PartContainerName);
 
+            // setup initial state
+            Visibility = Visibility.Collapsed;
 
+            _overlayRectangle.Opacity = .0;
+            _contentContainer.Opacity = .0;
 
-         
+            // build animation
+            _iOverlayAnimation = new DoubleAnimation { Duration = new Duration(TimeSpan.FromMilliseconds(150d)), To = 1d };
+            _oOverlayAnimation = new DoubleAnimation { Duration = new Duration(TimeSpan.FromMilliseconds(100d)), To = .0d };
+            _iContentContainer = new DoubleAnimation { Duration = new Duration(TimeSpan.FromMilliseconds(70d)), To = 1d };
+            _oContentContainer = new DoubleAnimation { Duration = new Duration(TimeSpan.FromMilliseconds(50d)), To = .0d };
 
-            //_partOverlay.Opacity = .0d;
-            //_partContainer.Opacity = .0d;
+            Timeline.SetDesiredFrameRate(_iOverlayAnimation, _FrameRate);
+            Timeline.SetDesiredFrameRate(_oOverlayAnimation, _FrameRate);
+            Timeline.SetDesiredFrameRate(_iContentContainer, _FrameRate);
+            Timeline.SetDesiredFrameRate(_oContentContainer, _FrameRate);
 
-            //Visibility = Visibility.Collapsed;
-
-            //_overlayInAnimation = new DoubleAnimation
-            //{
-            //    Duration = new Duration(TimeSpan.FromMilliseconds(150d)),
-            //    To = 1d
-            //};
-            //_overlayOutAnimation = new DoubleAnimation
-            //{
-            //    Duration = new Duration(TimeSpan.FromMilliseconds(100d)),
-            //    To = .0d
-            //};
-            //_containerInAnimation = new DoubleAnimation
-            //{
-            //    Duration = new Duration(TimeSpan.FromMilliseconds(70d)),
-            //    To = 1d
-            //};
-            //_containerOutAnimation = new DoubleAnimation
-            //{
-            //    Duration = new Duration(TimeSpan.FromMilliseconds(50d)),
-            //    To = .0d
-            //};
-
-            //Timeline.SetDesiredFrameRate(_overlayInAnimation, 30);
-            //Timeline.SetDesiredFrameRate(_overlayOutAnimation, 30);
-            //Timeline.SetDesiredFrameRate(_containerInAnimation, 30);
-            //Timeline.SetDesiredFrameRate(_containerOutAnimation, 30);
-
-            //_overlayInAnimation.Completed += _overlayInAnimationOnCompleted;
-            //_overlayOutAnimation.Completed += _overlayOutAnimationOnCompleted;
-
-            //_containerInAnimation.Completed += _containerInAnimationOnCompleted;
-            //_containerOutAnimation.Completed += _containerOutAnimationOnCompleted;
+            _oOverlayAnimation.Completed += (sender, e) => Visibility = Visibility.Collapsed;
         }
-
-        //private void _overlayInAnimationOnCompleted(object sender, EventArgs e)
-        //{
-        //    Showed?.Invoke(this, EventArgs.Empty);
-        //}
-
-        //private void _overlayOutAnimationOnCompleted(object sender, EventArgs e)
-        //{
-        //    Visibility = Visibility.Collapsed;
-        //    Closed?.Invoke(this, EventArgs.Empty);
-        //}
-
-        //private void _containerInAnimationOnCompleted(object sender, EventArgs e)
-        //{
-        //}
-
-        //private void _containerOutAnimationOnCompleted(object sender, EventArgs e)
-        //{
-        //}
-
-        //private void _BeginShowAnimation()
-        //{
-        //    _partOverlay.BeginAnimation(Shape.OpacityProperty, _overlayInAnimation);
-        //    _partContainer.BeginAnimation(FrameworkElement.OpacityProperty, _containerInAnimation);
-        //}
-
-        //private void _BeginHideAnimation()
-        //{
-        //    _partOverlay.BeginAnimation(Shape.OpacityProperty, _overlayOutAnimation);
-        //    _partContainer.BeginAnimation(FrameworkElement.OpacityProperty, _containerOutAnimation);
-        //}
-
-        //#region IOverlayControl
-
-        //public event EventHandler Closed;
-        //public event EventHandler Showed;
-
-        //public void Show(object content)
-        //{
-        //    Dispatcher.Invoke(() =>
-        //    {
-        //        Content = content;
-        //        Visibility = Visibility.Visible;
-
-        //        _BeginShowAnimation();
-        //    }, DispatcherPriority.Background);
-        //}
-
-        //public void Hide()
-        //{
-        //    Dispatcher.Invoke(_BeginHideAnimation, DispatcherPriority.Background);
-        //}
-
-        //#endregion
     }
 }
