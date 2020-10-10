@@ -80,7 +80,11 @@ namespace Launcher.XamlThemes.Controls
             Timeline.SetDesiredFrameRate(_iContentContainer, _FrameRate);
             Timeline.SetDesiredFrameRate(_oContentContainer, _FrameRate);
 
-            _oOverlayAnimation.Completed += (sender, e) => Visibility = Visibility.Collapsed;
+            _oOverlayAnimation.Completed += (sender, e) =>
+            {
+                Visibility = Visibility.Collapsed;
+                Content = null;
+            };
         }
     }
 }

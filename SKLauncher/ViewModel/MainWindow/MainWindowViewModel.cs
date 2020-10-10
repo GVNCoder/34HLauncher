@@ -110,21 +110,6 @@ namespace Launcher.ViewModel
             _zClientProcessTracker.ProcessDetected += _zClientProcessDetectedHandler;
             _zClientProcessTracker.ProcessLost += _zClientProcessLostHandler;
 
-            //_updateService.CancelDownloadResolver = async () =>
-            //{
-            //    var dlgResult = await _textDialogService.OpenDialog("Are you sure ?",
-            //        "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
-            //    return dlgResult.Action == DialogActionEnum.Primary;
-            //};
-            //_updateService.UpdateAvailableResolver = ver =>
-            //{
-            //    // ReSharper disable once AssignNullToNotNullAttribute
-            //    var dlgResult = MessageBox.Show(Application.Current.MainWindow, "Download and install it?", $"A new version is available {ver}",
-            //        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            //    return dlgResult == MessageBoxResult.Yes;
-            //};
-            //_updateService.Error += _updateServiceErrorHandler;
-
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
 
             _gameService.GameClose += _GameCloseHandler;
@@ -240,9 +225,14 @@ namespace Launcher.ViewModel
         {
             var windowInstance = (MainWindowView) parameter;
 
+
             // setup ui dependencies
             _navigator.SetDependency(windowInstance.HOST_Content);
             _dialogSystemBase.SetDependency(windowInstance.HOST_DialogContainer);
+
+            // TODO: Testing only
+            //windowInstance.MouseEnter += (s, e) => _dialogSystemBase.Show(new UserAbout());
+            //windowInstance.MouseLeave += (s, e) => _dialogSystemBase.Close();
 
             // setup application state vars
             _state.RegisterVars();
