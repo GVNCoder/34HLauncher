@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Launcher.Core.Service.Base;
 
 namespace Launcher.Core.Service
 {
@@ -8,7 +9,7 @@ namespace Launcher.Core.Service
     /// Defines a navigator that allows you to navigate through the application pages,
     /// track their change, as well as preprocess their navigation.
     /// </summary>
-    public interface IPageNavigator
+    public interface IPageNavigator : IUIHostDependency
     {
         /// <summary>
         /// Navigates to the specified page

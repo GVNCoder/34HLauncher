@@ -22,6 +22,7 @@ using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 using Launcher.Core;
 using Launcher.Core.Data;
+using Launcher.Core.Dialog;
 using Launcher.Core.Service.Base;
 using Launcher.Helpers;
 using Launcher.UserControls;
@@ -59,6 +60,7 @@ namespace Launcher.ViewModel
 
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
+        private readonly IDialogSystemBase _dialogSystemBase;
 
         public MainWindowViewModel(
             IZApi api,
@@ -76,10 +78,12 @@ namespace Launcher.ViewModel
             
             IPageNavigator navigator,
             IApplicationState state,
-            IViewModelSource viewModelSource)
+            IViewModelSource viewModelSource,
+            IDialogSystemBase dialogSystemBase)
         {
             _navigator = navigator;
             _state = state;
+            _dialogSystemBase = dialogSystemBase;
             
             _textDialogService = dialogService;
             _contentPresenterService = contentPresenterService;
@@ -234,13 +238,11 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(parameter =>
         {
-            var iWnd = (MainWindowView) parameter;
-
-            //iWnd.MouseEnter += (s, e) => iWnd.DialogControl.IsOpen = true;
-            //iWnd.MouseLeave += (s, e) => iWnd.DialogControl.IsOpen = false;
+            var windowInstance = (MainWindowView) parameter;
 
             // setup ui dependencies
-            ((IUIHostDependency)_navigator).SetDependency(iWnd.HOST_Content);
+            _navigator.SetDependency(windowInstance.HOST_Content);
+            _dialogSystemBase.SetDependency(windowInstance.HOST_DialogContainer);
 
             // setup application state vars
             _state.RegisterVars();

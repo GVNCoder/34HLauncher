@@ -6,6 +6,7 @@ using Launcher.Core.Data;
 using Launcher.Core.Data.Dialog;
 using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
+using Launcher.Core.Dialog;
 using Launcher.Core.RPC;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
@@ -89,6 +90,8 @@ namespace Launcher.Data
             Kernel.Bind<IApplicationState>().To<ApplicationState>()
                 .InSingletonScope();
             Kernel.Bind<IVisualProvider>().To<VisualProvider>()
+                .InSingletonScope();
+            Kernel.Bind<IDialogSystemBase>().To<DialogControlManager>()
                 .InSingletonScope();
         }
     }

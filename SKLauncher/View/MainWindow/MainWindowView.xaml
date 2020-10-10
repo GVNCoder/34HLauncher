@@ -144,9 +144,7 @@
             Grid.Row="0"
             Grid.RowSpan="3"
             Panel.ZIndex="1000"
-            UseLayoutRounding="True">
-            <controls:DialogControl x:Name="DialogControl" />
-        </Grid>
+            UseLayoutRounding="True" />
 
         <!--  Window top and bottom parts  -->
         <mainWindow:WindowNonClientPart Grid.Row="0" DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.NonClientDataContext}" />

@@ -1,30 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-using Launcher.Core.Helper;
-using Launcher.Core.Service;
-
 using Launcher.XamlThemes.Controls;
 
 namespace Launcher.Core.Dialog
 {
-    public class DialogControlManager : IDialogControlManager
+    public class DialogControlManager : IDialogSystemBase
     {
-        private const string __HOST_DialogContainer = "HOST_DialogContainer";
-        private readonly DialogControl _dialogControl;
-
-        public DialogControlManager(IApplicationState state)
-        {
-            // get dialog instance
-            var window = state.Application.MainWindow;
-            var dialogContainer = ReflectionHelper.GetPropertyInstance<Grid>(window, __HOST_DialogContainer);
-
-            // create dialog control
-            _dialogControl = new DialogControl { IsOpen = false, Visibility = Visibility.Collapsed };
-
-            // inject dialog control to container
-            dialogContainer.Children.Add(_dialogControl);
-        }
+        private DialogControl _dialogControl;
 
         #region IDialogControlManager
 
@@ -38,6 +21,22 @@ namespace Launcher.Core.Dialog
         public void Close()
         {
             _dialogControl.IsOpen = false;
+        }
+
+        #endregion
+
+        #region IUIHostDependency
+
+        public void SetDependency(FrameworkElement element)
+        {
+            // extract grid
+            var dialogContainer = (Grid) element;
+
+            // create dialog control
+            _dialogControl = new DialogControl();
+
+            // inject dialog control to container
+            dialogContainer.Children.Add(_dialogControl);
         }
 
         #endregion

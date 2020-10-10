@@ -6,11 +6,10 @@ using System.Windows.Threading;
 
 using Launcher.Core.Helper;
 using Launcher.Core.Service;
-using Launcher.Core.Service.Base;
 
 namespace Launcher.Core.Data
 {
-    public class PageNavigator : IPageNavigator, IUIHostDependency
+    public class PageNavigator : IPageNavigator
     {
         #region Private fields
 
