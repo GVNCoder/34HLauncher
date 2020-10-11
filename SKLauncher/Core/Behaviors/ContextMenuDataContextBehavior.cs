@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using Launcher.Core.Data;
-using Launcher.Core.Service;
 using Launcher.Data;
 using Ninject;
 using Zlo4NET.Api.Models.Shared;

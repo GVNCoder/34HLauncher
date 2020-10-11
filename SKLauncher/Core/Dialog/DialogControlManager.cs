@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 using Launcher.XamlThemes.Controls;
@@ -11,11 +12,22 @@ namespace Launcher.Core.Dialog
 
         #region IDialogControlManager
 
-        public void Show(UserControl content)
+        public Task<DialogResult> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new ()
         {
+            // create control
+            var control = new TUserControl { DataContext = viewModel };
+            var completionSource = new TaskCompletionSource<DialogResult>();
+            var dialog = new Dialog(completionSource, this);
+
+            // pass dialog for remote control
+            viewModel.Dialog = dialog;
+
             // setup control
-            _dialogControl.Content = content;
+            _dialogControl.Content = control;
             _dialogControl.IsOpen = true;
+
+            // return task
+            return completionSource.Task;
         }
 
         public void Close()
