@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using Launcher.Core.Interaction;
-using Launcher.Helpers;
 
 namespace Launcher.Core.Shared
 {

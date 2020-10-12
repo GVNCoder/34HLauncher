@@ -177,8 +177,14 @@
     <Compile Include="Core\Dialog\BaseDialogViewModel.cs" />
     <Compile Include="Core\Dialog\Dialog.cs" />
     <Compile Include="Core\Dialog\DialogAction.cs" />
+    <Compile Include="Core\Dialog\DialogButtons.cs" />
+    <Compile Include="Core\Dialog\DialogContentPresenterViewModel.cs" />
     <Compile Include="Core\Dialog\DialogControlManager.cs" />
     <Compile Include="Core\Dialog\DialogResult.cs" />
+    <Compile Include="Core\Dialog\DialogService.cs" />
+    <Compile Include="Core\Dialog\DialogServiceExtension.cs" />
+    <Compile Include="Core\Dialog\DialogTextViewModel.cs" />
+    <Compile Include="Core\Dialog\IDialogService.cs" />
     <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
@@ -283,6 +289,12 @@
     <Compile Include="UserControls\ContentPresenterControl.xaml.cs">
       <DependentUpon>ContentPresenterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DialogContentPresenter.xaml.cs">
+      <DependentUpon>DialogContentPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DialogText.xaml.cs">
+      <DependentUpon>DialogText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\GameControl.xaml.cs">
       <DependentUpon>GameControl.xaml</DependentUpon>
     </Compile>
@@ -370,6 +382,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\ContentPresenterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DialogContentPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DialogText.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

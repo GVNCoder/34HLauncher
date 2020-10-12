@@ -3,6 +3,7 @@
     public enum DialogAction
     {
         Primary,
-        Cancel
+        Cancel,
+        Declined
     }
 }
