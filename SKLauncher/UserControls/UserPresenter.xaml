@@ -76,9 +76,7 @@
                 PlacementTarget="{Binding ElementName=UserNameTextBlock}"
                 PopupAnimation="Scroll"
                 StaysOpen="False">
-                <i:Interaction.Behaviors>
-                    <behaviors:UserPresenterPopupBehavior />
-                </i:Interaction.Behaviors>
+
                 <ContentControl Style="{StaticResource UserPresenterStyle}">
                     <Grid>
                         <Grid.RowDefinitions>

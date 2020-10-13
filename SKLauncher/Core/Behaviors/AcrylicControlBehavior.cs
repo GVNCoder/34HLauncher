@@ -47,12 +47,12 @@ namespace Launcher.Core.Behaviors
             _visualProvider = kernel.Get<IVisualProvider>();
 
             // get visual content by context
-            var vContent = _visualProvider.GetVisualContent(VisualContext);
+            var visualContent = _visualProvider.GetVisualContent(VisualContext);
 
             // setup acrylic effect
             var acrylicEffect = new AcrylicPanel
             {
-                Target = vContent,
+                Target = visualContent,
                 NoiseOpacity = .0075,
                 TintOpacity = .25,
                 AdjustmentLevel = AdjustmentLevel

@@ -93,6 +93,8 @@ namespace Launcher.Data
                 .InSingletonScope();
             Kernel.Bind<IDialogSystemBase>().To<DialogControlManager>()
                 .InSingletonScope();
+            Kernel.Bind<IDialogService>().To<DialogService>()
+                .InSingletonScope();
         }
     }
 }

@@ -61,6 +61,7 @@ namespace Launcher.ViewModel
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
         private readonly IDialogSystemBase _dialogSystemBase;
+        private readonly IDialogService _dialogService;
 
         public MainWindowViewModel(
             IZApi api,
@@ -79,11 +80,13 @@ namespace Launcher.ViewModel
             IPageNavigator navigator,
             IApplicationState state,
             IViewModelSource viewModelSource,
+            IDialogService dialogService_,
             IDialogSystemBase dialogSystemBase)
         {
             _navigator = navigator;
             _state = state;
             _dialogSystemBase = dialogSystemBase;
+            _dialogService = dialogService_;
             
             _textDialogService = dialogService;
             _contentPresenterService = contentPresenterService;
@@ -308,10 +311,11 @@ namespace Launcher.ViewModel
             }
         });
 
-        public ICommand ShowAboutCommand => new DelegateCommand(async obj =>
+        public ICommand ShowAboutCommand => new AsyncCommand(() =>
         {
             _menuService.Close();
-            await _contentPresenterService.Show<UserAbout>(null);
+
+            return _dialogService.OpenPresenter<UserAbout>(null);
         });
 
         public ICommand OnClosingCommand => new DelegateCommand(_OnClosingExec);

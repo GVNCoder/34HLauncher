@@ -22,6 +22,7 @@
         </i:Interaction.Behaviors>
 
         <ContentPresenter Grid.Row="0" Content="{Binding Content}" />
+
         <Button
             Grid.Row="1"
             Command="{Binding CloseCommand}"
