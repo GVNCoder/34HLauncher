@@ -392,7 +392,7 @@
                             <Rectangle.Fill>
                                 <LinearGradientBrush Opacity=".75" StartPoint="1 0" EndPoint="0 1">
                                     <GradientStop Offset="0" Color="Black" />
-                                    <GradientStop Offset="1" Color="DimGray" />
+                                    <GradientStop Offset="1" Color="Black" />
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
