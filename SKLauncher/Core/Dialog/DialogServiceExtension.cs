@@ -26,5 +26,11 @@ namespace Launcher.Core.Dialog
             // return dialog
             return dialogService.Show<DialogText>(viewModel);
         }
+
+        public static async Task OpenMessageBox(this IDialogService dialogService, string title, string message)
+        {
+            // call extension method
+            _ = await dialogService.OpenTextDialog(title, message, DialogButtons.Cancel);
+        }
     }
 }
