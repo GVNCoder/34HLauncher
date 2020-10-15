@@ -408,4 +408,104 @@
         </Setter>
     </Style>
 
+    <Style x:Key="DialogPrimaryStyle" TargetType="{x:Type Button}">
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="MinWidth" Value="75" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        Name="PART_Border"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="2">
+                        <Border.Background>
+                            <SolidColorBrush Color="#FA5437" />
+                        </Border.Background>
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="White" />
+                        </TextBlock.Foreground>
+
+                        <TextBlock
+                            Name="PART_ContentPresenter"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="{TemplateBinding FontSize}"
+                            Text="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                        <DiscreteColorKeyFrame KeyTime="0" Value="#FF6245" />
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                        <DiscreteColorKeyFrame KeyTime="0" Value="#FA5437" />
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DialogSecondaryStyle" TargetType="{x:Type Button}">
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="MinWidth" Value="75" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border
+                        Name="PART_Border"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        CornerRadius="2">
+                        <Border.Background>
+                            <SolidColorBrush Color="#282828" />
+                        </Border.Background>
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="White" />
+                        </TextBlock.Foreground>
+
+                        <TextBlock
+                            Name="PART_ContentPresenter"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="{TemplateBinding FontSize}"
+                            Text="{TemplateBinding Content}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                        <DiscreteColorKeyFrame KeyTime="0" Value="#383838" />
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                        <DiscreteColorKeyFrame KeyTime="0" Value="#282828" />
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

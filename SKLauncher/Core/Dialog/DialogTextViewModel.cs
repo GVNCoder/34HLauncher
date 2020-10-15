@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using Launcher.Core.Interaction;
 
 namespace Launcher.Core.Dialog
@@ -10,17 +11,17 @@ namespace Launcher.Core.Dialog
             Title = title;
             Content = content;
 
-            OkButtonEnable = buttons.HasFlag(DialogButtons.Ok);
-            NoButtonEnable = buttons.HasFlag(DialogButtons.No);
-            CancelButtonEnable = buttons.HasFlag(DialogButtons.Cancel);
+            OkButtonVisibility = buttons.HasFlag(DialogButtons.Ok) ? Visibility.Visible : Visibility.Collapsed;
+            NoButtonVisibility = buttons.HasFlag(DialogButtons.No) ? Visibility.Visible : Visibility.Collapsed;
+            CancelButtonVisibility = buttons.HasFlag(DialogButtons.Cancel) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public string Title { get; }
         public string Content { get; }
 
-        public bool OkButtonEnable { get; }
-        public bool NoButtonEnable { get; }
-        public bool CancelButtonEnable { get; }
+        public Visibility OkButtonVisibility { get; }
+        public Visibility NoButtonVisibility { get; }
+        public Visibility CancelButtonVisibility { get; }
 
         public ICommand OkCommand => new DelegateCommand(obj => Dialog.CloseDialog(DialogAction.Primary));
         public ICommand NoCommand => new DelegateCommand(obj => Dialog.CloseDialog(DialogAction.Declined));
