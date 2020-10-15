@@ -14,7 +14,7 @@ namespace Launcher.Core.Dialog
 
         #region IDialogService
 
-        public Task<DialogResult> Show<TUserControl>(BaseDialogViewModel viewModel)
+        public Task<DialogResult?> Show<TUserControl>(BaseDialogViewModel viewModel)
             where TUserControl : UserControl, new()
         {
             return _dialogSystem.Show<TUserControl>(viewModel);

@@ -17,7 +17,7 @@ namespace Launcher.Core.Dialog
             _ = await dialogService.Show<DialogContentPresenter>(dialogViewModel);
         }
 
-        public static Task<DialogResult> OpenTextDialog(this IDialogService dialogService, string title,
+        public static Task<DialogResult?> OpenTextDialog(this IDialogService dialogService, string title,
             string text, DialogButtons buttons)
         {
             // create view model

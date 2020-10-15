@@ -4,10 +4,10 @@ namespace Launcher.Core.Dialog
 {
     public class Dialog
     {
-        private readonly TaskCompletionSource<DialogResult> _completionSource;
+        private readonly TaskCompletionSource<DialogResult?> _completionSource;
         private readonly IDialogSystemBase _dialogSystem;
 
-        public Dialog(TaskCompletionSource<DialogResult> completionSource, IDialogSystemBase dialogSystem)
+        public Dialog(TaskCompletionSource<DialogResult?> completionSource, IDialogSystemBase dialogSystem)
         {
             _completionSource = completionSource;
             _dialogSystem = dialogSystem;

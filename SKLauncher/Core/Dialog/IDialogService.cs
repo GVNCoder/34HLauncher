@@ -5,6 +5,6 @@ namespace Launcher.Core.Dialog
 {
     public interface IDialogService
     {
-        Task<DialogResult> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new();
+        Task<DialogResult?> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new();
     }
 }

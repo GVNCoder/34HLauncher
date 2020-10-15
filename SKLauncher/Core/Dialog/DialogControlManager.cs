@@ -12,22 +12,35 @@ namespace Launcher.Core.Dialog
 
         #region IDialogControlManager
 
-        public Task<DialogResult> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new ()
+        public Task<DialogResult?> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new ()
         {
-            // create control
-            var control = new TUserControl { DataContext = viewModel };
-            var completionSource = new TaskCompletionSource<DialogResult>();
-            var dialog = new Dialog(completionSource, this);
+            Task<DialogResult?> dialogTask;
 
-            // pass dialog for remote control
-            viewModel.Dialog = dialog;
+            // check, can use dialog control at the moment
+            if (_IsDialogControlFree()) // then pass Show() call
+            {
+                // create control
+                var control = new TUserControl { DataContext = viewModel };
+                var completionSource = new TaskCompletionSource<DialogResult?>();
+                var dialog = new Dialog(completionSource, this);
 
-            // setup control
-            _dialogControl.Content = control;
-            _dialogControl.IsOpen = true;
+                // pass dialog for remote control
+                viewModel.Dialog = dialog;
 
+                // setup control
+                _dialogControl.Content = control;
+                _dialogControl.IsOpen = true;
+
+                // save task
+                dialogTask = completionSource.Task;
+            }
+            else // then pass Show() call with NULL result
+            {
+                dialogTask = Task.FromResult<DialogResult?>(null);
+            }
+            
             // return task
-            return completionSource.Task;
+            return dialogTask;
         }
 
         public void Close()
@@ -50,6 +63,13 @@ namespace Launcher.Core.Dialog
             // inject dialog control to container
             dialogContainer.Children.Add(_dialogControl);
         }
+
+        #endregion
+
+        #region Private helpers
+
+        // indicates, when we can use dialog control
+        private bool _IsDialogControlFree() => ! _dialogControl.IsOpen;
 
         #endregion
     }
