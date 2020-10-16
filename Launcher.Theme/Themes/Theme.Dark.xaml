@@ -1699,10 +1699,12 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border
                         x:Name="PART_Border"
+                        BorderBrush="Black"
+                        BorderThickness="0,1,0,0"
                         CornerRadius="0 0 2 2"
                         TextBlock.Foreground="{TemplateBinding Foreground}">
                         <Border.Background>
-                            <SolidColorBrush Color="{StaticResource Theme800Color}" />
+                            <SolidColorBrush Color="{StaticResource Theme850Color}" />
                         </Border.Background>
                         <ContentPresenter
                             Margin="2"
