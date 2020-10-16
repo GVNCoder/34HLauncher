@@ -18,10 +18,10 @@ namespace Launcher.Core.Dialog
         }
 
         public static Task<DialogResult?> OpenTextDialog(this IDialogService dialogService, string title,
-            string text, DialogButtons buttons)
+            string text, DialogButtons buttons, bool showDontAsk = false)
         {
             // create view model
-            var viewModel = new DialogTextViewModel(title, text, buttons);
+            var viewModel = new DialogTextViewModel(title, text, buttons, showDontAsk);
 
             // return dialog
             return dialogService.Show<DialogText>(viewModel);

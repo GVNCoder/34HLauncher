@@ -7,7 +7,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    MinWidth="250"
+    MinWidth="300"
     MaxWidth="800"
     mc:Ignorable="d">
 
@@ -39,6 +39,13 @@
                 <behaviors:AcrylicControlBehavior AdjustmentLevel="OnSetup" VisualContext="Control" />
             </i:Interaction.Behaviors>
 
+            <!--  Dark bg  -->
+            <!--<Rectangle Grid.Row="0">
+                <Rectangle.Fill>
+                    <SolidColorBrush Opacity=".1" Color="Black" />
+                </Rectangle.Fill>
+            </Rectangle>-->
+
             <!--  Dialog Content  -->
             <Border Grid.Row="0" Padding="20">
                 <Grid>
@@ -53,6 +60,7 @@
                         HorizontalAlignment="Left"
                         FontSize="16"
                         FontWeight="SemiBold"
+                        Foreground="WhiteSmoke"
                         Text="{Binding Title, Mode=OneTime}" />
 
                     <!--  Text Content Presenter  -->
@@ -60,6 +68,7 @@
                         Grid.Row="1"
                         HorizontalAlignment="Center"
                         FontSize="14"
+                        Foreground="GhostWhite"
                         Text="{Binding Content, Mode=OneTime}"
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
@@ -69,30 +78,40 @@
             <!--  Dialog Buttons  -->
             <Border
                 Grid.Row="1"
-                Padding="10,5,10,10"
+                Padding="20,5,10,10"
                 Background="#151515">
 
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Grid>
 
-                    <Button
-                        Margin="0,0,5,0"
-                        Command="{Binding CancelCommand}"
-                        Content="Cancel"
-                        Style="{StaticResource DialogSecondaryStyle}"
-                        Visibility="{Binding CancelButtonVisibility, Mode=OneTime}" />
-                    <Button
-                        Margin="0,0,5,0"
-                        Command="{Binding NoCommand}"
-                        Content="No"
-                        Style="{StaticResource DialogSecondaryStyle}"
-                        Visibility="{Binding NoButtonVisibility, Mode=OneTime}" />
-                    <Button
-                        Command="{Binding OkCommand}"
-                        Content="Ok"
-                        Style="{StaticResource DialogPrimaryStyle}"
-                        Visibility="{Binding OkButtonVisibility, Mode=OneTime}" />
+                    <CheckBox
+                        VerticalAlignment="Center"
+                        Content="Don't show again"
+                        Foreground="#C8C8C8"
+                        IsChecked="{Binding DontAskFlag, Mode=OneWayToSource}"
+                        Visibility="{Binding CheckboxVisibility, Mode=OneTime}" />
 
-                </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                        <Button
+                            Margin="0,0,5,0"
+                            Command="{Binding CancelCommand}"
+                            Content="Cancel"
+                            Style="{StaticResource DialogSecondaryStyle}"
+                            Visibility="{Binding CancelButtonVisibility, Mode=OneTime}" />
+                        <Button
+                            Margin="0,0,5,0"
+                            Command="{Binding NoCommand}"
+                            Content="No"
+                            Style="{StaticResource DialogSecondaryStyle}"
+                            Visibility="{Binding NoButtonVisibility, Mode=OneTime}" />
+                        <Button
+                            Command="{Binding OkCommand}"
+                            Content="Ok"
+                            Style="{StaticResource DialogPrimaryStyle}"
+                            Visibility="{Binding OkButtonVisibility, Mode=OneTime}" />
+
+                    </StackPanel>
+                </Grid>
             </Border>
         </Grid>
     </Border>
