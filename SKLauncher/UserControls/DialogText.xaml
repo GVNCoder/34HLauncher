@@ -40,11 +40,11 @@
             </i:Interaction.Behaviors>
 
             <!--  Dark bg  -->
-            <!--<Rectangle Grid.Row="0">
+            <Rectangle Grid.Row="0">
                 <Rectangle.Fill>
                     <SolidColorBrush Opacity=".1" Color="Black" />
                 </Rectangle.Fill>
-            </Rectangle>-->
+            </Rectangle>
 
             <!--  Dialog Content  -->
             <Border Grid.Row="0" Padding="20">
@@ -58,7 +58,7 @@
                     <TextBlock
                         Grid.Row="0"
                         HorizontalAlignment="Left"
-                        FontSize="16"
+                        FontSize="16" Margin="0 0 0 10"
                         FontWeight="SemiBold"
                         Foreground="WhiteSmoke"
                         Text="{Binding Title, Mode=OneTime}" />
@@ -68,7 +68,6 @@
                         Grid.Row="1"
                         HorizontalAlignment="Center"
                         FontSize="14"
-                        Foreground="GhostWhite"
                         Text="{Binding Content, Mode=OneTime}"
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
@@ -85,7 +84,7 @@
 
                     <CheckBox
                         VerticalAlignment="Center"
-                        Content="Don't show again"
+                        Content="Don't show me again"
                         Foreground="#C8C8C8"
                         IsChecked="{Binding DontAskFlag, Mode=OneWayToSource}"
                         Visibility="{Binding CheckboxVisibility, Mode=OneTime}" />
