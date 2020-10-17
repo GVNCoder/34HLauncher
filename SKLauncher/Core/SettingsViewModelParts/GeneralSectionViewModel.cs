@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
@@ -22,16 +22,15 @@ namespace Launcher.Core.SettingsViewModelParts
 {
     public class GeneralSectionViewModel : BaseControlViewModel
     {
-        private readonly ITextDialogService _dialogService;
+        private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
         private readonly IEventLogService _eventLog;
         private readonly IDiscord _discord;
 
         private LauncherSettings _settings;
-        private bool _isLoaded;
 
         public GeneralSectionViewModel(
-            ITextDialogService dialogService,
+            IDialogService dialogService,
             ISettingsService settingsService,
             IEventLogService eventLog,
             IDiscord discord)
@@ -163,8 +162,8 @@ namespace Launcher.Core.SettingsViewModelParts
 
             if (value && viewModel._isLoaded)
             {
-                await viewModel._dialogService.OpenDialog(SharedLocalizationMap.TryToConnectHeader, SharedLocalizationMap.TryToConnect,
-                    TextDialogButtons.Ok);
+                await viewModel._dialogService.OpenTextDialog(SharedLocalizationMap.TryToConnectHeader, SharedLocalizationMap.TryToConnect,
+                    DialogButtons.Ok);
             }
 
             viewModel._settings.TryToConnect = value;

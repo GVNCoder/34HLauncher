@@ -3,13 +3,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
-using Launcher.Core.Bases;
 using Launcher.Core.Data;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
@@ -31,22 +30,22 @@ namespace Launcher.ViewModel
 
         private readonly IEventLogService _eventLogService;
         private readonly IGameService _gameService;
-        private readonly IContentPresenterService _presenterService;
         private readonly ISettingsService _settingsService;
         private readonly IZApi _api;
         private readonly IBusyService _busyService;
         private readonly IDiscord _discord;
+        private readonly IDialogService _dialogService;
 
         public HomeViewModel(
             IEventLogService eventLogService,
             IGameService gameService,
-            IContentPresenterService presenterService,
             ISettingsService settingsService,
             IZApi api,
             IBusyService busyService,
             IDiscord discord,
             IPageNavigator navigator,
-            IApplicationState state)
+            IApplicationState state,
+            IDialogService dialogService)
         {
             _navigator = navigator;
             _state = state;
@@ -54,10 +53,10 @@ namespace Launcher.ViewModel
 
             _eventLogService = eventLogService;
             _gameService = gameService;
-            _presenterService = presenterService;
             _settingsService = settingsService;
             _api = api;
             _busyService = busyService;
+            _dialogService = dialogService;
         }
 
         private static bool _isOnline(object playMode)
@@ -107,7 +106,7 @@ namespace Launcher.ViewModel
             var settings = _settingsService.GetGameSettings().Settings[(int) targetGame];
             var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame != ZGame.BF3);
 
-            _presenterService.Show<GameSettingsControl>(viewModel);
+            _dialogService.OpenPresenter<GameSettingsControl>(viewModel).Forget();
         }
 
         public ICommand JoinGameCommand => new DelegateCommand(_JoinGameCommandExec);

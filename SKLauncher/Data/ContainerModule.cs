@@ -3,7 +3,6 @@
 using log4net;
 using Launcher.Core;
 using Launcher.Core.Data;
-using Launcher.Core.Data.Dialog;
 using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
 using Launcher.Core.Dialog;
@@ -11,7 +10,6 @@ using Launcher.Core.RPC;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 
@@ -44,15 +42,6 @@ namespace Launcher.Data
                 .InSingletonScope();
             Kernel.Bind<IProcessService>()
                 .To<ProcessService>()
-                .InSingletonScope();
-            Kernel.Bind<IOverlayDialogService>()
-                .To<OverlayDialogService>()
-                .InSingletonScope();
-            Kernel.Bind<ITextDialogService>()
-                .To<TextDialogService>()
-                .InSingletonScope();
-            Kernel.Bind<IContentPresenterService>()
-                .To<ContentPresenterService>()
                 .InSingletonScope();
             Kernel.Bind<IEventLogService>()
                 .To<EventLogService>()

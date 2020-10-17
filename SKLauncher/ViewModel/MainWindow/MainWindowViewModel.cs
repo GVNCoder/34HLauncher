@@ -16,7 +16,6 @@ using Ninject.Syntax;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
@@ -27,7 +26,6 @@ using Launcher.Core.Service.Base;
 using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
-using Launcher.ViewModel;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
@@ -51,8 +49,6 @@ namespace Launcher.ViewModel
         private readonly IUpdateService _updateService;
         private readonly IZApi _api;
 
-        private readonly ITextDialogService _textDialogService;
-        private readonly IContentPresenterService _contentPresenterService;
         private readonly IEventLogService _eventLogService;
         private readonly IMainMenuService _menuService;
         private readonly IGameService _gameService;
@@ -69,8 +65,6 @@ namespace Launcher.ViewModel
             ISettingsService settingsService,
             IProcessService processService,
             IResolutionRoot kernel,
-            ITextDialogService dialogService,
-            IContentPresenterService contentPresenterService,
             IEventLogService eventLogService,
             IMainMenuService menuService,
             IUpdateService updateService,
@@ -80,16 +74,14 @@ namespace Launcher.ViewModel
             IPageNavigator navigator,
             IApplicationState state,
             IViewModelSource viewModelSource,
-            IDialogService dialogService_,
+            IDialogService dialogService,
             IDialogSystemBase dialogSystemBase)
         {
             _navigator = navigator;
             _state = state;
             _dialogSystemBase = dialogSystemBase;
-            _dialogService = dialogService_;
+            _dialogService = dialogService;
             
-            _textDialogService = dialogService;
-            _contentPresenterService = contentPresenterService;
             _eventLogService = eventLogService;
             _menuService = menuService;
 
@@ -306,8 +298,8 @@ namespace Launcher.ViewModel
             }
             else
             {
-                await _textDialogService.OpenDialog("Run ZClient",
-                    "Path to ZClient.exe was not set. Please set it in Settings and try again.", TextDialogButtons.Ok);
+                await _dialogService.OpenTextDialog("Run ZClient",
+                    "Path to ZClient.exe was not set. Please set it in Settings and try again.", DialogButtons.Ok);
             }
         });
 

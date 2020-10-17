@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using Launcher.Core.Bases;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
 using Launcher.Core.Services.EventLog;
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
@@ -20,14 +19,14 @@ namespace Launcher.ViewModel
         public BFHServerBrowserViewModel(
             IZApi api,
             IUIHostService hostService,
-            IContentPresenterService presenterService,
             IEventLogService eventLogService,
             IGameService gameService,
             IDiscord discord,
             App application,
             IPageNavigator navigator,
-            ISettingsService settingsService)
-            : base(api, hostService, gameService, eventLogService, presenterService, discord, application, /*navigationService,*/ settingsService, navigator)
+            ISettingsService settingsService,
+            IDialogService dialogService)
+            : base(api, hostService, gameService, eventLogService, discord, application,settingsService, navigator, dialogService)
         {
             MapNames = new[] { "All" }
                 .Concat(ZResource.GetBFHMapNames())
