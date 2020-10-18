@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,6 +10,7 @@ namespace Launcher.Core.Dialog
     public class DialogControlManager : IDialogSystemBase
     {
         private DialogControl _dialogControl;
+        private UserControl _currentDialogContent;
 
         #region IDialogControlManager
 
@@ -33,6 +35,9 @@ namespace Launcher.Core.Dialog
 
                 // save task
                 dialogTask = completionSource.Task;
+
+                // save content
+                _currentDialogContent = control;
             }
             else // then pass Show() call with NULL result
             {
@@ -59,6 +64,7 @@ namespace Launcher.Core.Dialog
 
             // create dialog control
             _dialogControl = new DialogControl();
+            _dialogControl.Closed += _DialogClosedCallback;
 
             // inject dialog control to container
             dialogContainer.Children.Add(_dialogControl);
@@ -70,6 +76,18 @@ namespace Launcher.Core.Dialog
 
         // indicates, when we can use dialog control
         private bool _IsDialogControlFree() => ! _dialogControl.IsOpen;
+
+        private void _DialogClosedCallback(object sender, EventArgs e)
+        {
+            // try to exclude user control from application visual tree
+            var contentPresenter = (Border) _currentDialogContent.Parent;
+
+            // exclude
+            contentPresenter.Child = null;
+
+            _currentDialogContent.Content = null;
+            _currentDialogContent = null;
+        }
 
         #endregion
     }

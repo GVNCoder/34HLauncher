@@ -62,8 +62,6 @@
     <Compile Include="Controls\GlyphButton.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\PingVisualizer.cs" />
-    <Compile Include="Controls\Shared\IOverlayControl.cs" />
-    <Compile Include="Controls\OverlayControl.cs" />
     <Compile Include="Controls\PlaceholderTextBox.cs" />
     <Compile Include="Controls\Shared\PingVisualizerEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

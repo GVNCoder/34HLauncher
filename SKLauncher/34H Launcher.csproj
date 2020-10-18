@@ -274,9 +274,6 @@
     <Compile Include="Styles\Controls\ScrollViewerAnimation\ScrollingAnimationBehavior.cs" />
     <Compile Include="Styles\MapAndPlayerRotation\PlayerListViewStyleSelector.cs" />
     <Compile Include="Styles\MapAndPlayerRotation\RotationsViewModel.cs" />
-    <Compile Include="UserControls\ContentPresenterControl.xaml.cs">
-      <DependentUpon>ContentPresenterControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\DialogContentPresenter.xaml.cs">
       <DependentUpon>DialogContentPresenter.xaml</DependentUpon>
     </Compile>
@@ -306,9 +303,6 @@
     </Compile>
     <Compile Include="UserControls\RotationsControl.xaml.cs">
       <DependentUpon>RotationsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\TextDialogControl.xaml.cs">
-      <DependentUpon>TextDialogControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Browser\BF3ServerBrowserViewModel.cs" />
     <Compile Include="ViewModel\Browser\BF3CoopViewModel.cs" />
@@ -369,10 +363,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ContentPresenterControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\DialogContentPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -410,10 +400,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\RotationsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\TextDialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

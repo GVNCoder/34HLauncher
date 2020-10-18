@@ -397,7 +397,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <ContentPresenter
+                        <Border
                             x:Name="PART_ContentContainer"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"

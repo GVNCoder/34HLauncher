@@ -6,7 +6,7 @@ using System.Windows.Shapes;
 
 namespace Launcher.XamlThemes.Controls
 {
-    public class DialogControl : ContentControl
+    public class DialogControl : Control
     {
         private const string PartOverlayName = "PART_Overlay";
         private const string PartContainerName = "PART_ContentContainer";
@@ -14,7 +14,7 @@ namespace Launcher.XamlThemes.Controls
         private const int _FrameRate = 30;
 
         private Rectangle _overlayRectangle;
-        private ContentPresenter _contentContainer;
+        private Border _contentContainer;
 
         private DoubleAnimation _iOverlayAnimation;
         private DoubleAnimation _oOverlayAnimation;
@@ -53,6 +53,21 @@ namespace Launcher.XamlThemes.Controls
             }
         }
 
+        public UserControl Content
+        {
+            get => (UserControl)GetValue(ContentProperty);
+            set
+            {
+                // inject content as visual child
+                _contentContainer.Child = value;
+
+                // setup prop value
+                SetValue(ContentProperty, value);
+            }
+        }
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register("Content", typeof(UserControl), typeof(DialogControl), new PropertyMetadata(null));
+
         #endregion
 
         public override void OnApplyTemplate()
@@ -61,7 +76,7 @@ namespace Launcher.XamlThemes.Controls
 
             // get template parts
             _overlayRectangle = (Rectangle) GetTemplateChild(PartOverlayName);
-            _contentContainer = (ContentPresenter) GetTemplateChild(PartContainerName);
+            _contentContainer = (Border) GetTemplateChild(PartContainerName);
 
             // setup initial state
             Visibility = Visibility.Collapsed;
@@ -83,8 +98,21 @@ namespace Launcher.XamlThemes.Controls
             _oOverlayAnimation.Completed += (sender, e) =>
             {
                 Visibility = Visibility.Collapsed;
-                Content = null;
+
+                _RaiseOnDialogClosed();
             };
         }
+
+        /// <summary>
+        /// Occurs when dialog control fully closed
+        /// </summary>
+        public event EventHandler Closed;
+
+        #region Private helpers
+
+        private void _RaiseOnDialogClosed()
+            => Closed?.Invoke(this, EventArgs.Empty);
+
+        #endregion
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Data\AsyncCommand.cs" />
     <Compile Include="Data\AsyncCommandBase.cs" />
     <Compile Include="Data\Model\Event\ApplicationStateEventArgs.cs" />
+    <Compile Include="Data\Model\Event\VisualContentChangedEventArgs.cs" />
     <Compile Include="Data\PageNavigator.cs" />
     <Compile Include="Data\VisualContext.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />

@@ -304,7 +304,7 @@ namespace Launcher.Core.Bases
             if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)
             {
                 // handle discord leave server browser
-                var dialogResult = await _dialogService.OpenTextDialog("",
+                var dialogResult = await _dialogService.OpenTextDialog("Warning",
                     "You have the Discord Presence option enabled." +
                     "Therefore, if you leave the server browser, your friends will not be able to see up-to - date information about the location of your game.",
                     DialogButtons.Ok, true);
