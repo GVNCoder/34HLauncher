@@ -51,13 +51,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <controls:AcrylicPanel
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2"
-            NoiseOpacity=".0075"
-            Target="{Binding BackgroundContent}"
-            TintColor="{DynamicResource Theme850Color}"
-            TintOpacity=".25" />
+        <i:Interaction.Behaviors>
+            <behaviors:AcrylicControlBehavior AdjustmentLevel="NoAdjust" VisualContext="Page" />
+        </i:Interaction.Behaviors>
 
         <Rectangle
             Grid.Row="0"

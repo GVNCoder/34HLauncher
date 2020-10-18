@@ -28,13 +28,12 @@ using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Bases
 {
-    public abstract class BaseServerBrowserViewModel : BasePageViewModel, IBlurredPage
+    public abstract class BaseServerBrowserViewModel : BasePageViewModel
     {
         #region Props
 
         public string[] MapNames { get; protected set; }
         public string[] GameModeNames { get; protected set; }
-        public Grid BackgroundContent { get; }
 
         #endregion
 
@@ -130,7 +129,6 @@ namespace Launcher.Core.Bases
 
         protected BaseServerBrowserViewModel(
             IZApi api,
-            IUIHostService uiHostService,
             IGameService gameService,
             IEventLogService eventLogService,
             IDiscord discord,
@@ -148,8 +146,6 @@ namespace Launcher.Core.Bases
             _application = application;
             _dialogService = dialogService;
             _settingsInstance = settingsService.GetLauncherSettings();
-
-            BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
         }
 
         #region Protected members

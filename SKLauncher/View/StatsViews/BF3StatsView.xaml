@@ -2,6 +2,7 @@
     x:Class="Launcher.View.StatsViews.BF3StatsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:Launcher.Core.Behaviors"
     xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
     xmlns:converters="clr-namespace:Launcher.Converters"
     xmlns:core="clr-namespace:Launcher.Core"
@@ -50,12 +51,11 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <controls:AcrylicPanel
-            Grid.ColumnSpan="3"
-            NoiseOpacity=".0075"
-            Target="{Binding WindowBackgroundContent}"
-            TintColor="{DynamicResource Theme850Color}"
-            TintOpacity=".15" />
+
+        <i:Interaction.Behaviors>
+            <behaviors:AcrylicControlBehavior AdjustmentLevel="NoAdjust" VisualContext="Page" />
+        </i:Interaction.Behaviors>
+
         <!--  Sum stats  -->
         <StackPanel
             Grid.Column="0"

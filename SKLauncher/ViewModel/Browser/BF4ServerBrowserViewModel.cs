@@ -18,7 +18,6 @@ namespace Launcher.ViewModel
     {
         public BF4ServerBrowserViewModel(
             IZApi api,
-            IUIHostService hostService,
             IEventLogService eventLogService,
             IGameService gameService,
             IDiscord discord,
@@ -26,7 +25,7 @@ namespace Launcher.ViewModel
             IPageNavigator navigator,
             ISettingsService settingsService,
             IDialogService dialogService)
-            : base(api, hostService, gameService, eventLogService, discord, application, settingsService, navigator, dialogService)
+            : base(api, gameService, eventLogService, discord, application, settingsService, navigator, dialogService)
         {
             MapNames = new[] { "All" }
                 .Concat(ZResource.GetBF4MapNames())

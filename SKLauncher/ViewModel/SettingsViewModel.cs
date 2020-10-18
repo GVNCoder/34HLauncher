@@ -9,12 +9,11 @@ using Launcher.Core.SettingsViewModelParts;
 using Launcher.Core.Shared;
 
 using Ninject;
-using IBlurredPage = Launcher.Core.Bases.IBlurredPage;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
 namespace Launcher.ViewModel
 {
-    public class SettingsViewModel : BasePageViewModel, IBlurredPage
+    public class SettingsViewModel : BasePageViewModel
     {
         public ThemesSectionViewModel ThemeSectionViewModel { get; }
         public GeneralSectionViewModel GeneralSectionViewModel { get; }
@@ -27,7 +26,6 @@ namespace Launcher.ViewModel
         public SettingsViewModel(
             ISettingsService settingsService,
             IEventLogService eventLogService,
-            IUIHostService hostService,
             IDiscord discord,
             IKernel kernel)
         {
@@ -39,11 +37,7 @@ namespace Launcher.ViewModel
             ThemeSectionViewModel = kernel.Get<ThemesSectionViewModel>();
             GeneralSectionViewModel = kernel.Get<GeneralSectionViewModel>();
             UpdatesSectionViewModel = kernel.Get<UpdatesSectionViewModel>();
-
-            BackgroundContent = hostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
         }
-
-        public Grid BackgroundContent { get; }
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
