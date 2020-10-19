@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,43 +11,54 @@ namespace Launcher.Core.Dialog
 {
     public class DialogControlManager : IDialogSystemBase
     {
+        private const int QUEUE_SIZE = 10;
+        private readonly Queue<_InternalDialog> _dialogQueue;
+
         private DialogControl _dialogControl;
         private UserControl _currentDialogContent;
+
+        public DialogControlManager()
+        {
+            _dialogQueue = new Queue<_InternalDialog>(QUEUE_SIZE);
+        }
 
         #region IDialogControlManager
 
         public Task<DialogResult?> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new ()
         {
-            Task<DialogResult?> dialogTask;
+            // create control
+            var control = new TUserControl { DataContext = viewModel };
+            var completionSource = new TaskCompletionSource<DialogResult?>();
+            var dialog = new Dialog(completionSource, this);
 
-            // check, can use dialog control at the moment
-            if (_IsDialogControlFree()) // then pass Show() call
+            // pass dialog for remote control
+            viewModel.Dialog = dialog;
+
+            // ReSharper disable once InvertIf
+            if (! _IsDialogControlFree() || _dialogQueue.Count != 0)
             {
-                // create control
-                var control = new TUserControl { DataContext = viewModel };
-                var completionSource = new TaskCompletionSource<DialogResult?>();
-                var dialog = new Dialog(completionSource, this);
+                // add dialog content to show queue
+                var internalDialog = new _InternalDialog { Content = control };
+                _dialogQueue.Enqueue(internalDialog);
 
-                // pass dialog for remote control
-                viewModel.Dialog = dialog;
+#if DEBUG
+                Console.WriteLine($@"{nameof(IDialogSystemBase)}.{nameof(Show)}.queueCount={_dialogQueue.Count}");
 
-                // setup control
-                _dialogControl.Content = control;
-                _dialogControl.IsOpen = true;
-
-                // save task
-                dialogTask = completionSource.Task;
-
-                // save content
-                _currentDialogContent = control;
+                // queue overflow
+                if (_dialogQueue.Count > QUEUE_SIZE)
+                {
+                    throw new Exception("Dialog queue overflow!");
+                }
+#else
+#endif
             }
-            else // then pass Show() call with NULL result
+            else
             {
-                dialogTask = Task.FromResult<DialogResult?>(null);
+                // initial setup
+                _SetupDialog(control);
             }
-            
-            // return task
-            return dialogTask;
+
+            return completionSource.Task;
         }
 
         public void Close()
@@ -80,6 +93,7 @@ namespace Launcher.Core.Dialog
         private void _DialogClosedCallback(object sender, EventArgs e)
         {
             // try to exclude user control from application visual tree
+            // and move dialog queue
             var contentPresenter = (Border) _currentDialogContent.Parent;
 
             // exclude
@@ -87,6 +101,25 @@ namespace Launcher.Core.Dialog
 
             _currentDialogContent.Content = null;
             _currentDialogContent = null;
+
+            // try move queue
+            // ReSharper disable once InvertIf
+            if (_dialogQueue.Any())
+            {
+                var internalDialog = _dialogQueue.Dequeue();
+
+                // move next
+                _SetupDialog(internalDialog.Content);
+            }
+        }
+
+        private void _SetupDialog(UserControl content)
+        {
+            _currentDialogContent = content;
+
+            // setup control
+            _dialogControl.Content = content;
+            _dialogControl.IsOpen = true;
         }
 
         #endregion
