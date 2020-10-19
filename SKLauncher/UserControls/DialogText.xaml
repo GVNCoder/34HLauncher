@@ -67,7 +67,7 @@
                     <!--  Text Content Presenter  -->
                     <TextBlock
                         Grid.Row="1"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Left"
                         FontSize="14"
                         Text="{Binding Content, Mode=OneTime}"
                         TextAlignment="Left"
