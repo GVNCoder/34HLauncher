@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     MinWidth="300"
     MaxWidth="800"
+    MaxHeight="{StaticResource WindowContentAreaHeight}"
     mc:Ignorable="d">
 
     <Border
