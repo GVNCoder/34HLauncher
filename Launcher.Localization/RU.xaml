@@ -78,7 +78,7 @@
     <system:String x:Key="sbView_Players">Игроки</system:String>
     <system:String x:Key="sbView_GameModeMap">Режим/Карта</system:String>
     <system:String x:Key="sbView_Ping">Пинг</system:String>
-    <system:String x:Key="sbView_MapRotationPlayers">Ротация карт\Игроки</system:String>
+    <system:String x:Key="sbView_MapRotationPlayers">Больше деталей</system:String>
     <system:String x:Key="sbView_CopyText">Копировать</system:String>
     <system:String x:Key="sbView_JOIN">Присоединится</system:String>
     <system:String x:Key="sbView_MapImage">Представление карты</system:String>

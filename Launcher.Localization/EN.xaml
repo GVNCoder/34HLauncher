@@ -78,7 +78,7 @@
     <system:String x:Key="sbView_Players">Players</system:String>
     <system:String x:Key="sbView_GameModeMap">Game mode/Map</system:String>
     <system:String x:Key="sbView_Ping">Ping</system:String>
-    <system:String x:Key="sbView_MapRotationPlayers">Map rotations\Players</system:String>
+    <system:String x:Key="sbView_MapRotationPlayers">More details</system:String>
     <system:String x:Key="sbView_CopyText">Copy text</system:String>
     <system:String x:Key="sbView_JOIN">JOIN</system:String>
     <system:String x:Key="sbView_MapImage">Map image</system:String>

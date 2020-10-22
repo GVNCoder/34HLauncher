@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Launcher.UserControls
 {
     /// <summary>
-    /// Interaction logic for ServerBrowserLeaveControl.xaml
+    /// Interaction logic for DialogServerDetails.xaml
     /// </summary>
-    public partial class ServerBrowserLeaveControl : UserControl
+    public partial class DialogServerDetails : UserControl
     {
-        public ServerBrowserLeaveControl()
+        public DialogServerDetails()
         {
             InitializeComponent();
         }

@@ -323,9 +323,8 @@ namespace Launcher.Core.Bases
             var viewModel =
                 new RotationsViewModel(
                     SelectedServer.Players,
-                    SelectedServer.MapRotation.Rotation,
-                    new PlayerListViewStyleSelector(_application.Resources));
-            await _dialogService.OpenPresenter<RotationsControl>(viewModel);
+                    SelectedServer.MapRotation.Rotation);
+            await _dialogService.OpenPresenter<DialogServerDetails>(viewModel);
         });
 
         public ICommand ResetFilterCommand => new DelegateCommand(obj => _ResetFilter(true));
