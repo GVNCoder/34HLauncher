@@ -233,7 +233,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="2 0 0 2">
+                        CornerRadius="2">
 
                         <ContentPresenter
                             Margin="{TemplateBinding Padding}"
@@ -266,7 +266,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="2 0 0 2">
+                        CornerRadius="2">
 
                         <ContentPresenter
                             Margin="{TemplateBinding Padding}"
