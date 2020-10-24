@@ -59,7 +59,7 @@ namespace Launcher.Core.Behaviors
             {
                 Target = visualContent,
                 NoiseOpacity = .0075,
-                TintOpacity = .25,
+                TintOpacity = .0,
                 AdjustmentLevel = AdjustmentLevel
             };
 

@@ -38,10 +38,6 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid.Background>
-            <SolidColorBrush Opacity=".25" Color="Black" />
-        </Grid.Background>
-
         <Border
             Grid.Row="0"
             Grid.Column="0"
@@ -62,10 +58,11 @@
 
                 <Border Grid.Row="1">
                     <Border.Background>
-                        <SolidColorBrush Opacity=".2" Color="Black" />
+                        <SolidColorBrush Opacity=".3" Color="Black" />
                     </Border.Background>
 
                     <ListView
+                        Margin="0,3,0,0"
                         Background="{x:Null}"
                         BorderThickness="0"
                         ItemContainerStyle="{StaticResource MapSelectionContainerStyle}"
@@ -95,7 +92,6 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        FontWeight="SemiBold"
                                         Foreground="{DynamicResource PrimaryLight400Brush}"
                                         Text="{Binding GameModeName}" />
 
@@ -153,10 +149,11 @@
 
                 <Border Grid.Row="1">
                     <Border.Background>
-                        <SolidColorBrush Opacity=".2" Color="Black" />
+                        <SolidColorBrush Opacity=".3" Color="Black" />
                     </Border.Background>
 
                     <ListView
+                        Margin="0,3,0,0"
                         Background="Transparent"
                         BorderThickness="0"
                         ItemContainerStyle="{StaticResource PlayerSelectionContainerStyle}"
@@ -181,7 +178,7 @@
                                         x:Name="PART_IdPresenter"
                                         Grid.Column="1"
                                         HorizontalAlignment="Right"
-                                        Foreground="LightGray"
+                                        Foreground="{DynamicResource PrimaryLight400Brush}"
                                         Text="{Binding Id}" />
                                 </Grid>
                             </DataTemplate>

@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Border
-        BorderBrush="#1B1B1B"
+        BorderBrush="#171717"
         BorderThickness="1"
         CornerRadius="{StaticResource CornerRadius}">
 
@@ -40,11 +40,17 @@
 
             <ContentPresenter Grid.Row="0" Content="{Binding Content}" />
 
-            <Button
+            <Border
                 Grid.Row="1"
-                Command="{Binding CloseCommand}"
-                Content="Cancel"
-                Style="{DynamicResource PresenterDialogCancelButton}" />
+                Padding="10,5,10,10"
+                Background="#151515">
+
+                <Button
+                    HorizontalAlignment="Right"
+                    Command="{Binding CloseCommand}"
+                    Content="Close"
+                    Style="{StaticResource DialogSecondaryStyle}" />
+            </Border>
         </Grid>
     </Border>
 </UserControl>
