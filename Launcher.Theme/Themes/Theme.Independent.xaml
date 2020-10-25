@@ -78,10 +78,10 @@
                         </Canvas>
 
                         <!--  tint layer  -->
-                        <Rectangle Opacity="{Binding TintOpacity, RelativeSource={RelativeSource AncestorType={x:Type controls:AcrylicPanel}}}">
-                            <Rectangle.Fill>
+                        <Rectangle Fill="{Binding TintBrush, RelativeSource={RelativeSource AncestorType={x:Type controls:AcrylicPanel}}}" Opacity="{Binding TintOpacity, RelativeSource={RelativeSource AncestorType={x:Type controls:AcrylicPanel}}}">
+                            <!--<Rectangle.Fill>
                                 <SolidColorBrush Color="{Binding TintColor, RelativeSource={RelativeSource AncestorType={x:Type controls:AcrylicPanel}}}" />
-                            </Rectangle.Fill>
+                            </Rectangle.Fill>-->
                         </Rectangle>
 
                         <!--  noise layer  -->

@@ -35,13 +35,13 @@ namespace Launcher.XamlThemes.Controls
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.Register("Source", typeof(FrameworkElement), typeof(AcrylicPanel), new PropertyMetadata(null));
 
-        public Color TintColor
+        public Brush TintBrush
         {
-            get => (Color)GetValue(TintColorProperty);
-            set => SetValue(TintColorProperty, value);
+            get => (Brush)GetValue(TintBrushProperty);
+            set => SetValue(TintBrushProperty, value);
         }
-        public static readonly DependencyProperty TintColorProperty =
-            DependencyProperty.Register("TintColor", typeof(Color), typeof(AcrylicPanel), new PropertyMetadata(Colors.White));
+        public static readonly DependencyProperty TintBrushProperty =
+            DependencyProperty.Register("TintBrush", typeof(Brush), typeof(AcrylicPanel), new PropertyMetadata(Brushes.White));
 
         public double TintOpacity
         {
