@@ -20,6 +20,15 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Page.Resources>
+
+        <LinearGradientBrush x:Key="CardAcrylicBrush" StartPoint="0 0" EndPoint="1 1">
+            <GradientStop Offset="-.5" Color="{DynamicResource ComplementaryColor}" />
+            <GradientStop Offset="1.5" Color="{DynamicResource BasePrimaryColor}" />
+        </LinearGradientBrush>
+
+    </Page.Resources>
+
     <Grid>
         <Image
             Width="{StaticResource WindowWidth}"
@@ -61,16 +70,9 @@
                             Height="75"
                             IsHitTestVisible="False"
                             NoiseOpacity=".02"
-                            Target="{Binding ElementName=BF3ImageContent}" />
-
-                        <Rectangle Width="200" Height="75">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush Opacity=".2" StartPoint="0 0" EndPoint="1 1">
-                                    <GradientStop Offset="-.5" Color="{DynamicResource ComplementaryColor}" />
-                                    <GradientStop Offset="1.5" Color="{DynamicResource BasePrimaryColor}" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                            Target="{Binding ElementName=BF3ImageContent}"
+                            TintBrush="{StaticResource CardAcrylicBrush}"
+                            TintOpacity=".2" />
 
                         <StackPanel
                             VerticalAlignment="Bottom"
@@ -248,16 +250,9 @@
                             Height="75"
                             IsHitTestVisible="False"
                             NoiseOpacity=".02"
-                            Target="{Binding ElementName=BF4ImageContent}" />
-
-                        <Rectangle Width="200" Height="75">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush Opacity=".2" StartPoint="0 0" EndPoint="1 1">
-                                    <GradientStop Offset="-.5" Color="{DynamicResource ComplementaryColor}" />
-                                    <GradientStop Offset="1.5" Color="{DynamicResource BasePrimaryColor}" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                            Target="{Binding ElementName=BF4ImageContent}"
+                            TintBrush="{StaticResource CardAcrylicBrush}"
+                            TintOpacity=".2" />
 
                         <StackPanel
                             VerticalAlignment="Bottom"
@@ -437,16 +432,9 @@
                             Height="75"
                             IsHitTestVisible="False"
                             NoiseOpacity="0.01"
-                            Target="{Binding ElementName=BFHImageContent}" />
-
-                        <Rectangle Width="200" Height="75">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush Opacity=".2" StartPoint="0 0" EndPoint="1 1">
-                                    <GradientStop Offset="-.5" Color="{DynamicResource ComplementaryColor}" />
-                                    <GradientStop Offset="1.5" Color="{DynamicResource BasePrimaryColor}" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                            Target="{Binding ElementName=BFHImageContent}"
+                            TintBrush="{StaticResource CardAcrylicBrush}"
+                            TintOpacity=".2" />
 
                         <StackPanel
                             VerticalAlignment="Bottom"

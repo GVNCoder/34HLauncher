@@ -8,8 +8,8 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="600"
-    Height="280"
+    Width="650"
+    Height="300"
     mc:Ignorable="d">
 
     <i:Interaction.Triggers>
@@ -41,7 +41,12 @@
         <Border
             Grid.Row="0"
             Grid.Column="0"
-            Padding="0,5,0,0">
+            Margin="5,5,2.5,5"
+            Padding="5"
+            CornerRadius="{StaticResource CornerRadius}">
+            <Border.Background>
+                <SolidColorBrush Opacity=".45" Color="Black" />
+            </Border.Background>
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -56,71 +61,71 @@
                     Foreground="WhiteSmoke"
                     Text="Supported maps" />
 
-                <Border Grid.Row="1">
-                    <Border.Background>
-                        <SolidColorBrush Opacity=".3" Color="Transparent" />
-                    </Border.Background>
+                <ListView
+                    Grid.Row="1"
+                    Margin="0,3,0,0"
+                    Background="{x:Null}"
+                    BorderThickness="0"
+                    ItemContainerStyle="{StaticResource MapSelectionContainerStyle}"
+                    ItemsSource="{Binding Maps}"
+                    ScrollViewer.CanContentScroll="False"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible">
 
-                    <ListView
-                        Margin="0,3,0,0"
-                        Background="{x:Null}"
-                        BorderThickness="0"
-                        ItemContainerStyle="{StaticResource MapSelectionContainerStyle}"
-                        ItemsSource="{Binding Maps}"
-                        ScrollViewer.CanContentScroll="False"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type extras:ZMap}">
+                            <Grid Margin="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate DataType="{x:Type extras:ZMap}">
-                                <Grid Margin="3">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    FontSize="14"
+                                    Foreground="WhiteSmoke"
+                                    Text="{Binding Name}" />
 
-                                    <TextBlock
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Foreground="WhiteSmoke"
-                                        Text="{Binding Name}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Foreground="{DynamicResource PrimaryLight400Brush}"
+                                    Text="{Binding GameModeName}" />
 
-                                    <TextBlock
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        Foreground="{DynamicResource PrimaryLight400Brush}"
-                                        Text="{Binding GameModeName}" />
-
-                                    <TextBlock
-                                        Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        FontSize="18"
-                                        FontWeight="SemiBold"
-                                        Text="{Binding Role, Converter={StaticResource MapRole2StringConverter}}"
-                                        Visibility="{Binding Role, Converter={StaticResource MapRole2VisibilityConverter}}">
-                                        <TextBlock.Foreground>
-                                            <SolidColorBrush Opacity=".38" Color="White" />
-                                        </TextBlock.Foreground>
-                                    </TextBlock>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Border>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="18"
+                                    FontWeight="SemiBold"
+                                    Text="{Binding Role, Converter={StaticResource MapRole2StringConverter}}"
+                                    Visibility="{Binding Role, Converter={StaticResource MapRole2VisibilityConverter}}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Opacity=".38" Color="White" />
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </Border>
 
         <Border
             Grid.Row="0"
             Grid.Column="1"
-            Margin="0,5,0,0">
+            Margin="2.5,5,5,5"
+            Padding="5"
+            CornerRadius="{StaticResource CornerRadius}">
+            <Border.Background>
+                <SolidColorBrush Opacity=".45" Color="Black" />
+            </Border.Background>
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -147,44 +152,39 @@
                     Foreground="WhiteSmoke"
                     Text="Players" />
 
-                <Border Grid.Row="1">
-                    <Border.Background>
-                        <SolidColorBrush Opacity=".3" Color="Transparent" />
-                    </Border.Background>
+                <ListView
+                    Grid.Row="1"
+                    Margin="0,3,0,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    ItemContainerStyle="{StaticResource PlayerSelectionContainerStyle}"
+                    ItemsSource="{Binding Players}"
+                    ScrollViewer.CanContentScroll="False"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible">
 
-                    <ListView
-                        Margin="0,3,0,0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        ItemContainerStyle="{StaticResource PlayerSelectionContainerStyle}"
-                        ItemsSource="{Binding Players}"
-                        ScrollViewer.CanContentScroll="False"
-                        ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type extras:ZPlayer}">
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate DataType="{x:Type extras:ZPlayer}">
-                                <Grid Margin="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="WhiteSmoke"
+                                    Text="{Binding Name}" />
 
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Foreground="WhiteSmoke"
-                                        Text="{Binding Name}" />
-
-                                    <TextBlock
-                                        x:Name="PART_IdPresenter"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        Foreground="{DynamicResource PrimaryLight400Brush}"
-                                        Text="{Binding Id}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Border>
+                                <TextBlock
+                                    x:Name="PART_IdPresenter"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    Foreground="{DynamicResource PrimaryLight400Brush}"
+                                    Text="{Binding Id}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </Border>
     </Grid>
