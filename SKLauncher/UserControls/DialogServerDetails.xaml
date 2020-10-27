@@ -58,7 +58,7 @@
 
                 <Border Grid.Row="1">
                     <Border.Background>
-                        <SolidColorBrush Opacity=".3" Color="Black" />
+                        <SolidColorBrush Opacity=".3" Color="Transparent" />
                     </Border.Background>
 
                     <ListView
@@ -149,7 +149,7 @@
 
                 <Border Grid.Row="1">
                     <Border.Background>
-                        <SolidColorBrush Opacity=".3" Color="Black" />
+                        <SolidColorBrush Opacity=".3" Color="Transparent" />
                     </Border.Background>
 
                     <ListView

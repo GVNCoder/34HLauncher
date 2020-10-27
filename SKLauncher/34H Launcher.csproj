@@ -212,10 +212,8 @@
     <Compile Include="Core\Services\SettingsService.cs" />
     <Compile Include="Core\SettingsViewModelParts\GeneralSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\ThemesSectionViewModel.cs" />
-    <Compile Include="Core\SettingsViewModelParts\UIBaseViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\UpdatesSectionViewModel.cs" />
     <Compile Include="Core\Shared\BusyViewModel.cs" />
-    <Compile Include="Core\Shared\ChangesViewModel.cs" />
     <Compile Include="Core\Shared\CoopMissionModel.cs" />
     <Compile Include="Core\Shared\EventLogLevel.cs" />
     <Compile Include="Core\Shared\EventViewModel.cs" />

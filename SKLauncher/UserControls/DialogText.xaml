@@ -37,7 +37,11 @@
             </Grid.OpacityMask>
 
             <i:Interaction.Behaviors>
-                <behaviors:AcrylicControlBehavior AdjustmentLevel="OnSetup" VisualContext="Control" />
+                <behaviors:AcrylicControlBehavior
+                    AdjustmentLevel="OnSetup"
+                    ForceTintOpacity=".1"
+                    TintBrush="{StaticResource DialogTextBackgroundTintBrush}"
+                    VisualContext="Control" />
             </i:Interaction.Behaviors>
 
             <!--  Dark bg  -->

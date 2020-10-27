@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using Launcher.Core.Interaction;
 using Launcher.Core.Services;
-using Launcher.Helpers;
 using Microsoft.Win32;
 using Zlo4NET.Api.Models.Shared;
 

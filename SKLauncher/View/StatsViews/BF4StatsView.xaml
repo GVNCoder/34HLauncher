@@ -52,7 +52,10 @@
         </Grid.ColumnDefinitions>
 
         <i:Interaction.Behaviors>
-            <behaviors:AcrylicControlBehavior AdjustmentLevel="NoAdjust" VisualContext="Page" />
+            <behaviors:AcrylicControlBehavior
+                AdjustmentLevel="NoAdjust"
+                TintBrush="{StaticResource PageBackgroundTintBrush}"
+                VisualContext="Page" />
         </i:Interaction.Behaviors>
 
         <!--  Sum stats  -->

@@ -39,7 +39,7 @@
                                 <DropShadowEffect
                                     BlurRadius="20"
                                     Direction="-65"
-                                    Opacity=".8"
+                                    Opacity=".65"
                                     Color="Black" />
                             </Border.Effect>
                             <ContentPresenter Content="{TemplateBinding ContentControl.Content}" />

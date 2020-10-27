@@ -35,7 +35,11 @@
             </Grid.OpacityMask>
 
             <i:Interaction.Behaviors>
-                <behaviors:AcrylicControlBehavior AdjustmentLevel="OnSetup" VisualContext="Control" />
+                <behaviors:AcrylicControlBehavior
+                    AdjustmentLevel="OnSetup"
+                    ForceTintOpacity=".15"
+                    TintBrush="{StaticResource DialogContentBackgroundTintBrush}"
+                    VisualContext="Control" />
             </i:Interaction.Behaviors>
 
             <ContentPresenter Grid.Row="0" Content="{Binding Content}" />

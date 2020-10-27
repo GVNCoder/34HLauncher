@@ -4,6 +4,10 @@
     xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls"
     xmlns:converters="clr-namespace:Launcher.XamlThemes.Controls.Converters">
 
+    <SolidColorBrush x:Key="PageBackgroundTintBrush" Color="Black" />
+    <SolidColorBrush x:Key="DialogTextBackgroundTintBrush" Color="Black" />
+    <SolidColorBrush x:Key="DialogContentBackgroundTintBrush" Color="Black" />
+
     <converters:BrushTranslationConverter x:Key="brushTranslationConverter" />
 
     <!--  Base control style`s  -->
@@ -386,7 +390,7 @@
                     <Grid>
                         <Rectangle x:Name="PART_Overlay">
                             <Rectangle.Fill>
-                                <LinearGradientBrush Opacity=".75" StartPoint="1 0" EndPoint="0 1">
+                                <LinearGradientBrush Opacity=".6" StartPoint="1 0" EndPoint="0 1">
                                     <GradientStop Offset="0" Color="Black" />
                                     <GradientStop Offset="1" Color="Black" />
                                 </LinearGradientBrush>

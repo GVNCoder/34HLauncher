@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
