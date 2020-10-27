@@ -106,7 +106,7 @@ namespace Launcher.ViewModel
             var settings = _settingsService.GetGameSettings().Settings[(int) targetGame];
             var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame != ZGame.BF3);
 
-            _dialogService.OpenPresenter<GameSettingsControl>(viewModel).Forget();
+            _dialogService.OpenPresenter<DialogGameSettings>(viewModel).Forget();
         }
 
         public ICommand JoinGameCommand => new DelegateCommand(_JoinGameCommandExec);

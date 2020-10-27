@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Launcher.UserControls
 {
     /// <summary>
-    /// Interaction logic for GameSettingsControl.xaml
+    /// Interaction logic for DialogGameSettings.xaml
     /// </summary>
-    public partial class GameSettingsControl : UserControl
+    public partial class DialogGameSettings : UserControl
     {
-        public GameSettingsControl()
+        public DialogGameSettings()
         {
             InitializeComponent();
         }

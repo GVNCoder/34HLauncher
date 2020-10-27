@@ -273,6 +273,9 @@
     <Compile Include="UserControls\DialogContentPresenter.xaml.cs">
       <DependentUpon>DialogContentPresenter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DialogGameSettings.xaml.cs">
+      <DependentUpon>DialogGameSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\DialogServerDetails.xaml.cs">
       <DependentUpon>DialogServerDetails.xaml</DependentUpon>
     </Compile>
@@ -281,9 +284,6 @@
     </Compile>
     <Compile Include="UserControls\GameControl.xaml.cs">
       <DependentUpon>GameControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\GameSettingsControl.xaml.cs">
-      <DependentUpon>GameSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UserPresenter.xaml.cs">
       <DependentUpon>UserPresenter.xaml</DependentUpon>
@@ -360,6 +360,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\DialogGameSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\DialogServerDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -369,10 +373,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\GameControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\GameSettingsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
