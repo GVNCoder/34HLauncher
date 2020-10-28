@@ -90,9 +90,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\JesusIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Images\bg_default.jpg" />
   </ItemGroup>
   <ItemGroup>

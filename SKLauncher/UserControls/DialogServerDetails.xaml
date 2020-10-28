@@ -41,7 +41,7 @@
         <Border
             Grid.Row="0"
             Grid.Column="0"
-            Margin="5,5,2.5,5"
+            Margin="3,3,1.5,3"
             Padding="5"
             CornerRadius="{StaticResource CornerRadius}">
             <Border.Background>
@@ -120,7 +120,7 @@
         <Border
             Grid.Row="0"
             Grid.Column="1"
-            Margin="2.5,5,5,5"
+            Margin="1.5,3,3,3"
             Padding="5"
             CornerRadius="{StaticResource CornerRadius}">
             <Border.Background>

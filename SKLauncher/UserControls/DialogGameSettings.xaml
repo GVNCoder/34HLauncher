@@ -2,6 +2,7 @@
     x:Class="Launcher.UserControls.DialogGameSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.UserControls"
@@ -16,7 +17,7 @@
     </i:Interaction.Triggers>
 
     <Border
-        Margin="5"
+        Margin="3"
         Padding="5"
         CornerRadius="{StaticResource CornerRadius}">
         <Border.Background>
@@ -62,6 +63,7 @@
                         Background="Transparent"
                         BorderThickness="0"
                         Foreground="{DynamicResource ThemeForegroundBrush}"
+                        ItemContainerStyle="{StaticResource DllSelectorContainerStyle}"
                         ItemsSource="{Binding Dlls}" />
                 </Border>
 
@@ -71,18 +73,21 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button
+                    <controls:IconButton
                         Grid.Column="0"
                         Command="{Binding AddCommand}"
-                        Content="Add"
-                        Style="{DynamicResource TextDialogButton}" />
+                        Icon=""
+                        IconSize="20"
+                        Text="Add" />
 
-                    <Button
+                    <controls:IconButton
                         Grid.Column="1"
                         Command="{Binding RemoveCommand}"
                         CommandParameter="{Binding ElementName=PART_DllListView, Path=SelectedItems}"
-                        Content="Remove"
-                        Style="{DynamicResource TextDialogButton}" />
+                        Icon=""
+                        IconSize="20"
+                        Text="Remove" />
+
                 </Grid>
             </StackPanel>
         </Grid>
