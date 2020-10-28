@@ -74,9 +74,6 @@
             <Image Source="{DynamicResource BackgroundImage}" Stretch="Fill" />
         </Grid>
 
-        <Rectangle Grid.Row="0" Fill="{DynamicResource Theme850Brush}" />
-        <Rectangle Grid.Row="2" Fill="{DynamicResource Theme850Brush}" />
-
         <!--  Content  -->
         <Frame
             x:Name="HOST_Content"
