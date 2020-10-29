@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-
+using Launcher.Core;
 using Launcher.Core.Data;
 using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
@@ -32,7 +32,7 @@ namespace Launcher.ViewModel
         private readonly IGameService _gameService;
         private readonly ISettingsService _settingsService;
         private readonly IZApi _api;
-        private readonly IBusyService _busyService;
+        private readonly IBusyIndicatorService _busyIndicatorService;
         private readonly IDiscord _discord;
         private readonly IDialogService _dialogService;
 
@@ -41,7 +41,7 @@ namespace Launcher.ViewModel
             IGameService gameService,
             ISettingsService settingsService,
             IZApi api,
-            IBusyService busyService,
+            IBusyIndicatorService busyIndicatorService,
             IDiscord discord,
             IPageNavigator navigator,
             IApplicationState state,
@@ -55,7 +55,7 @@ namespace Launcher.ViewModel
             _gameService = gameService;
             _settingsService = settingsService;
             _api = api;
-            _busyService = busyService;
+            _busyIndicatorService = busyIndicatorService;
             _dialogService = dialogService;
         }
 
@@ -179,7 +179,7 @@ namespace Launcher.ViewModel
                 return;
             }
 
-            _busyService.Busy(HLM.BusyGettingStats);
+            _busyIndicatorService.Open(HLM.BusyGettingStats);
 
             var game = (ZGame) Enum.Parse(typeof(ZGame), (string) obj);
             var stats = await _api.GetStatsAsync(game);
@@ -190,21 +190,21 @@ namespace Launcher.ViewModel
             if (stats.Rank == 0)
             {
                 _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventNoobStats);
-                _busyService.Free();
-                return;
             }
-
-            switch (game)
+            else
             {
-                case ZGame.BF3:
-                case ZGame.BF4:
-                    _navigator.Navigate($"View\\StatsViews\\{game}StatsView.xaml"); break;
-                case ZGame.BFH:
-                case ZGame.None:
+                switch (game)
+                {
+                    case ZGame.BF3:
+                    case ZGame.BF4:
+                        _navigator.Navigate($"View\\StatsViews\\{game}StatsView.xaml"); break;
+                    case ZGame.BFH:
+                    case ZGame.None:
                     default: throw new ArgumentOutOfRangeException(nameof(game), game, @"Stats supports only in BF3 and BF4.");
+                }
             }
 
-            _busyService.Free();
+            _busyIndicatorService.Close();
         }
 
         #endregion

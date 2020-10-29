@@ -34,9 +34,6 @@ namespace Launcher.Data
                 .To<NetworkAvailabilityTracker>();
             Kernel.Bind<IMainMenuService>()
                 .To<MainMenuService>();
-            Kernel.Bind<IBusyService>()
-                .To<BusyService>()
-                .InSingletonScope();
             Kernel.Bind<ISettingsService>()
                 .To<SettingsService>()
                 .InSingletonScope();
