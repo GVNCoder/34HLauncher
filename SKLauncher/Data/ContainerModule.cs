@@ -84,6 +84,10 @@ namespace Launcher.Data
                 .InSingletonScope();
             Kernel.Bind<IDialogService>().To<DialogService>()
                 .InSingletonScope();
+            Kernel.Bind<IBusyIndicatorBase>().To<BusyIndicatorControlManager>()
+                .InSingletonScope();
+            Kernel.Bind<IBusyIndicatorService>().To<BusyIndicatorService>()
+                .InSingletonScope();
         }
     }
 }

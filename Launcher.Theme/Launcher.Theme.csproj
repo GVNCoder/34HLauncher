@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Controls\AcrylicAdjustmentLevel.cs" />
     <Compile Include="Controls\AcrylicPanel.cs" />
+    <Compile Include="Controls\BusyIndicatorControl.cs" />
     <Compile Include="Controls\Converters\BrushTranslationConverter.cs" />
     <Compile Include="Controls\Converters\DarkPingEnum2BrushConverter.cs" />
     <Compile Include="Controls\Converters\DarkPingEnum2IconConverter.cs" />

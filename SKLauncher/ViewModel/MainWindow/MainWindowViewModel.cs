@@ -58,6 +58,8 @@ namespace Launcher.ViewModel
         private readonly IApplicationState _state;
         private readonly IDialogSystemBase _dialogSystemBase;
         private readonly IDialogService _dialogService;
+        private readonly IBusyIndicatorBase _busyIndicatorBase;
+        private readonly IBusyIndicatorService _busyIndicatorService;
 
         public MainWindowViewModel(
             IZApi api,
@@ -75,12 +77,16 @@ namespace Launcher.ViewModel
             IApplicationState state,
             IViewModelSource viewModelSource,
             IDialogService dialogService,
-            IDialogSystemBase dialogSystemBase)
+            IDialogSystemBase dialogSystemBase,
+            IBusyIndicatorBase busyIndicatorBase,
+            IBusyIndicatorService busyIndicatorService)
         {
             _navigator = navigator;
             _state = state;
             _dialogSystemBase = dialogSystemBase;
             _dialogService = dialogService;
+            _busyIndicatorBase = busyIndicatorBase;
+            _busyIndicatorService = busyIndicatorService;
             
             _eventLogService = eventLogService;
             _menuService = menuService;
@@ -220,14 +226,14 @@ namespace Launcher.ViewModel
         {
             var windowInstance = (MainWindowView) parameter;
 
-
             // setup ui dependencies
             _navigator.SetDependency(windowInstance.HOST_Content);
             _dialogSystemBase.SetDependency(windowInstance.HOST_DialogContainer);
+            _busyIndicatorBase.SetDependency(windowInstance.HOST_DialogContainer);
 
-            // TODO: Testing only
-            //windowInstance.MouseEnter += (s, e) => _dialogSystemBase.Show(new UserAbout());
-            //windowInstance.MouseLeave += (s, e) => _dialogSystemBase.Close();
+            //// TODO: Testing only
+            //windowInstance.MouseEnter += (s, e) => _busyIndicatorBase.Open("Please wait...");
+            //windowInstance.MouseLeave += (s, e) => _busyIndicatorBase.Close();
 
             // setup application state vars
             _state.RegisterVars();

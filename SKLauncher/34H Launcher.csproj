@@ -150,6 +150,9 @@
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
     <Compile Include="Core\Behaviors\LastClosedEventBehavior.cs" />
+    <Compile Include="Core\BusyIndicatorControlManager.cs" />
+    <Compile Include="Core\BusyIndicatorService.cs" />
+    <Compile Include="Core\BusyIndicatorServiceExtensions.cs" />
     <Compile Include="Core\Data\BaseGameWorker.cs" />
     <Compile Include="Core\Data\BaseJoinParams.cs" />
     <Compile Include="Core\Data\CoopGameWorker.cs" />
@@ -184,6 +187,8 @@
     <Compile Include="Core\Dialog\IDialogService.cs" />
     <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
     <Compile Include="Core\Dialog\_InternalDialog.cs" />
+    <Compile Include="Core\IBusyIndicatorBase.cs" />
+    <Compile Include="Core\IBusyIndicatorService.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
     <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />
