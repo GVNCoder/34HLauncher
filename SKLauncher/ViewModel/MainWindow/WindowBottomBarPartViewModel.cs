@@ -2,11 +2,11 @@
 using System.Windows.Input;
 
 using Launcher.Core;
-using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+using Launcher.ViewModel.UserControl;
 
 namespace Launcher.ViewModel
 {
@@ -29,6 +29,7 @@ namespace Launcher.ViewModel
             // build view models for child user controls
             UpdateControlViewModel = viewModelLocator.GetExisting<UpdateControlViewModel>();
             GameControlViewModel = viewModelLocator.GetExisting<GameControlViewModel>();
+            EventsButtonControlViewModel = viewModelLocator.GetExisting<EventsButtonViewModel>();
 
             // setup vars
             VersionString = versionService.GetLauncherVersion().ToString();
@@ -41,18 +42,11 @@ namespace Launcher.ViewModel
 
         public UpdateControlViewModel UpdateControlViewModel { get; }
         public GameControlViewModel GameControlViewModel { get; }
+        public EventsButtonViewModel  EventsButtonControlViewModel { get; }
 
         #endregion
 
         #region Bindable properties
-
-        public bool HasEvents
-        {
-            get => (bool)GetValue(HasEventsProperty);
-            set => SetValue(HasEventsProperty, value);
-        }
-        public static readonly DependencyProperty HasEventsProperty =
-            DependencyProperty.Register("HasEvents", typeof(bool), typeof(WindowBottomBarPartViewModel), new PropertyMetadata(false));
 
         public string  VersionString
         {
@@ -65,15 +59,6 @@ namespace Launcher.ViewModel
         #endregion
 
         #region Commands
-
-        public ICommand OpenLogCommand => new DelegateCommand((obj) =>
-        {
-            // navigate to page
-            _navigator.Navigate("View/EventLogView.xaml");
-
-            // reset var
-            HasEvents = false;
-        });
 
         public override ICommand LoadedCommand => throw new System.NotImplementedException();
         public override ICommand UnloadedCommand => throw new System.NotImplementedException();
@@ -101,9 +86,6 @@ namespace Launcher.ViewModel
                 "-You, for whatever reason, are not logged in to ZClient\n-Running multiple processes of ZClient\n" +
                 "-Launcher internal error (restart the launcher and contact the developer)");
             _isDisconnectedEventShowed = true;
-
-            // setup var
-            HasEvents = true;
         }
 
         #endregion

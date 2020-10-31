@@ -186,6 +186,9 @@
     <Compile Include="Core\Dialog\IDialogService.cs" />
     <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
     <Compile Include="Core\Dialog\_InternalDialog.cs" />
+    <Compile Include="UserControls\EventsButtonControl.xaml.cs">
+      <DependentUpon>EventsButtonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Events\EventItemViewModel.cs" />
     <Compile Include="Core\EventOccuredEventArgs.cs" />
     <Compile Include="Core\EventService.cs" />
@@ -310,6 +313,7 @@
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />
     <Compile Include="ViewModel\UpdateControlViewModel.cs" />
+    <Compile Include="ViewModel\UserControl\EventsButtonViewModel.cs" />
     <Compile Include="ViewModel\UserControl\UserPresenterViewModel.cs" />
     <Compile Include="View\BF3CoopView.xaml.cs">
       <DependentUpon>BF3CoopView.xaml</DependentUpon>
@@ -373,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DialogText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EventsButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
