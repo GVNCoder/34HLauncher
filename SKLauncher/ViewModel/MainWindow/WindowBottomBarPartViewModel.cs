@@ -13,17 +13,14 @@ namespace Launcher.ViewModel
     public class WindowBottomBarPartViewModel : BaseControlViewModel
     {
         private readonly IEventService _eventService;
-        private readonly IPageNavigator _navigator;
 
         private bool _isDisconnectedEventShowed;
 
         public WindowBottomBarPartViewModel(
             IVersionService versionService,
             IEventService eventService,
-            IPageNavigator navigator,
             IViewModelSource viewModelLocator)
         {
-            _navigator = navigator;
             _eventService = eventService;
 
             // build view models for child user controls
@@ -33,9 +30,6 @@ namespace Launcher.ViewModel
 
             // setup vars
             VersionString = versionService.GetLauncherVersion().ToString();
-
-            // tack has events
-            eventService.EventOccured += _OnEventOccured;
         }
 
         #region Public members
@@ -91,12 +85,6 @@ namespace Launcher.ViewModel
         #endregion
 
         #region Private helpers
-
-        private void _OnEventOccured(object sender, EventOccuredEventArgs e)
-        {
-            // setup var
-            HasEvents = true;
-        }
 
         #endregion
     }
