@@ -20,14 +20,6 @@ namespace Launcher.ViewModel.UserControl
 
         #region Bindable properties
 
-        public string ToolTipContent
-        {
-            get => (string)GetValue(ToolTipContentProperty);
-            set => SetValue(ToolTipContentProperty, value);
-        }
-        public static readonly DependencyProperty ToolTipContentProperty =
-            DependencyProperty.Register("ToolTipContent", typeof(string), typeof(EventsButtonViewModel), new PropertyMetadata(string.Empty));
-
         public bool HasSomethingNew
         {
             get => (bool)GetValue(HasSomethingNewProperty);
@@ -55,9 +47,6 @@ namespace Launcher.ViewModel.UserControl
         public EventsButtonViewModel(IPageNavigator navigator, IEventService eventService)
         {
             _navigator = navigator;
-
-            // setup vars
-            ToolTipContent = "Launcher events";
 
             // track something new in launcher events :)
             eventService.EventOccured += _OnEventOccured;

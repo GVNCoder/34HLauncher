@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    ToolTip="Launcher events"
     mc:Ignorable="d">
 
     <!--  Define interactivity  -->
@@ -25,7 +26,6 @@
                 </Setter.Value>
             </Setter>
             <Setter Property="Padding" Value="10,0" />
-            <Setter Property="ToolTip" Value="{Binding Path=DataContext.ToolTipContent}" />
             <Setter Property="ToolTipService.Placement" Value="Top" />
             <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
             <Style.Triggers>
