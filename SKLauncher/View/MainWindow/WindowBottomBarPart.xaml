@@ -38,9 +38,11 @@
             <controls:EventsButton
                 Margin="3,0,0,0"
                 Command="{Binding OpenLogCommand}"
-                Foreground="{DynamicResource ThemeForegroundBrush}"
-                HasEvents="{Binding HasEvents}"
-                Text="{DynamicResource shared_Events}" />
+                HasEvents="{Binding HasEvents, Mode=OneWay}"
+                Text="{DynamicResource shared_Events}"
+                ToolTip="Launcher events"
+                ToolTipService.InitialShowDelay="0"
+                ToolTipService.Placement="Top" />
             <userControls:GameControl Margin="5,0,0,0" DataContext="{Binding GameControlViewModel}" />
             <userControls:UpdateDownloadControl Margin="5,0,0,0" DataContext="{Binding UpdateControlViewModel}" />
         </StackPanel>

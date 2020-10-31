@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using Launcher.Core;
 using Launcher.Core.Data.Updates;
 using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service.Base;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 
@@ -15,12 +14,12 @@ namespace Launcher.ViewModel
     public class UpdateControlViewModel : BaseControlViewModel
     {
         private readonly IUpdateService _updateService;
-        private readonly IEventLogService _eventService;
+        private readonly IEventService _eventService;
         private readonly IDialogService _dialogService;
 
         public UpdateControlViewModel(
             IUpdateService updateService,
-            IEventLogService eventService,
+            IEventService eventService,
             IDialogService dialogService)
         {
             _updateService = updateService;
@@ -58,7 +57,9 @@ namespace Launcher.ViewModel
         }
 
         private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
-            => _eventService.Log(EventLogLevel.Error, "Update service", e.Message);
+        {
+
+        }/*_eventService.Log(EventLogLevel.Error, "Update service", e.Message);*/
 
         #endregion
 

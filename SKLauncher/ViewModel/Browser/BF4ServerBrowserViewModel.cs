@@ -1,15 +1,17 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Launcher.Core;
 using Launcher.Core.Bases;
 using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
+
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.ViewModel
@@ -18,14 +20,14 @@ namespace Launcher.ViewModel
     {
         public BF4ServerBrowserViewModel(
             IZApi api,
-            IEventLogService eventLogService,
+            IEventService eventService,
             IGameService gameService,
             IDiscord discord,
             App application,
             IPageNavigator navigator,
             ISettingsService settingsService,
             IDialogService dialogService)
-            : base(api, gameService, eventLogService, discord, application, settingsService, navigator, dialogService)
+            : base(api, gameService, eventService, discord, application, settingsService, navigator, dialogService)
         {
             MapNames = new[] { "All" }
                 .Concat(ZResource.GetBF4MapNames())

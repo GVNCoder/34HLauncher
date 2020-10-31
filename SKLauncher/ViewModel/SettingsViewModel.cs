@@ -1,12 +1,11 @@
 ﻿using System.Windows.Input;
-using System.Windows.Controls;
+
+using Launcher.Core;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.SettingsViewModelParts;
-using Launcher.Core.Shared;
 
 using Ninject;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
@@ -20,17 +19,17 @@ namespace Launcher.ViewModel
         public UpdatesSectionViewModel UpdatesSectionViewModel { get; }
 
         private readonly ISettingsService _settingsService;
-        private readonly IEventLogService _eventLogService;
+        private readonly IEventService _eventService;
         private readonly IDiscord _discord;
 
         public SettingsViewModel(
             ISettingsService settingsService,
-            IEventLogService eventLogService,
+            IEventService eventService,
             IDiscord discord,
             IKernel kernel)
         {
             _settingsService = settingsService;
-            _eventLogService = eventLogService;
+            _eventService = eventService;
             _discord = discord;
 
             // vm parts
@@ -50,7 +49,7 @@ namespace Launcher.ViewModel
             var settingsSave = _settingsService.Save();
             if (!settingsSave)
             {
-                _eventLogService.Log(EventLogLevel.Warning, SLM.SaveSettingsHeader, SLM.SaveSettings);
+                //_eventLogService.Log(EventLogLevel.Warning, SLM.SaveSettingsHeader, SLM.SaveSettings);
             }
 
             _settingsService.FreeGlobalLock();

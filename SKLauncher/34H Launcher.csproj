@@ -158,7 +158,6 @@
     <Compile Include="Core\Data\CoopGameWorker.cs" />
     <Compile Include="Core\Data\CoopJoinParams.cs" />
     <Compile Include="Core\Data\DetectedGameWorker.cs" />
-    <Compile Include="Core\Data\EventLog\EventLogService.cs" />
     <Compile Include="Core\Data\GameCloseEventArgs.cs" />
     <Compile Include="Core\Data\GameRunErrorEventArgs.cs" />
     <Compile Include="Core\Data\GameService.cs" />
@@ -187,8 +186,14 @@
     <Compile Include="Core\Dialog\IDialogService.cs" />
     <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
     <Compile Include="Core\Dialog\_InternalDialog.cs" />
+    <Compile Include="ViewModel\Events\EventItemViewModel.cs" />
+    <Compile Include="Core\EventOccuredEventArgs.cs" />
+    <Compile Include="Core\EventService.cs" />
+    <Compile Include="Core\EventServiceExtensions.cs" />
+    <Compile Include="Core\EventType.cs" />
     <Compile Include="Core\IBusyIndicatorBase.cs" />
     <Compile Include="Core\IBusyIndicatorService.cs" />
+    <Compile Include="Core\IEventService.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
     <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />
@@ -199,7 +204,6 @@
     <Compile Include="Core\RPC\IDiscordPresence.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatedEventArgs.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatesUnit.cs" />
-    <Compile Include="Core\Services\EventLog\IEventLogService.cs" />
     <Compile Include="Core\Services\IGameService.cs" />
     <Compile Include="Core\Services\ILauncherProcessService.cs" />
     <Compile Include="Core\Services\IMainMenuService.cs" />
@@ -216,10 +220,7 @@
     <Compile Include="Core\SettingsViewModelParts\GeneralSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\ThemesSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\UpdatesSectionViewModel.cs" />
-    <Compile Include="Core\Shared\BusyViewModel.cs" />
     <Compile Include="Core\Shared\CoopMissionModel.cs" />
-    <Compile Include="Core\Shared\EventLogLevel.cs" />
-    <Compile Include="Core\Shared\EventViewModel.cs" />
     <Compile Include="Core\Shared\GameControlViewModel.cs" />
     <Compile Include="Core\Shared\GameEventArgs.cs" />
     <Compile Include="Core\Shared\GameEventType.cs" />
@@ -305,7 +306,7 @@
     <Compile Include="ViewModel\Stats\BF4StatsViewModel.cs" />
     <Compile Include="ViewModel\Browser\BF4ServerBrowserViewModel.cs" />
     <Compile Include="ViewModel\Browser\BFHServerBrowserViewModel.cs" />
-    <Compile Include="ViewModel\EventLogViewModel.cs" />
+    <Compile Include="ViewModel\Events\EventLogViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />
     <Compile Include="ViewModel\UpdateControlViewModel.cs" />

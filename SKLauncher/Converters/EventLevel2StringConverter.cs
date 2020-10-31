@@ -9,16 +9,18 @@ namespace Launcher.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // getting value
-            if (!(value is EventLogLevel level)) throw new InvalidCastException();
+            //// getting value
+            //if (!(value is EventLogLevel level)) throw new InvalidCastException();
 
-            switch (level)
-            {
-                case EventLogLevel.Error: return "";
-                case EventLogLevel.Warning: return "";
-                case EventLogLevel.Message: return "";
-                default: return string.Empty;
-            }
+            //switch (level)
+            //{
+            //    case EventLogLevel.Error: return "";
+            //    case EventLogLevel.Warning: return "";
+            //    case EventLogLevel.Message: return "";
+            //    default: return string.Empty;
+            //}
+
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

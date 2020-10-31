@@ -3,14 +3,12 @@
 using log4net;
 using Launcher.Core;
 using Launcher.Core.Data;
-using Launcher.Core.Data.EventLog;
 using Launcher.Core.Data.Updates;
 using Launcher.Core.Dialog;
 using Launcher.Core.RPC;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 
 using Ninject.Modules;
@@ -40,9 +38,7 @@ namespace Launcher.Data
             Kernel.Bind<IProcessService>()
                 .To<ProcessService>()
                 .InSingletonScope();
-            Kernel.Bind<IEventLogService>()
-                .To<EventLogService>()
-                .InSingletonScope();
+
             Kernel.Bind<IUpdateService>()
                 .To<UpdateService>()
                 .InSingletonScope();
@@ -84,6 +80,8 @@ namespace Launcher.Data
             Kernel.Bind<IBusyIndicatorBase>().To<BusyIndicatorControlManager>()
                 .InSingletonScope();
             Kernel.Bind<IBusyIndicatorService>().To<BusyIndicatorService>()
+                .InSingletonScope();
+            Kernel.Bind<IEventService>().To<EventService>()
                 .InSingletonScope();
         }
     }

@@ -11,7 +11,6 @@ using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
@@ -25,7 +24,7 @@ namespace Launcher.Core.SettingsViewModelParts
     {
         private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
-        private readonly IEventLogService _eventLog;
+        private readonly IEventService _eventService;
         private readonly IDiscord _discord;
 
         private LauncherSettings _settings;
@@ -33,12 +32,12 @@ namespace Launcher.Core.SettingsViewModelParts
         public GeneralSectionViewModel(
             IDialogService dialogService,
             ISettingsService settingsService,
-            IEventLogService eventLog,
+            IEventService eventLog,
             IDiscord discord)
         {
             _dialogService = dialogService;
             _settingsService = settingsService;
-            _eventLog = eventLog;
+            _eventService = eventLog;
             _discord = discord;
 
             LocalizationEnumerable = new[]
@@ -223,7 +222,7 @@ namespace Launcher.Core.SettingsViewModelParts
             }
             else
             {
-                _eventLog.Log(EventLogLevel.Warning, SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
+                //_eventLog.Log(EventLogLevel.Warning, SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
             }
         });
     }

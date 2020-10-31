@@ -11,6 +11,8 @@ namespace Launcher.XamlThemes.Controls
                 new FrameworkPropertyMetadata(typeof(EventsButton)));
         }
 
+        #region Bindable properties
+
         public bool HasEvents
         {
             get => (bool)GetValue(HasEventsProperty);
@@ -26,5 +28,7 @@ namespace Launcher.XamlThemes.Controls
         }
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(EventsButton), new PropertyMetadata(string.Empty));
+
+        #endregion
     }
 }

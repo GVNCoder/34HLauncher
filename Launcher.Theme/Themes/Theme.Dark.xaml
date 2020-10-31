@@ -522,56 +522,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type controls:EventsButton}" TargetType="{x:Type controls:EventsButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:EventsButton}">
-                    <ControlTemplate.Resources>
-                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-                    </ControlTemplate.Resources>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                    <Border Padding="5,0,2,0" CornerRadius="2">
-                        <Border.Background>
-                            <SolidColorBrush Color="{StaticResource Theme700Color}" />
-                            <!--  #333333  -->
-                        </Border.Background>
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Foreground="{TemplateBinding Foreground}"
-                                Text="{TemplateBinding Text}" />
-                            <Grid Margin="5,0,0,0">
-                                <TextBlock
-                                    Margin="0,0,5,0"
-                                    FontFamily="{StaticResource Ionicons}"
-                                    FontSize="16"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    Text="" />
-                                <Ellipse
-                                    Width="8"
-                                    Height="8"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Fill="#FF322C"
-                                    StrokeThickness="1"
-                                    Visibility="{TemplateBinding HasEvents,
-                                                                 Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Ellipse.Stroke>
-                                        <SolidColorBrush Color="{StaticResource Theme700Color}" />
-                                    </Ellipse.Stroke>
-                                </Ellipse>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type controls:FlatGroup}">
 
         <Setter Property="Template">

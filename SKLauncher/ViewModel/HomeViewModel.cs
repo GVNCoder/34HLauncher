@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+
 using Launcher.Core;
 using Launcher.Core.Data;
 using Launcher.Core.Dialog;
@@ -9,7 +10,6 @@ using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.UserControls;
@@ -28,7 +28,7 @@ namespace Launcher.ViewModel
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
 
-        private readonly IEventLogService _eventLogService;
+        private readonly IEventService _eventService;
         private readonly IGameService _gameService;
         private readonly ISettingsService _settingsService;
         private readonly IZApi _api;
@@ -37,7 +37,7 @@ namespace Launcher.ViewModel
         private readonly IDialogService _dialogService;
 
         public HomeViewModel(
-            IEventLogService eventLogService,
+            IEventService eventService,
             IGameService gameService,
             ISettingsService settingsService,
             IZApi api,
@@ -51,7 +51,7 @@ namespace Launcher.ViewModel
             _state = state;
             _discord = discord;
 
-            _eventLogService = eventLogService;
+            _eventService = eventService;
             _gameService = gameService;
             _settingsService = settingsService;
             _api = api;
@@ -123,8 +123,8 @@ namespace Launcher.ViewModel
             // check connection
             if (! connected)
             {
-                _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun,
-                    _isOnline(playMode) ? HLM.EventLauncherDisconnectedServers : HLM.EventLauncherDisconnected);
+                //_eventLogService.Log(EventLogLevel.Warning, SLM.GameRun,
+                //    _isOnline(playMode) ? HLM.EventLauncherDisconnectedServers : HLM.EventLauncherDisconnected);
 
                 return;
             }
@@ -175,7 +175,7 @@ namespace Launcher.ViewModel
             var connected = _state.GetState<bool>(Constants.ZCLIENT_CONNECTION);
             if (! connected)
             {
-                _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventLauncherDisconnectedStats);
+                //_eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventLauncherDisconnectedStats);
                 return;
             }
 
@@ -189,7 +189,7 @@ namespace Launcher.ViewModel
 
             if (stats.Rank == 0)
             {
-                _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventNoobStats);
+                //_eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventNoobStats);
             }
             else
             {

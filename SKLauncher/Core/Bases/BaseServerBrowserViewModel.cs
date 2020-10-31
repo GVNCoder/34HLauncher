@@ -13,7 +13,6 @@ using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Styles.MapAndPlayerRotation;
@@ -130,7 +129,7 @@ namespace Launcher.Core.Bases
         protected BaseServerBrowserViewModel(
             IZApi api,
             IGameService gameService,
-            IEventLogService eventLogService,
+            IEventService eventService,
             IDiscord discord,
             Application application,
             ISettingsService settingsService,
@@ -142,7 +141,7 @@ namespace Launcher.Core.Bases
 
             _api = api;
             _gameService = gameService;
-            _eventLogService = eventLogService;
+            _eventService = eventService;
             _application = application;
             _dialogService = dialogService;
             _settingsInstance = settingsService.GetLauncherSettings();
@@ -157,7 +156,7 @@ namespace Launcher.Core.Bases
         protected readonly IDiscord _discord;
         protected readonly IGameService _gameService;
         protected readonly Application _application;
-        protected readonly IEventLogService _eventLogService;
+        protected readonly IEventService _eventService;
         protected readonly LauncherSettings _settingsInstance;
         
         protected IZServersListService _serversService;
@@ -253,8 +252,8 @@ namespace Launcher.Core.Bases
         protected void OnJoinImpl(ZRole role)
         {
             if (SelectedServer == null) return;
-            if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber)
-                _eventLogService.Log(EventLogLevel.Warning, "Cannot join", "No slots available");
+            //if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber)
+            //    _eventLogService.Log(EventLogLevel.Warning, "Cannot join", "No slots available");
 
             _JoinGame(SelectedServer, role);
         }
