@@ -49,7 +49,8 @@ namespace Launcher.ViewModel
             {
                 EventName = e.Name,
                 Content = e.Content,
-                EventType = e.EventType
+                EventType = e.EventType,
+                TimeCreated = e.TimeCreated.ToString("HH:mm:ss tt")
             };
 
             // log event

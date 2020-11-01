@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+
 using Launcher.Core;
 
 namespace Launcher.ViewModel
@@ -30,6 +31,14 @@ namespace Launcher.ViewModel
         }
         public static readonly DependencyProperty EventTypeProperty =
             DependencyProperty.Register("EventType", typeof(EventType), typeof(EventItemViewModel), new PropertyMetadata(Core.EventType.Info));
+
+        public string TimeCreated
+        {
+            get => (string)GetValue(TimeCreatedProperty);
+            set => SetValue(TimeCreatedProperty, value);
+        }
+        public static readonly DependencyProperty TimeCreatedProperty =
+            DependencyProperty.Register("TimeCreated", typeof(string), typeof(EventItemViewModel), new PropertyMetadata(string.Empty));
 
         #endregion
     }

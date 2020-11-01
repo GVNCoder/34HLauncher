@@ -10,5 +10,8 @@
 
         public static void ErrorEvent(this IEventService eventService, string name, string content) =>
             eventService.Event(name, content, EventType.Error);
+
+        public static void SuccessEvent(this IEventService eventService, string name, string content) =>
+            eventService.Event(name, content, EventType.Success);
     }
 }
