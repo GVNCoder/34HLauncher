@@ -36,8 +36,8 @@
                 Text="{Binding VersionString}" />
 
             <userControls:EventsButtonControl DataContext="{Binding EventsButtonControlViewModel}" />
-            <userControls:GameControl Margin="5,0,0,0" DataContext="{Binding GameControlViewModel}" />
-            <userControls:UpdateDownloadControl Margin="5,0,0,0" DataContext="{Binding UpdateControlViewModel}" />
+            <userControls:GameControl DataContext="{Binding GameControlViewModel}" />
+            <userControls:UpdateDownloadControl DataContext="{Binding UpdateControlViewModel}" />
         </StackPanel>
 
         <!--  Author  -->

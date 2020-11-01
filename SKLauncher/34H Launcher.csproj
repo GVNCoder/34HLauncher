@@ -137,7 +137,6 @@
     </ApplicationDefinition>
     <Compile Include="Converters\EventLevel2ColorConverter.cs" />
     <Compile Include="Converters\EventLevel2StringConverter.cs" />
-    <Compile Include="Converters\GameControlState2ColorConverter.cs" />
     <Compile Include="Converters\MathNegativeConverter.cs" />
     <Compile Include="Converters\Ping2PingEnumConverter.cs" />
     <Compile Include="Converters\Rotations\MapRole2StringConverter.cs" />
