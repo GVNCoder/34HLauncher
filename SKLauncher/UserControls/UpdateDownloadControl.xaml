@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource OpenSans}"
+    Visibility="{Binding Visibility, Mode=OneWay}"
     mc:Ignorable="d">
 
     <!--  Define style  -->
@@ -30,8 +31,6 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-
-    <!--  Visibility="{Binding Visibility, Mode=OneWay}"  -->
 
     <Grid>
         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
