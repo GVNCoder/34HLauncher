@@ -13,6 +13,7 @@ namespace Launcher.ViewModel
     public class EventLogViewModel : BasePageViewModel
     {
         private const int EVENT_LOG_SIZE = 15;
+        private const string TimeCreatedFormatString = "HH:mm:ss";
 
         private readonly IDiscord _discord;
 
@@ -24,12 +25,19 @@ namespace Launcher.ViewModel
 
             // track events
             eventService.EventOccured += _OnEventReceived;
+
+            // build eventsList
+            var eventList = eventService;
+
+            // move logged event into current viewModel
+            Events = new ObservableCollection<EventItemViewModel>(
+                eventList.EventsStack
+                    .Select(_BuildItemViewModelFromItem));
         }
 
         #region Bindable properties
 
         public ObservableCollection<EventItemViewModel> Events { get; }
-            = new ObservableCollection<EventItemViewModel>();
 
         #endregion
 
@@ -44,17 +52,7 @@ namespace Launcher.ViewModel
 
         private void _OnEventReceived(object sender, EventOccuredEventArgs e)
         {
-            // create event
-            var eventItem = new EventItemViewModel
-            {
-                EventName = e.Name,
-                Content = e.Content,
-                EventType = e.EventType,
-                TimeCreated = e.TimeCreated.ToString("HH:mm:ss tt")
-            };
-
-            // log event
-            Events.Add(eventItem);
+            HandleEvent(e);
 
             // check events collection overflow
             // ReSharper disable once InvertIf
@@ -66,6 +64,24 @@ namespace Launcher.ViewModel
                 Events.RemoveAt(itemIndex);
             }
         }
+
+        private void HandleEvent(EventOccuredEventArgs e) => Dispatcher.Invoke(() =>
+        {
+            // create event
+            var eventItem = _BuildItemViewModelFromItem(e.Event);
+
+            // log event
+            Events.Insert(0, eventItem);
+        });
+
+        private static EventItemViewModel _BuildItemViewModelFromItem(EventItem item)
+            => new EventItemViewModel
+            {
+                EventName = item.Name,
+                Content = item.Content,
+                EventType = item.EventType,
+                TimeCreated = item.TimeCreated.ToString(TimeCreatedFormatString)
+            };
 
         #endregion
     }

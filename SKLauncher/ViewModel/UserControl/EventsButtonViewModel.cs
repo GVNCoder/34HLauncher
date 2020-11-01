@@ -6,6 +6,7 @@ using Launcher.Core;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
+using Launcher.View;
 
 namespace Launcher.ViewModel.UserControl
 {
@@ -23,7 +24,7 @@ namespace Launcher.ViewModel.UserControl
         public bool HasSomethingNew
         {
             get => (bool)GetValue(HasSomethingNewProperty);
-            set => SetValue(HasSomethingNewProperty, value);
+            set => Dispatcher.Invoke(() => SetValue(HasSomethingNewProperty, value));
         }
         public static readonly DependencyProperty HasSomethingNewProperty =
             DependencyProperty.Register("HasSomethingNew", typeof(bool), typeof(EventsButtonViewModel), new PropertyMetadata(false));
@@ -56,6 +57,10 @@ namespace Launcher.ViewModel.UserControl
 
         private void _OnEventOccured(object sender, EventOccuredEventArgs e)
         {
+            // check page type
+            // if we are already on the page with events, then we do not need to change the state of the button
+            if (_navigator.CurrentPage is EventLogView) return;
+
             HasSomethingNew = true;
         }
 

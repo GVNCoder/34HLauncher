@@ -64,8 +64,7 @@ namespace Launcher.ViewModel
         public void UpdateConnected()
         {
             _isDisconnectedEventShowed = false;
-
-            // TODO: Add success connected event here
+            _eventService.SuccessEvent("ZClient connection", "Successfully connected to ZClient");
         }
 
         public void UpdateDisconnected()
