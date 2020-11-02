@@ -13,7 +13,6 @@ namespace Launcher.Core.Behaviors
     {
         protected override void OnAttached()
         {
-            var app = (App) Application.Current;
             var viewModelLocator = Resolver.Kernel
                 .Get<ViewModelLocator>();
             switch (TargetGameContext)

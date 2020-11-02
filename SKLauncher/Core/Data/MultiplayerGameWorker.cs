@@ -1,6 +1,4 @@
-﻿using System;
-using DiscordRPC;
-using Launcher.Core.RPC;
+﻿using Launcher.Core.RPC;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 

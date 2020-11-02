@@ -15,16 +15,13 @@ namespace Launcher.ViewModel
     {
         private readonly IUpdateService _updateService;
         private readonly IEventService _eventService;
-        private readonly IDialogService _dialogService;
 
         public UpdateControlViewModel(
             IUpdateService updateService,
-            IEventService eventService,
-            IDialogService dialogService)
+            IEventService eventService)
         {
             _updateService = updateService;
             _eventService = eventService;
-            _dialogService = dialogService;
 
             // assign resolvers and subscribe to events
             _updateService.CancelDownloadResolver = _downloadCancelResolver;

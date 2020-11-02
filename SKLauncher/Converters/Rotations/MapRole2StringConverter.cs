@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+
 using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Converters
@@ -15,7 +16,7 @@ namespace Launcher.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return Binding.DoNothing;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Launcher.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // get value
-            if (!(value is EventType eventType))
+            if (! (value is EventType eventType))
                 throw new InvalidCastException($"{nameof(EventType2IconConverter)} value: {value}");
 
             string icon;

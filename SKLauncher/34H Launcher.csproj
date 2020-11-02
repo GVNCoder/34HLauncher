@@ -145,7 +145,6 @@
     <Compile Include="Core\ApplicationStateExtension.cs" />
     <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
     <Compile Include="Core\Behaviors\AcrylicControlBehavior.cs" />
-    <Compile Include="Core\Behaviors\ButtonContextMenuBehavior.cs" />
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
     <Compile Include="Core\Behaviors\LastClosedEventBehavior.cs" />
@@ -198,8 +197,6 @@
     <Compile Include="Core\IBusyIndicatorService.cs" />
     <Compile Include="Core\IEventService.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
-    <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
-    <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />
     <Compile Include="Core\RPC\Discord.cs" />
     <Compile Include="Core\RPC\DiscordConnectionChangedEventArgs.cs" />
     <Compile Include="Core\RPC\DiscordPresence.cs" />
@@ -213,7 +210,6 @@
     <Compile Include="Core\Services\INetworkAvailabilityTracker.cs" />
     <Compile Include="Core\Services\IProcessService.cs" />
     <Compile Include="Core\Services\ISettingsService.cs" />
-    <Compile Include="Core\Services\Updates\IUpdateControl.cs" />
     <Compile Include="Core\Services\Updates\IUpdateService.cs" />
     <Compile Include="Core\Services\LauncherProcessService.cs" />
     <Compile Include="Core\Services\MainMenuService.cs" />
@@ -251,7 +247,6 @@
     <Compile Include="Helpers\FilterConstant.cs" />
     <Compile Include="Helpers\FolderConstant.cs" />
     <Compile Include="Helpers\GenericTypes.cs" />
-    <Compile Include="Helpers\IErrorHandler.cs" />
     <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Core\Shared\LauncherVersion.cs" />
     <Compile Include="Core\Data\Updates\UpdateService.cs" />
@@ -259,10 +254,8 @@
     <Compile Include="Converters\RankNumberToImageSourceConverter.cs" />
     <Compile Include="Core\Services\IUIHostService.cs" />
     <Compile Include="Core\Services\IVersionService.cs" />
-    <Compile Include="Core\Services\IWindowContentNavigationService.cs" />
     <Compile Include="Core\Services\UIHostService.cs" />
     <Compile Include="Core\Services\VersionService.cs" />
-    <Compile Include="Core\Services\WindowContentNavigationService.cs" />
     <Compile Include="Helpers\LoggingHelper.cs" />
     <Compile Include="Helpers\ServerPingCalculator.cs" />
     <Compile Include="Helpers\SettingsDialogHelper.cs" />
@@ -352,14 +345,6 @@
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\Loc\en_EN.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Loc\ru_RU.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles\HomeViewResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
