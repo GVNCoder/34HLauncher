@@ -56,10 +56,8 @@ namespace Launcher.ViewModel
             return dlgResult == MessageBoxResult.Yes;
         }
 
-        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
-        {
-
-        }/*_eventService.Log(EventLogLevel.Error, "Update service", e.Message);*/
+        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e) 
+            => _eventService.ErrorEvent("Update service", e.Message);
 
         #endregion
 

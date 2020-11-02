@@ -222,7 +222,7 @@ namespace Launcher.Core.SettingsViewModelParts
             }
             else
             {
-                //_eventLog.Log(EventLogLevel.Warning, SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
+                _eventService.WarnEvent(SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
             }
         });
     }

@@ -122,7 +122,7 @@ namespace Launcher.Core.SettingsViewModelParts
             var result = ThemeManager.TrySetBackgroundImage(BackgroundImageEnum.Custom, dialog.FileName);
             if (! result)
             {
-                //_eventLog.Log(EventLogLevel.Warning, SLM.CannotSetImageHeader, SLM.CannotSetImage);
+                _eventService.WarnEvent(SLM.CannotSetImageHeader, SLM.CannotSetImage);
             }
 
             ThemeManager.ApplyBackgroundImage();

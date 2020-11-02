@@ -117,13 +117,13 @@ namespace Launcher.ViewModel
 
         private void _GameRunErrorHandler(object sender, GameRunErrorEventArgs e)
         {
-            //_eventLogService.Log(EventLogLevel.Warning, SLM.GameRun, e.Error.Message);
+            _eventService.WarnEvent(SLM.GameRun, e.Error.Message);
             _log.Error(LoggingHelper.GetMessage(e.Error));
         }
 
         private void _GameCloseHandler(object sender, GameCloseEventArgs e)
         {
-            //_eventLogService.Log(EventLogLevel.Message, SLM.GameRun, e.PipeLog);
+            _eventService.InfoEvent(SLM.GameRun, e.PipeLog);
         }
 
         private void _RefreshAppState()
@@ -183,12 +183,12 @@ namespace Launcher.ViewModel
                     }
                     else
                     {
-                        //_eventLogService.Log(EventLogLevel.Warning, "ZClient path", "ZClient not detected");
+                        _eventService.WarnEvent("ZClient path", "ZClient not detected");
                     }
                 }
                 catch (Exception)
                 {
-                    //_eventLogService.Log(EventLogLevel.Error, "ZClient path", "An error occurred while trying to get the path to ZClient.");
+                    _eventService.ErrorEvent("ZClient path", "An error occurred while trying to get the path to ZClient.");
                 }
             }
 
@@ -206,8 +206,8 @@ namespace Launcher.ViewModel
             var runResult = _processService.Run(path, true);
             if (!runResult)
             {
-                //_eventLogService.Log(EventLogLevel.Warning, "Cannot run ZClient",
-                //    "Wrong path or unknown error. Try again.");
+                _eventService.WarnEvent("Cannot run ZClient",
+                    "Wrong path or unknown error. Try again.");
             }
         }
 
@@ -293,7 +293,7 @@ namespace Launcher.ViewModel
             {
                 if (Process.GetProcessesByName(_ZClientProcessName).Length > 0)
                 {
-                    //_eventLogService.Log(EventLogLevel.Message, "Run ZClient", "ZClient already run.");
+                    _eventService.WarnEvent("Run ZClient", "ZClient already run.");
                 }
                 else
                 {

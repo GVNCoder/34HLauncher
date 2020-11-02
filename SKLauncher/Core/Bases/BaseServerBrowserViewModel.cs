@@ -252,8 +252,10 @@ namespace Launcher.Core.Bases
         protected void OnJoinImpl(ZRole role)
         {
             if (SelectedServer == null) return;
-            //if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber)
-            //    _eventLogService.Log(EventLogLevel.Warning, "Cannot join", "No slots available");
+            if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber)
+                _eventService.WarnEvent("Cannot join", "No slots available");
+
+            // TODO: Terminate join process
 
             _JoinGame(SelectedServer, role);
         }

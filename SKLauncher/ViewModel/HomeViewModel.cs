@@ -123,8 +123,8 @@ namespace Launcher.ViewModel
             // check connection
             if (! connected)
             {
-                //_eventLogService.Log(EventLogLevel.Warning, SLM.GameRun,
-                //    _isOnline(playMode) ? HLM.EventLauncherDisconnectedServers : HLM.EventLauncherDisconnected);
+                _eventService.WarnEvent(SLM.GameRun,
+                    _isOnline(playMode) ? HLM.EventLauncherDisconnectedServers : HLM.EventLauncherDisconnected);
 
                 return;
             }
@@ -175,7 +175,7 @@ namespace Launcher.ViewModel
             var connected = _state.GetState<bool>(Constants.ZCLIENT_CONNECTION);
             if (! connected)
             {
-                //_eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventLauncherDisconnectedStats);
+                _eventService.WarnEvent(HLM.StatsView, HLM.EventLauncherDisconnectedStats);
                 return;
             }
 
@@ -189,7 +189,7 @@ namespace Launcher.ViewModel
 
             if (stats.Rank == 0)
             {
-                //_eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventNoobStats);
+                _eventService.WarnEvent(HLM.StatsView, HLM.EventNoobStats);
             }
             else
             {

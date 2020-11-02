@@ -49,7 +49,7 @@ namespace Launcher.ViewModel
             var settingsSave = _settingsService.Save();
             if (!settingsSave)
             {
-                //_eventLogService.Log(EventLogLevel.Warning, SLM.SaveSettingsHeader, SLM.SaveSettings);
+                _eventService.WarnEvent(SLM.SaveSettingsHeader, SLM.SaveSettings);
             }
 
             _settingsService.FreeGlobalLock();
