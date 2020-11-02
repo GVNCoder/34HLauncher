@@ -52,26 +52,31 @@ namespace Launcher.ViewModel
 
         private void _OnEventReceived(object sender, EventOccuredEventArgs e)
         {
-            HandleEvent(e);
+            _HandleIncomingEvent(e);
 
             // check events collection overflow
             // ReSharper disable once InvertIf
             if (Events.Count > EVENT_LOG_SIZE)
             {
-                var lastItem = Events.Last();
-                var itemIndex = Events.IndexOf(lastItem);
-
-                Events.RemoveAt(itemIndex);
+                _RemoveLastEvent();
             }
         }
 
-        private void HandleEvent(EventOccuredEventArgs e) => Dispatcher.Invoke(() =>
+        private void _HandleIncomingEvent(EventOccuredEventArgs e) => Dispatcher.Invoke(() =>
         {
             // create event
             var eventItem = _BuildItemViewModelFromItem(e.Event);
 
             // log event
             Events.Insert(0, eventItem);
+        });
+
+        private void _RemoveLastEvent() => Dispatcher.Invoke(() =>
+        {
+            var lastItem = Events.Last();
+            var itemIndex = Events.IndexOf(lastItem);
+
+            Events.RemoveAt(itemIndex);
         });
 
         private static EventItemViewModel _BuildItemViewModelFromItem(EventItem item)
