@@ -1,6 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
 
 using Launcher.Core;
+using Launcher.Core.Interaction;
+
+using Clipboard = Launcher.Helpers.Clipboard;
 
 namespace Launcher.ViewModel
 {
@@ -39,6 +44,18 @@ namespace Launcher.ViewModel
         }
         public static readonly DependencyProperty TimeCreatedProperty =
             DependencyProperty.Register("TimeCreated", typeof(string), typeof(EventItemViewModel), new PropertyMetadata(string.Empty));
+
+        #endregion
+
+        #region Commands
+
+        public ICommand CopyEventCommand => new DelegateCommand(obj =>
+        {
+            // build content to copy
+            var content = $"{EventName}{Environment.NewLine}{Content}";
+
+            Clipboard.CopyToClipboard(content);
+        });
 
         #endregion
     }

@@ -9,12 +9,11 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:shared="clr-namespace:Launcher.Core.Shared"
+    xmlns:viewModel="clr-namespace:Launcher.ViewModel"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=EventLogViewModel}"
     TextElement.FontFamily="{StaticResource OpenSans}"
-    TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
     TextOptions.TextRenderingMode="ClearType"
     mc:Ignorable="d">
 
@@ -25,20 +24,13 @@
     </i:Interaction.Triggers>
 
     <Page.Resources>
-        <converters:EventLevel2ColorConverter x:Key="EventLevel2ColorConverter" />
 
-        <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
+        <converters:EventType2ColorConverter x:Key="EventType2ColorConverter" />
+        <converters:EventType2IconConverter x:Key="EventType2IconConverter" />
+
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
         <i:Interaction.Behaviors>
             <behaviors:AcrylicControlBehavior
@@ -48,98 +40,60 @@
         </i:Interaction.Behaviors>
 
         <ListView
-            Grid.Row="0"
-            Margin="3"
+            Padding="3"
+            Background="Transparent"
+            BorderThickness="0"
+            ItemContainerStyle="{StaticResource EventItemContainerStyle}"
             ItemsSource="{Binding Events}"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            Style="{StaticResource ListViewStyle}">
-
-            <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource DisableSelectionContainerStyle}" TargetType="{x:Type ListViewItem}">
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="Padding" Value="0" />
-                </Style>
-            </ListView.ItemContainerStyle>
-
+            ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border
-                        Margin="0,0,0,2"
-                        Padding="3"
-                        CornerRadius="2">
-                        <Border.Background>
-                            <SolidColorBrush Opacity=".85" Color="{DynamicResource Theme850Color}" />
-                        </Border.Background>
-                        <Grid Width="1055">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="70" />
-                            </Grid.ColumnDefinitions>
+                <DataTemplate DataType="{x:Type viewModel:EventItemViewModel}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <Border
-                                Grid.Column="0"
-                                Width="50"
-                                Height="25"
-                                Margin="0,0,10,0"
-                                BorderThickness="1"
-                                CornerRadius="2">
-                                <Border.BorderBrush>
-                                    <SolidColorBrush Color="{Binding Level, Converter={StaticResource EventLevel2ColorConverter}}" />
-                                </Border.BorderBrush>
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{Binding Level, Converter={StaticResource EventLevel2ColorConverter}}" />
-                                </TextBlock.Foreground>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock
+                                FontWeight="SemiBold"
+                                Foreground="WhiteSmoke"
+                                Text="{Binding EventName}" />
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                Foreground="WhiteSmoke"
+                                Text="{Binding Content}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+
+                            <Border Padding="10,3" CornerRadius="{StaticResource CornerRadius}">
+                                <Border.Background>
+                                    <SolidColorBrush Opacity=".1" Color="{Binding EventType, Converter={StaticResource EventType2ColorConverter}}" />
+                                </Border.Background>
                                 <TextBlock
-                                    HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontFamily="{StaticResource Ionicons}"
                                     FontSize="18"
-                                    Text="{Binding Level, Converter={StaticResource EventLevel2StringConverter}}"
-                                    TextOptions.TextRenderingMode="Aliased" />
+                                    Text="{Binding EventType, Converter={StaticResource EventType2IconConverter}}"
+                                    TextOptions.TextRenderingMode="Aliased">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{Binding EventType, Converter={StaticResource EventType2ColorConverter}}" />
+                                    </TextBlock.Foreground>
+                                </TextBlock>
                             </Border>
 
-                            <StackPanel
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                Orientation="Vertical">
-                                <TextBlock FontWeight="SemiBold" Text="{Binding Header}" />
-                                <TextBlock Text="{Binding Content}" TextWrapping="WrapWithOverflow" />
-                            </StackPanel>
-
-                            <StackPanel
-                                x:Name="PART_ControlsContainer"
-                                Grid.Column="2"
-                                VerticalAlignment="Center"
-                                Visibility="Hidden">
-                                <Button
-                                    Width="70"
-                                    Command="{Binding CloseCommand}"
-                                    Content="{DynamicResource shared_Close}" />
-                                <Button
-                                    Width="70"
-                                    Margin="0,3,0,0"
-                                    Command="{Binding CopyCommand}"
-                                    Content="Copy" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                    <DataTemplate.Triggers>
-                        <Trigger Property="FrameworkElement.IsMouseOver" Value="True">
-                            <Setter TargetName="PART_ControlsContainer" Property="Visibility" Value="Visible" />
-                        </Trigger>
-                    </DataTemplate.Triggers>
+                            <controls:IconButton
+                                Margin="5,0,0,0"
+                                Padding="10,0"
+                                Foreground="LightGray"
+                                Icon=""
+                                IconSize="18"
+                                Text="Copy" />
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <Grid Grid.Row="1">
-            <Button
-                Grid.Column="0"
-                Command="{Binding CleanupEventsCommand}"
-                Content="{DynamicResource shared_CleanupAll}"
-                Style="{DynamicResource TextDialogButton}" />
-        </Grid>
     </Grid>
 </Page>

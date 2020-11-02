@@ -27,7 +27,6 @@
                 TopRight="2" />
             <!--#endregion-->
             <!--  Service locator  -->
-            <converters:EventLevel2StringConverter x:Key="EventLevel2StringConverter" />
             <BooleanToVisibilityConverter x:Key="b2vConverter" />
             <!--  ToolTip Popup animation  -->
             <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Slide</PopupAnimation>
