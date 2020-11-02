@@ -86,6 +86,7 @@
                             <controls:IconButton
                                 Margin="5,0,0,0"
                                 Padding="10,0"
+                                Command="{Binding CopyEventCommand}"
                                 Foreground="LightGray"
                                 Icon=""
                                 IconSize="18"
