@@ -10,6 +10,7 @@
     xmlns:userControls="clr-namespace:Launcher.UserControls"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowBottomBarHeight}"
+    Background="{DynamicResource Theme850Brush}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     mc:Ignorable="d">
 
@@ -21,7 +22,7 @@
 
         <StackPanel
             Grid.Column="0"
-            Height="20"
+            Height="{StaticResource WindowBottomBarHeight}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Orientation="Horizontal">
@@ -34,14 +35,9 @@
                 Foreground="{DynamicResource Theme500Brush}"
                 Text="{Binding VersionString}" />
 
-            <controls:EventsButton
-                Margin="3,0,0,0"
-                Command="{Binding OpenLogCommand}"
-                Foreground="{DynamicResource ThemeForegroundBrush}"
-                HasEvents="{Binding HasEvents}"
-                Text="{DynamicResource shared_Events}" />
-            <userControls:GameControl Margin="5,0,0,0" DataContext="{Binding GameControlViewModel}" />
-            <userControls:UpdateDownloadControl Margin="5,0,0,0" DataContext="{Binding UpdateControlViewModel}" />
+            <userControls:EventsButtonControl DataContext="{Binding EventsButtonControlViewModel}" />
+            <userControls:GameControl DataContext="{Binding GameControlViewModel}" />
+            <userControls:UpdateDownloadControl DataContext="{Binding UpdateControlViewModel}" />
         </StackPanel>
 
         <!--  Author  -->

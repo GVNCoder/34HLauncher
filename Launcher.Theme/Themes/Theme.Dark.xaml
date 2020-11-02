@@ -522,56 +522,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type controls:EventsButton}" TargetType="{x:Type controls:EventsButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:EventsButton}">
-                    <ControlTemplate.Resources>
-                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-                    </ControlTemplate.Resources>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                    <Border Padding="5,0,2,0" CornerRadius="2">
-                        <Border.Background>
-                            <SolidColorBrush Color="{StaticResource Theme700Color}" />
-                            <!--  #333333  -->
-                        </Border.Background>
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Foreground="{TemplateBinding Foreground}"
-                                Text="{TemplateBinding Text}" />
-                            <Grid Margin="5,0,0,0">
-                                <TextBlock
-                                    Margin="0,0,5,0"
-                                    FontFamily="{StaticResource Ionicons}"
-                                    FontSize="16"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    Text="" />
-                                <Ellipse
-                                    Width="8"
-                                    Height="8"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Fill="#FF322C"
-                                    StrokeThickness="1"
-                                    Visibility="{TemplateBinding HasEvents,
-                                                                 Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Ellipse.Stroke>
-                                        <SolidColorBrush Color="{StaticResource Theme700Color}" />
-                                    </Ellipse.Stroke>
-                                </Ellipse>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type controls:FlatGroup}">
 
         <Setter Property="Template">
@@ -619,12 +569,13 @@
     </Style>
 
     <Style TargetType="{x:Type controls:IconButton}">
+        <Setter Property="Padding" Value="5,0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:IconButton}">
                     <Border
                         Name="Border"
-                        Padding="5,0"
+                        Padding="{TemplateBinding Padding}"
                         CornerRadius="2"
                         TextBlock.Foreground="{TemplateBinding Foreground}">
                         <Border.Background>
@@ -804,64 +755,6 @@
                             <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                     </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type controls:OverlayControl}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:OverlayControl}">
-                    <Grid>
-                        <Rectangle x:Name="PART_Overlay">
-                            <Rectangle.Fill>
-                                <LinearGradientBrush Opacity=".75" StartPoint="1 0" EndPoint="0 1">
-                                    <GradientStop Offset="0" Color="{StaticResource BaseThemeColor}" />
-                                    <GradientStop Offset="1" Color="{StaticResource Theme850Color}" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-
-                        <Border
-                            x:Name="PART_Container"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            BorderThickness="1"
-                            CornerRadius="2"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <Border.OpacityMask>
-                                <VisualBrush>
-                                    <VisualBrush.Visual>
-                                        <Rectangle
-                                            Width="{Binding ElementName=PART_Container, Path=ActualWidth}"
-                                            Height="{Binding ElementName=PART_Container, Path=ActualHeight}"
-                                            Fill="Black"
-                                            RadiusX="2"
-                                            RadiusY="2" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Border.OpacityMask>
-                            <Border.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="25"
-                                    Opacity=".65"
-                                    ShadowDepth="7" />
-                            </Border.Effect>
-                            <Border.Background>
-                                <SolidColorBrush Color="{StaticResource Theme850Color}" />
-                            </Border.Background>
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{StaticResource BaseThemeColor}" />
-                            </Border.BorderBrush>
-
-                            <ContentPresenter
-                                x:Name="PART_ContentPresenter"
-                                Content="{TemplateBinding Content}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Border>
-                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1699,10 +1592,12 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border
                         x:Name="PART_Border"
+                        BorderBrush="Black"
+                        BorderThickness="0,1,0,0"
                         CornerRadius="0 0 2 2"
                         TextBlock.Foreground="{TemplateBinding Foreground}">
                         <Border.Background>
-                            <SolidColorBrush Color="{StaticResource Theme800Color}" />
+                            <SolidColorBrush Color="{StaticResource Theme850Color}" />
                         </Border.Background>
                         <ContentPresenter
                             Margin="2"

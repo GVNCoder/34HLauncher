@@ -74,9 +74,6 @@
             <Image Source="{DynamicResource BackgroundImage}" Stretch="Fill" />
         </Grid>
 
-        <Rectangle Grid.Row="0" Fill="{DynamicResource Theme850Brush}" />
-        <Rectangle Grid.Row="2" Fill="{DynamicResource Theme850Brush}" />
-
         <!--  Content  -->
         <Frame
             x:Name="HOST_Content"
@@ -140,7 +137,7 @@
 
         <!--  Overlay container  -->
         <Grid
-            x:Name="HOST_OverlayContainer"
+            x:Name="HOST_DialogContainer"
             Grid.Row="0"
             Grid.RowSpan="3"
             Panel.ZIndex="1000"

@@ -6,13 +6,13 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
+
 using Launcher.Core.Data;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Styles.MapAndPlayerRotation;
@@ -22,17 +22,17 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
+
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Bases
 {
-    public abstract class BaseServerBrowserViewModel : BasePageViewModel, IBlurredPage
+    public abstract class BaseServerBrowserViewModel : BasePageViewModel
     {
         #region Props
 
         public string[] MapNames { get; protected set; }
         public string[] GameModeNames { get; protected set; }
-        public Grid BackgroundContent { get; }
 
         #endregion
 
@@ -128,40 +128,36 @@ namespace Launcher.Core.Bases
 
         protected BaseServerBrowserViewModel(
             IZApi api,
-            IUIHostService uiHostService,
             IGameService gameService,
-            IEventLogService eventLogService,
-            IContentPresenterService modalContentPresenterService,
+            IEventService eventService,
             IDiscord discord,
             Application application,
             ISettingsService settingsService,
-            IPageNavigator navigator)
+            IPageNavigator navigator,
+            IDialogService dialogService)
         {
             _navigator = navigator;
             _discord = discord;
 
             _api = api;
             _gameService = gameService;
-            _eventLogService = eventLogService;
-            _modalContentService = modalContentPresenterService;
+            _eventService = eventService;
             _application = application;
-            //_navigationService = navigationService;
+            _dialogService = dialogService;
             _settingsInstance = settingsService.GetLauncherSettings();
-
-            BackgroundContent = (Grid) uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground);
         }
 
         #region Protected members
 
         protected readonly IPageNavigator _navigator;
+        protected readonly IDialogService _dialogService;
 
         protected readonly IZApi _api;
         protected readonly IDiscord _discord;
         protected readonly IGameService _gameService;
         protected readonly Application _application;
-        protected readonly IEventLogService _eventLogService;
+        protected readonly IEventService _eventService;
         protected readonly LauncherSettings _settingsInstance;
-        protected readonly IContentPresenterService _modalContentService;
         
         protected IZServersListService _serversService;
         protected CollectionViewSource _collectionViewSource;
@@ -256,8 +252,6 @@ namespace Launcher.Core.Bases
         protected void OnJoinImpl(ZRole role)
         {
             if (SelectedServer == null) return;
-            if (SelectedServer.PlayersCapacity == SelectedServer.CurrentPlayersNumber)
-                _eventLogService.Log(EventLogLevel.Warning, "Cannot join", "No slots available");
 
             _JoinGame(SelectedServer, role);
         }
@@ -295,7 +289,7 @@ namespace Launcher.Core.Bases
             }
         }
 
-        private void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)
+        private async void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)
         {
             _navigator.NavigationInitiated -= _LeaveServerBrowserInitiated;
 
@@ -303,8 +297,17 @@ namespace Launcher.Core.Bases
             if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)
             {
                 // handle discord leave server browser
-                var viewModel = new ServerBrowserLeaveViewModel(_settingsInstance);
-                _modalContentService.Show<ServerBrowserLeaveControl>(viewModel).Forget();
+                var dialogResult = await _dialogService.OpenTextDialog("Warning",
+                    "You have the Discord Presence option enabled." +
+                    "Therefore, if you leave the server browser, your friends will not be able to see up-to - date information about the location of your game.",
+                    DialogButtons.Ok, true);
+
+                if (dialogResult != null)
+                {
+                    // save user choice
+                    _settingsInstance.DisableAskServerBrowserDiscordLeave =
+                        dialogResult.GetValueOrDefault().GetResult<bool>();
+                }
             }
         }
 
@@ -317,9 +320,8 @@ namespace Launcher.Core.Bases
             var viewModel =
                 new RotationsViewModel(
                     SelectedServer.Players,
-                    SelectedServer.MapRotation.Rotation,
-                    new PlayerListViewStyleSelector(_application.Resources));
-            await _modalContentService.Show<RotationsControl>(viewModel);
+                    SelectedServer.MapRotation.Rotation);
+            await _dialogService.OpenPresenter<DialogServerDetails>(viewModel);
         });
 
         public ICommand ResetFilterCommand => new DelegateCommand(obj => _ResetFilter(true));

@@ -5,12 +5,13 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+
 using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
-using Launcher.ViewModel;
+
 using Newtonsoft.Json;
 
 namespace Launcher.Core.Data.Updates

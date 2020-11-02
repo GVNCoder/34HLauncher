@@ -13,12 +13,10 @@ namespace Launcher.Styles.MapAndPlayerRotation
     {
         public RotationsViewModel(
             ObservableCollection<ZPlayer> players,
-            ObservableCollection<ZMap> maps,
-            StyleSelector playerStyleSelector)
+            ObservableCollection<ZMap> maps)
         {
             Players = players;
             Maps = maps;
-            PlayerStyleSelector = playerStyleSelector;
         }
 
         public ICommand LoadedCommand => new DelegateCommand(obj =>
@@ -44,8 +42,6 @@ namespace Launcher.Styles.MapAndPlayerRotation
 
         public ObservableCollection<ZPlayer> Players { get; }
         public ObservableCollection<ZMap> Maps { get; }
-
-        public StyleSelector PlayerStyleSelector { get; }
 
         public Visibility PlayersVisibility
         {

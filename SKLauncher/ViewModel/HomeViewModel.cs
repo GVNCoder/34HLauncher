@@ -3,14 +3,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
-using Launcher.Core.Bases;
+using Launcher.Core;
 using Launcher.Core.Data;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.UserControls;
@@ -29,35 +28,35 @@ namespace Launcher.ViewModel
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
 
-        private readonly IEventLogService _eventLogService;
+        private readonly IEventService _eventService;
         private readonly IGameService _gameService;
-        private readonly IContentPresenterService _presenterService;
         private readonly ISettingsService _settingsService;
         private readonly IZApi _api;
-        private readonly IBusyService _busyService;
+        private readonly IBusyIndicatorService _busyIndicatorService;
         private readonly IDiscord _discord;
+        private readonly IDialogService _dialogService;
 
         public HomeViewModel(
-            IEventLogService eventLogService,
+            IEventService eventService,
             IGameService gameService,
-            IContentPresenterService presenterService,
             ISettingsService settingsService,
             IZApi api,
-            IBusyService busyService,
+            IBusyIndicatorService busyIndicatorService,
             IDiscord discord,
             IPageNavigator navigator,
-            IApplicationState state)
+            IApplicationState state,
+            IDialogService dialogService)
         {
             _navigator = navigator;
             _state = state;
             _discord = discord;
 
-            _eventLogService = eventLogService;
+            _eventService = eventService;
             _gameService = gameService;
-            _presenterService = presenterService;
             _settingsService = settingsService;
             _api = api;
-            _busyService = busyService;
+            _busyIndicatorService = busyIndicatorService;
+            _dialogService = dialogService;
         }
 
         private static bool _isOnline(object playMode)
@@ -107,7 +106,7 @@ namespace Launcher.ViewModel
             var settings = _settingsService.GetGameSettings().Settings[(int) targetGame];
             var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame != ZGame.BF3);
 
-            _presenterService.Show<GameSettingsControl>(viewModel);
+            _dialogService.OpenPresenter<DialogGameSettings>(viewModel).Forget();
         }
 
         public ICommand JoinGameCommand => new DelegateCommand(_JoinGameCommandExec);
@@ -124,7 +123,7 @@ namespace Launcher.ViewModel
             // check connection
             if (! connected)
             {
-                _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun,
+                _eventService.WarnEvent(SLM.GameRun,
                     _isOnline(playMode) ? HLM.EventLauncherDisconnectedServers : HLM.EventLauncherDisconnected);
 
                 return;
@@ -176,11 +175,11 @@ namespace Launcher.ViewModel
             var connected = _state.GetState<bool>(Constants.ZCLIENT_CONNECTION);
             if (! connected)
             {
-                _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventLauncherDisconnectedStats);
+                _eventService.WarnEvent(HLM.StatsView, HLM.EventLauncherDisconnectedStats);
                 return;
             }
 
-            _busyService.Busy(HLM.BusyGettingStats);
+            _busyIndicatorService.Open(HLM.BusyGettingStats);
 
             var game = (ZGame) Enum.Parse(typeof(ZGame), (string) obj);
             var stats = await _api.GetStatsAsync(game);
@@ -190,22 +189,22 @@ namespace Launcher.ViewModel
 
             if (stats.Rank == 0)
             {
-                _eventLogService.Log(EventLogLevel.Warning, HLM.StatsView, HLM.EventNoobStats);
-                _busyService.Free();
-                return;
+                _eventService.WarnEvent(HLM.StatsView, HLM.EventNoobStats);
             }
-
-            switch (game)
+            else
             {
-                case ZGame.BF3:
-                case ZGame.BF4:
-                    _navigator.Navigate($"View\\StatsViews\\{game}StatsView.xaml"); break;
-                case ZGame.BFH:
-                case ZGame.None:
+                switch (game)
+                {
+                    case ZGame.BF3:
+                    case ZGame.BF4:
+                        _navigator.Navigate($"View\\StatsViews\\{game}StatsView.xaml"); break;
+                    case ZGame.BFH:
+                    case ZGame.None:
                     default: throw new ArgumentOutOfRangeException(nameof(game), game, @"Stats supports only in BF3 and BF4.");
+                }
             }
 
-            _busyService.Free();
+            _busyIndicatorService.Close();
         }
 
         #endregion

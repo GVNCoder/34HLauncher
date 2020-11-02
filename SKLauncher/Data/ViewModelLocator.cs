@@ -6,7 +6,7 @@ using Launcher.Core.Service.Base;
 using Launcher.Core.Shared;
 using Launcher.ViewModel;
 using Launcher.ViewModel.Stats;
-
+using Launcher.ViewModel.UserControl;
 using Ninject;
 using Ninject.Syntax;
 
@@ -37,6 +37,7 @@ namespace Launcher.Data
                 [typeof(BFHServerBrowserViewModel)] = _BuildLazyInitializer<BFHServerBrowserViewModel>(),
                 [typeof(UpdateControlViewModel)] = _BuildLazyInitializer<UpdateControlViewModel>(),
                 [typeof(GameControlViewModel)] = _BuildLazyInitializer<GameControlViewModel>(),
+                [typeof(EventsButtonViewModel)] = _BuildLazyInitializer<EventsButtonViewModel>(),
             };
         }
 

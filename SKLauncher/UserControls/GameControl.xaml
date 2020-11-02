@@ -9,30 +9,43 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    Height="20"
-    Foreground="{DynamicResource Theme800Brush}"
     ToolTip="{Binding ToolTipContent}"
-    ToolTipService.InitialShowDelay="0"
-    ToolTipService.Placement="Top"
-    ToolTipService.ShowDuration="{x:Static system:Int32.MaxValue}"
     Visibility="{Binding GameControlVisibility}"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <converters:GameControlState2ColorConverter x:Key="GameControlState2ColorConverter" />
-    </UserControl.Resources>
+    <!--  Define style  -->
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Opacity=".15" Color="#00DD4E" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="ToolTipService.Placement" Value="Top" />
+            <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+            <Setter Property="ToolTipService.ShowDuration" Value="{x:Static system:Int32.MaxValue}" />
+            <Style.Triggers>
+                <Trigger Property="UserControl.IsMouseOver" Value="True">
+                    <Setter Property="UserControl.Cursor" Value="Hand" />
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Opacity=".25" Color="#00DD4E" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
 
-    <Border Padding="10,0,5,0" CornerRadius="2">
-        <Border.Background>
-            <SolidColorBrush Opacity="1" Color="{Binding InLoadingState, Converter={StaticResource GameControlState2ColorConverter}}" />
-        </Border.Background>
+    <Grid>
         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
             <TextBlock
                 Margin="0,0,0,1"
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource OpenSans}"
-                FontWeight="Bold"
-                Foreground="{DynamicResource WindowKeyBrush}"
+                FontWeight="SemiBold"
+                Foreground="#EAEAEA"
                 Text="{Binding Text}" />
             <TextBlock
                 x:Name="PART_Loading"
@@ -40,6 +53,7 @@
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource Ionicons}"
                 FontSize="14"
+                Foreground="#EAEAEA"
                 RenderTransformOrigin=".5 .5"
                 Text=""
                 TextOptions.TextHintingMode="Animated"
@@ -68,7 +82,7 @@
                 Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 Command="{Binding CloseCommand}"
-                Foreground="{DynamicResource WindowKeyBrush}"
+                Foreground="#EAEAEA"
                 Icon=""
                 IconSize="16"
                 TextOptions.TextRenderingMode="Aliased"
@@ -95,5 +109,5 @@
                 </controls:GlyphButton.Triggers>
             </controls:GlyphButton>
         </StackPanel>
-    </Border>
+    </Grid>
 </UserControl>

@@ -1,0 +1,82 @@
+﻿<UserControl
+    x:Class="Launcher.UserControls.EventsButtonControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Launcher.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    ToolTip="Launcher events"
+    mc:Ignorable="d">
+
+    <!--  Define interactivity  -->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseUp">
+            <i:InvokeCommandAction Command="{Binding OpenEventsViewCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <!--  Define triggers  -->
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Opacity=".15" Color="#3EB5F1" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="ToolTipService.Placement" Value="Top" />
+            <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+            <Style.Triggers>
+                <Trigger Property="UserControl.IsMouseOver" Value="True">
+                    <Setter Property="UserControl.Cursor" Value="Hand" />
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Opacity=".25" Color="#3EB5F1" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
+    <!--  Define resources  -->
+    <UserControl.Resources>
+
+        <system:Double x:Key="SomethingNewIndicatorDiameter">8</system:Double>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Column="0"
+            VerticalAlignment="Center"
+            FontFamily="{StaticResource Ionicons}"
+            FontSize="18"
+            Foreground="#EAEAEA"
+            Text=""
+            TextOptions.TextRenderingMode="Aliased" />
+
+        <Ellipse
+            Grid.Column="0"
+            Width="{StaticResource SomethingNewIndicatorDiameter}"
+            Height="{StaticResource SomethingNewIndicatorDiameter}"
+            Margin="0,0,0,7"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Fill="#FF322C"
+            StrokeThickness="1"
+            Visibility="{Binding HasSomethingNew, Mode=OneWay, Converter={StaticResource b2vConverter}}">
+            <Ellipse.Stroke>
+                <SolidColorBrush Color="#EAEAEA" />
+            </Ellipse.Stroke>
+        </Ellipse>
+    </Grid>
+
+</UserControl>

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+
 using Launcher.Core.Interaction;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.XamlThemes.Theming;
@@ -19,14 +19,14 @@ namespace Launcher.Core.SettingsViewModelParts
     public class ThemesSectionViewModel : BaseControlViewModel
     {
         private readonly ISettingsService _settingsService;
-        private readonly IEventLogService _eventLog;
+        private readonly IEventService _eventService;
 
         private LauncherSettings _settings;
 
-        public ThemesSectionViewModel(ISettingsService settingsService, IEventLogService eventLog)
+        public ThemesSectionViewModel(ISettingsService settingsService, IEventService eventService)
         {
             _settingsService = settingsService;
-            _eventLog = eventLog;
+            _eventService = eventService;
 
             ThemeEnumerable = new[]
             {
@@ -122,7 +122,7 @@ namespace Launcher.Core.SettingsViewModelParts
             var result = ThemeManager.TrySetBackgroundImage(BackgroundImageEnum.Custom, dialog.FileName);
             if (! result)
             {
-                _eventLog.Log(EventLogLevel.Warning, SLM.CannotSetImageHeader, SLM.CannotSetImage);
+                _eventService.WarnEvent(SLM.CannotSetImageHeader, SLM.CannotSetImage);
             }
 
             ThemeManager.ApplyBackgroundImage();

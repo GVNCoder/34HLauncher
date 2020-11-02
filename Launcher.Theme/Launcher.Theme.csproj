@@ -48,20 +48,20 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AcrylicAdjustmentLevel.cs" />
     <Compile Include="Controls\AcrylicPanel.cs" />
+    <Compile Include="Controls\BusyIndicatorControl.cs" />
     <Compile Include="Controls\Converters\BrushTranslationConverter.cs" />
     <Compile Include="Controls\Converters\DarkPingEnum2BrushConverter.cs" />
     <Compile Include="Controls\Converters\DarkPingEnum2IconConverter.cs" />
     <Compile Include="Controls\Converters\LightPingEnum2BrushConverter.cs" />
     <Compile Include="Controls\Converters\LightPingEnum2IconConverter.cs" />
     <Compile Include="Controls\Converters\SliderValue2OpacityConverter.cs" />
-    <Compile Include="Controls\EventsButton.cs" />
+    <Compile Include="Controls\DialogControl.cs" />
     <Compile Include="Controls\FlatGroup.cs" />
     <Compile Include="Controls\GlyphButton.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Controls\PingVisualizer.cs" />
-    <Compile Include="Controls\Shared\IOverlayControl.cs" />
-    <Compile Include="Controls\OverlayControl.cs" />
     <Compile Include="Controls\PlaceholderTextBox.cs" />
     <Compile Include="Controls\Shared\PingVisualizerEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

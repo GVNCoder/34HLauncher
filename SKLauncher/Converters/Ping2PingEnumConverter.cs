@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+
 using Launcher.XamlThemes.Controls.Shared;
 
 namespace Launcher.Converters

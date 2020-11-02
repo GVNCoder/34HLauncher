@@ -1,88 +1,61 @@
-﻿using System.Collections.Specialized;
-
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
 
-using Launcher.Core.Interaction;
+using Launcher.Core;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
+using Launcher.ViewModel.UserControl;
 
 namespace Launcher.ViewModel
 {
     public class WindowBottomBarPartViewModel : BaseControlViewModel
     {
-        private readonly IEventLogService _eventLogService;
-        private readonly IPageNavigator _navigator;
+        private readonly IEventService _eventService;
 
-        private EventViewModel _disconnectedVm;
+        private bool _isDisconnectedEventShowed;
 
         public WindowBottomBarPartViewModel(
-            IUIHostService uiHostService,
             IVersionService versionService,
-            IEventLogService eventLogService,
-            IPageNavigator navigator,
+            IEventService eventService,
             IViewModelSource viewModelLocator)
         {
-            _navigator = navigator;
+            _eventService = eventService;
 
+            // build view models for child user controls
             UpdateControlViewModel = viewModelLocator.GetExisting<UpdateControlViewModel>();
             GameControlViewModel = viewModelLocator.GetExisting<GameControlViewModel>();
+            EventsButtonControlViewModel = viewModelLocator.GetExisting<EventsButtonViewModel>();
 
-            WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
+            // setup vars
             VersionString = versionService.GetLauncherVersion().ToString();
-
-            _eventLogService = eventLogService;
-
-            var obsCollection = viewModelLocator.GetExisting<EventLogViewModel>()
-                .Events;
-            obsCollection.CollectionChanged += _eventsCollectionChanged;
-        }
-
-        private void _eventsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (HasEvents == _eventLogService.HasEvents) return;
-                HasEvents = _eventLogService.HasEvents;
-            });
         }
 
         #region Public members
 
         public UpdateControlViewModel UpdateControlViewModel { get; }
         public GameControlViewModel GameControlViewModel { get; }
+        public EventsButtonViewModel  EventsButtonControlViewModel { get; }
 
-        public Grid WindowBackgroundContent { get; }
-        public string VersionString { get; }
+        #endregion
 
-        public bool HasEvents
+        #region Bindable properties
+
+        public string  VersionString
         {
-            get => (bool)GetValue(HasEventsProperty);
-            set => SetValue(HasEventsProperty, value);
+            get => (string )GetValue(VersionStringProperty);
+            set => SetValue(VersionStringProperty, value);
         }
-        public static readonly DependencyProperty HasEventsProperty =
-            DependencyProperty.Register("HasEvents", typeof(bool), typeof(WindowBottomBarPartViewModel), new PropertyMetadata(false));
+        public static readonly DependencyProperty VersionStringProperty =
+            DependencyProperty.Register("VersionString", typeof(string ), typeof(WindowBottomBarPartViewModel), new PropertyMetadata("test version"));
 
         #endregion
 
         #region Commands
 
-        public ICommand OpenLogCommand => new DelegateCommand(_openLogCommandExec);
-
         public override ICommand LoadedCommand => throw new System.NotImplementedException();
-
         public override ICommand UnloadedCommand => throw new System.NotImplementedException();
-
-        private void _openLogCommandExec(object obj)
-        {
-            if (! _eventLogService.HasEvents) return;
-
-            _navigator.Navigate("View/EventLogView.xaml");
-        }
 
         #endregion
 
@@ -90,28 +63,27 @@ namespace Launcher.ViewModel
 
         public void UpdateConnected()
         {
-            // check already call this method
-            if (_disconnectedVm == null) return;
-
-            // sync with UI thread
-            Dispatcher.Invoke(() =>
-            {
-                _disconnectedVm?.CloseCommand.Execute(null);
-                _disconnectedVm = null;
-            });
+            _isDisconnectedEventShowed = false;
+            _eventService.SuccessEvent("ZClient connection", "Successfully connected to ZClient");
         }
 
         public void UpdateDisconnected()
         {
             // check already call this method
-            if (_disconnectedVm != null) return;
+            if (_isDisconnectedEventShowed) return;
 
-            _disconnectedVm = _eventLogService.Log(EventLogLevel.Error,
+            // show event
+            _eventService.ErrorEvent(
                 "Unable to establish a connection to the ZClient for one of the following reasons:",
                 "-ZClient not running\n-You did not click the Connect button\n-There is no internet connection\n" +
                 "-You, for whatever reason, are not logged in to ZClient\n-Running multiple processes of ZClient\n" +
                 "-Launcher internal error (restart the launcher and contact the developer)");
+            _isDisconnectedEventShowed = true;
         }
+
+        #endregion
+
+        #region Private helpers
 
         #endregion
     }

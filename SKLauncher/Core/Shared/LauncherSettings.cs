@@ -22,6 +22,7 @@ namespace Launcher.Core.Shared
         public bool TryToConnect { get; set; }
         public bool DisableChangelogAutoOpen { get; set; }
         public bool DisableAskServerBrowserDiscordLeave { get; set; }
+        public bool CloseZClientWithLauncher { get; set; }
 
         public bool IsDefault { get => _isDefault; private set => _isDefault = value; }
 
@@ -41,6 +42,7 @@ namespace Launcher.Core.Shared
                 IsDefault = true,
                 DisableChangelogAutoOpen = false,
                 DisableAskServerBrowserDiscordLeave = false,
+                CloseZClientWithLauncher = false
             };
         }
 

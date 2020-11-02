@@ -1,21 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+
+using Launcher.Core.Data;
+using Launcher.Core.Services;
+
+using Ninject;
 
 namespace Launcher.Helpers
 {
     public static class LoggingHelper
     {
+        #region Const
+
         private const int TRACE_LIMIT = 7;
+        private static readonly Version VERSION;
+
+        #endregion
+
+        static LoggingHelper()
+        {
+            // resolve svc
+            var versionSvc = Resolver.Kernel.Get<IVersionService>();
+
+            // get current version
+            VERSION = versionSvc.GetAssemblyVersion();
+        }
+
+        #region Private helpers
 
         private static StackTrace _GetTraceObject(Exception ex) => new StackTrace(ex, true);
 
         private static IEnumerable<StackFrame> _GetFrames(StackTrace trace) => trace.GetFrames()?.Take(TRACE_LIMIT);
 
-        private static string _GetLogPart(StackFrame frame) =>
-            $"at [{Path.GetFileName(frame.GetFileName())}][{frame.GetFileLineNumber()}][{frame.GetMethod().Name}]{Environment.NewLine}";
+        private static string _GetLogPart(StackFrame frame) => $"at [{frame.GetMethod().Name}]{Environment.NewLine}";
 
         private static string _GetStackTraceMessage(Exception ex)
         {
@@ -34,13 +53,15 @@ namespace Launcher.Helpers
             return logMessage;
         }
 
+        #endregion
+
         public static string GetMessage(Exception exception)
         {
             var outerExceptionMessage = _GetLogForException(exception);
             var innerExceptionMessage = exception.InnerException == null
                 ? string.Empty
                 : $"Inner {_GetLogForException(exception.InnerException)}";
-            var logMessage = $"{outerExceptionMessage}{innerExceptionMessage}";
+            var logMessage = $"[{VERSION}] {outerExceptionMessage} {innerExceptionMessage}";
             
             return logMessage;
         }

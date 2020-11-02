@@ -4,10 +4,10 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
 using Launcher.Core.Shared;
 
 namespace Launcher.Core.SettingsViewModelParts
@@ -17,14 +17,13 @@ namespace Launcher.Core.SettingsViewModelParts
         private const string __changelogFileName = "ChangeLog_";
         private const string __cacheFilePath = "update\\34H Update.exe";
 
-        private readonly ITextDialogService _dialogService;
+        private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
 
         private LauncherSettings _settings;
-        private bool _isLoaded;
 
         public UpdatesSectionViewModel(
-            ITextDialogService dialogService,
+            IDialogService dialogService,
             ISettingsService settingsService)
         {
             _dialogService = dialogService;
@@ -74,8 +73,8 @@ namespace Launcher.Core.SettingsViewModelParts
             }
             else
             {
-                await _dialogService.OpenDialog("File not found",
-                    "For some reason, the file with changelog was not found.", TextDialogButtons.Ok);
+                await _dialogService.OpenTextDialog("File not found",
+                    "For some reason, the file with changelog was not found.", DialogButtons.Ok);
             }
         });
 
@@ -92,7 +91,7 @@ namespace Launcher.Core.SettingsViewModelParts
                 dialogContent = "Unknown error while deleting cache.";
             }
 
-            await _dialogService.OpenDialog("Delete cache", dialogContent, TextDialogButtons.Ok);
+            await _dialogService.OpenTextDialog("Delete cache", dialogContent, DialogButtons.Ok);
         });
     }
 }

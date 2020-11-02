@@ -5,50 +5,33 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="800"
-    Height="250"
+    Width="600"
     TextElement.FontFamily="{StaticResource OpenSans}"
-    TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
-    TextOptions.TextRenderingMode="ClearType"
     mc:Ignorable="d">
 
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <Border
+        Margin="3"
+        Padding="5"
+        CornerRadius="{StaticResource CornerRadius}">
+        <Border.Background>
+            <SolidColorBrush Opacity=".45" Color="Black" />
+        </Border.Background>
 
-        <Image
-            Grid.Row="0"
-            Grid.Column="0"
-            Height="200"
-            Margin="5,0"
-            Source="pack://application:,,,/Launcher.Resources;component/Images/JesusIcon.png">
-            <Image.Effect>
-                <DropShadowEffect
-                    BlurRadius="25"
-                    Opacity=".55"
-                    ShadowDepth="15"
-                    Color="Black" />
-            </Image.Effect>
-        </Image>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <StackPanel
-            Grid.Row="0"
-            Grid.Column="1"
-            VerticalAlignment="Center"
-            Orientation="Vertical"
-            TextElement.FontSize="14">
+            <StackPanel
+                Grid.Row="0"
+                Margin="10,5,10,0"
+                Orientation="Horizontal">
 
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <TextBlock
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
-                    FontSize="18"
+                    FontSize="20"
                     FontWeight="SemiBold"
                     IsHitTestVisible="False"
                     Text="34H">
@@ -59,32 +42,45 @@
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
+
                 <TextBlock
                     Margin="2,0,0,0"
                     VerticalAlignment="Center"
-                    FontSize="18"
+                    FontSize="20"
                     FontWeight="Regular"
                     IsHitTestVisible="False"
                     Text="LAUNCHER">
                     <TextBlock.Foreground>
                         <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
-                            <GradientStop Offset="0" Color="{DynamicResource Theme50Color}" />
-                            <GradientStop Offset="1" Color="{DynamicResource Theme300Color}" />
+                            <GradientStop Offset="0" Color="White" />
+                            <GradientStop Offset="1" Color="LightGray" />
                         </LinearGradientBrush>
                     </TextBlock.Foreground>
                 </TextBlock>
+
+                <TextBlock
+                    Margin="3,2,0,0"
+                    Foreground="WhiteSmoke"
+                    Text="©" />
             </StackPanel>
-            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow">
-                Launcher for the games Battlefield 3, 4 and Hardline on the&#160;<Run FontWeight="Bold" Foreground="#D34144">ZLOEmu</Run>
-                project.<LineBreak />
-                Designed and implemented for&#160;<Run FontWeight="Bold" Foreground="#D34144">ZLOEmu</Run>
-                Community.<LineBreak />
-                I express my gratitude to the people who participated in the testing:&#160;<Run FontWeight="Bold" Foreground="{DynamicResource ComplementaryBrush}">LandLord, IIIMATKO, Serega_Bubir, Argus, RevMe_kurva(Mergen), dailOr, PIONERKA, SePaHBoD, Redskier13</Run>
-                ... (if I forgot someone, write to me).<LineBreak />
-                Special thanks to&#160;<Run FontWeight="Bold" Foreground="{DynamicResource BasePrimaryBrush}">ZLOFENIX</Run>
-                for the existence of the&#160;<Run FontWeight="Bold" Foreground="#D34144">ZLOEmu</Run>
-                project! And also, thanks to the project administration!<LineBreak />
-                I wish you a pleasant use, we will meet on the battlefield)</TextBlock>
-        </StackPanel>
-    </Grid>
+
+            <StackPanel
+                Grid.Row="1"
+                Margin="10,5"
+                Orientation="Vertical"
+                TextBlock.FontSize="14">
+
+                <TextBlock Text="The Battlefield launcher for ZLOEmu project Community" />
+
+                <TextBlock Margin="0,5,0,0" TextWrapping="WrapWithOverflow">
+                    Special thanks to&#160;<Run FontWeight="SemiBold" Foreground="LightSalmon">ZLOFENIX, LandLord, IIIMATKO, Serega_Bubir, Argus, RevMe_kurva(Mergen), dailOr, PIONERKA, SePaHBoD, Redskier13 and Project Administration!</Run>
+                </TextBlock>
+
+                <TextBlock Margin="0,5,0,0" Text="I wish you a pleasant use, we will meet on the battlefield)" />
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" />
+        </Grid>
+    </Border>
 </UserControl>

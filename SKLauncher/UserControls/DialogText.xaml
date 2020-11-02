@@ -1,0 +1,123 @@
+﻿<UserControl
+    x:Class="Launcher.UserControls.DialogText"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:Launcher.Core.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Launcher.UserControls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    MinWidth="300"
+    MaxWidth="800"
+    MaxHeight="{StaticResource WindowContentAreaHeight}"
+    mc:Ignorable="d">
+
+    <Border
+        BorderBrush="#171717"
+        BorderThickness="1"
+        CornerRadius="{StaticResource CornerRadius}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.OpacityMask>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <Rectangle
+                            Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=ActualWidth}"
+                            Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=ActualHeight}"
+                            Fill="Black"
+                            RadiusX="{Binding Source={StaticResource CornerRadius}, Path=TopRight}"
+                            RadiusY="{Binding Source={StaticResource CornerRadius}, Path=TopRight}" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Grid.OpacityMask>
+
+            <i:Interaction.Behaviors>
+                <behaviors:AcrylicControlBehavior
+                    AdjustmentLevel="OnSetup"
+                    ForceTintOpacity=".1"
+                    TintBrush="{StaticResource DialogTextBackgroundTintBrush}"
+                    VisualContext="Control" />
+            </i:Interaction.Behaviors>
+
+            <!--  Dark bg  -->
+            <Rectangle Grid.Row="0">
+                <Rectangle.Fill>
+                    <SolidColorBrush Opacity=".1" Color="Black" />
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <!--  Dialog Content  -->
+            <Border Grid.Row="0" Padding="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!--  Title Presenter  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Left"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Foreground="WhiteSmoke"
+                        Text="{Binding Title, Mode=OneTime}" />
+
+                    <!--  Text Content Presenter  -->
+                    <TextBlock
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        FontSize="14"
+                        Text="{Binding Content, Mode=OneTime}"
+                        TextAlignment="Left"
+                        TextWrapping="WrapWithOverflow" />
+                </Grid>
+            </Border>
+
+            <!--  Dialog Buttons  -->
+            <Border
+                Grid.Row="1"
+                Padding="20,5,10,10"
+                Background="#151515">
+
+                <Grid>
+
+                    <CheckBox
+                        VerticalAlignment="Center"
+                        Content="Don't show me again"
+                        Foreground="#C8C8C8"
+                        IsChecked="{Binding DontAskFlag, Mode=OneWayToSource}"
+                        Visibility="{Binding CheckboxVisibility, Mode=OneTime}" />
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                        <Button
+                            Margin="0,0,5,0"
+                            Command="{Binding CancelCommand}"
+                            Content="Cancel"
+                            Style="{StaticResource DialogSecondaryStyle}"
+                            Visibility="{Binding CancelButtonVisibility, Mode=OneTime}" />
+                        <Button
+                            Margin="0,0,5,0"
+                            Command="{Binding NoCommand}"
+                            Content="No"
+                            Style="{StaticResource DialogSecondaryStyle}"
+                            Visibility="{Binding NoButtonVisibility, Mode=OneTime}" />
+                        <Button
+                            Command="{Binding OkCommand}"
+                            Content="Ok"
+                            Style="{StaticResource DialogPrimaryStyle}"
+                            Visibility="{Binding OkButtonVisibility, Mode=OneTime}" />
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

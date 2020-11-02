@@ -6,11 +6,10 @@ using System.Windows.Threading;
 
 using Launcher.Core.Helper;
 using Launcher.Core.Service;
-using Launcher.Core.Service.Base;
 
 namespace Launcher.Core.Data
 {
-    public class PageNavigator : IPageNavigator, IUIHostDependency
+    public class PageNavigator : IPageNavigator
     {
         #region Private fields
 
@@ -53,6 +52,7 @@ namespace Launcher.Core.Data
         }
 
         public Page CurrentPage => (Page) _navigationService?.Content;
+        public Frame Container { get; private set; }
         
         public event EventHandler<NavigatingCancelEventArgs> NavigationInitiated;
         public event EventHandler<NavigationEventArgs> Navigated;
@@ -63,6 +63,8 @@ namespace Launcher.Core.Data
 
         public void SetDependency(FrameworkElement element)
         {
+            Container = (Frame) element;
+
             // extract NavigationService instance
             _navigationService = ReflectionHelper.GetPropertyInstance<NavigationService>(element, __HOST_NAME);
             

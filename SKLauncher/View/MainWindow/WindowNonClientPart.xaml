@@ -10,6 +10,7 @@
     xmlns:userControls="clr-namespace:Launcher.UserControls"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowNonClientHeight}"
+    Background="{DynamicResource Theme850Brush}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     mc:Ignorable="d">
 

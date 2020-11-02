@@ -16,17 +16,14 @@ using Ninject.Syntax;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
-using Launcher.Core.Shared;
 using Launcher.Core;
 using Launcher.Core.Data;
+using Launcher.Core.Dialog;
 using Launcher.Core.Service.Base;
 using Launcher.Helpers;
 using Launcher.UserControls;
 using Launcher.View;
-using Launcher.ViewModel;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
@@ -50,15 +47,17 @@ namespace Launcher.ViewModel
         private readonly IUpdateService _updateService;
         private readonly IZApi _api;
 
-        private readonly ITextDialogService _textDialogService;
-        private readonly IContentPresenterService _contentPresenterService;
-        private readonly IEventLogService _eventLogService;
+        private readonly IEventService _eventService;
         private readonly IMainMenuService _menuService;
         private readonly IGameService _gameService;
         private readonly IDiscord _discordPresence;
 
         private readonly IPageNavigator _navigator;
         private readonly IApplicationState _state;
+        private readonly IDialogSystemBase _dialogSystemBase;
+        private readonly IDialogService _dialogService;
+        private readonly IBusyIndicatorBase _busyIndicatorBase;
+        private readonly IBusyIndicatorService _busyIndicatorService;
 
         public MainWindowViewModel(
             IZApi api,
@@ -66,9 +65,7 @@ namespace Launcher.ViewModel
             ISettingsService settingsService,
             IProcessService processService,
             IResolutionRoot kernel,
-            ITextDialogService dialogService,
-            IContentPresenterService contentPresenterService,
-            IEventLogService eventLogService,
+            IEventService eventService,
             IMainMenuService menuService,
             IUpdateService updateService,
             IGameService gameService,
@@ -76,14 +73,20 @@ namespace Launcher.ViewModel
             
             IPageNavigator navigator,
             IApplicationState state,
-            IViewModelSource viewModelSource)
+            IViewModelSource viewModelSource,
+            IDialogService dialogService,
+            IDialogSystemBase dialogSystemBase,
+            IBusyIndicatorBase busyIndicatorBase,
+            IBusyIndicatorService busyIndicatorService)
         {
             _navigator = navigator;
             _state = state;
-            
-            _textDialogService = dialogService;
-            _contentPresenterService = contentPresenterService;
-            _eventLogService = eventLogService;
+            _dialogSystemBase = dialogSystemBase;
+            _dialogService = dialogService;
+            _busyIndicatorBase = busyIndicatorBase;
+            _busyIndicatorService = busyIndicatorService;
+            _eventService = eventService;
+
             _menuService = menuService;
 
             _apiConnection = api.Connection;
@@ -106,21 +109,6 @@ namespace Launcher.ViewModel
             _zClientProcessTracker.ProcessDetected += _zClientProcessDetectedHandler;
             _zClientProcessTracker.ProcessLost += _zClientProcessLostHandler;
 
-            //_updateService.CancelDownloadResolver = async () =>
-            //{
-            //    var dlgResult = await _textDialogService.OpenDialog("Are you sure ?",
-            //        "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
-            //    return dlgResult.Action == DialogActionEnum.Primary;
-            //};
-            //_updateService.UpdateAvailableResolver = ver =>
-            //{
-            //    // ReSharper disable once AssignNullToNotNullAttribute
-            //    var dlgResult = MessageBox.Show(Application.Current.MainWindow, "Download and install it?", $"A new version is available {ver}",
-            //        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            //    return dlgResult == MessageBoxResult.Yes;
-            //};
-            //_updateService.Error += _updateServiceErrorHandler;
-
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
 
             _gameService.GameClose += _GameCloseHandler;
@@ -129,13 +117,13 @@ namespace Launcher.ViewModel
 
         private void _GameRunErrorHandler(object sender, GameRunErrorEventArgs e)
         {
-            _eventLogService.Log(EventLogLevel.Warning, SLM.GameRun, e.Error.Message);
+            _eventService.WarnEvent(SLM.GameRun, e.Error.Message);
             _log.Error(LoggingHelper.GetMessage(e.Error));
         }
 
         private void _GameCloseHandler(object sender, GameCloseEventArgs e)
         {
-            _eventLogService.Log(EventLogLevel.Message, SLM.GameRun, e.PipeLog);
+            _eventService.InfoEvent(SLM.GameRun, e.PipeLog);
         }
 
         private void _RefreshAppState()
@@ -195,12 +183,12 @@ namespace Launcher.ViewModel
                     }
                     else
                     {
-                        _eventLogService.Log(EventLogLevel.Warning, "ZClient path", "ZClient not detected");
+                        _eventService.WarnEvent("ZClient path", "ZClient not detected");
                     }
                 }
                 catch (Exception)
                 {
-                    _eventLogService.Log(EventLogLevel.Error, "ZClient path", "An error occurred while trying to get the path to ZClient.");
+                    _eventService.ErrorEvent("ZClient path", "An error occurred while trying to get the path to ZClient.");
                 }
             }
 
@@ -218,7 +206,7 @@ namespace Launcher.ViewModel
             var runResult = _processService.Run(path, true);
             if (!runResult)
             {
-                _eventLogService.Log(EventLogLevel.Warning, "Cannot run ZClient",
+                _eventService.WarnEvent("Cannot run ZClient",
                     "Wrong path or unknown error. Try again.");
             }
         }
@@ -234,10 +222,16 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(parameter =>
         {
-            var iWnd = (MainWindowView) parameter;
+            var windowInstance = (MainWindowView) parameter;
 
             // setup ui dependencies
-            ((IUIHostDependency)_navigator).SetDependency(iWnd.HOST_Content);
+            _navigator.SetDependency(windowInstance.HOST_Content);
+            _dialogSystemBase.SetDependency(windowInstance.HOST_DialogContainer);
+            _busyIndicatorBase.SetDependency(windowInstance.HOST_DialogContainer);
+
+            //// TODO: Testing only
+            //windowInstance.MouseEnter += (s, e) => _busyIndicatorBase.Open("Please wait...");
+            //windowInstance.MouseLeave += (s, e) => _busyIndicatorBase.Close();
 
             // setup application state vars
             _state.RegisterVars();
@@ -299,7 +293,7 @@ namespace Launcher.ViewModel
             {
                 if (Process.GetProcessesByName(_ZClientProcessName).Length > 0)
                 {
-                    _eventLogService.Log(EventLogLevel.Message, "Run ZClient", "ZClient already run.");
+                    _eventService.WarnEvent("Run ZClient", "ZClient already run.");
                 }
                 else
                 {
@@ -308,22 +302,23 @@ namespace Launcher.ViewModel
             }
             else
             {
-                await _textDialogService.OpenDialog("Run ZClient",
-                    "Path to ZClient.exe was not set. Please set it in Settings and try again.", TextDialogButtons.Ok);
+                await _dialogService.OpenTextDialog("Run ZClient",
+                    "Path to ZClient.exe was not set. Please set it in Settings and try again.", DialogButtons.Ok);
             }
         });
 
-        public ICommand ShowAboutCommand => new DelegateCommand(async obj =>
+        public ICommand ShowAboutCommand => new AsyncCommand(() =>
         {
             _menuService.Close();
-            await _contentPresenterService.Show<UserAbout>(null);
+
+            return _dialogService.OpenPresenter<UserAbout>(null);
         });
 
         public ICommand OnClosingCommand => new DelegateCommand(_OnClosingExec);
 
         private void _OnClosingExec(object obj)
         {
-            if (!(obj is CancelEventArgs e)) return;
+            if (! (obj is CancelEventArgs e)) return;
 
             if (_updateService.InDownloadStage)
             {
@@ -334,6 +329,40 @@ namespace Launcher.ViewModel
             else
             {
                 e.Cancel = false;
+            }
+
+            // check, we are going to close or not
+            if (e.Cancel) return;
+
+            var settings = _settingsService.GetLauncherSettings();
+
+            // handle settings actions
+            if (settings.CloseZClientWithLauncher && _zClientProcessTracker.IsRun)
+            {
+                try
+                {
+                    using (var zClientProcess = _zClientProcessTracker.Process)
+                    {
+                        // disconnect from zClient
+                        _apiConnection.ConnectionChanged -= _apiConnectionConnectionChangedHandler;
+                        _apiConnection.Disconnect();
+
+                        // stop track zClient process
+                        _zClientProcessTracker.StopTrack();
+
+                        // close process
+                        if (zClientProcess.Responding && !zClientProcess.HasExited)
+                        {
+                            if (zClientProcess.MainWindowHandle != IntPtr.Zero)
+                                zClientProcess.CloseMainWindow();
+                            else zClientProcess.Kill();
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    // ignore
+                }
             }
         }
 

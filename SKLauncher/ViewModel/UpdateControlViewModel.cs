@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using Launcher.Core;
 using Launcher.Core.Data.Updates;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service.Base;
-using Launcher.Core.Services.Dialog;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 
@@ -15,17 +14,14 @@ namespace Launcher.ViewModel
     public class UpdateControlViewModel : BaseControlViewModel
     {
         private readonly IUpdateService _updateService;
-        private readonly IEventLogService _eventService;
-        private readonly ITextDialogService _dialogService;
+        private readonly IEventService _eventService;
 
         public UpdateControlViewModel(
             IUpdateService updateService,
-            IEventLogService eventService,
-            ITextDialogService dialogService)
+            IEventService eventService)
         {
             _updateService = updateService;
             _eventService = eventService;
-            _dialogService = dialogService;
 
             // assign resolvers and subscribe to events
             _updateService.CancelDownloadResolver = _downloadCancelResolver;
@@ -38,15 +34,15 @@ namespace Launcher.ViewModel
 
         #region Updates handlers
 
-        private async Task<bool> _downloadCancelResolver()
+        private Task<bool> _downloadCancelResolver()
         {
-            var dlgResult = await _dialogService.OpenDialog("Are you sure ?",
-                "Are you sure you want to stop downloading the update?", TextDialogButtons.Ok | TextDialogButtons.No);
-            var isCanceled = dlgResult.Action == DialogActionEnum.Primary;
+            var dlgResult = MessageBox.Show("Are you sure you want to stop downloading the update?",
+                "Are you sure ?", MessageBoxButton.YesNo);
+            var isCanceled = dlgResult == MessageBoxResult.Yes;
 
             if (! isCanceled) Dispatcher.Invoke(() => Visibility = Visibility.Visible);
 
-            return isCanceled;
+            return Task.FromResult(isCanceled);
         }
 
         private bool _updateAvailableResolver(LauncherVersion ver)
@@ -57,8 +53,8 @@ namespace Launcher.ViewModel
             return dlgResult == MessageBoxResult.Yes;
         }
 
-        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
-            => _eventService.Log(EventLogLevel.Error, "Update service", e.Message);
+        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e) 
+            => _eventService.ErrorEvent("Update service", e.Message);
 
         #endregion
 

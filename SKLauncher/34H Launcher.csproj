@@ -135,31 +135,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\EventLevel2ColorConverter.cs" />
-    <Compile Include="Converters\EventLevel2StringConverter.cs" />
-    <Compile Include="Converters\GameControlState2ColorConverter.cs" />
+    <Compile Include="Converters\EventType2ColorConverter.cs" />
+    <Compile Include="Converters\EventType2IconConverter.cs" />
     <Compile Include="Converters\MathNegativeConverter.cs" />
     <Compile Include="Converters\Ping2PingEnumConverter.cs" />
-    <Compile Include="Converters\Rotations\MapRole2ColorConverter.cs" />
     <Compile Include="Converters\Rotations\MapRole2StringConverter.cs" />
     <Compile Include="Converters\Rotations\MapRole2VisibilityConverter.cs" />
     <Compile Include="Converters\String2VisibilityConverter.cs" />
     <Compile Include="Core\ApplicationStateExtension.cs" />
     <Compile Include="Core\Bases\BaseServerBrowserViewModel.cs" />
-    <Compile Include="Core\Bases\IBlurredPage.cs" />
-    <Compile Include="Core\Behaviors\ButtonContextMenuBehavior.cs" />
+    <Compile Include="Core\Behaviors\AcrylicControlBehavior.cs" />
     <Compile Include="Core\Behaviors\ContextMenuDataContextBehavior.cs" />
     <Compile Include="Core\Behaviors\DetailsRowCopyBehavior.cs" />
     <Compile Include="Core\Behaviors\LastClosedEventBehavior.cs" />
-    <Compile Include="Core\Behaviors\UserPresenterPopupBehavior.cs" />
+    <Compile Include="Core\BusyIndicatorControlManager.cs" />
+    <Compile Include="Core\BusyIndicatorService.cs" />
+    <Compile Include="Core\BusyIndicatorServiceExtensions.cs" />
     <Compile Include="Core\Data\BaseGameWorker.cs" />
     <Compile Include="Core\Data\BaseJoinParams.cs" />
     <Compile Include="Core\Data\CoopGameWorker.cs" />
     <Compile Include="Core\Data\CoopJoinParams.cs" />
     <Compile Include="Core\Data\DetectedGameWorker.cs" />
-    <Compile Include="Core\Data\Dialog\ContentPresenterService.cs" />
-    <Compile Include="Core\Data\Dialog\TextDialogService.cs" />
-    <Compile Include="Core\Data\EventLog\EventLogService.cs" />
     <Compile Include="Core\Data\GameCloseEventArgs.cs" />
     <Compile Include="Core\Data\GameRunErrorEventArgs.cs" />
     <Compile Include="Core\Data\GameService.cs" />
@@ -174,9 +170,33 @@
     <Compile Include="Core\Data\Updates\UpdateErrorEventArgs.cs" />
     <Compile Include="Core\Data\Updates\UpdateInfoObject.cs" />
     <Compile Include="Core\Data\Updates\UpdateProgressEventArgs.cs" />
+    <Compile Include="Core\Dialog\BaseDialogViewModel.cs" />
+    <Compile Include="Core\Dialog\Dialog.cs" />
+    <Compile Include="Core\Dialog\DialogAction.cs" />
+    <Compile Include="Core\Dialog\DialogButtons.cs" />
+    <Compile Include="Core\Dialog\DialogContentPresenterViewModel.cs" />
+    <Compile Include="Core\Dialog\DialogControlManager.cs" />
+    <Compile Include="Core\Dialog\DialogMessageBoxViewModel.cs" />
+    <Compile Include="Core\Dialog\DialogResult.cs" />
+    <Compile Include="Core\Dialog\DialogService.cs" />
+    <Compile Include="Core\Dialog\DialogServiceExtension.cs" />
+    <Compile Include="Core\Dialog\DialogTextViewModel.cs" />
+    <Compile Include="Core\Dialog\IDialogService.cs" />
+    <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
+    <Compile Include="Core\Dialog\_InternalDialog.cs" />
+    <Compile Include="Core\EventItem.cs" />
+    <Compile Include="UserControls\EventsButtonControl.xaml.cs">
+      <DependentUpon>EventsButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Events\EventItemViewModel.cs" />
+    <Compile Include="Core\EventOccuredEventArgs.cs" />
+    <Compile Include="Core\EventService.cs" />
+    <Compile Include="Core\EventServiceExtensions.cs" />
+    <Compile Include="Core\EventType.cs" />
+    <Compile Include="Core\IBusyIndicatorBase.cs" />
+    <Compile Include="Core\IBusyIndicatorService.cs" />
+    <Compile Include="Core\IEventService.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
-    <Compile Include="Core\Locators\IUserControlViewModelLocator.cs" />
-    <Compile Include="Core\Locators\UserControlViewModelLocator.cs" />
     <Compile Include="Core\RPC\Discord.cs" />
     <Compile Include="Core\RPC\DiscordConnectionChangedEventArgs.cs" />
     <Compile Include="Core\RPC\DiscordPresence.cs" />
@@ -184,40 +204,22 @@
     <Compile Include="Core\RPC\IDiscordPresence.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatedEventArgs.cs" />
     <Compile Include="Core\RPC\ServerModelUpdatesUnit.cs" />
-    <Compile Include="Core\Services\BusyService.cs" />
-    <Compile Include="Core\Services\Dialog\IContentPresenterService.cs" />
-    <Compile Include="Core\Services\EventLog\IEventLogService.cs" />
-    <Compile Include="Core\Services\IBusyService.cs" />
     <Compile Include="Core\Services\IGameService.cs" />
     <Compile Include="Core\Services\ILauncherProcessService.cs" />
     <Compile Include="Core\Services\IMainMenuService.cs" />
     <Compile Include="Core\Services\INetworkAvailabilityTracker.cs" />
-    <Compile Include="Core\Services\Dialog\IOverlayDialogService.cs" />
     <Compile Include="Core\Services\IProcessService.cs" />
     <Compile Include="Core\Services\ISettingsService.cs" />
-    <Compile Include="Core\Services\Dialog\ITextDialogService.cs" />
-    <Compile Include="Core\Services\Updates\IUpdateControl.cs" />
     <Compile Include="Core\Services\Updates\IUpdateService.cs" />
     <Compile Include="Core\Services\LauncherProcessService.cs" />
     <Compile Include="Core\Services\MainMenuService.cs" />
     <Compile Include="Core\Services\NetworkAvailabilityTracker.cs" />
-    <Compile Include="Core\Data\Dialog\OverlayDialogService.cs" />
     <Compile Include="Core\Services\ProcessService.cs" />
     <Compile Include="Core\Services\SettingsService.cs" />
     <Compile Include="Core\SettingsViewModelParts\GeneralSectionViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\ThemesSectionViewModel.cs" />
-    <Compile Include="Core\SettingsViewModelParts\UIBaseViewModel.cs" />
     <Compile Include="Core\SettingsViewModelParts\UpdatesSectionViewModel.cs" />
-    <Compile Include="Core\Shared\BusyViewModel.cs" />
-    <Compile Include="Core\Shared\ChangesViewModel.cs" />
-    <Compile Include="Core\Shared\ContentPresenterViewModel.cs" />
     <Compile Include="Core\Shared\CoopMissionModel.cs" />
-    <Compile Include="Core\Shared\DialogActionEnum.cs" />
-    <Compile Include="Core\Shared\DialogControlHelper.cs" />
-    <Compile Include="Core\Shared\DialogResult.cs" />
-    <Compile Include="Core\Shared\BaseDialogViewModel.cs" />
-    <Compile Include="Core\Shared\EventLogLevel.cs" />
-    <Compile Include="Core\Shared\EventViewModel.cs" />
     <Compile Include="Core\Shared\GameControlViewModel.cs" />
     <Compile Include="Core\Shared\GameEventArgs.cs" />
     <Compile Include="Core\Shared\GameEventType.cs" />
@@ -231,9 +233,8 @@
     <Compile Include="Core\Shared\NetworkAvailabilityChangedEvent.cs" />
     <Compile Include="Core\Shared\ServerBrowserLeaveViewModel.cs" />
     <Compile Include="Core\Shared\StateConstants.cs" />
-    <Compile Include="Core\Shared\TextDialogButtons.cs" />
-    <Compile Include="Core\Shared\TextDialogViewModel.cs" />
     <Compile Include="Core\Shared\UIElementConstants.cs" />
+    <Compile Include="Core\VisualProvider.cs" />
     <Compile Include="Data\ContainerModule.cs" />
     <Compile Include="Data\ViewModelLocator.cs" />
     <Compile Include="Data\Resolver.cs" />
@@ -246,7 +247,6 @@
     <Compile Include="Helpers\FilterConstant.cs" />
     <Compile Include="Helpers\FolderConstant.cs" />
     <Compile Include="Helpers\GenericTypes.cs" />
-    <Compile Include="Helpers\IErrorHandler.cs" />
     <Compile Include="Helpers\ListHelper.cs" />
     <Compile Include="Core\Shared\LauncherVersion.cs" />
     <Compile Include="Core\Data\Updates\UpdateService.cs" />
@@ -254,10 +254,8 @@
     <Compile Include="Converters\RankNumberToImageSourceConverter.cs" />
     <Compile Include="Core\Services\IUIHostService.cs" />
     <Compile Include="Core\Services\IVersionService.cs" />
-    <Compile Include="Core\Services\IWindowContentNavigationService.cs" />
     <Compile Include="Core\Services\UIHostService.cs" />
     <Compile Include="Core\Services\VersionService.cs" />
-    <Compile Include="Core\Services\WindowContentNavigationService.cs" />
     <Compile Include="Helpers\LoggingHelper.cs" />
     <Compile Include="Helpers\ServerPingCalculator.cs" />
     <Compile Include="Helpers\SettingsDialogHelper.cs" />
@@ -271,22 +269,24 @@
     <Compile Include="Helpers\Exceptions.cs" />
     <Compile Include="Styles\Controls\ScrollViewerAnimation\AnimatableScrollView.cs" />
     <Compile Include="Styles\Controls\ScrollViewerAnimation\ScrollingAnimationBehavior.cs" />
-    <Compile Include="Styles\MapAndPlayerRotation\PlayerListViewStyleSelector.cs" />
     <Compile Include="Styles\MapAndPlayerRotation\RotationsViewModel.cs" />
-    <Compile Include="UserControls\ContentPresenterControl.xaml.cs">
-      <DependentUpon>ContentPresenterControl.xaml</DependentUpon>
+    <Compile Include="UserControls\DialogContentPresenter.xaml.cs">
+      <DependentUpon>DialogContentPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DialogGameSettings.xaml.cs">
+      <DependentUpon>DialogGameSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DialogServerDetails.xaml.cs">
+      <DependentUpon>DialogServerDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DialogText.xaml.cs">
+      <DependentUpon>DialogText.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\GameControl.xaml.cs">
       <DependentUpon>GameControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\GameSettingsControl.xaml.cs">
-      <DependentUpon>GameSettingsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\UserPresenter.xaml.cs">
       <DependentUpon>UserPresenter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ServerBrowserLeaveControl.xaml.cs">
-      <DependentUpon>ServerBrowserLeaveControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UpdateDownloadControl.xaml.cs">
       <DependentUpon>UpdateDownloadControl.xaml</DependentUpon>
@@ -297,21 +297,16 @@
     <Compile Include="UserControls\UserBusyIndicator.xaml.cs">
       <DependentUpon>UserBusyIndicator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\RotationsControl.xaml.cs">
-      <DependentUpon>RotationsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\TextDialogControl.xaml.cs">
-      <DependentUpon>TextDialogControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\Browser\BF3ServerBrowserViewModel.cs" />
     <Compile Include="ViewModel\Browser\BF3CoopViewModel.cs" />
     <Compile Include="ViewModel\Stats\BF4StatsViewModel.cs" />
     <Compile Include="ViewModel\Browser\BF4ServerBrowserViewModel.cs" />
     <Compile Include="ViewModel\Browser\BFHServerBrowserViewModel.cs" />
-    <Compile Include="ViewModel\EventLogViewModel.cs" />
+    <Compile Include="ViewModel\Events\EventLogViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\WindowNonClientPartViewModel.cs" />
     <Compile Include="ViewModel\UpdateControlViewModel.cs" />
+    <Compile Include="ViewModel\UserControl\EventsButtonViewModel.cs" />
     <Compile Include="ViewModel\UserControl\UserPresenterViewModel.cs" />
     <Compile Include="View\BF3CoopView.xaml.cs">
       <DependentUpon>BF3CoopView.xaml</DependentUpon>
@@ -350,19 +345,27 @@
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\Loc\en_EN.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Loc\ru_RU.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles\HomeViewResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ContentPresenterControl.xaml">
+    <Page Include="UserControls\DialogContentPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DialogGameSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DialogServerDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DialogText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EventsButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -370,15 +373,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\GameSettingsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControls\UserPresenter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\ServerBrowserLeaveControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -391,14 +386,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UserBusyIndicator.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\RotationsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\TextDialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

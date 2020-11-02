@@ -5,15 +5,18 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+
 using Launcher.Core.Interaction;
+using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Helpers;
+
 using Microsoft.Win32;
+
 using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Core.Shared
 {
-    public class GameSettingsViewModel : DependencyObject
+    public class GameSettingsViewModel : BaseControlViewModel
     {
         private readonly GameSetting _settings;
         private readonly ZGameArchitecture _defaultArchitecture;
@@ -35,12 +38,22 @@ namespace Launcher.Core.Shared
             UseAnotherArchitecture = _defaultArchitecture != _settings.PreferredArchitecture;
             Dlls = new ObservableCollection<string>(setting.Dlls.Select(Path.GetFileName));
             CanChangeArchitecture = canChangeArchitecture;
+
+            CurrentArchitecture = $"Your system architecture is {_defaultArchitecture}";
         }
 
         public ObservableCollection<string> Dlls { get; }
         public string BaseArchitecture { get; }
         public string OpposeArchitecture { get; }
         public bool CanChangeArchitecture { get; }
+
+        public string CurrentArchitecture
+        {
+            get => (string)GetValue(CurrentArchitectureProperty);
+            set => SetValue(CurrentArchitectureProperty, value);
+        }
+        public static readonly DependencyProperty CurrentArchitectureProperty =
+            DependencyProperty.Register("CurrentArchitecture", typeof(string), typeof(GameSettingsViewModel), new PropertyMetadata(string.Empty));
 
         public bool UseAnotherArchitecture
         {
@@ -109,14 +122,15 @@ namespace Launcher.Core.Shared
                 .ToArray();
             foreach (var selectedItem in selectedItems)
             {
-                var stringItem = (string)selectedItem;
+                var stringItem = (string) selectedItem;
                 Dlls.Remove(stringItem);
                 var item = _settings.Dlls.First(path => path.EndsWith(stringItem));
                 _settings.Dlls.Remove(item);
             }
         });
 
-        public ICommand UnloadedCommand => new DelegateCommand(_UnloadedExec);
+        public override ICommand LoadedCommand => throw new NotImplementedException();
+        public override ICommand UnloadedCommand => new DelegateCommand(_UnloadedExec);
 
         private void _UnloadedExec(object obj)
         {

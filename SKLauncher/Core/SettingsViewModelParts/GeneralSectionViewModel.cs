@@ -5,14 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
-using Launcher.Core.Services.Dialog;
-using Launcher.Core.Services.EventLog;
 using Launcher.Core.Shared;
+
 using Launcher.Helpers;
+
 using Launcher.Localization.Loc;
 using Launcher.Localization.Loc.inCodeLocalizationMap;
 
@@ -22,23 +24,22 @@ namespace Launcher.Core.SettingsViewModelParts
 {
     public class GeneralSectionViewModel : BaseControlViewModel
     {
-        private readonly ITextDialogService _dialogService;
+        private readonly IDialogService _dialogService;
         private readonly ISettingsService _settingsService;
-        private readonly IEventLogService _eventLog;
+        private readonly IEventService _eventService;
         private readonly IDiscord _discord;
 
         private LauncherSettings _settings;
-        private bool _isLoaded;
 
         public GeneralSectionViewModel(
-            ITextDialogService dialogService,
+            IDialogService dialogService,
             ISettingsService settingsService,
-            IEventLogService eventLog,
+            IEventService eventLog,
             IDiscord discord)
         {
             _dialogService = dialogService;
             _settingsService = settingsService;
-            _eventLog = eventLog;
+            _eventService = eventLog;
             _discord = discord;
 
             LocalizationEnumerable = new[]
@@ -163,8 +164,8 @@ namespace Launcher.Core.SettingsViewModelParts
 
             if (value && viewModel._isLoaded)
             {
-                await viewModel._dialogService.OpenDialog(SharedLocalizationMap.TryToConnectHeader, SharedLocalizationMap.TryToConnect,
-                    TextDialogButtons.Ok);
+                await viewModel._dialogService.OpenTextDialog(SharedLocalizationMap.TryToConnectHeader, SharedLocalizationMap.TryToConnect,
+                    DialogButtons.Ok);
             }
 
             viewModel._settings.TryToConnect = value;
@@ -178,6 +179,22 @@ namespace Launcher.Core.SettingsViewModelParts
         public static readonly DependencyProperty CanUseDiscordPresenceProperty =
             DependencyProperty.Register("CanUseDiscordPresence", typeof(bool), typeof(GeneralSectionViewModel), new PropertyMetadata(true));
 
+        public bool CloseZClientWithLauncher
+        {
+            get => (bool)GetValue(CloseZClientWithLauncherProperty);
+            set => SetValue(CloseZClientWithLauncherProperty, value);
+        }
+        public static readonly DependencyProperty CloseZClientWithLauncherProperty =
+            DependencyProperty.Register("CloseZClientWithLauncher", typeof(bool), typeof(GeneralSectionViewModel), new PropertyMetadata(false, _closeZClientWithLauncherPropertyChangedCallback));
+
+        private static void _closeZClientWithLauncherPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var viewModel = (GeneralSectionViewModel) d;
+            var value = (bool) e.NewValue;
+
+            viewModel._settings.CloseZClientWithLauncher = value;
+        }
+
         #endregion
 
         private void _AssignSettings(LauncherSettings settings)
@@ -190,6 +207,7 @@ namespace Launcher.Core.SettingsViewModelParts
             AutorunZClient = settings.RunZClient;
             UseDiscordPresence = settings.UseDiscordPresence;
             TryToConnect = settings.TryToConnect;
+            CloseZClientWithLauncher = settings.CloseZClientWithLauncher;
         }
 
         public KeyValuePair<string, LocalizationEnum>[] LocalizationEnumerable { get; }
@@ -223,7 +241,7 @@ namespace Launcher.Core.SettingsViewModelParts
             }
             else
             {
-                _eventLog.Log(EventLogLevel.Warning, SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
+                _eventService.WarnEvent(SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
             }
         });
     }

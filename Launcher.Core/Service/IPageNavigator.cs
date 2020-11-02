@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Launcher.Core.Data.Model.Event;
+using Launcher.Core.Service.Base;
 
 namespace Launcher.Core.Service
 {
@@ -9,7 +9,7 @@ namespace Launcher.Core.Service
     /// Defines a navigator that allows you to navigate through the application pages,
     /// track their change, as well as preprocess their navigation.
     /// </summary>
-    public interface IPageNavigator
+    public interface IPageNavigator : IUIHostDependency
     {
         /// <summary>
         /// Navigates to the specified page
@@ -28,6 +28,10 @@ namespace Launcher.Core.Service
         /// Gets the current page
         /// </summary>
         Page CurrentPage { get; }
+        /// <summary>
+        /// Gets the content presenter
+        /// </summary>
+        Frame Container { get; }
         /// <summary>
         /// Occurs when navigation was initiated
         /// </summary>
