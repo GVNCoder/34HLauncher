@@ -318,7 +318,7 @@ namespace Launcher.ViewModel
 
         private void _OnClosingExec(object obj)
         {
-            if (!(obj is CancelEventArgs e)) return;
+            if (! (obj is CancelEventArgs e)) return;
 
             if (_updateService.InDownloadStage)
             {
@@ -329,6 +329,40 @@ namespace Launcher.ViewModel
             else
             {
                 e.Cancel = false;
+            }
+
+            // check, we are going to close or not
+            if (e.Cancel) return;
+
+            var settings = _settingsService.GetLauncherSettings();
+
+            // handle settings actions
+            if (settings.CloseZClientWithLauncher && _zClientProcessTracker.IsRun)
+            {
+                try
+                {
+                    using (var zClientProcess = _zClientProcessTracker.Process)
+                    {
+                        // disconnect from zClient
+                        _apiConnection.ConnectionChanged -= _apiConnectionConnectionChangedHandler;
+                        _apiConnection.Disconnect();
+
+                        // stop track zClient process
+                        _zClientProcessTracker.StopTrack();
+
+                        // close process
+                        if (zClientProcess.Responding && !zClientProcess.HasExited)
+                        {
+                            if (zClientProcess.MainWindowHandle != IntPtr.Zero)
+                                zClientProcess.CloseMainWindow();
+                            else zClientProcess.Kill();
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    // ignore
+                }
             }
         }
 

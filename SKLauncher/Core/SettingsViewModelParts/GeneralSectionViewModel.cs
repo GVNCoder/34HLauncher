@@ -12,7 +12,9 @@ using Launcher.Core.RPC;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
+
 using Launcher.Helpers;
+
 using Launcher.Localization.Loc;
 using Launcher.Localization.Loc.inCodeLocalizationMap;
 
@@ -177,6 +179,22 @@ namespace Launcher.Core.SettingsViewModelParts
         public static readonly DependencyProperty CanUseDiscordPresenceProperty =
             DependencyProperty.Register("CanUseDiscordPresence", typeof(bool), typeof(GeneralSectionViewModel), new PropertyMetadata(true));
 
+        public bool CloseZClientWithLauncher
+        {
+            get => (bool)GetValue(CloseZClientWithLauncherProperty);
+            set => SetValue(CloseZClientWithLauncherProperty, value);
+        }
+        public static readonly DependencyProperty CloseZClientWithLauncherProperty =
+            DependencyProperty.Register("CloseZClientWithLauncher", typeof(bool), typeof(GeneralSectionViewModel), new PropertyMetadata(false, _closeZClientWithLauncherPropertyChangedCallback));
+
+        private static void _closeZClientWithLauncherPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var viewModel = (GeneralSectionViewModel) d;
+            var value = (bool) e.NewValue;
+
+            viewModel._settings.CloseZClientWithLauncher = value;
+        }
+
         #endregion
 
         private void _AssignSettings(LauncherSettings settings)
@@ -189,6 +207,7 @@ namespace Launcher.Core.SettingsViewModelParts
             AutorunZClient = settings.RunZClient;
             UseDiscordPresence = settings.UseDiscordPresence;
             TryToConnect = settings.TryToConnect;
+            CloseZClientWithLauncher = settings.CloseZClientWithLauncher;
         }
 
         public KeyValuePair<string, LocalizationEnum>[] LocalizationEnumerable { get; }

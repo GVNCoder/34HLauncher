@@ -362,6 +362,11 @@
                         IsChecked="{Binding UseDiscordPresence}"
                         IsEnabled="{Binding CanUseDiscordPresence}" />
 
+                    <CheckBox
+                        Margin="0,5,0,0"
+                        Content="Close ZClient with the launcher"
+                        IsChecked="{Binding CloseZClientWithLauncher}" />
+
                 </StackPanel>
 
             </controls1:FlatGroup>
