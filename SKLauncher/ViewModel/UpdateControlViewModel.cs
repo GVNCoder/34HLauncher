@@ -56,7 +56,7 @@ namespace Launcher.ViewModel
             return dlgResult == MessageBoxResult.Yes;
         }
 
-        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e) 
+        private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e)
             => _eventService.ErrorEvent("Update service", e.Message);
 
         private void _updateServiceReportHandler(object sender, UpdateProgressEventArgs e) => Dispatcher.Invoke(() =>
