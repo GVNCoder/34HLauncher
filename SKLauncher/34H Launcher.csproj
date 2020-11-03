@@ -294,9 +294,6 @@
     <Compile Include="UserControls\UserAbout.xaml.cs">
       <DependentUpon>UserAbout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UserBusyIndicator.xaml.cs">
-      <DependentUpon>UserBusyIndicator.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\Browser\BF3ServerBrowserViewModel.cs" />
     <Compile Include="ViewModel\Browser\BF3CoopViewModel.cs" />
     <Compile Include="ViewModel\Stats\BF4StatsViewModel.cs" />
@@ -382,10 +379,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UserAbout.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\UserBusyIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
