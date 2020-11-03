@@ -76,7 +76,7 @@ namespace Launcher.ViewModel
             _eventService.ErrorEvent(
                 "Unable to establish a connection to the ZClient for one of the following reasons:",
                 "-ZClient not running\n-You did not click the Connect button\n-There is no internet connection\n" +
-                "-You, for whatever reason, are not logged in to ZClient\n-Running multiple processes of ZClient\n" +
+                "-You, for whatever reason, are not logged in to ZClient\n" +
                 "-Launcher internal error (restart the launcher and contact the developer)");
             _isDisconnectedEventShowed = true;
         }

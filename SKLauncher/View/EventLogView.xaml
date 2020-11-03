@@ -56,6 +56,11 @@
 
                         <StackPanel Grid.Column="0">
                             <TextBlock
+                                FontSize="10"
+                                Foreground="LightGray"
+                                Text="{Binding TimeCreated}" />
+                            <TextBlock
+                                Margin="0,2,0,0"
                                 FontWeight="SemiBold"
                                 Foreground="WhiteSmoke"
                                 Text="{Binding EventName}" />
