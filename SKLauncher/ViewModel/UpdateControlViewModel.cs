@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 using Launcher.Core;
 using Launcher.Core.Data.Updates;
-using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services.Updates;
@@ -26,7 +27,11 @@ namespace Launcher.ViewModel
             // assign resolvers and subscribe to events
             _updateService.CancelDownloadResolver = _downloadCancelResolver;
             _updateService.UpdateAvailableResolver = _updateAvailableResolver;
+
             _updateService.Error += _updateServiceErrorHandler;
+            _updateService.ReportProgress += _updateServiceReportHandler;
+            _updateService.BeginDownload += _updateServiceBeginDownloadHandler;
+            _updateService.EndDownload += _updateServiceEndDownloadHandler;
 
             // assign loc text
             Text = "Update downloading";
@@ -39,8 +44,6 @@ namespace Launcher.ViewModel
             var dlgResult = MessageBox.Show("Are you sure you want to stop downloading the update?",
                 "Are you sure ?", MessageBoxButton.YesNo);
             var isCanceled = dlgResult == MessageBoxResult.Yes;
-
-            if (! isCanceled) Dispatcher.Invoke(() => Visibility = Visibility.Visible);
 
             return Task.FromResult(isCanceled);
         }
@@ -55,6 +58,21 @@ namespace Launcher.ViewModel
 
         private void _updateServiceErrorHandler(object sender, UpdateErrorEventArgs e) 
             => _eventService.ErrorEvent("Update service", e.Message);
+
+        private void _updateServiceReportHandler(object sender, UpdateProgressEventArgs e) => Dispatcher.Invoke(() =>
+        {
+            Progress = e.Progress;
+        });
+
+        private void _updateServiceEndDownloadHandler(object sender, UpdateDownloadEventArgs e) => Dispatcher.Invoke(() =>
+        {
+            Visibility = Visibility.Collapsed;
+        });
+
+        private void _updateServiceBeginDownloadHandler(object sender, EventArgs e) => Dispatcher.Invoke(() =>
+        {
+            Visibility = Visibility.Visible;
+        });
 
         #endregion
 
@@ -92,9 +110,6 @@ namespace Launcher.ViewModel
         {
             // cancel download process
             _updateService.CancelDownload();
-
-            // hide control in UI
-            Dispatcher.Invoke(() => Visibility = Visibility.Collapsed);
         });
 
         public override ICommand LoadedCommand => throw new System.NotImplementedException();

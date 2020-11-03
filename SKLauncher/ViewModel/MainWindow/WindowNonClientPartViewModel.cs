@@ -33,7 +33,6 @@ namespace Launcher.ViewModel
         private ZUser _authorizedUser;
 
         public WindowNonClientPartViewModel(
-            IUIHostService uiHostService,
             IMainMenuService mainMenuService,
             IPageNavigator navigator,
             IZApi api,
@@ -44,7 +43,6 @@ namespace Launcher.ViewModel
 
             _navigator = navigator;
 
-            WindowBackgroundContent = uiHostService.GetHostContainer(UIElementConstants.HostWindowBackground) as Grid;
             _navigator.NavigationInitiated += _navigationInitiatedHandler;
             var application = Application.Current as App;
 
@@ -69,7 +67,6 @@ namespace Launcher.ViewModel
         #region Public members
 
         public UserPresenterViewModel UserPresenterViewModel { get; }
-        public Grid WindowBackgroundContent { get; }
 
         public Visibility ConnectButtonVisibility
         {
