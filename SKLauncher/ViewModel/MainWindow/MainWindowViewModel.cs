@@ -159,37 +159,28 @@ namespace Launcher.ViewModel
 
         private async void _zClientProcessDetectedHandler(object sender, Process process)
         {
+            // refresh some UI states
             _RefreshAppState();
 
-            var startProcessTime = process.StartTime.ToUniversalTime();
+            // pause briefly if necessary before continuing
+            var startTime = process.StartTime.ToUniversalTime();
             var currentTime = DateTime.UtcNow;
-            var diff = currentTime - startProcessTime;
+            var timeDifference = currentTime - startTime;
 
-            if (Math.Floor((decimal) diff.TotalSeconds) < 3m)
+            // if the process was started less than three seconds ago
+            if (Math.Floor((decimal) timeDifference.TotalSeconds) < 3m)
             {
                 // wait 3.5 seconds for full ZClient start
                 await Task.Delay(3500);
             }
 
-            if (string.IsNullOrEmpty(_settingsService.GetLauncherSettings().PathToZClient))
+            // try to detect ZClient location
+            var settings = _settingsService.GetLauncherSettings();
+
+            // check, do we need to find a way at all?
+            if (string.IsNullOrEmpty(settings.PathToZClient))
             {
-                try
-                {
-                    var path = (string) Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\ZLO", "ZClientPath",
-                        string.Empty);
-                    if (!string.IsNullOrEmpty(path))
-                    {
-                        _settingsService.GetLauncherSettings().PathToZClient = Path.Combine(path, "ZClient.exe");
-                    }
-                    else
-                    {
-                        _eventService.WarnEvent("ZClient path", "ZClient not detected");
-                    }
-                }
-                catch (Exception)
-                {
-                    _eventService.ErrorEvent("ZClient path", "An error occurred while trying to get the path to ZClient.");
-                }
+                settings.PathToZClient = ZClientProcessHelper.TryGetPathFromProcess(process);
             }
 
             if (_settingsService.GetLauncherSettings().TryToConnect)
@@ -204,7 +195,7 @@ namespace Launcher.ViewModel
         private void _runZClient(string path)
         {
             var runResult = _processService.Run(path, true);
-            if (!runResult)
+            if (! runResult)
             {
                 _eventService.WarnEvent("Cannot run ZClient",
                     "Wrong path or unknown error. Try again.");
@@ -241,11 +232,30 @@ namespace Launcher.ViewModel
             BottomBarDataContext.UpdateDisconnected();  // for error message showing
 
             var settings = _settingsService.GetLauncherSettings();
+
+            // try to get zClient path
+            var zClientPath = settings.PathToZClient;
+            if (string.IsNullOrEmpty(zClientPath))
+            {
+                var process = Process.GetProcessesByName(_ZClientProcessName)
+                    .FirstOrDefault();
+
+                settings.PathToZClient = process != null
+                    ? ZClientProcessHelper.TryGetPathFromProcess(process)
+                    : ZClientProcessHelper.TryGetPathFromRegistry();
+            }
+
             if (settings.RunZClient)
             {
-                if (Process.GetProcessesByName(_ZClientProcessName).Length == 0)
+                // try to run zClient
+                if (! string.IsNullOrEmpty(settings.PathToZClient))
                 {
                     _runZClient(settings.PathToZClient);
+                }
+                else
+                {
+                    _eventService.WarnEvent("ZClient autorun", "Launcher was unable to automatically detect the path to the ZClient\n" +
+                                                               "Perhaps ZClient has never been launched on your computer yet");
                 }
             }
 

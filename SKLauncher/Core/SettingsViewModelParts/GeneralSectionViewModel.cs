@@ -231,18 +231,5 @@ namespace Launcher.Core.SettingsViewModelParts
 
             ZClientPath = dialog.FileName;
         });
-
-        public ICommand DetectZClientCommand => new DelegateCommand(obj =>
-        {
-            var process = Process.GetProcessesByName("ZClient").FirstOrDefault();
-            if (process != null)
-            {
-                ZClientPath = process.MainModule.FileName;
-            }
-            else
-            {
-                _eventService.WarnEvent(SLM.DetectingZClientProcessHeader, SLM.DetectingZClientProcess);
-            }
-        });
     }
 }
