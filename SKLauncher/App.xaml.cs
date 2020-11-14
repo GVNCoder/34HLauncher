@@ -17,7 +17,7 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
 
-[assembly: AssemblyVersion("0.124.1.2")]
+[assembly: AssemblyVersion("0.124.2.2")]
 
 namespace Launcher
 {
