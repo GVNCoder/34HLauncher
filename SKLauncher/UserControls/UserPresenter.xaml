@@ -98,7 +98,8 @@
                             FontFamily="{StaticResource Ionicons}"
                             FontSize="54"
                             Foreground="#d4d4d4"
-                            Text="" />
+                            Text=""
+                            TextOptions.TextRenderingMode="Aliased" />
 
                         <!--  User Name & Id  -->
                         <TextBlock
