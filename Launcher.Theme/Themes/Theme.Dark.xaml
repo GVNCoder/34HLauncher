@@ -1281,6 +1281,7 @@
     <!--#region Button`s-->
 
     <Style x:Key="SystemOtherButtonStyleDark" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource Theme50Brush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -1288,39 +1289,42 @@
                         <Border.Background>
                             <SolidColorBrush Opacity=".0" Color="{StaticResource Theme50Color}" />
                         </Border.Background>
-                        <TextBlock.Foreground>
-                            <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
-                                <GradientStop Offset="0" Color="{StaticResource Theme50Color}" />
-                                <GradientStop Offset="1" Color="{StaticResource Theme300Color}" />
-                            </LinearGradientBrush>
-                        </TextBlock.Foreground>
+
                         <TextBlock
                             Name="PART_ContentPresenter"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontFamily="{StaticResource Ionicons}"
                             FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"
                             Text="{TemplateBinding Content}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)">
-                                        <DiscreteDoubleKeyFrame KeyTime="0" Value=".15" />
-                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_Border"
+                                        Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
+                                        To=".15"
+                                        Duration="0:0:0.07" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)">
-                                        <DiscreteDoubleKeyFrame KeyTime="0" Value=".0" />
-                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_Border"
+                                        Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
+                                        To=".0"
+                                        Duration="0:0:0.1" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#474747" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -1331,16 +1335,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
-                    <Border Name="PART_Border">
+                    <Border Name="PART_Border" TextBlock.Foreground="{StaticResource Theme50Brush}">
                         <Border.Background>
                             <SolidColorBrush Opacity=".0" Color="#FF2F2A" />
                         </Border.Background>
-                        <TextBlock.Foreground>
-                            <LinearGradientBrush StartPoint="1 0" EndPoint="1 1">
-                                <GradientStop Offset="0" Color="{StaticResource Theme50Color}" />
-                                <GradientStop Offset="1" Color="{StaticResource Theme300Color}" />
-                            </LinearGradientBrush>
-                        </TextBlock.Foreground>
+
                         <TextBlock
                             Name="PART_ContentPresenter"
                             HorizontalAlignment="Center"
@@ -1353,18 +1352,22 @@
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)">
-                                        <DiscreteDoubleKeyFrame KeyTime="0" Value=".85" />
-                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_Border"
+                                        Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
+                                        To="1"
+                                        Duration="0:0:0.07" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)">
-                                        <DiscreteDoubleKeyFrame KeyTime="0" Value=".0" />
-                                    </DoubleAnimationUsingKeyFrames>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="PART_Border"
+                                        Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Opacity)"
+                                        To=".0"
+                                        Duration="0:0:0.1" />
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
