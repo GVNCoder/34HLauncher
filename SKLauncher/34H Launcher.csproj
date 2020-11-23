@@ -97,8 +97,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DiscordRPC, Version=1.0.150.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DiscordRichPresence.1.0.150\lib\net35\DiscordRPC.dll</HintPath>
+    <Reference Include="DiscordRPC, Version=1.0.166.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiscordRichPresence.1.0.166\lib\net35\DiscordRPC.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -476,6 +476,10 @@
     <Resource Include="Notes.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Zlo4NET\src\Zlo4NET\Zlo4NET.csproj">
+      <Project>{b7b8b004-cb76-442f-bcab-7f0dbcf11bdd}</Project>
+      <Name>Zlo4NET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Launcher.Core\Launcher.Core.csproj">
       <Project>{43735012-549c-4c5e-a42d-dade29c497b6}</Project>
       <Name>Launcher.Core</Name>
@@ -491,10 +495,6 @@
     <ProjectReference Include="..\Launcher.Theme\Launcher.Theme.csproj">
       <Project>{640fbce5-c7a3-431a-bedb-7606723d2d83}</Project>
       <Name>Launcher.Theme</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\zlo4net\Zlo4NET.csproj">
-      <Project>{b7b8b004-cb76-442f-bcab-7f0dbcf11bdd}</Project>
-      <Name>Zlo4NET</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -66,14 +66,14 @@
     <Compile Include="Service\IViewModelSource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\zlo4net\Zlo4NET.csproj">
+    <Folder Include="Data\Model\Shared\" />
+    <Folder Include="Internal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Zlo4NET\src\Zlo4NET\Zlo4NET.csproj">
       <Project>{b7b8b004-cb76-442f-bcab-7f0dbcf11bdd}</Project>
       <Name>Zlo4NET</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Model\Shared\" />
-    <Folder Include="Internal\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
