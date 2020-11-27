@@ -16,7 +16,7 @@ namespace Launcher.Core
         private const string WINDOW_BACKGROUND_CONTENT = "HOST_WindowBackground";
 
         private readonly IPageNavigator _navigator;
-        private readonly Visual _windowContentRef;
+        private Visual _windowContentRef;
 
         public VisualProvider(IPageNavigator navigator)
         {
@@ -24,22 +24,6 @@ namespace Launcher.Core
 
             // track content changed
             _navigator.Navigated += _ControlVisualContentChangedHandler;
-
-            // window background content is always static
-            var rootGrid = (Grid) _navigator.Container.Parent;
-
-            foreach (var child in rootGrid.Children)
-            {
-                var control = (FrameworkElement)child;
-
-                // find window background content
-                // ReSharper disable once InvertIf
-                if (control.Name == WINDOW_BACKGROUND_CONTENT)
-                {
-                    _windowContentRef = control;
-                    break;
-                }
-            }
         }
 
         #region IVisualProvider
@@ -52,6 +36,26 @@ namespace Launcher.Core
             switch (context)
             {
                 case VisualContext.Page:
+
+                    // check if need to load window content ref
+                    if (_windowContentRef == null)
+                    {
+                        // window background content is always static
+                        var rootGrid = (Grid) _navigator.Container.Parent;
+
+                        foreach (var child in rootGrid.Children)
+                        {
+                            var control = (FrameworkElement) child;
+
+                            // find window background content
+                            // ReSharper disable once InvertIf
+                            if (control.Name == WINDOW_BACKGROUND_CONTENT)
+                            {
+                                _windowContentRef = control;
+                                break;
+                            }
+                        }
+                    }
 
                     visualContent = _windowContentRef;
                     break;
