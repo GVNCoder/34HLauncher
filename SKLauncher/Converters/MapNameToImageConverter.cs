@@ -1,11 +1,7 @@
-﻿using System.Windows.Media.Imaging;
-using System.Globalization;
-using System.Windows.Data;
-using System.Resources;
-using System.Drawing;
-using System;
+﻿using System.Globalization;
 using System.Windows.Media;
-using Launcher.Services;
+using System.Windows.Data;
+using System;
 
 namespace Launcher.Converters
 {
