@@ -485,7 +485,9 @@
     <EmbeddedResource Include="Images\Ranks\BF4\r98.png" />
     <EmbeddedResource Include="Images\Ranks\BF4\r99.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Maps\BF4\bf4_TestRange.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\MainMenu\BF3MenuCardDark.png" />
     <Resource Include="Images\MainMenu\BF3MenuCardLight.png" />
