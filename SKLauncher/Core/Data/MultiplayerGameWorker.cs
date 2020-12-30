@@ -8,7 +8,7 @@ using Zlo4NET.Api.Service;
 
 namespace Launcher.Core.Data
 {
-    public class MultiplayerGameWorker : BaseRunningGameWorker
+    public class MultiplayerGameWorker : BaseGameWorker
     {
         private ServerModelUpdatesUnit _updateServerUnit;
 

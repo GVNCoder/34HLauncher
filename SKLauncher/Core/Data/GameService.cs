@@ -52,6 +52,10 @@ namespace Launcher.Core.Data
 
         public async Task RunMultiplayer(MultiplayerJoinParams param)
         {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun) return;
+
             // disallow game run
             CanRun = false;
             // set current play mode
@@ -89,6 +93,10 @@ namespace Launcher.Core.Data
 
         public async Task RunSingleplayer(SingleplayerJoinParams param)
         {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun) return;
+
             // disallow game run
             CanRun = false;
             // set current play mode
@@ -124,6 +132,10 @@ namespace Launcher.Core.Data
 
         public async Task RunPlayground(TestRangeJoinParams param)
         {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun) return;
+
             // disallow game run
             CanRun = false;
             // set current play mode
@@ -159,6 +171,10 @@ namespace Launcher.Core.Data
 
         public async Task RunCoop(CoopJoinParams param)
         {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun) return;
+
             // disallow game run
             CanRun = false;
             // set current play mode
@@ -209,19 +225,6 @@ namespace Launcher.Core.Data
             }
         }
 
-        public void TryDetect()
-        {
-            var processes = Process.GetProcesses();
-            var process = _GetAnyGameProcess(processes);
-
-            if (process == null) return;
-
-            CanRun = false;
-            var constructorArguments = _BuildConstructorParameters(new[] { "view", "process" }, _gameControl, process);
-
-            _CreateGameWorker(ref _gameWorker, typeof(DetectedGameWorker), constructorArguments);
-        }
-
         public event EventHandler<GameCloseEventArgs> GameClose;
         public event EventHandler<GameRunErrorEventArgs> GameRunError;
 
@@ -235,6 +238,14 @@ namespace Launcher.Core.Data
 
         private void _OnGameClose(GameCloseEventArgs e) => GameClose?.Invoke(this, e);
         private void _OnGameRunError(Exception error) => GameRunError?.Invoke(this, new GameRunErrorEventArgs(error));
+
+        private bool _IsAlreadyHasRunGame()
+        {
+            var processes = Process.GetProcesses();
+            var process = _GetAnyGameProcess(processes);
+
+            return process == null;
+        }
 
         private async Task<Exception> _TryRunAndStartWorker(Type implType, GameSetting gameSettings, BaseJoinParams param, IZRunGame game)
         {

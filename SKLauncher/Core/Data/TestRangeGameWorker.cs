@@ -8,7 +8,7 @@ using Zlo4NET.Api.Service;
 
 namespace Launcher.Core.Data
 {
-    public class TestRangeGameWorker : BaseRunningGameWorker
+    public class TestRangeGameWorker : BaseGameWorker
     {
         public TestRangeGameWorker(
             IZRunGame game,

@@ -264,7 +264,6 @@ namespace Launcher.ViewModel
                 _discordPresence.Start();
             }
 
-            _gameService.TryDetect();
             _updateService.BeginUpdate();
             _zClientProcessTracker.StartTrack();
 

@@ -7,7 +7,7 @@ using Zlo4NET.Api.Service;
 
 namespace Launcher.Core.Data
 {
-    public class SingleplayerGameWorker : BaseRunningGameWorker
+    public class SingleplayerGameWorker : BaseGameWorker
     {
         public SingleplayerGameWorker(
             IZRunGame game,

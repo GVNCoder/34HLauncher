@@ -8,7 +8,7 @@ using Zlo4NET.Api.Service;
 
 namespace Launcher.Core.Data
 {
-    public class CoopGameWorker : BaseRunningGameWorker
+    public class CoopGameWorker : BaseGameWorker
     {
         public CoopGameWorker(
             IZRunGame game,

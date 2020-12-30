@@ -11,7 +11,6 @@ namespace Launcher.Core.Services
         Task RunSingleplayer(SingleplayerJoinParams param);
         Task RunPlayground(TestRangeJoinParams param);
         Task RunCoop(CoopJoinParams param);
-        void TryDetect();
 
         event EventHandler<GameCloseEventArgs> GameClose;
         event EventHandler<GameRunErrorEventArgs> GameRunError;
