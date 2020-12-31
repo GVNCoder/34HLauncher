@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using log4net;
+
 using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
