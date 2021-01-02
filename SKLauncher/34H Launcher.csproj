@@ -154,10 +154,11 @@
     <Compile Include="Core\Data\BaseJoinParams.cs" />
     <Compile Include="Core\Data\CoopGameWorker.cs" />
     <Compile Include="Core\Data\CoopJoinParams.cs" />
+    <Compile Include="Core\Data\GamaWorkerPipeLogEventArgs.cs" />
     <Compile Include="Core\Data\GameCloseEventArgs.cs" />
     <Compile Include="Core\Data\GameRunErrorEventArgs.cs" />
     <Compile Include="Core\Data\GameService.cs" />
-    <Compile Include="Core\Data\GameWorkerStateChangedEventArgs.cs" />
+    <Compile Include="Core\Data\GameWorkerErrorEventArgs.cs" />
     <Compile Include="Core\Data\IGameWorker.cs" />
     <Compile Include="Core\Data\MultiplayerGameWorker.cs" />
     <Compile Include="Core\Data\MultiplayerJoinParams.cs" />
