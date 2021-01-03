@@ -63,18 +63,13 @@ namespace Launcher.Core.Data
         public void Stop()
         {
             var closeResult = _gameProcess.TryClose();
-            if (closeResult)
-            {
-                _OnWorkComplete();
-            }
-            else
-            {
-                // log some info
-                const string message = "For some reason can't close game process";
+            if (closeResult) return;
 
-                _logger.Warn(message);
-                _OnError(message);
-            }
+            // log some info
+            const string message = "For some reason can't close game process";
+
+            _logger.Warn(message);
+            _OnError(message);
         }
 
         public event EventHandler<GameWorkerErrorEventArgs> Error;
