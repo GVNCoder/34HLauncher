@@ -223,8 +223,8 @@ namespace Launcher.Core.Data
                 var runParams = new ZCoopParams
                 {
                     PreferredArchitecture = settings.PreferredArchitecture,
-                    Difficulty = parameters.CoopMission.Difficulty,
-                    Level = parameters.CoopMission.Level,
+                    Difficulty = parameters.CoopMission?.Difficulty,
+                    Level = parameters.CoopMission?.Level,
                     Mode = parameters.Mode,
                     FriendId = parameters.FriendId
                 };
