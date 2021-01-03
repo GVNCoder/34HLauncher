@@ -6,7 +6,7 @@ using Launcher.Core.Service.Base;
 
 namespace Launcher.Core.Shared
 {
-    public class GameControlViewModel : BaseControlViewModel, IGameControl
+    public class GameControlViewModel : BaseControlViewModel
     {
         #region Dependency properties
 

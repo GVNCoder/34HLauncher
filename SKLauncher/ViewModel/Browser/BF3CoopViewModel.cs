@@ -163,9 +163,6 @@ namespace Launcher.ViewModel
 
         public ICommand HostCommand => new DelegateCommand(obj =>
         {
-            // check can run game
-            if (!_gameService.CanRun) return;
-
             // parse difficulty enum and assign for selected mission
             var difficulty = EnumUtil.Parse<ZCoopDifficulty>(DifficultyName);
             SelectedMission.Difficulty = difficulty;
@@ -183,9 +180,6 @@ namespace Launcher.ViewModel
 
         public ICommand JoinCommand => new DelegateCommand(obj =>
         {
-            // check can run game
-            if (!_gameService.CanRun) return;
-
             // create run params
             var friendId = uint.Parse(FriendId);
             var param = new CoopJoinParams

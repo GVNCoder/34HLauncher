@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 using log4net;
 
-using Launcher.Core.Service;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 
 using Ninject;
-using Ninject.Parameters;
 
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
@@ -25,220 +23,252 @@ namespace Launcher.Core.Data
         private const int __x86ProcessNameLength = 7;
 
         private readonly ISettingsService _settingsService;
-        private readonly IGameControl _gameControl;
         private readonly IZGameFactory _gameFactory;
         private readonly IKernel _kernel;
         private readonly ILog _log;
         
-        private BaseGameWorker _gameWorker;
+        private bool _canRunNewGame;
+        private ZPlayMode _currentPlayMode;
 
         public GameService(
             IZApi api,
             App application,
-            ISettingsService settingsService,
-            IViewModelSource viewModelLocator)
+            ISettingsService settingsService)
         {
-            _gameControl = viewModelLocator.GetExisting<GameControlViewModel>();
-
             _kernel = Resolver.Kernel;
 
             _gameFactory = api.GameFactory;
             _settingsService = settingsService;
             _log = application.Logger;
 
-            CanRun = true;
+            _canRunNewGame = true;
+            _currentPlayMode = ZPlayMode.None;
         }
 
         #region IGameService
 
-        public async Task RunMultiplayer(MultiplayerJoinParams param)
+        public async Task RunMultiplayer(MultiplayerJoinParams parameters)
         {
             // check possibility to run a game
             var possibleToRun = _IsAlreadyHasRunGame();
-            if (! possibleToRun) return;
-
-            // disallow game run
-            CanRun = false;
-            // set current play mode
-            CurrentPlayMode = ZPlayMode.Multiplayer;
-
-            // get game setting
-            var settings = _GetGameSettings(param.Game);
-            // create run params
-            var runParams = new ZMultiParams
+            if (! possibleToRun || ! _canRunNewGame)
             {
-                Game = param.Game,
-                PreferredArchitecture = settings.PreferredArchitecture,
-                Role = param.PlayerRole,
-                ServerId = param.ServerModel.Id
-            };
-            try
-            {
-                // create game for run
-                var gameForRun = await _gameFactory.CreateMultiAsync(runParams);
-                var error = await _TryRunAndStartWorker(typeof(MultiplayerGameWorker), settings, param, gameForRun);
-
-                // throw run error if exists
-                if (error != null) throw error;
-            }
-            catch (Exception exc)
-            {
-                // raise error event
-                _OnGameRunError(exc);
-                // allow to run
-                CanRun = true;
-                // reset current play mode
-                CurrentPlayMode = null;
-            }
-        }
-
-        public async Task RunSingleplayer(SingleplayerJoinParams param)
-        {
-            // check possibility to run a game
-            var possibleToRun = _IsAlreadyHasRunGame();
-            if (! possibleToRun) return;
-
-            // disallow game run
-            CanRun = false;
-            // set current play mode
-            CurrentPlayMode = ZPlayMode.Singleplayer;
-
-            // get game setting
-            var settings = _GetGameSettings(param.Game);
-            // create run params
-            var runParams = new ZSingleParams
-            {
-                Game = param.Game,
-                PreferredArchitecture = settings.PreferredArchitecture
-            };
-            try
-            {
-                // create game for run
-                var gameForRun = await _gameFactory.CreateSingleAsync(runParams);
-                var error = await _TryRunAndStartWorker(typeof(SingleplayerGameWorker), settings, param, gameForRun);
-
-                // throw run error if exists
-                if (error != null) throw error;
-            }
-            catch (Exception exc)
-            {
-                // raise error event
-                _OnGameRunError(exc);
-                // allow to run
-                CanRun = true;
-                // reset current play mode
-                CurrentPlayMode = null;
-            }
-        }
-
-        public async Task RunPlayground(TestRangeJoinParams param)
-        {
-            // check possibility to run a game
-            var possibleToRun = _IsAlreadyHasRunGame();
-            if (! possibleToRun) return;
-
-            // disallow game run
-            CanRun = false;
-            // set current play mode
-            CurrentPlayMode = ZPlayMode.TestRange;
-
-            // get game setting
-            var settings = _GetGameSettings(param.Game);
-            // create run params
-            var runParams = new ZTestRangeParams
-            {
-                Game = param.Game,
-                PreferredArchitecture = settings.PreferredArchitecture
-            };
-            try
-            {
-                // create game for run
-                var gameForRun = await _gameFactory.CreateTestRangeAsync(runParams);
-                var error = await _TryRunAndStartWorker(typeof(TestRangeGameWorker), settings, param, gameForRun);
-
-                // throw run error if exists
-                if (error != null) throw error;
-            }
-            catch (Exception exc)
-            {
-                // raise error event
-                _OnGameRunError(exc);
-                // allow to run
-                CanRun = true;
-                // reset current play mode
-                CurrentPlayMode = null;
-            }
-        }
-
-        public async Task RunCoop(CoopJoinParams param)
-        {
-            // check possibility to run a game
-            var possibleToRun = _IsAlreadyHasRunGame();
-            if (! possibleToRun) return;
-
-            // disallow game run
-            CanRun = false;
-            // set current play mode
-            CurrentPlayMode = param.Mode;
-
-            // get game setting
-            var settings = _GetGameSettings(param.Game);
-            // create run params
-            ZCoopParams runParams = null;
-            if (param.Mode == ZPlayMode.CooperativeClient)
-            {
-                runParams = new ZCoopParams
-                {
-                    PreferredArchitecture = settings.PreferredArchitecture,
-                    Mode = param.Mode,
-                    FriendId = param.FriendId
-                };
+                _OnCreationError("You already have an active game");
             }
             else
             {
-                runParams = new ZCoopParams
+                // set service state
+                _canRunNewGame = false;
+                _currentPlayMode = ZPlayMode.Multiplayer;
+
+                // get game setting
+                var settings = _GetGameSettings(parameters.Game);
+
+                // create run params
+                var runParams = new ZMultiParams
                 {
+                    Game = parameters.Game,
                     PreferredArchitecture = settings.PreferredArchitecture,
-                    Difficulty = param.CoopMission.Difficulty,
-                    Level = param.CoopMission.Level,
-                    Mode = param.Mode,
-                    FriendId = param.FriendId
+                    Role = parameters.PlayerRole,
+                    ServerId = parameters.ServerModel.Id
                 };
-            }
 
-            try
-            {
-                // create game for run
-                var gameForRun = await _gameFactory.CreateCoOpAsync(runParams);
-                var error = await _TryRunAndStartWorker(typeof(CoopGameWorker), settings, param, gameForRun);
+                try
+                {
+                    // create game to run
+                    var gameProcess = await _gameFactory.CreateMultiAsync(runParams);
 
-                // throw run error if exists
-                if (error != null) throw error;
-            }
-            catch (Exception exc)
-            {
-                // raise error event
-                _OnGameRunError(exc);
-                // allow to run
-                CanRun = true;
-                // reset current play mode
-                CurrentPlayMode = null;
+                    // create worker
+                    var worker = _kernel.Get<MultiplayerGameWorker>();
+                    worker.Complete += (sender, e) => _canRunNewGame = true;
+
+                    // pass game created event
+                    _OnCreated(worker, "Multiplayer", parameters.ServerModel.Name);
+
+                    // run game
+                    await worker.Begin(gameProcess, settings);
+                }
+                catch (Exception exc)
+                {
+                    // raise error event
+                    _OnCreationError(exc.Message);
+
+                    // reset service state
+                    _canRunNewGame = true;
+                    _currentPlayMode = ZPlayMode.None;
+                }
             }
         }
 
-        public event EventHandler<GameCloseEventArgs> GameClose;
-        public event EventHandler<GameRunErrorEventArgs> GameRunError;
+        public async Task RunSingleplayer(SingleplayerJoinParams parameters)
+        {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun || ! _canRunNewGame)
+            {
+                _OnCreationError("You already have an active game");
+            }
+            else
+            {
+                // set service state
+                _canRunNewGame = false;
+                _currentPlayMode = ZPlayMode.Multiplayer;
 
-        public bool CanRun { get; private set; }
-        public BaseGameWorker CurrentGame => _gameWorker;
-        public ZPlayMode? CurrentPlayMode { get; private set; }
+                // get game setting
+                var settings = _GetGameSettings(parameters.Game);
+
+                // create run params
+                var runParams = new ZSingleParams
+                {
+                    Game = parameters.Game,
+                    PreferredArchitecture = settings.PreferredArchitecture
+                };
+
+                try
+                {
+                    // create game to run
+                    var gameProcess = await _gameFactory.CreateSingleAsync(runParams);
+
+                    // create worker
+                    var worker = _kernel.Get<MultiplayerGameWorker>();
+                    worker.Complete += (sender, e) => _canRunNewGame = true;
+
+                    // pass game created event
+                    _OnCreated(worker, "Singleplayer", "Campaign");
+
+                    // run game
+                    await worker.Begin(gameProcess, settings);
+                }
+                catch (Exception exc)
+                {
+                    // raise error event
+                    _OnCreationError(exc.Message);
+
+                    // reset service state
+                    _canRunNewGame = true;
+                    _currentPlayMode = ZPlayMode.None;
+                }
+            }
+        }
+
+        public async Task RunPlayground(TestRangeJoinParams parameters)
+        {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun || ! _canRunNewGame)
+            {
+                _OnCreationError("You already have an active game");
+            }
+            else
+            {
+                // set service state
+                _canRunNewGame = false;
+                _currentPlayMode = ZPlayMode.Multiplayer;
+
+                // get game setting
+                var settings = _GetGameSettings(parameters.Game);
+
+                // create run params
+                var runParams = new ZTestRangeParams
+                {
+                    Game = parameters.Game,
+                    PreferredArchitecture = settings.PreferredArchitecture
+                };
+
+                try
+                {
+                    // create game to run
+                    var gameProcess = await _gameFactory.CreateTestRangeAsync(runParams);
+
+                    // create worker
+                    var worker = _kernel.Get<TestRangeGameWorker>();
+                    worker.Complete += (sender, e) => _canRunNewGame = true;
+
+                    // pass game created event
+                    _OnCreated(worker, "Singleplayer", "Playground");
+
+                    // run game
+                    await worker.Begin(gameProcess, settings);
+                }
+                catch (Exception exc)
+                {
+                    // raise error event
+                    _OnCreationError(exc.Message);
+
+                    // reset service state
+                    _canRunNewGame = true;
+                    _currentPlayMode = ZPlayMode.None;
+                }
+            }
+        }
+
+        public async Task RunCoop(CoopJoinParams parameters)
+        {
+            // check possibility to run a game
+            var possibleToRun = _IsAlreadyHasRunGame();
+            if (! possibleToRun || ! _canRunNewGame)
+            {
+                _OnCreationError("You already have an active game");
+            }
+            else
+            {
+                // set service state
+                _canRunNewGame = false;
+                _currentPlayMode = ZPlayMode.Multiplayer;
+
+                // get game setting
+                var settings = _GetGameSettings(parameters.Game);
+
+                // create run params
+                var runParams = new ZCoopParams
+                {
+                    PreferredArchitecture = settings.PreferredArchitecture,
+                    Difficulty = parameters.CoopMission.Difficulty,
+                    Level = parameters.CoopMission.Level,
+                    Mode = parameters.Mode,
+                    FriendId = parameters.FriendId
+                };
+
+                try
+                {
+                    // create game to run
+                    var gameProcess = await _gameFactory.CreateCoOpAsync(runParams);
+
+                    // create worker
+                    var worker = _kernel.Get<CoopGameWorker>();
+                    worker.Complete += (sender, e) => _canRunNewGame = true;
+
+                    // pass game created event
+                    _OnCreated(worker, "Coop", parameters.Mode == ZPlayMode.CooperativeClient ? "Client" : "Host");
+
+                    // run game
+                    await worker.Begin(gameProcess, settings);
+                }
+                catch (Exception exc)
+                {
+                    // raise error event
+                    _OnCreationError(exc.Message);
+
+                    // reset service state
+                    _canRunNewGame = true;
+                    _currentPlayMode = ZPlayMode.None;
+                }
+            }
+        }
+
+        public event EventHandler<GameCreatedEnventArgs> GameCreated;
+        public event EventHandler<GameCreationErrorEventArgs> GameCreationError;
+
+        public ZPlayMode CurrentPlayMode => _currentPlayMode;
 
         #endregion
 
         #region Private helpers
 
-        private void _OnGameClose(GameCloseEventArgs e) => GameClose?.Invoke(this, e);
-        private void _OnGameRunError(Exception error) => GameRunError?.Invoke(this, new GameRunErrorEventArgs(error));
+        private void _OnCreationError(string message) => GameCreationError?.Invoke(this, new GameCreationErrorEventArgs(message));
+
+        private void _OnCreated(IGameWorker worker, string gameModeName, string placementName) =>
+            GameCreated?.Invoke(this, new GameCreatedEnventArgs(worker, gameModeName, placementName));
 
         private bool _IsAlreadyHasRunGame()
         {
@@ -246,64 +276,6 @@ namespace Launcher.Core.Data
             var process = _GetAnyGameProcess(processes);
 
             return process == null;
-        }
-
-        private async Task<Exception> _TryRunAndStartWorker(Type implType, GameSetting gameSettings, BaseJoinParams param, IZRunGame game)
-        {
-            Exception exception = null;
-            try
-            {
-                var constructorParams = _BuildConstructorParameters(new[] { "game", "gameSettings", "param", "view" },
-                    game, gameSettings, param, _gameControl);
-
-                _CreateGameWorker(ref _gameWorker, implType, constructorParams);
-
-                var runResult = await game.RunAsync();
-                if (runResult != ZRunResult.Success)
-                {
-                    throw new Exception("Cannot run game for unknown reason.");
-                }
-            }
-            catch (Exception exc)
-            {
-                _DestroyGameAssistant(ref _gameWorker);
-                exception = exc;
-            }
-
-            return exception;
-        }
-
-        private BaseGameWorker _BuildGameWorker(Type implType, IParameter[] parameters)
-            => (BaseGameWorker)_kernel.Get(implType, parameters);
-
-        private static IParameter[] _BuildConstructorParameters(IEnumerable<string> paramNames, params object[] values)
-            => paramNames.Select((t, i) => new ConstructorArgument(t, values[i])).Cast<IParameter>().ToArray();
-
-        // ReSharper disable once RedundantAssignment
-        private void _CreateGameWorker(ref BaseGameWorker gameWorkerRef, Type implType, IParameter[] parameters)
-        {
-            gameWorkerRef = _BuildGameWorker(implType, parameters);
-            gameWorkerRef.Done += _OnWorkCompeteHandler;
-            gameWorkerRef.BeginWork();
-        }
-
-        private void _DestroyGameAssistant(ref BaseGameWorker gameWorkerRef)
-        {
-            gameWorkerRef.Done -= _OnWorkCompeteHandler;
-            gameWorkerRef = null;
-        }
-
-        private void _OnWorkCompeteHandler(object sender, GameCloseEventArgs e)
-        {
-            CanRun = true;
-            // reset current play mode
-            CurrentPlayMode = null;
-
-            _DestroyGameAssistant(ref _gameWorker);
-            if (!string.IsNullOrEmpty(e.PipeLog))
-            {
-                _OnGameClose(e);
-            }
         }
 
         private static Process _GetAnyGameProcess(IEnumerable<Process> processes)

@@ -179,8 +179,6 @@ namespace Launcher.Core.Bases
 
         protected void _JoinGame(ZServerBase server, ZRole role)
         {
-            // check can run game
-            if (! _gameService.CanRun) return;
             // create run params
             var runParams = new MultiplayerJoinParams
             {
@@ -274,19 +272,6 @@ namespace Launcher.Core.Bases
 
             // begin ping calculation
             _collectionChangedHandler(null, null);
-            // trying to restore discord server updates
-            if (_gameService.CurrentPlayMode == ZPlayMode.Multiplayer)
-            {
-                var param = (MultiplayerJoinParams) _gameService.CurrentGame.Params;
-                var currentGame = (MultiplayerGameWorker) _gameService.CurrentGame;
-                var serverModel = param.ServerModel;
-                var compatibleServerModel =
-                    collection.FirstOrDefault(s => s.Game == param.Game && s.Id == serverModel.Id);
-
-                if (compatibleServerModel == null) return;
-
-                currentGame.RelinkServer(compatibleServerModel);
-            }
         }
 
         private async void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)

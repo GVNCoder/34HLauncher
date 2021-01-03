@@ -148,9 +148,6 @@ namespace Launcher.ViewModel
             }
             else
             {
-                // check can run game
-                if (! _gameService.CanRun) return;
-
                 if (playMode == ZPlayMode.Singleplayer)
                 {
                     // create run params
