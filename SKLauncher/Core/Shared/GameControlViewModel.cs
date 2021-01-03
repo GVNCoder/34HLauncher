@@ -1,54 +1,79 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+
+using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service.Base;
+using Launcher.Core.Services;
 
 namespace Launcher.Core.Shared
 {
     public class GameControlViewModel : BaseControlViewModel
     {
+        private readonly IEventService _eventService;
+
+        private IGameWorker _worker;
+
+        public GameControlViewModel(
+            IGameService gameService
+            , IEventService eventService)
+        {
+            _eventService = eventService;
+
+            // track service events
+            gameService.GameCreated += _GameCreatedHandler;
+        }
+
         #region Dependency properties
 
-        public string Text
+        public string MainText
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (string)GetValue(MainTextProperty);
+            set => SetValue(MainTextProperty, value);
         }
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(GameControlViewModel), new PropertyMetadata("Default text"));
+        public static readonly DependencyProperty MainTextProperty =
+            DependencyProperty.Register("MainText", typeof(string), typeof(GameControlViewModel), new PropertyMetadata("Game"));
 
-        public string ToolTipContent
+        public string GameModeName
         {
-            get => (string)GetValue(ToolTipContentProperty);
-            set => SetValue(ToolTipContentProperty, value);
+            get => (string) Dispatcher.Invoke(() => GetValue(GameModeNameProperty));
+            set => Dispatcher.Invoke(() => SetValue(GameModeNameProperty, value));
         }
-        public static readonly DependencyProperty ToolTipContentProperty =
-            DependencyProperty.Register("ToolTipContent", typeof(string), typeof(GameControlViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty GameModeNameProperty =
+            DependencyProperty.Register("GameModeName", typeof(string), typeof(GameControlViewModel), new PropertyMetadata(string.Empty));
 
-        public bool InLoadingState
+        public string PlacementName
         {
-            get => (bool)GetValue(InLoadingStateProperty);
-            set => SetValue(InLoadingStateProperty, value);
+            get => (string)Dispatcher.Invoke(() => GetValue(PlacementNameProperty));
+            set => Dispatcher.Invoke(() => SetValue(PlacementNameProperty, value));
         }
-        public static readonly DependencyProperty InLoadingStateProperty =
-            DependencyProperty.Register("InLoadingState", typeof(bool), typeof(GameControlViewModel), new PropertyMetadata(true));
+        public static readonly DependencyProperty PlacementNameProperty =
+            DependencyProperty.Register("PlacementName", typeof(string), typeof(GameControlViewModel), new PropertyMetadata(string.Empty));
 
-        public Visibility GameControlVisibility
+        public bool IsGameControlVisible
         {
-            get => (Visibility)GetValue(GameControlVisibilityProperty);
-            set => SetValue(GameControlVisibilityProperty, value);
+            get => (bool)Dispatcher.Invoke(() => GetValue(IsGameControlVisibleProperty));
+            set => Dispatcher.Invoke(() => SetValue(IsGameControlVisibleProperty, value));
         }
-        public static readonly DependencyProperty GameControlVisibilityProperty =
-            DependencyProperty.Register("GameControlVisibility", typeof(Visibility), typeof(GameControlViewModel), new PropertyMetadata(Visibility.Collapsed));
+        public static readonly DependencyProperty IsGameControlVisibleProperty =
+            DependencyProperty.Register("IsGameControlVisible", typeof(bool), typeof(GameControlViewModel), new PropertyMetadata(false));
 
-        public bool CanClose
+        public bool IsLoadingIndicatorVisible
         {
-            get => (bool)GetValue(CanCloseProperty);
-            set => SetValue(CanCloseProperty, value);
+            get => (bool) Dispatcher.Invoke(() => GetValue(IsLoadingIndicatorVisibleProperty));
+            set => Dispatcher.Invoke(() => SetValue(IsLoadingIndicatorVisibleProperty, value));
         }
-        public static readonly DependencyProperty CanCloseProperty =
-            DependencyProperty.Register("CanClose", typeof(bool), typeof(GameControlViewModel), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsLoadingIndicatorVisibleProperty =
+            DependencyProperty.Register("IsLoadingIndicatorVisible", typeof(bool), typeof(GameControlViewModel), new PropertyMetadata(true));
+
+        public bool IsCloseButtonVisible
+        {
+            get => (bool) Dispatcher.Invoke(() => GetValue(IsCloseButtonVisibleProperty));
+            set => Dispatcher.Invoke(() => SetValue(IsCloseButtonVisibleProperty, value));
+        }
+        public static readonly DependencyProperty IsCloseButtonVisibleProperty =
+            DependencyProperty.Register("IsCloseButtonVisible", typeof(bool), typeof(GameControlViewModel), new PropertyMetadata(false));
 
         #endregion
 
@@ -56,8 +81,7 @@ namespace Launcher.Core.Shared
 
         public ICommand CloseCommand => new DelegateCommand(obj =>
         {
-            CanClose = false;
-            CloseClick?.Invoke(this, EventArgs.Empty);
+            _worker.Stop();
         });
 
         public override ICommand LoadedCommand => throw new NotImplementedException();
@@ -66,46 +90,59 @@ namespace Launcher.Core.Shared
 
         #endregion
 
-        #region IGameControl
+        #region Private helpers
 
-        public event EventHandler CloseClick;
-
-        public void Show()
+        private void _GameCreatedHandler(object sender, GameCreatedEnventArgs e)
         {
-            Dispatcher.Invoke(() =>
-            {
-                if (GameControlVisibility == Visibility.Visible) return;
-                GameControlVisibility = Visibility.Visible;
-            });
+            _worker = e.Worker;
+
+            // set visuals state
+            IsGameControlVisible = true;
+            GameModeName = e.GamePlayModeName;
+            PlacementName = e.PlacementName;
+
+            // track game worker events
+            _worker.Error += _WorkerErrorHandler;
+            _worker.Complete += _WorkerCompleteHandler;
+            _worker.GamePipe += _WorkerGamePipeHandler;
+            _worker.CanCloseGame += _WorkerCanCloseHandler;
+            _worker.GameLoadingCompleted += _WorkerGameLoadingCompleted;
         }
 
-        public void SetText(string text)
+        private void _WorkerGameLoadingCompleted(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(() => Text = text);
+            // change internal state
+            IsLoadingIndicatorVisible = false;
         }
 
-        public void SetToolTipText(string text)
+        private void _WorkerCanCloseHandler(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(() => ToolTipContent = text);
+            // change internal state
+            IsCloseButtonVisible = true;
         }
 
-        public void SetState(bool isLoading)
+        private void _WorkerGamePipeHandler(object sender, GamaWorkerPipeLogEventArgs e)
         {
-            Dispatcher.Invoke(() => InLoadingState = isLoading);
+            _eventService.InfoEvent("Game run", e.PipeLog);
         }
 
-        public void SetCanClose(bool canClose)
+        private void _WorkerCompleteHandler(object sender, EventArgs e)
         {
-            Dispatcher.Invoke(() => { CanClose = canClose; });
+            // change internal state
+            IsGameControlVisible = false;
+            IsCloseButtonVisible = false;
+            IsLoadingIndicatorVisible = true;
+
+            _worker.Error -= _WorkerErrorHandler;
+            _worker.Complete -= _WorkerCompleteHandler;
+            _worker.GamePipe -= _WorkerGamePipeHandler;
+            _worker.CanCloseGame -= _WorkerCanCloseHandler;
+            _worker.GameLoadingCompleted -= _WorkerGameLoadingCompleted;
         }
 
-        public void Hide()
+        private void _WorkerErrorHandler(object sender, GameWorkerErrorEventArgs e)
         {
-            Dispatcher.Invoke(() =>
-            {
-                if (GameControlVisibility == Visibility.Collapsed) return;
-                GameControlVisibility = Visibility.Collapsed;
-            });
+            _eventService.WarnEvent("Game run", e.Message);
         }
 
         #endregion

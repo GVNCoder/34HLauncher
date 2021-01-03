@@ -9,16 +9,33 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    ToolTip="{Binding ToolTipContent}"
-    Visibility="{Binding GameControlVisibility}"
+    Visibility="{Binding IsGameControlVisible, Converter={StaticResource b2vConverter}}"
     mc:Ignorable="d">
+
+    <UserControl.ToolTip>
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <TextBlock FontSize="14">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} | {1}">
+                        <MultiBinding.Bindings>
+                            <Binding Path="GameModeName" />
+                            <Binding Path="PlacementName" />
+                        </MultiBinding.Bindings>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+    </UserControl.ToolTip>
 
     <!--  Define style  -->
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Opacity=".15" Color="#00DD4E" />
+                    <LinearGradientBrush Opacity=".8">
+                        <GradientStop Offset="0" Color="#28c1a0" />
+                        <GradientStop Offset="1" Color="#1c9379" />
+                    </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
             <Setter Property="Padding" Value="10,0" />
@@ -28,9 +45,12 @@
             <Style.Triggers>
                 <Trigger Property="UserControl.IsMouseOver" Value="True">
                     <Setter Property="UserControl.Cursor" Value="Hand" />
-                    <Setter Property="Background">
+                    <Setter Property="UserControl.Background">
                         <Setter.Value>
-                            <SolidColorBrush Opacity=".25" Color="#00DD4E" />
+                            <LinearGradientBrush>
+                                <GradientStop Offset="0" Color="#28c1a0" />
+                                <GradientStop Offset="1" Color="#1c9379" />
+                            </LinearGradientBrush>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -40,24 +60,18 @@
 
     <Grid>
         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-            <TextBlock
-                Margin="0,0,0,1"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource OpenSans}"
-                FontWeight="SemiBold"
-                Foreground="#EAEAEA"
-                Text="{Binding Text}" />
+
+            <!--  ReSharper disable once Xaml.BindingWithoutContextNotResolved  -->
             <TextBlock
                 x:Name="PART_Loading"
-                Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource Ionicons}"
-                FontSize="14"
-                Foreground="#EAEAEA"
+                FontSize="16"
+                Foreground="#1B1B1B"
                 RenderTransformOrigin=".5 .5"
                 Text=""
                 TextOptions.TextHintingMode="Animated"
-                Visibility="{Binding InLoadingState, Converter={StaticResource b2vConverter}}">
+                Visibility="{Binding IsLoadingIndicatorVisible, Converter={StaticResource b2vConverter}}">
                 <TextBlock.RenderTransform>
                     <RotateTransform />
                 </TextBlock.RenderTransform>
@@ -71,22 +85,30 @@
                                     Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(RotateTransform.Angle)"
                                     From="0"
                                     To="360"
-                                    Duration="0:0:1.5" />
+                                    Duration="0:0:2" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
+
+            <TextBlock
+                Margin="20,0"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource OpenSans}"
+                FontWeight="Bold"
+                Foreground="#1B1B1B"
+                Text="{Binding MainText}" />
+
             <controls:GlyphButton
                 x:Name="PART_CloseButton"
-                Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 Command="{Binding CloseCommand}"
-                Foreground="#EAEAEA"
-                Icon=""
+                Foreground="#1B1B1B"
+                Icon=""
                 IconSize="16"
                 TextOptions.TextRenderingMode="Aliased"
-                Visibility="{Binding CanClose, Converter={StaticResource b2vConverter}}">
+                Visibility="{Binding IsCloseButtonVisible, Converter={StaticResource b2vConverter}}">
                 <controls:GlyphButton.Triggers>
                     <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
                         <BeginStoryboard>
