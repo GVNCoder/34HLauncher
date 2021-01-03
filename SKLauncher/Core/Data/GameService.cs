@@ -112,7 +112,7 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = ZPlayMode.Multiplayer;
+                _currentPlayMode = ZPlayMode.Singleplayer;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
@@ -130,7 +130,7 @@ namespace Launcher.Core.Data
                     var gameProcess = await _gameFactory.CreateSingleAsync(runParams);
 
                     // create worker
-                    var worker = _kernel.Get<MultiplayerGameWorker>();
+                    var worker = _kernel.Get<SingleplayerGameWorker>();
                     worker.Complete += (sender, e) => _canRunNewGame = true;
 
                     // pass game created event
@@ -163,7 +163,7 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = ZPlayMode.Multiplayer;
+                _currentPlayMode = ZPlayMode.TestRange;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
@@ -214,7 +214,7 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = ZPlayMode.Multiplayer;
+                _currentPlayMode = parameters.Mode;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
