@@ -56,6 +56,7 @@ namespace Launcher.Core.Data
 
                 _logger.Error(message);
                 _OnError(message);
+                _OnWorkComplete();
             }
         }
 
