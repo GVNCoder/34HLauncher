@@ -80,7 +80,11 @@ namespace Launcher.Core.Data
 
                     // create worker
                     var worker = _kernel.Get<MultiplayerGameWorker>();
-                    worker.Complete += (sender, e) => _canRunNewGame = true;
+                    worker.Complete += (sender, e) =>
+                    {
+                        _canRunNewGame = true;
+                        _currentPlayMode = ZPlayMode.None;
+                    };
 
                     // pass game created event
                     _OnCreated(worker, "Multiplayer", parameters.ServerModel.Name);
@@ -131,7 +135,11 @@ namespace Launcher.Core.Data
 
                     // create worker
                     var worker = _kernel.Get<SingleplayerGameWorker>();
-                    worker.Complete += (sender, e) => _canRunNewGame = true;
+                    worker.Complete += (sender, e) =>
+                    {
+                        _canRunNewGame = true;
+                        _currentPlayMode = ZPlayMode.None;
+                    };
 
                     // pass game created event
                     _OnCreated(worker, "Singleplayer", "Campaign");
@@ -182,7 +190,11 @@ namespace Launcher.Core.Data
 
                     // create worker
                     var worker = _kernel.Get<TestRangeGameWorker>();
-                    worker.Complete += (sender, e) => _canRunNewGame = true;
+                    worker.Complete += (sender, e) =>
+                    {
+                        _canRunNewGame = true;
+                        _currentPlayMode = ZPlayMode.None;
+                    };
 
                     // pass game created event
                     _OnCreated(worker, "Singleplayer", "Playground");
@@ -236,7 +248,11 @@ namespace Launcher.Core.Data
 
                     // create worker
                     var worker = _kernel.Get<CoopGameWorker>();
-                    worker.Complete += (sender, e) => _canRunNewGame = true;
+                    worker.Complete += (sender, e) =>
+                    {
+                        _canRunNewGame = true;
+                        _currentPlayMode = ZPlayMode.None;
+                    };
 
                     // pass game created event
                     _OnCreated(worker, "Coop", parameters.Mode == ZPlayMode.CooperativeClient ? "Client" : "Host");
@@ -259,6 +275,7 @@ namespace Launcher.Core.Data
         public event EventHandler<GameCreatedEnventArgs> GameCreated;
         public event EventHandler<GameCreationErrorEventArgs> GameCreationError;
 
+        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
         public ZPlayMode CurrentPlayMode => _currentPlayMode;
 
         #endregion
