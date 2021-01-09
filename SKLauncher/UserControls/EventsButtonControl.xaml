@@ -22,10 +22,9 @@
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Opacity=".15" Color="#3EB5F1" />
+                    <SolidColorBrush Opacity=".05" Color="White" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="Padding" Value="10,0" />
             <Setter Property="ToolTipService.Placement" Value="Top" />
             <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
             <Style.Triggers>
@@ -33,7 +32,7 @@
                     <Setter Property="UserControl.Cursor" Value="Hand" />
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Opacity=".25" Color="#3EB5F1" />
+                            <SolidColorBrush Opacity=".1" Color="White" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -53,30 +52,44 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3" />
+        </Grid.RowDefinitions>
 
-        <TextBlock
+        <Rectangle
+            Grid.Row="1"
             Grid.Column="0"
-            VerticalAlignment="Center"
-            FontFamily="{StaticResource Ionicons}"
-            FontSize="18"
-            Foreground="#EAEAEA"
-            Text=""
-            TextOptions.TextRenderingMode="Aliased" />
+            Grid.ColumnSpan="2"
+            Fill="#3EB5F1" />
 
-        <Ellipse
+        <Grid
+            Grid.Row="0"
             Grid.Column="0"
-            Width="{StaticResource SomethingNewIndicatorDiameter}"
-            Height="{StaticResource SomethingNewIndicatorDiameter}"
-            Margin="0,0,0,7"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Fill="#FF322C"
-            StrokeThickness="1"
-            Visibility="{Binding HasSomethingNew, Mode=OneWay, Converter={StaticResource b2vConverter}}">
-            <Ellipse.Stroke>
-                <SolidColorBrush Color="#EAEAEA" />
-            </Ellipse.Stroke>
-        </Ellipse>
+            Grid.ColumnSpan="2"
+            Margin="10,0">
+            <TextBlock
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource Ionicons}"
+                FontSize="18"
+                Foreground="#EAEAEA"
+                Text=""
+                TextOptions.TextRenderingMode="Aliased" />
+
+            <Ellipse
+                Width="{StaticResource SomethingNewIndicatorDiameter}"
+                Height="{StaticResource SomethingNewIndicatorDiameter}"
+                Margin="0,0,0,7"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Fill="#FF322C"
+                StrokeThickness="1"
+                Visibility="{Binding HasSomethingNew, Mode=OneWay, Converter={StaticResource b2vConverter}}">
+                <Ellipse.Stroke>
+                    <SolidColorBrush Color="#EAEAEA" />
+                </Ellipse.Stroke>
+            </Ellipse>
+        </Grid>
     </Grid>
 
 </UserControl>

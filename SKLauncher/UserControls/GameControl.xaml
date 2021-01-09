@@ -12,7 +12,7 @@
     Visibility="{Binding IsGameControlVisible, Converter={StaticResource b2vConverter}}"
     mc:Ignorable="d">
 
-    <UserControl.ToolTip>
+    <!--<UserControl.ToolTip>
         <StackPanel Margin="5" Orientation="Horizontal">
             <TextBlock FontSize="14">
                 <TextBlock.Text>
@@ -25,20 +25,20 @@
                 </TextBlock.Text>
             </TextBlock>
         </StackPanel>
-    </UserControl.ToolTip>
+    </UserControl.ToolTip>-->
 
     <!--  Define style  -->
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <LinearGradientBrush Opacity=".8">
+                    <!--<LinearGradientBrush Opacity=".8">
                         <GradientStop Offset="0" Color="#28c1a0" />
                         <GradientStop Offset="1" Color="#1c9379" />
-                    </LinearGradientBrush>
+                    </LinearGradientBrush>-->
+                    <SolidColorBrush Opacity=".05" Color="White" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="Padding" Value="10,0" />
             <Setter Property="ToolTipService.Placement" Value="Top" />
             <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
             <Setter Property="ToolTipService.ShowDuration" Value="{x:Static system:Int32.MaxValue}" />
@@ -47,10 +47,11 @@
                     <Setter Property="UserControl.Cursor" Value="Hand" />
                     <Setter Property="UserControl.Background">
                         <Setter.Value>
-                            <LinearGradientBrush>
+                            <!--<LinearGradientBrush>
                                 <GradientStop Offset="0" Color="#28c1a0" />
                                 <GradientStop Offset="1" Color="#1c9379" />
-                            </LinearGradientBrush>
+                            </LinearGradientBrush>-->
+                            <SolidColorBrush Opacity=".1" Color="White" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -59,18 +60,32 @@
     </UserControl.Style>
 
     <Grid>
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3" />
+        </Grid.RowDefinitions>
 
-            <!--  ReSharper disable once Xaml.BindingWithoutContextNotResolved  -->
+        <Rectangle
+            Grid.Row="1"
+            Height="3"
+            Fill="#41E171" />
+
+        <StackPanel
+            Grid.Row="0"
+            Margin="10,0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+
             <TextBlock
                 x:Name="PART_Loading"
+                Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource Ionicons}"
                 FontSize="16"
-                Foreground="#1B1B1B"
+                Foreground="WhiteSmoke"
                 RenderTransformOrigin=".5 .5"
                 Text=""
-                TextOptions.TextHintingMode="Animated"
+                TextOptions.TextRenderingMode="Aliased"
                 Visibility="{Binding IsLoadingIndicatorVisible, Converter={StaticResource b2vConverter}}">
                 <TextBlock.RenderTransform>
                     <RotateTransform />
@@ -85,26 +100,36 @@
                                     Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(RotateTransform.Angle)"
                                     From="0"
                                     To="360"
-                                    Duration="0:0:2" />
+                                    Duration="0:0:1.5" />
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
 
-            <TextBlock
-                Margin="20,0"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource OpenSans}"
-                FontWeight="Bold"
-                Foreground="#1B1B1B"
-                Text="{Binding MainText}" />
+            <StackPanel Orientation="Vertical">
+                <TextBlock
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource OpenSans}"
+                    FontWeight="SemiBold"
+                    Foreground="WhiteSmoke">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} | {1}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="GameModeName" />
+                                <Binding Path="PlacementName" />
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
 
             <controls:GlyphButton
                 x:Name="PART_CloseButton"
                 VerticalAlignment="Center"
                 Command="{Binding CloseCommand}"
-                Foreground="#1B1B1B"
+                Foreground="WhiteSmoke"
                 Icon=""
                 IconSize="16"
                 TextOptions.TextRenderingMode="Aliased"
