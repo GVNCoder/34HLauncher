@@ -7,9 +7,9 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource OpenSans}"
-    Visibility="Visible"
+    Visibility="{Binding Visibility, Mode=OneWay}"
     mc:Ignorable="d">
-    <!--  {Binding Visibility, Mode=OneWay}  -->
+
     <!--  Define style  -->
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">

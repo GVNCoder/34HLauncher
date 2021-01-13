@@ -7,7 +7,7 @@ using log4net;
 
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
-using Launcher.Helpers;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
@@ -17,9 +17,6 @@ namespace Launcher.Core.Data
 {
     public class MultiplayerGameWorker : IGameWorker
     {
-        private const int RETRY_LIMIT = 5;
-        private const string DISCONNECT_BLAZE = "ERR_DISCONNECT_BLAZE 1 1 -1";
-
         private readonly ISettingsService _settingsService;
         private readonly StringBuilder _pipeLogger;
         private readonly IZApi _zloApi;
@@ -27,8 +24,6 @@ namespace Launcher.Core.Data
 
         private IZGameProcess _gameProcess;
         private GameSetting _gameSettings;
-        private bool _canRestart;
-        private int _restartTryCount;
 
         public MultiplayerGameWorker(
             ISettingsService settingsService
@@ -40,8 +35,6 @@ namespace Launcher.Core.Data
             _logger = logger;
 
             _pipeLogger = new StringBuilder();
-            _canRestart = false;
-            _restartTryCount = 1;
         }
 
         #region IGameWorker
@@ -119,10 +112,6 @@ namespace Launcher.Core.Data
 
                     break;
                 case ZGameEvent.Alert:
-
-                    // set flag to handle DISCONNECT BLAZE
-                    _canRestart = e.RawState.Contains(DISCONNECT_BLAZE) && _restartTryCount < RETRY_LIMIT;
-
                     break;
                 case ZGameEvent.GameWaiting:
 
@@ -169,22 +158,8 @@ namespace Launcher.Core.Data
             }
             else if (states.Contains(ZGameState.State_GameClose))
             {
-                // handle DISCONNECT BLAZE error
-                if (_canRestart)
-                {
-                    // log this attempt
-                    _pipeLogger.AppendLine($"Attempt to reconnect {_restartTryCount} / {RETRY_LIMIT}");
-
-                    _restartTryCount ++;
-
-                    // start game again
-                    _gameProcess.RunAsync().Forget();
-                }
-                else
-                {
-                    _OnGamePipeLog(_pipeLogger.ToString());
-                    _OnWorkComplete();
-                }
+                _OnGamePipeLog(_pipeLogger.ToString());
+                _OnWorkComplete();
             }
         }
 
