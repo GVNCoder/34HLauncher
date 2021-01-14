@@ -27,14 +27,6 @@ namespace Launcher.Core.Shared
 
         #region Dependency properties
 
-        public string MainText
-        {
-            get => (string)GetValue(MainTextProperty);
-            set => SetValue(MainTextProperty, value);
-        }
-        public static readonly DependencyProperty MainTextProperty =
-            DependencyProperty.Register("MainText", typeof(string), typeof(GameControlViewModel), new PropertyMetadata("Game"));
-
         public string GameModeName
         {
             get => (string) Dispatcher.Invoke(() => GetValue(GameModeNameProperty));
@@ -81,6 +73,10 @@ namespace Launcher.Core.Shared
 
         public ICommand CloseCommand => new DelegateCommand(obj =>
         {
+            // hide close button
+            IsCloseButtonVisible = false;
+
+            // send a request to cancel game
             _worker.Stop();
         });
 
