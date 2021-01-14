@@ -13,7 +13,7 @@ namespace Launcher.Core.Data
         void Stop();
 
         event EventHandler<GameWorkerErrorEventArgs> Error;
-        event EventHandler<GamaWorkerPipeLogEventArgs> GamePipe;
+        event EventHandler<GameWorkerPipeLogEventArgs> GamePipe;
         event EventHandler CanCloseGame;
         event EventHandler GameLoadingCompleted; 
         event EventHandler Complete;

@@ -73,7 +73,7 @@ namespace Launcher.Core.Data
         }
 
         public event EventHandler<GameWorkerErrorEventArgs> Error;
-        public event EventHandler<GamaWorkerPipeLogEventArgs> GamePipe;
+        public event EventHandler<GameWorkerPipeLogEventArgs> GamePipe;
         public event EventHandler CanCloseGame;
         public event EventHandler GameLoadingCompleted;
         public event EventHandler Complete;
@@ -90,7 +90,7 @@ namespace Launcher.Core.Data
 
         private void _OnGameLoadingCompleted() => GameLoadingCompleted?.Invoke(this, EventArgs.Empty);
 
-        private void _OnGamePipeLog(string gamePipe) => GamePipe?.Invoke(this, new GamaWorkerPipeLogEventArgs(gamePipe));
+        private void _OnGamePipeLog(string gamePipe) => GamePipe?.Invoke(this, new GameWorkerPipeLogEventArgs(gamePipe));
 
         private void _gamePipeHandler(object sender, ZGamePipeArgs e)
         {

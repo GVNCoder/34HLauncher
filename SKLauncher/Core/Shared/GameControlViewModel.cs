@@ -117,7 +117,7 @@ namespace Launcher.Core.Shared
             IsCloseButtonVisible = true;
         }
 
-        private void _WorkerGamePipeHandler(object sender, GamaWorkerPipeLogEventArgs e)
+        private void _WorkerGamePipeHandler(object sender, GameWorkerPipeLogEventArgs e)
         {
             _eventService.InfoEvent("Game run", e.PipeLog);
         }

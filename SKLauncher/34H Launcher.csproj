@@ -154,7 +154,7 @@
     <Compile Include="Core\Data\BaseJoinParams.cs" />
     <Compile Include="Core\Data\CoopGameWorker.cs" />
     <Compile Include="Core\Data\CoopJoinParams.cs" />
-    <Compile Include="Core\Data\GamaWorkerPipeLogEventArgs.cs" />
+    <Compile Include="Core\Data\GameWorkerPipeLogEventArgs.cs" />
     <Compile Include="Core\Data\GameCloseEventArgs.cs" />
     <Compile Include="Core\Data\GameCreatedEnventArgs.cs" />
     <Compile Include="Core\Data\GameCreationErrorEventArgs.cs" />

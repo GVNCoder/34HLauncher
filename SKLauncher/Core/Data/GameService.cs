@@ -79,7 +79,7 @@ namespace Launcher.Core.Data
                     var gameProcess = await _gameFactory.CreateMultiAsync(runParams);
 
                     // create worker
-                    var worker = _kernel.Get<MultiplayerGameWorker>();
+                    var worker = (IGameWorker) _kernel.Get<MultiplayerGameWorker>();
                     worker.Complete += (sender, e) =>
                     {
                         _canRunNewGame = true;
