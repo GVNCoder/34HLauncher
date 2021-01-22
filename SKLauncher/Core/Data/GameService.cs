@@ -28,7 +28,6 @@ namespace Launcher.Core.Data
         private readonly ILog _log;
         
         private bool _canRunNewGame;
-        private ZPlayMode _currentPlayMode;
 
         public GameService(
             IZApi api,
@@ -42,7 +41,6 @@ namespace Launcher.Core.Data
             _log = application.Logger;
 
             _canRunNewGame = true;
-            _currentPlayMode = ZPlayMode.None;
         }
 
         #region IGameService
@@ -59,7 +57,6 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = ZPlayMode.Multiplayer;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
@@ -83,7 +80,6 @@ namespace Launcher.Core.Data
                     worker.Complete += (sender, e) =>
                     {
                         _canRunNewGame = true;
-                        _currentPlayMode = ZPlayMode.None;
                     };
 
                     // pass game created event
@@ -99,7 +95,6 @@ namespace Launcher.Core.Data
 
                     // reset service state
                     _canRunNewGame = true;
-                    _currentPlayMode = ZPlayMode.None;
                 }
             }
         }
@@ -116,7 +111,6 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = ZPlayMode.Singleplayer;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
@@ -138,7 +132,6 @@ namespace Launcher.Core.Data
                     worker.Complete += (sender, e) =>
                     {
                         _canRunNewGame = true;
-                        _currentPlayMode = ZPlayMode.None;
                     };
 
                     // pass game created event
@@ -154,7 +147,6 @@ namespace Launcher.Core.Data
 
                     // reset service state
                     _canRunNewGame = true;
-                    _currentPlayMode = ZPlayMode.None;
                 }
             }
         }
@@ -171,7 +163,6 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = ZPlayMode.TestRange;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
@@ -193,7 +184,6 @@ namespace Launcher.Core.Data
                     worker.Complete += (sender, e) =>
                     {
                         _canRunNewGame = true;
-                        _currentPlayMode = ZPlayMode.None;
                     };
 
                     // pass game created event
@@ -209,7 +199,6 @@ namespace Launcher.Core.Data
 
                     // reset service state
                     _canRunNewGame = true;
-                    _currentPlayMode = ZPlayMode.None;
                 }
             }
         }
@@ -226,7 +215,6 @@ namespace Launcher.Core.Data
             {
                 // set service state
                 _canRunNewGame = false;
-                _currentPlayMode = parameters.Mode;
 
                 // get game setting
                 var settings = _GetGameSettings(parameters.Game);
@@ -251,7 +239,6 @@ namespace Launcher.Core.Data
                     worker.Complete += (sender, e) =>
                     {
                         _canRunNewGame = true;
-                        _currentPlayMode = ZPlayMode.None;
                     };
 
                     // pass game created event
@@ -267,16 +254,12 @@ namespace Launcher.Core.Data
 
                     // reset service state
                     _canRunNewGame = true;
-                    _currentPlayMode = ZPlayMode.None;
                 }
             }
         }
 
         public event EventHandler<GameCreatedEnventArgs> GameCreated;
         public event EventHandler<GameCreationErrorEventArgs> GameCreationError;
-
-        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
-        public ZPlayMode CurrentPlayMode => _currentPlayMode;
 
         #endregion
 

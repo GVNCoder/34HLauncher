@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 
 using Launcher.Core.Data;
-using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Core.Services
 {
@@ -15,7 +14,5 @@ namespace Launcher.Core.Services
 
         event EventHandler<GameCreatedEnventArgs> GameCreated;
         event EventHandler<GameCreationErrorEventArgs> GameCreationError;
-
-        ZPlayMode CurrentPlayMode { get; }
     }
 }
