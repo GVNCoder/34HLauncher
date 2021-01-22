@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 using Ninject;
 
@@ -8,6 +7,7 @@ using DiscordRPC;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Core.Data;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
