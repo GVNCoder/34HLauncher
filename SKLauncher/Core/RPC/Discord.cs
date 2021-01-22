@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Linq;
-using Launcher.Core.Shared;
 
 using Ninject;
+
 using DiscordRPC;
+
 using Launcher.Core.Services;
+using Launcher.Core.Shared;
+using Launcher.Core.Data;
+using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
-using Launcher.Core.Data;
+using Zlo4NET.Api.Service;
 
 namespace Launcher.Core.RPC
 {
@@ -60,6 +64,7 @@ namespace Launcher.Core.RPC
 
         private readonly RichPresence _ServerRichPresence = new RichPresence
         {
+            State = "In Game",
             Assets = new Assets
             {
                 SmallImageKey = "small_logo",
@@ -94,19 +99,6 @@ namespace Launcher.Core.RPC
             }
         };
 
-        private readonly RichPresence _UnknownGamePresence = new RichPresence
-        {
-            Details = "Unknown mode",
-            State = "Playing",
-            Assets = new Assets
-            {
-                LargeImageKey = "unknown_logo",
-                LargeImageText = "Battlefield",
-                SmallImageKey = "small_logo",
-                SmallImageText = "ZLOEmu"
-            }
-        };
-
         #endregion
 
         private readonly string[] _BFTitles =
@@ -118,14 +110,16 @@ namespace Launcher.Core.RPC
 
         private readonly IDiscordPresence _discordPresence;
         private readonly LauncherSettings _settings;
+        private readonly IZConnection _zloConnection;
 
-        private ServerModelUpdatesUnit _updateUnit;
         private RichPresence _pagePresence;
         private RichPresence _gamePresence;
         private bool _useGamePresence;
 
-        public Discord(App application, ISettingsService settingsService)
+        public Discord(IZApi zloApi, ISettingsService settingsService)
         {
+            _zloConnection = zloApi.Connection;
+
             _discordPresence = Resolver.Kernel.Get<IDiscordPresence>();
             _discordPresence.ConnectionChanged += _discordConnectionChangedHandler;
 
@@ -174,53 +168,17 @@ namespace Launcher.Core.RPC
             _updatePresence();
         }
 
-        #region Server presence
-
         public void UpdateServer(ZServerBase server)
         {
-            // create new Unit
-            if (_updateUnit == null)
-            {
-                _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
-                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-                _ServerRichPresence.Details = server.Name;
-                _ServerRichPresence.State = "In Game";
-                _ServerRichPresence.Party = new Party
-                {
-                    ID = Secrets.CreateFriendlySecret(new Random()),
-                    Max = server.PlayersCapacity,
-                    Size = server.CurrentPlayersNumber
-                };
-                _ServerRichPresence.Timestamps = Timestamps.Now;
-                _updateUnit = new ServerModelUpdatesUnit(server);
-                _updateUnit.ServerModelUpdated += (sender, e) =>
-                {
-                    _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(e.Model.MapRotation.Current);
-                    _ServerRichPresence.Details = e.Model.Name;
-                    _ServerRichPresence.Party.Size = e.Model.CurrentPlayersNumber;
-
-                    _gamePresence = _ServerRichPresence;
-                    _updatePresence();
-                };
-
-            }
-            else // Update data int UpdatesUnit
-            {
-                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-                _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
-
-                _updateUnit.Relink(server);
-            }
+            _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
+            _ServerRichPresence.Assets.LargeImageText = _zloConnection.AuthorizedUser?.Name;
+            _ServerRichPresence.Details = server.Name;
+            _ServerRichPresence.Timestamps = Timestamps.Now;
 
             _gamePresence = _ServerRichPresence;
             _useGamePresence = true;
             _updatePresence();
         }
-
-        private static string _BuildServerLargeImageText(ZMap map) =>
-            $"{map.Name} | {string.Concat(map.GameModeName.Where(char.IsUpper))}";
-
-        #endregion
 
         public void UpdateCoop(ZPlayMode mode, CoopMissionModel model)
         {
@@ -248,13 +206,6 @@ namespace Launcher.Core.RPC
             _updatePresence();
         }
 
-        public void UpdateUnknown()
-        {
-            _gamePresence = _UnknownGamePresence;
-            _useGamePresence = true;
-            _updatePresence();
-        }
-
         public void Start()
         {
             _discordPresence.BeginPresence();
@@ -268,9 +219,6 @@ namespace Launcher.Core.RPC
         public void DisablePlay()
         {
             _useGamePresence = false;
-            _updateUnit?.Destroy();
-            _updateUnit = null;
-
             _updatePresence();
         }
 

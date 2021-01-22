@@ -24,7 +24,6 @@ namespace Launcher.Core.RPC
         void UpdateServer(ZServerBase server);
         void UpdateCoop(ZPlayMode mode, CoopMissionModel model);
         void UpdateSingle(ZGame game, ZPlayMode mode);
-        void UpdateUnknown();
 
         void DisablePlay();
 

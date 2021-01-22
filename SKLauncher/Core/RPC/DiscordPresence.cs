@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Timers;
+
 using DiscordRPC;
-using DiscordRPC.Logging;
 using DiscordRPC.Message;
+
 using log4net;
 
 namespace Launcher.Core.RPC
