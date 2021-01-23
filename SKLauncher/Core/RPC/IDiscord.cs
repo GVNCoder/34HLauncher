@@ -9,8 +9,9 @@ namespace Launcher.Core.RPC
     {
         void Start();
         void Stop();
+        void ToggleGame();
 
-        #region VM change
+        #region Page presence
 
         void UpdateServerBrowser(ZGame game);
         void UpdateCoopBrowser();
@@ -19,13 +20,11 @@ namespace Launcher.Core.RPC
 
         #endregion
 
-        #region Game
+        #region Game presence
 
         void UpdateServer(ZServerBase server);
         void UpdateCoop(ZPlayMode mode, CoopMissionModel model);
         void UpdateSingle(ZGame game, ZPlayMode mode);
-
-        void DisablePlay();
 
         #endregion
     }

@@ -200,10 +200,7 @@
     <Compile Include="Core\IEventService.cs" />
     <Compile Include="Core\Interaction\DelegateCommand.cs" />
     <Compile Include="Core\RPC\Discord.cs" />
-    <Compile Include="Core\RPC\DiscordConnectionChangedEventArgs.cs" />
-    <Compile Include="Core\RPC\DiscordPresence.cs" />
     <Compile Include="Core\RPC\IDiscord.cs" />
-    <Compile Include="Core\RPC\IDiscordPresence.cs" />
     <Compile Include="Core\Services\IGameService.cs" />
     <Compile Include="Core\Services\ILauncherProcessService.cs" />
     <Compile Include="Core\Services\IMainMenuService.cs" />
