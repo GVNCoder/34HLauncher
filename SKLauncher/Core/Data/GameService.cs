@@ -86,7 +86,7 @@ namespace Launcher.Core.Data
                     _OnCreated(worker, "Multiplayer", parameters.ServerModel.Name);
 
                     // run game
-                    await worker.Begin(gameProcess, settings);
+                    await worker.Begin(gameProcess, settings, parameters);
                 }
                 catch (Exception exc)
                 {
@@ -138,7 +138,7 @@ namespace Launcher.Core.Data
                     _OnCreated(worker, "Singleplayer", "Campaign");
 
                     // run game
-                    await worker.Begin(gameProcess, settings);
+                    await worker.Begin(gameProcess, settings, parameters);
                 }
                 catch (Exception exc)
                 {
@@ -190,7 +190,7 @@ namespace Launcher.Core.Data
                     _OnCreated(worker, "Singleplayer", "Playground");
 
                     // run game
-                    await worker.Begin(gameProcess, settings);
+                    await worker.Begin(gameProcess, settings, parameters);
                 }
                 catch (Exception exc)
                 {
@@ -245,7 +245,7 @@ namespace Launcher.Core.Data
                     _OnCreated(worker, "Coop", parameters.Mode == ZPlayMode.CooperativeClient ? "Client" : "Host");
 
                     // run game
-                    await worker.Begin(gameProcess, settings);
+                    await worker.Begin(gameProcess, settings, parameters);
                 }
                 catch (Exception exc)
                 {

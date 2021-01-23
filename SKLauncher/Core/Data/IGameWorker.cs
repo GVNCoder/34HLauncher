@@ -9,7 +9,7 @@ namespace Launcher.Core.Data
 {
     public interface IGameWorker
     {
-        Task Begin(IZGameProcess gameProcess, GameSetting gameSettings);
+        Task Begin(IZGameProcess gameProcess, GameSetting gameSettings, BaseJoinParams parameters);
         void Stop();
 
         event EventHandler<GameWorkerErrorEventArgs> Error;

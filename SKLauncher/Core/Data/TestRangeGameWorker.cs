@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using log4net;
-
+using Launcher.Core.RPC;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
 
@@ -19,6 +19,7 @@ namespace Launcher.Core.Data
     {
         private readonly ISettingsService _settingsService;
         private readonly StringBuilder _pipeLogger;
+        private readonly IDiscord _discord;
         private readonly IZApi _zloApi;
         private readonly ILog _logger;
 
@@ -27,10 +28,12 @@ namespace Launcher.Core.Data
 
         public TestRangeGameWorker(
             ISettingsService settingsService
+            , IDiscord discord
             , IZApi zloApi
             , ILog logger)
         {
             _settingsService = settingsService;
+            _discord = discord;
             _zloApi = zloApi;
             _logger = logger;
 
@@ -39,7 +42,7 @@ namespace Launcher.Core.Data
 
         #region IGameWorker
 
-        public async Task Begin(IZGameProcess gameProcess, GameSetting gameSettings)
+        public async Task Begin(IZGameProcess gameProcess, GameSetting gameSettings, BaseJoinParams parameters)
         {
             _gameProcess = gameProcess;
             _gameSettings = gameSettings;
@@ -57,6 +60,14 @@ namespace Launcher.Core.Data
                 _logger.Error(message);
                 _OnError(message);
                 _OnWorkComplete();
+            }
+            else
+            {
+                // extract playground parameters
+                var playgroundParameters = (TestRangeJoinParams) parameters;
+
+                // enable server discord presence
+                _discord.UpdateSingle(playgroundParameters.Game, ZPlayMode.TestRange);
             }
         }
 
@@ -160,6 +171,9 @@ namespace Launcher.Core.Data
             {
                 _OnGamePipeLog(_pipeLogger.ToString());
                 _OnWorkComplete();
+
+                // disable discord server presence
+                _discord.ToggleGame();
             }
         }
 
