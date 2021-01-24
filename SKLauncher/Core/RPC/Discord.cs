@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Linq;
+using System.Timers;
+
+using DiscordRPC;
+using DiscordRPC.Message;
+using log4net;
+
+using Launcher.Core.Services;
 using Launcher.Core.Shared;
 
-using Ninject;
-using DiscordRPC;
-using Launcher.Core.Services;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
-using Launcher.Core.Data;
 
 namespace Launcher.Core.RPC
 {
@@ -60,6 +62,7 @@ namespace Launcher.Core.RPC
 
         private readonly RichPresence _ServerRichPresence = new RichPresence
         {
+            State = "In Game",
             Assets = new Assets
             {
                 SmallImageKey = "small_logo",
@@ -94,20 +97,10 @@ namespace Launcher.Core.RPC
             }
         };
 
-        private readonly RichPresence _UnknownGamePresence = new RichPresence
-        {
-            Details = "Unknown mode",
-            State = "Playing",
-            Assets = new Assets
-            {
-                LargeImageKey = "unknown_logo",
-                LargeImageText = "Battlefield",
-                SmallImageKey = "small_logo",
-                SmallImageText = "ZLOEmu"
-            }
-        };
-
         #endregion
+
+        private const string APP_TOKEN = "726427142019350578";
+        private const int UPDATE_INTERVAL = 3000;
 
         private readonly string[] _BFTitles =
         {
@@ -116,167 +109,180 @@ namespace Launcher.Core.RPC
             "Battlefield Hardline"
         };
 
-        private readonly IDiscordPresence _discordPresence;
-        private readonly LauncherSettings _settings;
+        private readonly Timer _updateTimer;
+        private readonly ILog _log;
 
-        private ServerModelUpdatesUnit _updateUnit;
+        private DiscordRpcClient _rpcClient;
         private RichPresence _pagePresence;
         private RichPresence _gamePresence;
-        private bool _useGamePresence;
 
-        public Discord(App application, ISettingsService settingsService)
+        private bool _gamePresenceToggle;
+
+        public Discord(ILog log)
         {
-            _discordPresence = Resolver.Kernel.Get<IDiscordPresence>();
-            _discordPresence.ConnectionChanged += _discordConnectionChangedHandler;
+            _log = log;
 
-            _settings = settingsService.GetLauncherSettings();
+            // create update presence timer
+            _updateTimer = new Timer
+            {
+                Enabled = false,
+                AutoReset = true,
+                Interval = UPDATE_INTERVAL
+            };
+
+            _updateTimer.Elapsed += _UpdateTimerCallback;
+
+            // set default presence
             _pagePresence = _AFKRichPresence;
         }
 
-        private void _discordConnectionChangedHandler(object sender, DiscordConnectionChangedEventArgs e)
+        public void Start()
         {
-            if (e.IsConnected) _updatePresence();
+            // create a new client instance
+            _rpcClient = new DiscordRpcClient(APP_TOKEN, autoEvents: true);
+
+            // subscribe and track events
+            _rpcClient.OnReady += _RpcClientOnReadyHandler;  // Called when the client is ready to send presences
+            _rpcClient.OnClose += _RpcClientOnCloseHandler;  // Called when connection to discord is lost
+            _rpcClient.OnError += _RpcClientOnErrorHandler;  // Called when discord has a error
+            _rpcClient.OnConnectionFailed += _RpcClientOnConnectionFailedHandler;  // Called when a pipe connection failed
+
+            // start client
+            _rpcClient.Initialize();
         }
 
-        private string _GetTitleNameByGame(ZGame game) => _BFTitles[(int) game];
+        public void Stop()
+        {
+            _updateTimer.Enabled = false;
 
-        private static string _GetLargeImageKeyByGame(ZGame game) => $"{game.ToString().ToLower()}_large_logo";
+            _rpcClient.OnReady -= _RpcClientOnReadyHandler;  // Called when the client is ready to send presences
+            _rpcClient.OnClose -= _RpcClientOnCloseHandler;  // Called when connection to discord is lost
+            _rpcClient.OnError -= _RpcClientOnErrorHandler;  // Called when discord has a error
+            _rpcClient.OnConnectionFailed -= _RpcClientOnConnectionFailedHandler;  // Called when a pipe connection failed
+
+            // destroy client
+            _rpcClient.ClearPresence();
+            _rpcClient.Dispose();
+            _rpcClient = null;
+        }
+
+        public void ToggleGame()
+        {
+            _gamePresenceToggle = false;
+        }
+
+        #region Page presence
 
         public void UpdateServerBrowser(ZGame game)
         {
-            var titleName = _GetTitleNameByGame(game);
-            _ServerBrowserRichPresence.Assets.LargeImageText = titleName;
+            var title = _GetTitleByGame(game);
+
+            _ServerBrowserRichPresence.Assets.LargeImageText = title;
             _ServerBrowserRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(game);
 
             _pagePresence = _ServerBrowserRichPresence;
-            _updatePresence();
         }
 
         public void UpdateCoopBrowser()
         {
             _pagePresence = _CoopBrowserRichPresence;
-            _updatePresence();
         }
 
         public void UpdateStats(ZGame game)
         {
-            var titleName = _GetTitleNameByGame(game);
-            _StatsRichPresence.Assets.LargeImageText = titleName;
+            var title = _GetTitleByGame(game);
+
+            _StatsRichPresence.Assets.LargeImageText = title;
             _StatsRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(game);
 
             _pagePresence = _StatsRichPresence;
-            _updatePresence();
         }
 
         public void UpdateAFK()
         {
             _pagePresence = _AFKRichPresence;
-            _updatePresence();
         }
 
-        #region Server presence
+        #endregion
+
+        #region Game prensence
 
         public void UpdateServer(ZServerBase server)
         {
-            // create new Unit
-            if (_updateUnit == null)
-            {
-                _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
-                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-                _ServerRichPresence.Details = server.Name;
-                _ServerRichPresence.State = "In Game";
-                _ServerRichPresence.Party = new Party
-                {
-                    ID = Secrets.CreateFriendlySecret(new Random()),
-                    Max = server.PlayersCapacity,
-                    Size = server.CurrentPlayersNumber
-                };
-                _ServerRichPresence.Timestamps = Timestamps.Now;
-                _updateUnit = new ServerModelUpdatesUnit(server);
-                _updateUnit.ServerModelUpdated += (sender, e) =>
-                {
-                    _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(e.Model.MapRotation.Current);
-                    _ServerRichPresence.Details = e.Model.Name;
-                    _ServerRichPresence.Party.Size = e.Model.CurrentPlayersNumber;
-
-                    _gamePresence = _ServerRichPresence;
-                    _updatePresence();
-                };
-
-            }
-            else // Update data int UpdatesUnit
-            {
-                _ServerRichPresence.Assets.LargeImageText = _BuildServerLargeImageText(server.MapRotation.Current);
-                _ServerRichPresence.Party.Size = server.CurrentPlayersNumber;
-
-                _updateUnit.Relink(server);
-            }
+            _ServerRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(server.Game);
+            _ServerRichPresence.Assets.LargeImageText = _GetTitleByGame(server.Game);
+            _ServerRichPresence.Details = server.Name;
+            _ServerRichPresence.Timestamps = Timestamps.Now;
 
             _gamePresence = _ServerRichPresence;
-            _useGamePresence = true;
-            _updatePresence();
+            _gamePresenceToggle = true;
         }
-
-        private static string _BuildServerLargeImageText(ZMap map) =>
-            $"{map.Name} | {string.Concat(map.GameModeName.Where(char.IsUpper))}";
-
-        #endregion
 
         public void UpdateCoop(ZPlayMode mode, CoopMissionModel model)
         {
             _CoopRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(ZGame.BF3);
             _CoopRichPresence.Assets.LargeImageText = mode == ZPlayMode.CooperativeHost
                 ? _CoopRichPresence.Assets.LargeImageText = $"Host | {model.Name} | {model.Difficulty}"
-                : _CoopRichPresence.Assets.LargeImageText = $"In lobby on my friend";
-
+                : _CoopRichPresence.Assets.LargeImageText = "In the lobby with my friend";
             _CoopRichPresence.Timestamps = Timestamps.Now;
 
             _gamePresence = _CoopRichPresence;
-            _useGamePresence = true;
-            _updatePresence();
+            _gamePresenceToggle = true;
         }
 
         public void UpdateSingle(ZGame game, ZPlayMode mode)
         {
             _SingleRichPresence.Assets.LargeImageKey = _GetLargeImageKeyByGame(game);
-            _SingleRichPresence.Assets.LargeImageText = _GetTitleNameByGame(game);
+            _SingleRichPresence.Assets.LargeImageText = _GetTitleByGame(game);
             _SingleRichPresence.Details = mode == ZPlayMode.Singleplayer ? "Singleplayer" : "Playground";
             _SingleRichPresence.Timestamps = Timestamps.Now;
 
             _gamePresence = _SingleRichPresence;
-            _useGamePresence = true;
-            _updatePresence();
+            _gamePresenceToggle = true;
         }
 
-        public void UpdateUnknown()
+        #endregion
+
+        #region Private helpers
+
+        private void _UpdateTimerCallback(object sender, ElapsedEventArgs e)
         {
-            _gamePresence = _UnknownGamePresence;
-            _useGamePresence = true;
-            _updatePresence();
+            _rpcClient.SetPresence(_gamePresenceToggle ? _gamePresence : _pagePresence);
         }
 
-        public void Start()
+        private string _GetTitleByGame(ZGame game) => _BFTitles[(int)game];
+
+        private static string _GetLargeImageKeyByGame(ZGame game) => $"{game.ToString().ToLower()}_large_logo";
+
+        private void _RpcClientOnConnectionFailedHandler(object sender, ConnectionFailedMessage args)
         {
-            _discordPresence.BeginPresence();
+            // restart
+            Stop();
+            Start();
         }
 
-        public void Stop()
+        private void _RpcClientOnErrorHandler(object sender, ErrorMessage args) =>
+            _log.Warn($"DISCORD ERROR | {args.Code} {args.Message}");
+
+        private void _RpcClientOnCloseHandler(object sender, CloseMessage args)
         {
-            _discordPresence.StopPresence();
+            // log this shitty event
+            _log.Warn($"DISCORD CONNECTION_LOST | {args.Code} {args.Reason}");
+
+            // restart
+            Stop();
+            Start();
         }
 
-        public void DisablePlay()
+        private void _RpcClientOnReadyHandler(object sender, ReadyMessage args)
         {
-            _useGamePresence = false;
-            _updateUnit?.Destroy();
-            _updateUnit = null;
+            // send first presence
+            _rpcClient.SetPresence(_gamePresenceToggle ? _gamePresence : _pagePresence);
 
-            _updatePresence();
+            // enable updates timer
+            _updateTimer.Enabled = true;
         }
 
-        private void _updatePresence()
-        {
-            if (_settings.UseDiscordPresence) _discordPresence.UpdatePresence(_useGamePresence ? _gamePresence : _pagePresence);
-        }
+        #endregion
     }
 }

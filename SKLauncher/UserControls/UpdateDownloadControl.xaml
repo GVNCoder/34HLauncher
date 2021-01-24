@@ -15,16 +15,17 @@
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Opacity=".15" Color="#FF69E1" />
+                    <SolidColorBrush Opacity=".05" Color="White" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="ToolTipService.Placement" Value="Top" />
+            <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
             <Style.Triggers>
                 <Trigger Property="UserControl.IsMouseOver" Value="True">
                     <Setter Property="UserControl.Cursor" Value="Hand" />
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Opacity=".25" Color="#FF69E1" />
+                            <SolidColorBrush Opacity=".1" Color="White" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -33,49 +34,58 @@
     </UserControl.Style>
 
     <Grid>
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-            <TextBlock
-                Margin="0,0,0,1"
-                VerticalAlignment="Center"
-                FontWeight="SemiBold"
-                Foreground="#EAEAEA"
-                Text="Download update" />
-            <TextBlock
-                Margin="5,0,0,1"
-                VerticalAlignment="Center"
-                FontWeight="SemiBold"
-                Foreground="#EAEAEA"
-                Text="{Binding Progress, StringFormat={}{0}%}" />
-            <controls:GlyphButton
-                x:Name="PART_CloseButton"
-                Margin="5,0,0,0"
-                VerticalAlignment="Center"
-                Command="{Binding CancelDownloadCommand}"
-                Foreground="#EAEAEA"
-                Icon=""
-                IconSize="16"
-                TextOptions.TextRenderingMode="Aliased">
-                <controls:GlyphButton.Triggers>
-                    <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
-                                    <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Static Cursors.Hand}" />
-                                </ObjectAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
-                                    <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Null}" />
-                                </ObjectAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </controls:GlyphButton.Triggers>
-            </controls:GlyphButton>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3" />
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="1" Fill="#FF69E1" />
+
+        <Grid Grid.Row="0" Margin="10,0">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,0,1"
+                    VerticalAlignment="Center"
+                    FontWeight="SemiBold"
+                    Foreground="#EAEAEA"
+                    Text="Update" />
+                <TextBlock
+                    Margin="5,0,0,1"
+                    VerticalAlignment="Center"
+                    FontWeight="SemiBold"
+                    Foreground="#EAEAEA"
+                    Text="{Binding Progress, StringFormat={}{0}%}" />
+                <controls:GlyphButton
+                    x:Name="PART_CloseButton"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Command="{Binding CancelDownloadCommand}"
+                    Foreground="#EAEAEA"
+                    Icon=""
+                    IconSize="16"
+                    TextOptions.TextRenderingMode="Aliased">
+                    <controls:GlyphButton.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+                                        <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Static Cursors.Hand}" />
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_CloseButton" Storyboard.TargetProperty="(FrameworkElement.Cursor)">
+                                        <DiscreteObjectKeyFrame KeyTime="00:00:0" Value="{x:Null}" />
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </controls:GlyphButton.Triggers>
+                </controls:GlyphButton>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

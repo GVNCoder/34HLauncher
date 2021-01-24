@@ -61,7 +61,6 @@
     <Compile Include="Service\Base\IVisualProvider.cs" />
     <Compile Include="Service\IApplicationState.cs" />
     <Compile Include="Service\IControlViewModelLocator.cs" />
-    <Compile Include="Service\IDiscord.cs" />
     <Compile Include="Service\IPageNavigator.cs" />
     <Compile Include="Service\IViewModelSource.cs" />
   </ItemGroup>

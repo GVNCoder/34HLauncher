@@ -179,10 +179,8 @@ namespace Launcher.Core.Bases
 
         protected void _JoinGame(ZServerBase server, ZRole role)
         {
-            // check can run game
-            if (! _gameService.CanRun) return;
             // create run params
-            var runParams = new MultiplayerJoinParams
+            var runParams = new CreateMultiplayerParameters
             {
                 Game = server.Game,
                 PlayerRole = role,
@@ -274,41 +272,11 @@ namespace Launcher.Core.Bases
 
             // begin ping calculation
             _collectionChangedHandler(null, null);
-            // trying to restore discord server updates
-            if (_gameService.CurrentPlayMode == ZPlayMode.Multiplayer)
-            {
-                var param = (MultiplayerJoinParams) _gameService.CurrentGame.Params;
-                var currentGame = (MultiplayerGameWorker) _gameService.CurrentGame;
-                var serverModel = param.ServerModel;
-                var compatibleServerModel =
-                    collection.FirstOrDefault(s => s.Game == param.Game && s.Id == serverModel.Id);
-
-                if (compatibleServerModel == null) return;
-
-                currentGame.RelinkServer(compatibleServerModel);
-            }
         }
 
-        private async void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)
+        private void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)
         {
             _navigator.NavigationInitiated -= _LeaveServerBrowserInitiated;
-
-            var playingCurrently = _gameService.CurrentPlayMode == ZPlayMode.Multiplayer;
-            if (_settingsInstance.UseDiscordPresence && !_settingsInstance.DisableAskServerBrowserDiscordLeave && playingCurrently)
-            {
-                // handle discord leave server browser
-                var dialogResult = await _dialogService.OpenTextDialog("Warning",
-                    "You have the Discord Presence option enabled." +
-                    "Therefore, if you leave the server browser, your friends will not be able to see up-to - date information about the location of your game.",
-                    DialogButtons.Ok, true);
-
-                if (dialogResult != null)
-                {
-                    // save user choice
-                    _settingsInstance.DisableAskServerBrowserDiscordLeave =
-                        dialogResult.GetValueOrDefault().GetResult<bool>();
-                }
-            }
         }
 
         #endregion
