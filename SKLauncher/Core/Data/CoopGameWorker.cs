@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using log4net;
+
 using Launcher.Core.RPC;
 using Launcher.Core.Services;
 using Launcher.Core.Shared;
@@ -42,7 +43,7 @@ namespace Launcher.Core.Data
 
         #region IGameWorker
 
-        public async Task Begin(IZGameProcess gameProcess, GameSetting gameSettings, BaseJoinParams parameters)
+        public async Task Begin(IZGameProcess gameProcess, GameSetting gameSettings, CreateGameParametersBase parameters)
         {
             _gameProcess = gameProcess;
             _gameSettings = gameSettings;
@@ -64,7 +65,7 @@ namespace Launcher.Core.Data
             else
             {
                 // extract coop parameters
-                var coopParameters = (CoopJoinParams) parameters;
+                var coopParameters = (CreateCoopParameters) parameters;
 
                 // enable server discord presence
                 _discord.UpdateCoop(coopParameters.Mode, coopParameters.CoopMission);

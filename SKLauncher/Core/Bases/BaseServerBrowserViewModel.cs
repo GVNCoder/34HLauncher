@@ -180,7 +180,7 @@ namespace Launcher.Core.Bases
         protected void _JoinGame(ZServerBase server, ZRole role)
         {
             // create run params
-            var runParams = new MultiplayerJoinParams
+            var runParams = new CreateMultiplayerParameters
             {
                 Game = server.Game,
                 PlayerRole = role,

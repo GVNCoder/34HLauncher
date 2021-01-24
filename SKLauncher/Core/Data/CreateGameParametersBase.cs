@@ -2,7 +2,7 @@
 
 namespace Launcher.Core.Data
 {
-    public class BaseJoinParams
+    public abstract class CreateGameParametersBase
     {
         public ZGame Game { get; set; }
     }

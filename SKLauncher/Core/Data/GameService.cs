@@ -45,7 +45,7 @@ namespace Launcher.Core.Data
 
         #region IGameService
 
-        public async Task RunMultiplayer(MultiplayerJoinParams parameters)
+        public async Task RunMultiplayer(CreateMultiplayerParameters parameters)
         {
             // check possibility to run a game
             var possibleToRun = _IsAlreadyHasRunGame();
@@ -99,7 +99,7 @@ namespace Launcher.Core.Data
             }
         }
 
-        public async Task RunSingleplayer(SingleplayerJoinParams parameters)
+        public async Task RunSingleplayer(CreateSingleplayerParameters parameters)
         {
             // check possibility to run a game
             var possibleToRun = _IsAlreadyHasRunGame();
@@ -151,7 +151,7 @@ namespace Launcher.Core.Data
             }
         }
 
-        public async Task RunPlayground(TestRangeJoinParams parameters)
+        public async Task RunPlayground(CreateTestRangeParameters parameters)
         {
             // check possibility to run a game
             var possibleToRun = _IsAlreadyHasRunGame();
@@ -203,7 +203,7 @@ namespace Launcher.Core.Data
             }
         }
 
-        public async Task RunCoop(CoopJoinParams parameters)
+        public async Task RunCoop(CreateCoopParameters parameters)
         {
             // check possibility to run a game
             var possibleToRun = _IsAlreadyHasRunGame();
