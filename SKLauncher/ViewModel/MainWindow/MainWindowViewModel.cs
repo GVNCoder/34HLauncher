@@ -111,19 +111,13 @@ namespace Launcher.ViewModel
 
             api.Configure(new ZConfiguration { SynchronizationContext = SynchronizationContext.Current });
 
-            _gameService.GameClose += _GameCloseHandler;
-            _gameService.GameRunError += _GameRunErrorHandler;
+            _gameService.GameCreationError += _GameCreationErrorHandler;
         }
 
-        private void _GameRunErrorHandler(object sender, GameRunErrorEventArgs e)
+        private void _GameCreationErrorHandler(object sender, GameCreationErrorEventArgs e)
         {
-            _eventService.WarnEvent(SLM.GameRun, e.Error.Message);
-            _log.Error(LoggingHelper.GetMessage(e.Error));
-        }
-
-        private void _GameCloseHandler(object sender, GameCloseEventArgs e)
-        {
-            _eventService.InfoEvent(SLM.GameRun, e.PipeLog);
+            _eventService.WarnEvent(SLM.GameRun, e.Message);
+            _log.Warn(e.Message);
         }
 
         private void _RefreshAppState()
@@ -264,7 +258,6 @@ namespace Launcher.ViewModel
                 _discordPresence.Start();
             }
 
-            _gameService.TryDetect();
             _updateService.BeginUpdate();
             _zClientProcessTracker.StartTrack();
 

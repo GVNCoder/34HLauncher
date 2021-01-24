@@ -9,8 +9,7 @@
     xmlns:local="clr-namespace:Launcher.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    ToolTip="{Binding ToolTipContent}"
-    Visibility="{Binding GameControlVisibility}"
+    Visibility="{Binding IsGameControlVisible, Converter={StaticResource b2vConverter}}"
     mc:Ignorable="d">
 
     <!--  Define style  -->
@@ -18,19 +17,18 @@
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Opacity=".15" Color="#00DD4E" />
+                    <SolidColorBrush Opacity=".05" Color="White" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="Padding" Value="10,0" />
             <Setter Property="ToolTipService.Placement" Value="Top" />
             <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
             <Setter Property="ToolTipService.ShowDuration" Value="{x:Static system:Int32.MaxValue}" />
             <Style.Triggers>
                 <Trigger Property="UserControl.IsMouseOver" Value="True">
                     <Setter Property="UserControl.Cursor" Value="Hand" />
-                    <Setter Property="Background">
+                    <Setter Property="UserControl.Background">
                         <Setter.Value>
-                            <SolidColorBrush Opacity=".25" Color="#00DD4E" />
+                            <SolidColorBrush Opacity=".1" Color="White" />
                         </Setter.Value>
                     </Setter>
                 </Trigger>
@@ -39,25 +37,33 @@
     </UserControl.Style>
 
     <Grid>
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-            <TextBlock
-                Margin="0,0,0,1"
-                VerticalAlignment="Center"
-                FontFamily="{StaticResource OpenSans}"
-                FontWeight="SemiBold"
-                Foreground="#EAEAEA"
-                Text="{Binding Text}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3" />
+        </Grid.RowDefinitions>
+
+        <Rectangle
+            Grid.Row="1"
+            Height="3"
+            Fill="#41E171" />
+
+        <StackPanel
+            Grid.Row="0"
+            Margin="10,0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+
             <TextBlock
                 x:Name="PART_Loading"
-                Margin="5,0,0,0"
+                Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource Ionicons}"
-                FontSize="14"
-                Foreground="#EAEAEA"
+                FontSize="16"
+                Foreground="WhiteSmoke"
                 RenderTransformOrigin=".5 .5"
                 Text=""
-                TextOptions.TextHintingMode="Animated"
-                Visibility="{Binding InLoadingState, Converter={StaticResource b2vConverter}}">
+                TextOptions.TextRenderingMode="Aliased"
+                Visibility="{Binding IsLoadingIndicatorVisible, Converter={StaticResource b2vConverter}}">
                 <TextBlock.RenderTransform>
                     <RotateTransform />
                 </TextBlock.RenderTransform>
@@ -77,16 +83,35 @@
                     </EventTrigger>
                 </TextBlock.Triggers>
             </TextBlock>
+
+            <StackPanel Orientation="Vertical">
+                <TextBlock
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    FontFamily="{StaticResource OpenSans}"
+                    FontWeight="SemiBold"
+                    Foreground="WhiteSmoke">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} | {1}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="GameModeName" />
+                                <Binding Path="PlacementName" />
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+
             <controls:GlyphButton
                 x:Name="PART_CloseButton"
-                Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 Command="{Binding CloseCommand}"
-                Foreground="#EAEAEA"
-                Icon=""
+                Foreground="WhiteSmoke"
+                Icon=""
                 IconSize="16"
+                Style="{StaticResource GlyphButtonHoverFixStyle}"
                 TextOptions.TextRenderingMode="Aliased"
-                Visibility="{Binding CanClose, Converter={StaticResource b2vConverter}}">
+                Visibility="{Binding IsCloseButtonVisible, Converter={StaticResource b2vConverter}}">
                 <controls:GlyphButton.Triggers>
                     <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
                         <BeginStoryboard>

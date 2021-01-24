@@ -148,20 +148,17 @@ namespace Launcher.ViewModel
             }
             else
             {
-                // check can run game
-                if (! _gameService.CanRun) return;
-
                 if (playMode == ZPlayMode.Singleplayer)
                 {
                     // create run params
-                    var param = new SingleplayerJoinParams { Game = game };
+                    var param = new CreateSingleplayerParameters { Game = game };
                     // run game
                     _gameService.RunSingleplayer(param).Forget();
                 }
                 else
                 {
                     // create run params
-                    var param = new TestRangeJoinParams { Game = game };
+                    var param = new CreateTestRangeParameters { Game = game };
                     // run game
                     _gameService.RunPlayground(param).Forget();
                 }

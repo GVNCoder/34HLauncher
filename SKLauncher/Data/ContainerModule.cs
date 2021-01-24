@@ -46,8 +46,6 @@ namespace Launcher.Data
             Kernel.Bind<IGameService>()
                 .To<GameService>()
                 .InSingletonScope();
-            Kernel.Bind<IDiscordPresence>()
-                .To<DiscordPresence>();
             Kernel.Bind<IDiscord>()
                 .To<Discord>()
                 .InSingletonScope();
