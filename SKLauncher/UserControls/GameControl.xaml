@@ -12,30 +12,11 @@
     Visibility="{Binding IsGameControlVisible, Converter={StaticResource b2vConverter}}"
     mc:Ignorable="d">
 
-    <!--<UserControl.ToolTip>
-        <StackPanel Margin="5" Orientation="Horizontal">
-            <TextBlock FontSize="14">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0} | {1}">
-                        <MultiBinding.Bindings>
-                            <Binding Path="GameModeName" />
-                            <Binding Path="PlacementName" />
-                        </MultiBinding.Bindings>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
-        </StackPanel>
-    </UserControl.ToolTip>-->
-
     <!--  Define style  -->
     <UserControl.Style>
         <Style TargetType="{x:Type UserControl}">
             <Setter Property="Background">
                 <Setter.Value>
-                    <!--<LinearGradientBrush Opacity=".8">
-                        <GradientStop Offset="0" Color="#28c1a0" />
-                        <GradientStop Offset="1" Color="#1c9379" />
-                    </LinearGradientBrush>-->
                     <SolidColorBrush Opacity=".05" Color="White" />
                 </Setter.Value>
             </Setter>
@@ -47,10 +28,6 @@
                     <Setter Property="UserControl.Cursor" Value="Hand" />
                     <Setter Property="UserControl.Background">
                         <Setter.Value>
-                            <!--<LinearGradientBrush>
-                                <GradientStop Offset="0" Color="#28c1a0" />
-                                <GradientStop Offset="1" Color="#1c9379" />
-                            </LinearGradientBrush>-->
                             <SolidColorBrush Opacity=".1" Color="White" />
                         </Setter.Value>
                     </Setter>
@@ -132,6 +109,7 @@
                 Foreground="WhiteSmoke"
                 Icon=""
                 IconSize="16"
+                Style="{StaticResource GlyphButtonHoverFixStyle}"
                 TextOptions.TextRenderingMode="Aliased"
                 Visibility="{Binding IsCloseButtonVisible, Converter={StaticResource b2vConverter}}">
                 <controls:GlyphButton.Triggers>
