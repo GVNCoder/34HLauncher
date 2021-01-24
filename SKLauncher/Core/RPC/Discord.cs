@@ -153,6 +153,8 @@ namespace Launcher.Core.RPC
 
         public void Stop()
         {
+            _updateTimer.Enabled = false;
+
             _rpcClient.OnReady -= _RpcClientOnReadyHandler;  // Called when the client is ready to send presences
             _rpcClient.OnClose -= _RpcClientOnCloseHandler;  // Called when connection to discord is lost
             _rpcClient.OnError -= _RpcClientOnErrorHandler;  // Called when discord has a error
