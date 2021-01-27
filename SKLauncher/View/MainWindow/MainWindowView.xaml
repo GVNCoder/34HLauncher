@@ -12,6 +12,8 @@
     Title="34H Launcher"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowHeight}"
+    MinWidth="{StaticResource WindowWidth}"
+    MinHeight="{StaticResource WindowHeight}"
     DataContext="{Binding Path=MainWindowViewModel, Source={StaticResource ViewModelLocator}}"
     ResizeMode="CanResize"
     Style="{DynamicResource WndChromeStyle}"
