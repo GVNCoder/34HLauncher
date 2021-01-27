@@ -13,7 +13,7 @@
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowHeight}"
     DataContext="{Binding Path=MainWindowViewModel, Source={StaticResource ViewModelLocator}}"
-    ResizeMode="CanMinimize"
+    ResizeMode="CanResize"
     Style="{DynamicResource WndChromeStyle}"
     TextBlock.Foreground="{DynamicResource ThemeForegroundBrush}"
     TextElement.FontFamily="{StaticResource OpenSans}"
@@ -50,7 +50,7 @@
                         CaptionHeight="{StaticResource WindowNonClientHeight}"
                         GlassFrameThickness="-1"
                         NonClientFrameEdges="None"
-                        ResizeBorderThickness="0"
+                        ResizeBorderThickness="1"
                         UseAeroCaptionButtons="False" />
                 </Setter.Value>
             </Setter>
