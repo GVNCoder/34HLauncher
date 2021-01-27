@@ -1,17 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
-using Launcher.Core.Shared;
 using Launcher.ViewModel.UserControl;
+
 using Ninject;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
@@ -31,6 +32,7 @@ namespace Launcher.ViewModel
         private readonly IPageNavigator _navigator;
 
         private ZUser _authorizedUser;
+        private bool _isWindowMaximized;
 
         public WindowNonClientPartViewModel(
             IMainMenuService mainMenuService,
@@ -99,6 +101,20 @@ namespace Launcher.ViewModel
         public ICommand CloseWindowCommand => new DelegateCommand(obj => SystemCommands.CloseWindow(_wnd));
 
         public ICommand MinimizeWindowCommand => new DelegateCommand(obj => SystemCommands.MinimizeWindow(_wnd));
+
+        public ICommand MaximizeWindowCommand => new DelegateCommand(obj =>
+        {
+            if (_isWindowMaximized)
+            {
+                SystemCommands.RestoreWindow(_wnd);
+                _isWindowMaximized = false;
+            }
+            else
+            {
+                SystemCommands.MaximizeWindow(_wnd);
+                _isWindowMaximized = true;
+            }
+        });
 
         public ICommand ToggleMainMenuCommand => new DelegateCommand(obj => _mainMenuService.Toggle());
 

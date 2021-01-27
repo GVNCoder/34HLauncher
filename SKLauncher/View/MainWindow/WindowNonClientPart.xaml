@@ -159,6 +159,13 @@
             <Button
                 Width="20"
                 Height="20"
+                Command="{Binding MaximizeWindowCommand}"
+                Content=""
+                FontSize="14"
+                Style="{DynamicResource SystemOtherButtonStyleDark}" />
+            <Button
+                Width="20"
+                Height="20"
                 Command="{Binding CloseWindowCommand}"
                 Content=""
                 FontSize="14"
