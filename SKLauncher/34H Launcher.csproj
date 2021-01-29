@@ -185,6 +185,7 @@
     <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
     <Compile Include="Core\Dialog\_InternalDialog.cs" />
     <Compile Include="Core\EventItem.cs" />
+    <Compile Include="Core\Services\SystemParametersFix.cs" />
     <Compile Include="Helpers\ZClientProcessHelper.cs" />
     <Compile Include="UserControls\EventsButtonControl.xaml.cs">
       <DependentUpon>EventsButtonControl.xaml</DependentUpon>

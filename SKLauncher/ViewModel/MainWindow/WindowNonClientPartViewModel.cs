@@ -53,6 +53,8 @@ namespace Launcher.ViewModel
             _mainMenuService = mainMenuService;
             _api = api;
             _updateService = updateService;
+
+            _wnd.StateChanged += (sender, args) => _isWindowMaximized = _wnd.WindowState == WindowState.Maximized;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)

@@ -9,6 +9,8 @@
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mainWindow="clr-namespace:Launcher.View.MainWindow"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:services="clr-namespace:Launcher.Core.Services"
+    x:Name="ThisWindow"
     Title="34H Launcher"
     Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowHeight}"
@@ -52,10 +54,15 @@
                         CaptionHeight="{StaticResource WindowNonClientHeight}"
                         GlassFrameThickness="-1"
                         NonClientFrameEdges="None"
-                        ResizeBorderThickness="1"
+                        ResizeBorderThickness="5"
                         UseAeroCaptionButtons="False" />
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=ThisWindow, Path=WindowState}" Value="Maximized">
+                    <Setter Property="BorderThickness" Value="{x:Static services:SystemParametersFix.WindowResizeBorderThickness}" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
     </Window.Resources>
