@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
+// ReSharper disable All
+
 namespace Launcher.Core.Services
 {
     public static class SystemParametersFix
@@ -10,14 +12,15 @@ namespace Launcher.Core.Services
         {
             get
             {
-                float dpix = GetDpi(GetDeviceCapsIndex.LOGPIXELSX);
-                float dpiy = GetDpi(GetDeviceCapsIndex.LOGPIXELSY);
+                var dpix = GetDpi(GetDeviceCapsIndex.LOGPIXELSX);
+                var dpiy = GetDpi(GetDeviceCapsIndex.LOGPIXELSY);
 
-                int dx = GetSystemMetrics(GetSystemMetricsIndex.CXFRAME);
-                int dy = GetSystemMetrics(GetSystemMetricsIndex.CYFRAME);
+                var dx = GetSystemMetrics(GetSystemMetricsIndex.CXFRAME);
+                var dy = GetSystemMetrics(GetSystemMetricsIndex.CYFRAME);
 
                 // this adjustment is needed only since .NET 4.5 
-                int d = GetSystemMetrics(GetSystemMetricsIndex.SM_CXPADDEDBORDER);
+                var d = GetSystemMetrics(GetSystemMetricsIndex.SM_CXPADDEDBORDER);
+
                 dx += d;
                 dy += d;
 
@@ -32,7 +35,7 @@ namespace Launcher.Core.Services
         private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr GetDC(IntPtr hwnd);
+        private static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("gdi32.dll")]
         private static extern int GetDeviceCaps(IntPtr hdc, int nIndex);

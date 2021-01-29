@@ -16,8 +16,6 @@
     xmlns:shared="clr-namespace:Launcher.Core.Shared"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:theming="clr-namespace:Launcher.XamlThemes.Theming;assembly=Launcher.Theme"
-    Width="{StaticResource WindowWidth}"
-    Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SettingsViewModel}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"

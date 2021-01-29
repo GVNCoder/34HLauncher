@@ -10,8 +10,6 @@
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:Launcher.ViewModel"
-    Width="{StaticResource WindowWidth}"
-    Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=EventLogViewModel}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     TextOptions.TextRenderingMode="ClearType"

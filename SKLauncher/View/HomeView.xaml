@@ -8,8 +8,6 @@
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="clr-namespace:Launcher.UserControls"
-    Width="{StaticResource WindowWidth}"
-    Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}"
     TextOptions.TextRenderingMode="ClearType"
     mc:Ignorable="d">
@@ -30,9 +28,11 @@
     </Page.Resources>
 
     <Grid>
-        <Image
+        <!--
             Width="{StaticResource WindowWidth}"
             Height="{StaticResource WindowHeight}"
+        -->
+        <Image
             VerticalAlignment="Center"
             Source="{DynamicResource BackgroundImage}"
             Stretch="Fill" />

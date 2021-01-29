@@ -13,8 +13,6 @@
     xmlns:server="clr-namespace:Zlo4NET.Api.Models.Server;assembly=Zlo4NET"
     xmlns:shared="clr-namespace:Zlo4NET.Api.Models.Shared;assembly=Zlo4NET"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    Width="{StaticResource WindowWidth}"
-    Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Path=BF3ServerBrowserViewModel, Source={StaticResource ViewModelLocator}}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"

@@ -87,8 +87,6 @@
         <Frame
             x:Name="HOST_Content"
             Grid.Row="1"
-            Width="{StaticResource WindowWidth}"
-            Height="{StaticResource WindowContentAreaHeight}"
             NavigationUIVisibility="Hidden" />
 
         <!--  Menu  -->

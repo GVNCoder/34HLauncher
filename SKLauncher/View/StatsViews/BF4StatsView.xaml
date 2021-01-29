@@ -9,8 +9,6 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="{StaticResource WindowWidth}"
-    Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=BF4StatsViewModel}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"

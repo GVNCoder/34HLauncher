@@ -8,13 +8,10 @@
     xmlns:local="clr-namespace:Launcher.View.MainWindow"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="clr-namespace:Launcher.UserControls"
-    Width="{StaticResource WindowWidth}"
     Height="{StaticResource WindowNonClientHeight}"
     Background="{DynamicResource Theme850Brush}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     mc:Ignorable="d">
-
-    <UserControl.Resources />
 
     <Grid>
         <Grid.ColumnDefinitions>
