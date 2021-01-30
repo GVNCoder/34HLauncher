@@ -153,13 +153,13 @@
                 Content=""
                 FontSize="14"
                 Style="{DynamicResource SystemOtherButtonStyleDark}" />
-            <Button
+            <ToggleButton
                 Width="20"
                 Height="20"
                 Command="{Binding MaximizeWindowCommand}"
-                Content=""
                 FontSize="14"
-                Style="{DynamicResource SystemOtherButtonStyleDark}" />
+                IsChecked="{Binding CurrentWindowStateToggle, Mode=OneWay}"
+                Style="{DynamicResource SystemButtonMaximizeStyle}" />
             <Button
                 Width="20"
                 Height="20"

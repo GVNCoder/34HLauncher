@@ -54,7 +54,7 @@ namespace Launcher.ViewModel
             _api = api;
             _updateService = updateService;
 
-            _wnd.StateChanged += (sender, args) => _isWindowMaximized = _wnd.WindowState == WindowState.Maximized;
+            _wnd.StateChanged += (sender, args) => CurrentWindowStateToggle = _isWindowMaximized = _wnd.WindowState == WindowState.Maximized;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)
@@ -96,6 +96,14 @@ namespace Launcher.ViewModel
         public static readonly DependencyProperty CanBackNavigationProperty =
             DependencyProperty.Register("CanBackNavigation", typeof(bool), typeof(WindowNonClientPartViewModel), new PropertyMetadata(false));
 
+        public bool CurrentWindowStateToggle
+        {
+            get => (bool)GetValue(CurrentWindowStateToggleProperty);
+            set => SetValue(CurrentWindowStateToggleProperty, value);
+        }
+        public static readonly DependencyProperty CurrentWindowStateToggleProperty =
+            DependencyProperty.Register("CurrentWindowStateToggle", typeof(bool), typeof(WindowNonClientPartViewModel), new PropertyMetadata(false));
+
         #endregion
 
         #region Commands
@@ -109,12 +117,12 @@ namespace Launcher.ViewModel
             if (_isWindowMaximized)
             {
                 SystemCommands.RestoreWindow(_wnd);
-                _isWindowMaximized = false;
+                CurrentWindowStateToggle = _isWindowMaximized = false;
             }
             else
             {
                 SystemCommands.MaximizeWindow(_wnd);
-                _isWindowMaximized = true;
+                CurrentWindowStateToggle = _isWindowMaximized = true;
             }
         });
 
