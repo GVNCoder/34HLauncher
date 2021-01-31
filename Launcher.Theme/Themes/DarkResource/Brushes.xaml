@@ -10,7 +10,6 @@
     <SolidColorBrush x:Key="SystemButtonDefaultForegroundBrush" Color="{StaticResource SystemButtonBackgroundColor}" />
     <!--#endregion System buttons-->
 
-
     <Color x:Key="BaseThemeColor">#000000</Color>
     <Color x:Key="Theme850Color">#1A1A1A</Color>
     <Color x:Key="Theme800Color">#262626</Color>

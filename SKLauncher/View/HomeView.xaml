@@ -7,7 +7,6 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:userControls="clr-namespace:Launcher.UserControls"
     DataContext="{Binding Path=HomeViewModel, Source={StaticResource ViewModelLocator}}"
     TextOptions.TextRenderingMode="ClearType"
     mc:Ignorable="d">
@@ -28,11 +27,9 @@
     </Page.Resources>
 
     <Grid>
-        <!--
-            Width="{StaticResource WindowWidth}"
-            Height="{StaticResource WindowHeight}"
-        -->
         <Image
+            Width="{Binding WindowWidth, Mode=OneWay}"
+            Height="{Binding WindowHeight, Mode=OneWay}"
             VerticalAlignment="Center"
             Source="{DynamicResource BackgroundImage}"
             Stretch="Fill" />

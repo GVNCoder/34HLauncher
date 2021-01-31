@@ -45,7 +45,8 @@ namespace Launcher.ViewModel
             IDiscord discord,
             IPageNavigator navigator,
             IApplicationState state,
-            IDialogService dialogService)
+            IDialogService dialogService
+            , App application)
         {
             _navigator = navigator;
             _state = state;
@@ -57,6 +58,13 @@ namespace Launcher.ViewModel
             _api = api;
             _busyIndicatorService = busyIndicatorService;
             _dialogService = dialogService;
+
+            // track window size changed event
+            application.MainWindow.SizeChanged += (sender, args) =>
+            {
+                WindowHeight = args.NewSize.Height;
+                WindowWidth = args.NewSize.Width;
+            };
         }
 
         private static bool _isOnline(object playMode)
@@ -83,6 +91,22 @@ namespace Launcher.ViewModel
         }
         public static readonly DependencyProperty CardTransparencyProperty =
             DependencyProperty.Register("CardTransparency", typeof(double), typeof(HomeViewModel), new PropertyMetadata(.1d));
+
+        public double WindowHeight
+        {
+            get => (double)GetValue(WindowHeightProperty);
+            set => SetValue(WindowHeightProperty, value);
+        }
+        public static readonly DependencyProperty WindowHeightProperty =
+            DependencyProperty.Register("WindowHeight", typeof(double), typeof(HomeViewModel), new PropertyMetadata(WindowSettings.Height));
+
+        public double WindowWidth
+        {
+            get => (double)GetValue(WindowWidthProperty);
+            set => SetValue(WindowWidthProperty, value);
+        }
+        public static readonly DependencyProperty WindowWidthProperty =
+            DependencyProperty.Register("WindowWidth", typeof(double), typeof(HomeViewModel), new PropertyMetadata(WindowSettings.Width));
 
         #endregion
 
