@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using System.Windows;
 using System.Windows.Input;
 
 using log4net;
-using Microsoft.Win32;
 
 using Ninject.Syntax;
 

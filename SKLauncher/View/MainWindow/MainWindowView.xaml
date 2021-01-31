@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:Launcher.Core.Behaviors"
     xmlns:controls="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
+    xmlns:core="clr-namespace:Launcher.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:Launcher.View"
@@ -12,10 +13,10 @@
     xmlns:services="clr-namespace:Launcher.Core.Services"
     x:Name="ThisWindow"
     Title="34H Launcher"
-    Width="{StaticResource WindowWidth}"
-    Height="{StaticResource WindowHeight}"
-    MinWidth="{StaticResource WindowWidth}"
-    MinHeight="{StaticResource WindowHeight}"
+    Width="{x:Static core:WindowSettings.Width}"
+    Height="{x:Static core:WindowSettings.Height}"
+    MinWidth="{x:Static core:WindowSettings.Width}"
+    MinHeight="{x:Static core:WindowSettings.Height}"
     DataContext="{Binding Path=MainWindowViewModel, Source={StaticResource ViewModelLocator}}"
     ResizeMode="CanResize"
     Style="{DynamicResource WndChromeStyle}"
@@ -51,10 +52,10 @@
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
                     <WindowChrome
-                        CaptionHeight="{StaticResource WindowNonClientHeight}"
-                        GlassFrameThickness="-1"
+                        CaptionHeight="{x:Static core:WindowSettings.ChromeCaptionHeight}"
+                        GlassFrameThickness="{x:Static core:WindowSettings.ChromeGlassFrameThickness}"
                         NonClientFrameEdges="None"
-                        ResizeBorderThickness="5"
+                        ResizeBorderThickness="{x:Static core:WindowSettings.ChromeResizeBorderThickness}"
                         UseAeroCaptionButtons="False" />
                 </Setter.Value>
             </Setter>

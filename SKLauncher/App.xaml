@@ -12,8 +12,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <!--#region Constants-->
-            <system:Double x:Key="WindowWidth">1100</system:Double>
-            <system:Double x:Key="WindowHeight">600</system:Double>
             <system:Double x:Key="WindowNonClientHeight">30</system:Double>
             <system:Double x:Key="WindowBottomBarHeight">30</system:Double>
             <system:Double x:Key="WindowContentAreaHeight">540</system:Double>
