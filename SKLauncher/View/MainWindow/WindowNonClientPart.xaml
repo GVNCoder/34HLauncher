@@ -159,7 +159,7 @@
                 Command="{Binding MaximizeWindowCommand}"
                 FontSize="14"
                 IsChecked="{Binding CurrentWindowStateToggle, Mode=OneWay}"
-                Style="{DynamicResource SystemButtonMaximizeStyle}" />
+                Style="{DynamicResource SystemToggleButtonMaximizeStyle}" />
             <Button
                 Width="20"
                 Height="20"
