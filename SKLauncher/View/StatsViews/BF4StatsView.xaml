@@ -57,188 +57,49 @@
         </i:Interaction.Behaviors>
 
         <!--  Sum stats  -->
-        <StackPanel
-            Grid.Column="0"
-            Width="360"
-            Margin="5"
-            Orientation="Vertical">
-            <!--  Rank  -->
-            <Border
-                Padding="5"
-                Background="{DynamicResource Theme850Brush}"
-                CornerRadius="2">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        FontSize="14"
-                        Text="{Binding Stats.RankName}" />
-                    <Image
-                        Width="100"
-                        Height="100"
-                        Source="{Binding Stats.Rank, Converter={StaticResource RankNumberToImageSourceConverter}}" />
-                    <Grid Margin="20,0">
-                        <TextBlock HorizontalAlignment="Left" FontSize="10">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} / {1}">
-                                    <Binding Path="Stats.ShortXp" />
-                                    <Binding Path="Stats.MaxXp" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                Grid.Row="0"
+                Width="360"
+                Margin="5"
+                Orientation="Vertical">
+                <!--  Rank  -->
+                <Border
+                    Padding="5"
+                    Background="{DynamicResource Theme850Brush}"
+                    CornerRadius="2">
+                    <StackPanel Orientation="Vertical">
                         <TextBlock
-                            HorizontalAlignment="Right"
-                            FontSize="10"
-                            Text="{Binding Stats.UntilRankUp}" />
-                    </Grid>
-                    <ProgressBar
-                        Width="320"
-                        Height="10"
-                        Margin="0,3"
-                        Value="{Binding Stats.CurrentProgressPercent, Mode=OneWay}">
-                        <ProgressBar.OpacityMask>
-                            <VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Rectangle
-                                        Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
-                                        Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
-                                        Fill="White"
-                                        RadiusX="2"
-                                        RadiusY="2" />
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </ProgressBar.OpacityMask>
-                    </ProgressBar>
-                </StackPanel>
-            </Border>
-            <!--  Skill  -->
-            <Border
-                Margin="0,5,0,0"
-                Padding="5"
-                Background="{DynamicResource Theme850Brush}"
-                CornerRadius="2">
-                <Grid Margin="20,0,20,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock HorizontalAlignment="Center" Text="K/D" />
-
-                        <TextBlock
-                            Margin="0,5,0,15"
-                            FontWeight="Bold"
-                            Text="{Binding Stats.KD, StringFormat={}{0:F2}}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock HorizontalAlignment="Center" Text="{DynamicResource sView_Kills}" />
-
-                        <TextBlock
-                            Margin="0,5,0,15"
                             HorizontalAlignment="Center"
-                            FontWeight="Bold"
-                            Text="{Binding Stats.Kills}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock HorizontalAlignment="Center" Text="W/L" />
-
-                        <TextBlock
-                            Margin="0,5,0,15"
-                            FontWeight="Bold"
-                            Text="{Binding Stats.WL, StringFormat={}{0:F2}}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock Text="{DynamicResource sView_Accuracy}" />
-
-                        <TextBlock
-                            Margin="0,5,0,0"
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold"
-                            Text="{Binding Stats.Accuracy, StringFormat={}{0:P0}}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock HorizontalAlignment="Center" Text="{DynamicResource sView_Headshots}" />
-
-                        <TextBlock
-                            Margin="0,5,0,0"
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold"
-                            Text="{Binding Stats.HeadShots}" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock HorizontalAlignment="Center" Text="{DynamicResource sView_Time}" />
-
-                        <TextBlock
-                            Margin="0,5,0,0"
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold"
-                            Text="{Binding Stats.Time, StringFormat={}{0} h}" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <!--  Classes  -->
-            <Border
-                Margin="0,5,0,0"
-                Padding="5"
-                Background="{DynamicResource Theme850Brush}"
-                CornerRadius="2">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock
-                        Margin="20,0,0,3"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Text="Assault" />
-                    <Grid Margin="20,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                            FontSize="14"
+                            Text="{Binding Stats.RankName}" />
+                        <Image
+                            Width="100"
+                            Height="100"
+                            Source="{Binding Stats.Rank, Converter={StaticResource RankNumberToImageSourceConverter}}" />
+                        <Grid Margin="20,0">
+                            <TextBlock HorizontalAlignment="Left" FontSize="10">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} / {1}">
+                                        <Binding Path="Stats.ShortXp" />
+                                        <Binding Path="Stats.MaxXp" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                FontSize="10"
+                                Text="{Binding Stats.UntilRankUp}" />
+                        </Grid>
                         <ProgressBar
-                            Grid.Column="0"
-                            Width="250"
+                            Width="320"
                             Height="10"
-                            HorizontalAlignment="Left"
-                            Value="{Binding Stats.AssaultStarProgressPercent, Mode=OneWay}">
+                            Margin="0,3"
+                            Value="{Binding Stats.CurrentProgressPercent, Mode=OneWay}">
                             <ProgressBar.OpacityMask>
                                 <VisualBrush>
                                     <VisualBrush.Visual>
@@ -252,186 +113,330 @@
                                 </VisualBrush>
                             </ProgressBar.OpacityMask>
                         </ProgressBar>
-                        <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource Ionicons}"
-                                FontSize="14"
-                                Text="" />
-                            <TextBlock
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding Stats.AssaultStarsCount}" />
-                        </StackPanel>
-                    </Grid>
-
-                    <TextBlock
-                        Margin="20,5,0,3"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Text="Engineer" />
-                    <Grid Margin="20,0">
+                    </StackPanel>
+                </Border>
+                <!--  Skill  -->
+                <Border
+                    Margin="0,5,0,0"
+                    Padding="5"
+                    Background="{DynamicResource Theme850Brush}"
+                    CornerRadius="2">
+                    <Grid Margin="20,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <ProgressBar
-                            Grid.Column="0"
-                            Width="250"
-                            Height="10"
-                            HorizontalAlignment="Left"
-                            Value="{Binding Stats.EngineerStarProgressPercent, Mode=OneWay}">
-                            <ProgressBar.OpacityMask>
-                                <VisualBrush>
-                                    <VisualBrush.Visual>
-                                        <Rectangle
-                                            Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
-                                            Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
-                                            Fill="White"
-                                            RadiusX="2"
-                                            RadiusY="2" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </ProgressBar.OpacityMask>
-                        </ProgressBar>
                         <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock HorizontalAlignment="Center" Text="K/D" />
+
                             <TextBlock
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource Ionicons}"
-                                FontSize="14"
-                                Text="" />
-                            <TextBlock
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding Stats.EngineerStarsCount}" />
+                                Margin="0,5,0,15"
+                                FontWeight="Bold"
+                                Text="{Binding Stats.KD, StringFormat={}{0:F2}}" />
                         </StackPanel>
 
-                    </Grid>
-
-                    <TextBlock
-                        Margin="20,5,0,3"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Text="Support" />
-
-                    <Grid Margin="20,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <ProgressBar
-                            x:Name="SupportProgress"
-                            Grid.Column="0"
-                            Width="250"
-                            Height="10"
-                            HorizontalAlignment="Left"
-                            Value="{Binding Stats.SupportStarProgressPercent, Mode=OneWay}">
-                            <ProgressBar.OpacityMask>
-                                <VisualBrush>
-                                    <VisualBrush.Visual>
-                                        <Rectangle
-                                            Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
-                                            Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
-                                            Fill="White"
-                                            RadiusX="2"
-                                            RadiusY="2" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </ProgressBar.OpacityMask>
-                        </ProgressBar>
-
                         <StackPanel
+                            Grid.Row="0"
                             Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock HorizontalAlignment="Center" Text="{DynamicResource sView_Kills}" />
 
                             <TextBlock
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource Ionicons}"
-                                FontSize="14"
-                                Text="" />
-
-                            <TextBlock
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding Stats.SupportStarsCount}" />
+                                Margin="0,5,0,15"
+                                HorizontalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="{Binding Stats.Kills}" />
                         </StackPanel>
 
-                    </Grid>
-
-                    <TextBlock
-                        Margin="20,5,0,3"
-                        HorizontalAlignment="Left"
-                        FontSize="14"
-                        Text="Recon" />
-
-                    <Grid Margin="20,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <ProgressBar
-                            x:Name="ReconProgress"
-                            Grid.Column="0"
-                            Width="250"
-                            Height="10"
-                            HorizontalAlignment="Left"
-                            Value="{Binding Stats.ReconStarProgressPercent, Mode=OneWay}">
-                            <ProgressBar.OpacityMask>
-                                <VisualBrush>
-                                    <VisualBrush.Visual>
-                                        <Rectangle
-                                            Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
-                                            Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
-                                            Fill="White"
-                                            RadiusX="2"
-                                            RadiusY="2" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </ProgressBar.OpacityMask>
-                        </ProgressBar>
-
                         <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock HorizontalAlignment="Center" Text="W/L" />
 
                             <TextBlock
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource Ionicons}"
-                                FontSize="14"
-                                Text="" />
-
-                            <TextBlock
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding Stats.ReconStarsCount}" />
+                                Margin="0,5,0,15"
+                                FontWeight="Bold"
+                                Text="{Binding Stats.WL, StringFormat={}{0:F2}}" />
                         </StackPanel>
 
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock Text="{DynamicResource sView_Accuracy}" />
+
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="{Binding Stats.Accuracy, StringFormat={}{0:P0}}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock HorizontalAlignment="Center" Text="{DynamicResource sView_Headshots}" />
+
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="{Binding Stats.HeadShots}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock HorizontalAlignment="Center" Text="{DynamicResource sView_Time}" />
+
+                            <TextBlock
+                                Margin="0,5,0,0"
+                                HorizontalAlignment="Center"
+                                FontWeight="Bold"
+                                Text="{Binding Stats.Time, StringFormat={}{0} h}" />
+                        </StackPanel>
                     </Grid>
-                </StackPanel>
-            </Border>
+                </Border>
+                <!--  Classes  -->
+                <Border
+                    Margin="0,5,0,0"
+                    Padding="5"
+                    Background="{DynamicResource Theme850Brush}"
+                    CornerRadius="2">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock
+                            Margin="20,0,0,3"
+                            HorizontalAlignment="Left"
+                            FontSize="14"
+                            Text="Assault" />
+                        <Grid Margin="20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <ProgressBar
+                                Grid.Column="0"
+                                Width="250"
+                                Height="10"
+                                HorizontalAlignment="Left"
+                                Value="{Binding Stats.AssaultStarProgressPercent, Mode=OneWay}">
+                                <ProgressBar.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Rectangle
+                                                Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
+                                                Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
+                                                Fill="White"
+                                                RadiusX="2"
+                                                RadiusY="2" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </ProgressBar.OpacityMask>
+                            </ProgressBar>
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource Ionicons}"
+                                    FontSize="14"
+                                    Text="" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Stats.AssaultStarsCount}" />
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock
+                            Margin="20,5,0,3"
+                            HorizontalAlignment="Left"
+                            FontSize="14"
+                            Text="Engineer" />
+                        <Grid Margin="20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <ProgressBar
+                                Grid.Column="0"
+                                Width="250"
+                                Height="10"
+                                HorizontalAlignment="Left"
+                                Value="{Binding Stats.EngineerStarProgressPercent, Mode=OneWay}">
+                                <ProgressBar.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Rectangle
+                                                Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
+                                                Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
+                                                Fill="White"
+                                                RadiusX="2"
+                                                RadiusY="2" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </ProgressBar.OpacityMask>
+                            </ProgressBar>
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource Ionicons}"
+                                    FontSize="14"
+                                    Text="" />
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Stats.EngineerStarsCount}" />
+                            </StackPanel>
+
+                        </Grid>
+
+                        <TextBlock
+                            Margin="20,5,0,3"
+                            HorizontalAlignment="Left"
+                            FontSize="14"
+                            Text="Support" />
+
+                        <Grid Margin="20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <ProgressBar
+                                x:Name="SupportProgress"
+                                Grid.Column="0"
+                                Width="250"
+                                Height="10"
+                                HorizontalAlignment="Left"
+                                Value="{Binding Stats.SupportStarProgressPercent, Mode=OneWay}">
+                                <ProgressBar.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Rectangle
+                                                Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
+                                                Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
+                                                Fill="White"
+                                                RadiusX="2"
+                                                RadiusY="2" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </ProgressBar.OpacityMask>
+                            </ProgressBar>
+
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource Ionicons}"
+                                    FontSize="14"
+                                    Text="" />
+
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Stats.SupportStarsCount}" />
+                            </StackPanel>
+
+                        </Grid>
+
+                        <TextBlock
+                            Margin="20,5,0,3"
+                            HorizontalAlignment="Left"
+                            FontSize="14"
+                            Text="Recon" />
+
+                        <Grid Margin="20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <ProgressBar
+                                x:Name="ReconProgress"
+                                Grid.Column="0"
+                                Width="250"
+                                Height="10"
+                                HorizontalAlignment="Left"
+                                Value="{Binding Stats.ReconStarProgressPercent, Mode=OneWay}">
+                                <ProgressBar.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Rectangle
+                                                Width="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Width}"
+                                                Height="{Binding RelativeSource={RelativeSource AncestorType=ProgressBar}, Path=Height}"
+                                                Fill="White"
+                                                RadiusX="2"
+                                                RadiusY="2" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </ProgressBar.OpacityMask>
+                            </ProgressBar>
+
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource Ionicons}"
+                                    FontSize="14"
+                                    Text="" />
+
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Stats.ReconStarsCount}" />
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
             <!--  Goto ZloLog  -->
             <Button
-                Height="77"
-                Margin="0,5,0,0"
+                Grid.Row="1"
+                Margin="5,0,5,5"
                 Command="{Binding}"
                 Content="{DynamicResource sView_OpenZloLog}"
                 IsEnabled="False" />
-        </StackPanel>
+        </Grid>
         <!--  Detailed column 1  -->
         <Border
             Grid.Column="1"
