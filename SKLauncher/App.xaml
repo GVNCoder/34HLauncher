@@ -34,10 +34,6 @@
             <CollectionViewSource x:Key="ServersListView" />
 
             <!--  Release  -->
-
-
-
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Launcher.Resources;component/Fonts.xaml" />
                 <!--  Release  -->
