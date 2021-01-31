@@ -16,7 +16,6 @@ using Ninject;
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
-using Clipboard = Launcher.Helpers.Clipboard;
 using WLM = Launcher.Localization.Loc.inCodeLocalizationMap.WindowViewLocalizationMap;
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
@@ -32,7 +31,6 @@ namespace Launcher.ViewModel
         private readonly IPageNavigator _navigator;
 
         private ZUser _authorizedUser;
-        private bool _isWindowMaximized;
 
         public WindowNonClientPartViewModel(
             IMainMenuService mainMenuService,
@@ -54,7 +52,8 @@ namespace Launcher.ViewModel
             _api = api;
             _updateService = updateService;
 
-            _wnd.StateChanged += (sender, args) => CurrentWindowStateToggle = _isWindowMaximized = _wnd.WindowState == WindowState.Maximized;
+            // track window state
+            _wnd.StateChanged += (sender, args) => CurrentWindowStateToggle = _wnd.WindowState == WindowState.Maximized;
         }
 
         private void _navigationInitiatedHandler(object sender, EventArgs e)
@@ -114,15 +113,15 @@ namespace Launcher.ViewModel
 
         public ICommand MaximizeWindowCommand => new DelegateCommand(obj =>
         {
-            if (_isWindowMaximized)
+            if (CurrentWindowStateToggle)
             {
                 SystemCommands.RestoreWindow(_wnd);
-                CurrentWindowStateToggle = _isWindowMaximized = false;
+                CurrentWindowStateToggle = false;
             }
             else
             {
                 SystemCommands.MaximizeWindow(_wnd);
-                CurrentWindowStateToggle = _isWindowMaximized = true;
+                CurrentWindowStateToggle = true;
             }
         });
 
