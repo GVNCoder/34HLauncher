@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 
 using Launcher.Core.Data;
+using Launcher.Core.Dialog;
 using Launcher.Core.Interaction;
 using Launcher.Core.RPC;
 using Launcher.Core.Service.Base;
@@ -21,18 +22,22 @@ namespace Launcher.ViewModel
     public class BF3CoopViewModel : BasePageViewModel
     {
         private CollectionViewSource _collectionViewSource;
+
         private readonly IEnumerable<CoopMissionModel> _missions;
         private readonly IGameService _gameService;
         private readonly IDiscord _discord;
+        private readonly IDialogService _dialogService;
 
         public BF3CoopViewModel(
             IGameService gameService,
-            IDiscord discord)
+            IDiscord discord
+            , IDialogService dialogService)
         {
             DifficultyEnumerable = Enum.GetNames(typeof(ZCoopDifficulty));
 
             _gameService = gameService;
             _discord = discord;
+            _dialogService = dialogService;
             _missions = new[]
             {
                 new CoopMissionModel
@@ -180,16 +185,24 @@ namespace Launcher.ViewModel
 
         public ICommand JoinCommand => new DelegateCommand(obj =>
         {
-            // create run params
-            var friendId = uint.Parse(FriendId);
-            var param = new CreateCoopParameters
+            // check if user input is valid
+            var parseResult = uint.TryParse(FriendId, out var friendId);
+            if (parseResult)
             {
-                Game = ZGame.BF3,
-                Mode = ZPlayMode.CooperativeClient,
-                FriendId = friendId
-            };
-            // run game
-            _gameService.RunCoop(param).Forget();
+                var param = new CreateCoopParameters
+                {
+                    Game = ZGame.BF3,
+                    Mode = ZPlayMode.CooperativeClient,
+                    FriendId = friendId
+                };
+
+                // run game
+                _gameService.RunCoop(param).Forget();
+            }
+            else
+            {
+                _dialogService.OpenMessageBox("Input error", $"Invalid value \"{FriendId}\". It must be greater than 0!").Forget();
+            }
         });
 
         #endregion
