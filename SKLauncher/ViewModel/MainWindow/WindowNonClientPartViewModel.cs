@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 using Launcher.Core.Data;
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
@@ -11,7 +12,9 @@ using Launcher.Core.Services;
 using Launcher.Core.Services.Updates;
 using Launcher.Core.Shared;
 using Launcher.ViewModel.UserControl;
+
 using Ninject;
+
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 
