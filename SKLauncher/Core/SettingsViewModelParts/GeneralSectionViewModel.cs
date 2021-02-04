@@ -44,8 +44,8 @@ namespace Launcher.Core.SettingsViewModelParts
 
             LocalizationEnumerable = new[]
             {
-                new KeyValuePair<string, LocalizationEnum>("English", LocalizationEnum.EN),
-                new KeyValuePair<string, LocalizationEnum>("Русский", LocalizationEnum.RU),
+                new KeyValuePair<string, LauncherLocalization>("English", LauncherLocalization.EN),
+                new KeyValuePair<string, LauncherLocalization>("Русский", LauncherLocalization.RU),
             };
         }
 
@@ -210,7 +210,7 @@ namespace Launcher.Core.SettingsViewModelParts
             CloseZClientWithLauncher = settings.CloseZClientWithLauncher;
         }
 
-        public KeyValuePair<string, LocalizationEnum>[] LocalizationEnumerable { get; }
+        public KeyValuePair<string, LauncherLocalization>[] LocalizationEnumerable { get; }
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {

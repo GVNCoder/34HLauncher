@@ -1,51 +1,56 @@
 ﻿using System;
+
 using Launcher.Localization.Loc;
 using Launcher.XamlThemes.Theming;
 
 namespace Launcher.Core.Shared
 {
+    // Auto...
+    // Use...
+    // Data...
+    // DataCollection...
+    // Disable...
+
     [Serializable]
     public class LauncherSettings
     {
-        [NonSerialized]
-        private bool _isDefault = false;
+        public bool AutoUnfoldGameWindow         { get; set; }
+        public bool AutoRunZClientApplication    { get; set; }
+        public bool AutoConnectToZClient         { get; set; }
+        public bool AutoCloseZClientWithLauncher { get; set; }
 
-        public ThemeEnum Theme { get; set; }
-        public AccentEnum Accent { get; set; }
+        public bool UseDiscordRPC { get; set; }
 
-        public LocalizationEnum Localization { get; set; }
-        public bool UnfoldGameWindow { get; set; }
-        public string PathToZClient { get; set; }
-        public bool RunZClient { get; set; }
-        public bool UseDiscordPresence { get; set; }
-        public double CardTransparency { get; set; }
-        public bool TryToConnect { get; set; }
-        public bool DisableChangelogAutoOpen { get; set; }
-        public bool DisableAskServerBrowserDiscordLeave { get; set; }
-        public bool CloseZClientWithLauncher { get; set; }
+        public bool DisableChangelogOpening { get; set; }
 
-        public bool IsDefault { get => _isDefault; private set => _isDefault = value; }
+        public string DataZClientPath              { get; set; }
+        public double DataMainMenuCardTransparency { get; set; }
 
-        static LauncherSettings()
-        {
-            Default = new LauncherSettings
-            {
-                Theme = ThemeEnum.Dark,
-                Accent = AccentEnum.OrangeRed,
-                Localization = LocalizationEnum.EN,
-                PathToZClient = string.Empty,
-                RunZClient = false,
-                UnfoldGameWindow = false,
-                UseDiscordPresence = false,
-                CardTransparency = .1d,
-                TryToConnect = false,
-                IsDefault = true,
-                DisableChangelogAutoOpen = false,
-                DisableAskServerBrowserDiscordLeave = false,
-                CloseZClientWithLauncher = false
-            };
-        }
+        public LauncherTheme        DataTheme        { get; set; }
+        public LauncherLocalization DataLocalization { get; set; }
 
-        public static LauncherSettings Default { get; }
+        public GameSettings[] DataCollectionGameSettings { get; set; }
+
+        //static LauncherSettings()
+        //{
+        //    Default = new LauncherSettings
+        //    {
+        //        Theme = ThemeEnum.Dark,
+        //        Accent = AccentEnum.OrangeRed,
+        //        Localization = LocalizationEnum.EN,
+        //        PathToZClient = string.Empty,
+        //        RunZClient = false,
+        //        UnfoldGameWindow = false,
+        //        UseDiscordPresence = false,
+        //        CardTransparency = .1d,
+        //        TryToConnect = false,
+        //        IsDefault = true,
+        //        DisableChangelogAutoOpen = false,
+        //        DisableAskServerBrowserDiscordLeave = false,
+        //        CloseZClientWithLauncher = false
+        //    };
+        //}
+
+        //public static LauncherSettings Default { get; }
     }
 }

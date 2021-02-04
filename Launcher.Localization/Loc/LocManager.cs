@@ -15,9 +15,9 @@ namespace Launcher.Localization.Loc
             _entryDictionary = application.Resources;
         }
 
-        public static LocalizationEnum CurrentLoc { get; private set; } = LocalizationEnum.None;
+        public static LauncherLocalization CurrentLoc { get; private set; } = LauncherLocalization.None;
 
-        public static void SetLocale(LocalizationEnum loc)
+        public static void SetLocale(LauncherLocalization loc)
         {
             if (CurrentLoc == loc) return;
 

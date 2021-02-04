@@ -30,8 +30,8 @@ namespace Launcher.Core.SettingsViewModelParts
 
             ThemeEnumerable = new[]
             {
-                new KeyValuePair<string, ThemeEnum>("Dark", ThemeEnum.Dark),
-                new KeyValuePair<string, ThemeEnum>("Light", ThemeEnum.Light),
+                new KeyValuePair<string, LauncherTheme>("Dark", LauncherTheme.Dark),
+                new KeyValuePair<string, LauncherTheme>("Light", LauncherTheme.Light),
             };
         }
 
@@ -98,7 +98,7 @@ namespace Launcher.Core.SettingsViewModelParts
             GameCardOpacity = (int) (settings.CardTransparency * 100);
         }
 
-        public KeyValuePair<string, ThemeEnum>[] ThemeEnumerable { get; }
+        public KeyValuePair<string, LauncherTheme>[] ThemeEnumerable { get; }
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {

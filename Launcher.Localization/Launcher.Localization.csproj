@@ -51,7 +51,7 @@
     <Compile Include="Loc\inCodeLocalizationMap\HomeViewLocalizationMap.cs" />
     <Compile Include="Loc\inCodeLocalizationMap\SharedLocalizationMap.cs" />
     <Compile Include="Loc\inCodeLocalizationMap\WindowViewLocalizationMap.cs" />
-    <Compile Include="Loc\LocalizationEnum.cs" />
+    <Compile Include="Loc\LauncherLocalization.cs" />
     <Compile Include="Loc\LocalizationResourceDictionary.cs" />
     <Compile Include="Loc\LocManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

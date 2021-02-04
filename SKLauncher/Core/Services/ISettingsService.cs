@@ -4,17 +4,15 @@ namespace Launcher.Core.Services
 {
     public interface ISettingsService
     {
-        bool LoadLauncherSettings();
-        bool LoadGameSettings();
-
-        LauncherSettings GetLauncherSettings();
-        GameSettings GetGameSettings();
-
+        bool Load();
         bool Save();
 
-        bool GlobalBlock { get; }
+        void SetLock();
+        void FreeLock();
 
-        void SetGlobalLock();
-        void FreeGlobalLock();
+        bool CanGetAccess();
+        bool IsDefault();
+
+        LauncherSettings Current { get; }
     }
 }

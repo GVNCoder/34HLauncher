@@ -217,14 +217,11 @@
     <Compile Include="Core\SettingsViewModelParts\UpdatesSectionViewModel.cs" />
     <Compile Include="Core\Shared\CoopMissionModel.cs" />
     <Compile Include="Core\Shared\GameControlViewModel.cs" />
-    <Compile Include="Core\Shared\RunContext.cs" />
-    <Compile Include="Core\Shared\GameSetting.cs" />
     <Compile Include="Core\Shared\GameSettings.cs" />
     <Compile Include="Core\Shared\GameSettingsViewModel.cs" />
     <Compile Include="Core\Shared\GameTabViewModel.cs" />
     <Compile Include="Core\Shared\LauncherSettings.cs" />
     <Compile Include="Core\Shared\NetworkAvailabilityChangedEvent.cs" />
-    <Compile Include="Core\Shared\ServerBrowserLeaveViewModel.cs" />
     <Compile Include="Core\Shared\StateConstants.cs" />
     <Compile Include="Core\Shared\UIElementConstants.cs" />
     <Compile Include="Core\VisualProvider.cs" />

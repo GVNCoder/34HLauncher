@@ -24,7 +24,7 @@ namespace Launcher.XamlThemes.Theming
         private static AccentResourceDictionary _currentAccentDictionary;
         private static BitmapImage _backgroundImage;
 
-        private static ThemeEnum _currentTheme;
+        private static LauncherTheme _currentTheme;
         private static AccentEnum _currentAccent;
         private static BackgroundImageEnum _imageSourceType;
 
@@ -73,7 +73,7 @@ namespace Launcher.XamlThemes.Theming
 
         #region Public interface
 
-        public static ThemeEnum CurrentTheme => _currentTheme;
+        public static LauncherTheme CurrentTheme => _currentTheme;
         public static AccentEnum CurrentAccent => _currentAccent;
 
         public const float ImageFileSizeLimit = 10f;
@@ -101,7 +101,7 @@ namespace Launcher.XamlThemes.Theming
             _currentAccent = accent;
         }
 
-        public static void ApplyTheme(ThemeEnum theme)
+        public static void ApplyTheme(LauncherTheme theme)
         {
             if (_currentTheme == theme) return;
 

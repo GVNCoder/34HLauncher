@@ -81,7 +81,7 @@
     <Compile Include="Theming\AccentEnum.cs" />
     <Compile Include="Theming\AccentResourceDictionary.cs" />
     <Compile Include="Theming\BackgroundImageEnum.cs" />
-    <Compile Include="Theming\ThemeEnum.cs" />
+    <Compile Include="Theming\LauncherTheme.cs" />
     <Compile Include="Theming\ThemeManager.cs" />
     <Compile Include="Theming\ThemeResourceDictionary.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
