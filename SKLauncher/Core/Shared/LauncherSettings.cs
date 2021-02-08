@@ -15,7 +15,7 @@ namespace Launcher.Core.Shared
     public class LauncherSettings
     {
         public bool AutoUnfoldGameWindow         { get; set; }
-        public bool AutoRunZClientApplication    { get; set; }
+        public bool AutoRunZClient               { get; set; }
         public bool AutoConnectToZClient         { get; set; }
         public bool AutoCloseZClientWithLauncher { get; set; }
 
@@ -30,6 +30,9 @@ namespace Launcher.Core.Shared
         public LauncherLocalization DataLocalization { get; set; }
 
         public GameSettings[] DataCollectionGameSettings { get; set; }
+
+        public uint[] DataCollectionHiddenServers        { get; set; }
+        public uint[] DataCollectionFavoriteServers      { get; set; }
 
         //static LauncherSettings()
         //{
