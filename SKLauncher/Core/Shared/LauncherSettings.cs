@@ -18,10 +18,9 @@ namespace Launcher.Core.Shared
         public bool AutoRunZClient               { get; set; }
         public bool AutoConnectToZClient         { get; set; }
         public bool AutoCloseZClientWithLauncher { get; set; }
+        public bool AutoOpenChangelog            { get; set; }
 
         public bool UseDiscordRPC { get; set; }
-
-        public bool DisableChangelogOpening { get; set; }
 
         public string DataZClientPath              { get; set; }
         public double DataMainMenuCardTransparency { get; set; }
@@ -33,27 +32,5 @@ namespace Launcher.Core.Shared
 
         public uint[] DataCollectionHiddenServers        { get; set; }
         public uint[] DataCollectionFavoriteServers      { get; set; }
-
-        //static LauncherSettings()
-        //{
-        //    Default = new LauncherSettings
-        //    {
-        //        Theme = ThemeEnum.Dark,
-        //        Accent = AccentEnum.OrangeRed,
-        //        Localization = LocalizationEnum.EN,
-        //        PathToZClient = string.Empty,
-        //        RunZClient = false,
-        //        UnfoldGameWindow = false,
-        //        UseDiscordPresence = false,
-        //        CardTransparency = .1d,
-        //        TryToConnect = false,
-        //        IsDefault = true,
-        //        DisableChangelogAutoOpen = false,
-        //        DisableAskServerBrowserDiscordLeave = false,
-        //        CloseZClientWithLauncher = false
-        //    };
-        //}
-
-        //public static LauncherSettings Default { get; }
     }
 }

@@ -1,46 +1,155 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 using Launcher.Core.Shared;
+using Launcher.Helpers;
+using Launcher.Localization.Loc;
+using Launcher.XamlThemes.Theming;
+
+using Zlo4NET.Api.Models.Shared;
 
 namespace Launcher.Core.Services
 {
     public class SettingsService : ISettingsService
     {
-        private const string _launcherSettingsFileName = _settingsDirectoryName + "\\launcher.settings.34h";
-        private const string _gameSettingsFileName = _settingsDirectoryName + "\\game.settings.34h";
-        private const string _settingsDirectoryName = "settings";
+        private const string _SettingsFileName = "settings.34h";
 
-        private LauncherSettings _launcherSettings;
-        private GameSettings _gameSettings;
+        private readonly object _sync;
+        private readonly LauncherSettings _defaultSettings;
 
-        private T _loadSettingsByPath<T>(IFormatter formatter, string path) where T: class
+        private LauncherSettings _settings;
+        private bool _settingsLock;
+        private bool _isDefault;
+
+        public SettingsService()
         {
-            T var;
+            _sync = new object();
+
+            // create default settings
+            var currentSystemArchitecture = Environment.Is64BitOperatingSystem
+                ? ZGameArchitecture.x64
+                : ZGameArchitecture.x32;
+            var emptyStringArray = new string[] { };
+            var emptyUintArray = new uint[] { };
+
+            // create default game settings instance
+            var defaultGameSettings = new[]
+            {
+                new GameSettings
+                {
+                    DataGame = ZGame.BF3,
+                    DataArchitecture = currentSystemArchitecture,
+                    DataCollectionInjectableDlls = emptyStringArray
+                },
+                new GameSettings
+                {
+                    DataGame = ZGame.BF4,
+                    DataArchitecture = currentSystemArchitecture,
+                    DataCollectionInjectableDlls = emptyStringArray
+                },
+                new GameSettings
+                {
+                    DataGame = ZGame.BFH,
+                    DataArchitecture = currentSystemArchitecture,
+                    DataCollectionInjectableDlls = emptyStringArray
+                }
+            };
+
+            // create default settings instance
+            _defaultSettings = new LauncherSettings
+            {
+                AutoUnfoldGameWindow = false,
+                AutoRunZClient = false,
+                AutoConnectToZClient = false,
+                AutoCloseZClientWithLauncher = false,
+                AutoOpenChangelog = true,
+
+                UseDiscordRPC = false,
+
+                DataZClientPath = string.Empty,
+                DataMainMenuCardTransparency = .1d,
+
+                DataTheme            = LauncherTheme.Dark,
+                DataLocalization     = LauncherLocalization.EN,
+
+                DataCollectionGameSettings = defaultGameSettings,
+
+                DataCollectionFavoriteServers = emptyUintArray,
+                DataCollectionHiddenServers = emptyUintArray
+            };
+        }
+
+        public void SetLock()
+        {
+            lock (_sync)
+            {
+                _settingsLock = true;
+            }
+        }
+
+        public void FreeLock()
+        {
+            lock (_sync)
+            {
+                _settingsLock = false;
+            }
+        }
+
+        public bool CanGetAccess()
+        {
+            lock (_sync)
+            {
+                return _settingsLock;
+            }
+        }
+
+        public bool IsDefault() => _isDefault;
+
+        public bool Load()
+        {
+            // create formatter
+            var formatter = new BinaryFormatter();
+
+            // build settings path
+            var settingsPath = Path.Combine(FolderConstant.SettingsFolder, _SettingsFileName);
+
+            // try load
             try
             {
-                using (var fs = new FileStream(path, FileMode.Open))
+                using (var stream = new FileStream(settingsPath, FileMode.Open))
                 {
-                    var = (T) formatter.Deserialize(fs);
+                    _settings = (LauncherSettings) formatter.Deserialize(stream);
                 }
             }
             catch
             {
-                var = null;
+                // setup default settings
+                _settings = _defaultSettings;
+
+                // check it
+                _isDefault = true;
+
+                return false;
             }
 
-            return var;
+            return true;
         }
 
-        private bool _saveSettingsByPath<T>(IFormatter formatter, string path, T setting)
+        public bool Save()
         {
+            // create formatter
+            var formatter = new BinaryFormatter();
+
+            // build settings path
+            var settingsPath = Path.Combine(FolderConstant.SettingsFolder, _SettingsFileName);
+
+            // try save
             try
             {
-                using (var fs = new FileStream(path, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(settingsPath, FileMode.OpenOrCreate))
                 {
-                    formatter.Serialize(fs, setting);
+                    formatter.Serialize(stream, _settings);
                 }
             }
             catch
@@ -51,69 +160,8 @@ namespace Launcher.Core.Services
             return true;
         }
 
-        public GameSettings GetGameSettings() => _gameSettings;
-
-        public LauncherSettings GetLauncherSettings() => _launcherSettings;
-
-        public bool LoadLauncherSettings()
-        {
-            //if (!Directory.Exists(_settingsDirectoryName))
-            //{
-            //    Directory.CreateDirectory(_settingsDirectoryName);
-            //}
-
-            var formatter = new BinaryFormatter();
-            var launcherSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _launcherSettingsFileName);
-
-            var launcherSettings = _loadSettingsByPath<LauncherSettings>(formatter, launcherSettingsPath);
-            if (launcherSettings != null)
-            {
-                _launcherSettings = launcherSettings;
-                return true;
-            }
-            else
-            {
-                _launcherSettings = LauncherSettings.Default;
-                return false;
-            }
-        }
-
-        public bool LoadGameSettings()
-        {
-            if (!Directory.Exists(_settingsDirectoryName))
-            {
-                Directory.CreateDirectory(_settingsDirectoryName);
-            }
-
-            var formatter = new BinaryFormatter();
-            var gameSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _gameSettingsFileName);
-
-            var gameSettings = _loadSettingsByPath<GameSettings>(formatter, gameSettingsPath);
-            if (gameSettings != null)
-            {
-                _gameSettings = gameSettings;
-                return true;
-            }
-            else
-            {
-                _gameSettings = GameSettings.Default;
-                return false;
-            }
-        }
-
-        public bool Save()
-        {
-            var formatter = new BinaryFormatter();
-            var launcherSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _launcherSettingsFileName);
-            var gameSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _gameSettingsFileName);
-
-            return _saveSettingsByPath<LauncherSettings>(formatter, launcherSettingsPath, _launcherSettings)
-                   && _saveSettingsByPath<GameSettings>(formatter, gameSettingsPath, _gameSettings);
-        }
-
-        public bool GlobalBlock { get; private set; }
-
-        public void SetGlobalLock() => GlobalBlock = true;
-        public void FreeGlobalLock() => GlobalBlock = false;
+        // ReSharper disable once ConvertToAutoProperty
+        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
+        public LauncherSettings Current => _settings;
     }
 }
