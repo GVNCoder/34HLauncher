@@ -82,8 +82,10 @@
     <Compile Include="Theming\AccentResourceDictionary.cs" />
     <Compile Include="Theming\BackgroundImageEnum.cs" />
     <Compile Include="Theming\LauncherTheme.cs" />
+    <Compile Include="Theming\ThemeMenuCardImage.cs" />
     <Compile Include="Theming\ThemeManager.cs" />
     <Compile Include="Theming\ThemeResourceDictionary.cs" />
+    <Compile Include="Theming\_ImageResource.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

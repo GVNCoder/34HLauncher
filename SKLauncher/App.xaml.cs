@@ -12,7 +12,7 @@ using Launcher.Core.Services;
 using Launcher.Core.Shared;
 using Launcher.Helpers;
 using Launcher.Localization.Loc;
-
+using Launcher.XamlThemes.Theming;
 using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Core.Data;
@@ -57,27 +57,29 @@ namespace Launcher
             ProcessService.HandleProcessInstance(this, e.Args);
 
             base.OnStartup(e);
+
+            // track some events
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(_logUnhandledExceptions);
+            ThemeManager.Error                         += new EventHandler<Exception>(_logThemeExceptions);
 
             // assign instance into Xaml
             Resources["ViewModelLocator"] = Resolver.Kernel.Get<IViewModelSource>();
 
-            // Old code
             _SetupDirectories();
             _SetupLoggers(ZApi.Instance, Logger);
 
-            SettingsService.LoadLauncherSettings();
-            SettingsService.LoadGameSettings();
+            SettingsService.Load();
 
-            var settings = SettingsService.GetLauncherSettings();
+            var settings = SettingsService.Current;
 
+            // apply settings
             LocManager.Initialize(this);
-            LocManager.SetLocale(settings.Localization);
+            LocManager.SetLocale(settings.DataLocalization);
 
-            XamlThemes.Theming.ThemeManager.Initialize(this);
-            XamlThemes.Theming.ThemeManager.ApplyAccent(settings.Accent);
-            XamlThemes.Theming.ThemeManager.ApplyTheme(settings.Theme);
-            XamlThemes.Theming.ThemeManager.ApplyBackgroundImage();
+            ThemeManager.Initialize(Resources);
+            ThemeManager.LoadCustomResourcesIfExists();
+            ThemeManager.ApplyAccent(AccentEnum.OrangeRed);
+            ThemeManager.ApplyTheme(settings.DataTheme);
 
             ProcessService.HandleUpdate(settings, e.Args);
         }
@@ -131,6 +133,15 @@ namespace Launcher
             {
                 Logger.Error(logMessage);
             }
+        }
+
+        private void _logThemeExceptions(object sender, Exception exception)
+        {
+            // build message
+            var logMessage = LoggingHelper.GetMessage(exception);
+
+            // log message
+            Logger.Error(logMessage);
         }
     }
 }

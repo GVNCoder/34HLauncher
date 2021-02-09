@@ -1,34 +1,350 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
+using System.Linq;
 using System.Windows;
+using System.Reflection;
+using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
 namespace Launcher.XamlThemes.Theming
 {
     public static class ThemeManager
     {
-        private const string _ResourcesDirectory = "resources";
-        private const string _ResourceFileName = "resource.34h";
-        private const string _BackgroundImageResourceKey = "BackgroundImage";
-        private static readonly string _resourceFilePath;
+        #region Public interface
+
+        public static event EventHandler<Exception> Error;
+
+        // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
+        public static LauncherTheme CurrentTheme => _currentTheme;
+
+        public const float BackgroundImageWightLimit = 1080f;
+        public const float BackgroundImageHeightLimit = 2048f;
+
+        public const float MenuCardImageWightLimit = 200f;
+        public const float MenuCardImageHeightLimit = 330f;
+
+        public const float BackgroundImageSizeLimit = 10f;
+        public const float MenuCardImageSizeLimit = .5f;
+
+        public static void Initialize(ResourceDictionary applicationResourceDictionary)
+        {
+            // we add our resource dictionary to the starting position so that we only deal with it and not affect the order of standard resources
+            // create our root resource dictionary
+            _rootDictionary = new ResourceDictionary();
+
+            // inject it
+            applicationResourceDictionary.MergedDictionaries.Add(_rootDictionary);
+
+            // get resources assembly ref
+            _resourceAssemblyRef = AppDomain.CurrentDomain.GetAssemblies()
+                .Single(a => a.GetName().Name == "Launcher.Resources");
+
+            // load image resources
+            foreach (var imageResource in _imageResources)
+            {
+                // check if we have access to external image resource
+                var imageStream = File.Exists(imageResource.ExternalPath)
+                    ? File.OpenRead(imageResource.ExternalPath)
+                    : _resourceAssemblyRef.GetManifestResourceStream(imageResource.InternalPath);
+
+                // load image
+                imageResource.ImageRef = _CreateImageFromStream(imageStream);
+
+                // free mem
+                imageStream.Close();
+            }
+        }
+
+        public static void ApplyTheme(LauncherTheme theme)
+        {
+            // validate incoming parameter
+            if (_currentTheme == theme)
+            {
+                return;
+            }
+
+            if (theme == LauncherTheme.None)
+            {
+                throw new ArgumentException(@"Theme parameter is None", nameof(theme));
+            }
+
+            // create theme resource
+            var newThemeDictionary = new ThemeResourceDictionary
+            {
+                Source = new Uri($"/Launcher.Theme;component/Themes/Theme.{theme}.xaml", UriKind.Relative)
+            };
+
+            // inject theme resource
+            _rootDictionary.MergedDictionaries.Insert(_themeResourcePositionIndex, newThemeDictionary);
+            _rootDictionary.MergedDictionaries.Remove(_currentThemeDictionary);
+
+            // save state
+            _currentThemeDictionary = newThemeDictionary;
+            _currentTheme = theme;
+        }
+
+        public static void ApplyAccent(AccentEnum accent)
+        {
+            var newAccentDictionary = new AccentResourceDictionary
+                { Source = new Uri($"/Launcher.Theme;component/Accents/{accent}.xaml", UriKind.Relative) };
+
+            _rootDictionary.MergedDictionaries.Insert(_accentResourcePositionIndex, newAccentDictionary);
+        }
+
+        public static void ResetBackgroundImage()
+        {
+            // get image resource instance
+            var imageResource = _imageResources.Single(ir => ir.ResourceKey == _ResourceKeyBackgroundImage);
+
+            // load resource steam in mem
+            var imageStream = _resourceAssemblyRef
+                .GetManifestResourceStream(imageResource.InternalPath);
+
+            // create image to set
+            var image = _CreateImageFromStream(imageStream);
+
+            // replace current image
+            _rootDictionary.Remove(_ResourceKeyBackgroundImage);
+            _rootDictionary.Add(_ResourceKeyBackgroundImage, image);
+
+            // free mem resources
+            imageStream.Close();
+
+            // update image ref
+            imageResource.ImageRef = image;
+        }
+
+        public static bool SetCustomBackgroundImage(string path)
+        {
+            // try to load the custom resource
+            try
+            {
+                // try get file stream
+                var imageStream = File.OpenRead(path);
+
+                // create and validate image file
+                var image = _CreateImageFromStream(imageStream);
+
+                // check file size
+                // should be less then 10 MBytes
+                if (imageStream.Length * .000001d > BackgroundImageSizeLimit)
+                {
+                    return false;
+                }
+
+                // check image size
+                // should be 2k
+                if (image.PixelWidth > BackgroundImageWightLimit || image.PixelHeight > BackgroundImageHeightLimit)
+                {
+                    return false;
+                }
+
+                // ok! the image is valid ;)
+                // free mem
+                imageStream.Close();
+
+                // get image resource instance
+                var imageResource = _imageResources.Single(ir => ir.ResourceKey == _ResourceKeyBackgroundImage);
+
+                // copy resource into save directory
+                File.Copy(sourceFileName: path, destFileName: imageResource.ExternalPath, overwrite: true);
+
+                // replace current image
+                _rootDictionary.Remove(_ResourceKeyBackgroundImage);
+                _rootDictionary.Add(_ResourceKeyBackgroundImage, image);
+
+                // update image ref
+                imageResource.ImageRef = image;
+            }
+            catch (Exception exception)
+            {
+                // raise Error event
+                OnError(exception);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void ApplyImages()
+        {
+            // apply all image resources
+            foreach (var imageResource in _imageResources)
+            {
+                // replace image resource
+                _rootDictionary.Remove(imageResource.ResourceKey);
+                _rootDictionary.Add(imageResource.ResourceKey, imageResource.ImageRef);
+            }
+        }
+
+        public static bool SetCustomMenuCardImage(ThemeMenuCardImage menuCard, string path)
+        {
+            // try to load the custom resource
+            try
+            {
+                // try get file stream
+                var imageStream = File.OpenRead(path);
+
+                // create and validate image file
+                var image = _CreateImageFromStream(imageStream);
+
+                // check file size
+                // should be less then 0.5 MBytes
+                if (imageStream.Length * .000001d > MenuCardImageSizeLimit)
+                {
+                    return false;
+                }
+
+                // check image size
+                // should be 2k
+                if (image.PixelWidth > MenuCardImageWightLimit || image.PixelHeight > MenuCardImageHeightLimit)
+                {
+                    return false;
+                }
+
+                // ok! the image is valid ;)
+                // free mem
+                imageStream.Close();
+
+                // get resourceKey
+                var resourceKey = string.Empty;
+
+                // ReSharper disable once SwitchStatementMissingSomeCases
+                switch (menuCard)
+                {
+                    case ThemeMenuCardImage.BF3: resourceKey = _ResourceKeyBF3CardImage;
+                        break;
+                    case ThemeMenuCardImage.BF4: resourceKey = _ResourceKeyBF4CardImage;
+                        break;
+                    case ThemeMenuCardImage.BFH: resourceKey = _ResourceKeyBFHCardImage;
+                        break;
+                }
+
+                // get image resource instance
+                var imageResource = _imageResources.Single(ir => ir.ResourceKey == resourceKey);
+
+                // copy resource into save directory
+                File.Copy(sourceFileName: path, destFileName: imageResource.ExternalPath, overwrite: true);
+
+                // replace current image
+                _rootDictionary.Remove(resourceKey);
+                _rootDictionary.Add(resourceKey, image);
+
+                // update image ref
+                imageResource.ImageRef = image;
+            }
+            catch (Exception exception)
+            {
+                // raise Error event
+                OnError(exception);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void ResetMenuCardImage(ThemeMenuCardImage menuCard)
+        {
+            // get resourceKey
+            var resourceKey = string.Empty;
+
+            // ReSharper disable once SwitchStatementMissingSomeCases
+            switch (menuCard)
+            {
+                case ThemeMenuCardImage.BF3:
+                    resourceKey = _ResourceKeyBF3CardImage;
+                    break;
+                case ThemeMenuCardImage.BF4:
+                    resourceKey = _ResourceKeyBF4CardImage;
+                    break;
+                case ThemeMenuCardImage.BFH:
+                    resourceKey = _ResourceKeyBFHCardImage;
+                    break;
+            }
+
+            // get image resource instance
+            var imageResource = _imageResources.Single(ir => ir.ResourceKey == resourceKey);
+
+            // load resource steam in mem
+            var imageStream = _resourceAssemblyRef
+                .GetManifestResourceStream(imageResource.InternalPath);
+
+            // create image to set
+            var image = _CreateImageFromStream(imageStream);
+
+            // replace current image
+            _rootDictionary.Remove(resourceKey);
+            _rootDictionary.Add(resourceKey, image);
+
+            // free mem resources
+            imageStream.Close();
+
+            // update image ref
+            imageResource.ImageRef = image;
+        }
+
+        #endregion
+
+        #region Private helpers
+        
+        private static LauncherTheme _currentTheme;
+        private static ResourceDictionary _rootDictionary;
+        private static ThemeResourceDictionary _currentThemeDictionary;
+        private static Assembly _resourceAssemblyRef;
+        private static readonly _ImageResource[] _imageResources;
+
+        private const string _ResourceKeyBackgroundImage = "BackgroundImage";
+        private const string _ResourceKeyBF3CardImage = "BF3CardImage";
+        private const string _ResourceKeyBF4CardImage = "BF4CardImage";
+        private const string _ResourceKeyBFHCardImage = "BFHCardImage";
+
+        private const string _ResourcesDirectoryName = "resources";
+        private const string _ResourcesFileExtension = "34h";
+
+        private const string _BaseResourcePath = "Launcher.Resources.Images";
+        private const string _DefaultBackgroundImageResourcePathPiece = "bg_default.jpg";
+        private const string _DefaultBF3CardImageResourcePathPiece = "MainMenu.BF3MenuCard.png";
+        private const string _DefaultBF4CardImageResourcePathPiece = "MainMenu.BF4MenuCard.png";
+        private const string _DefaultBFHCardImageResourcePathPiece = "MainMenu.BFHMenuCard.png";
+
+        private const int _themeResourcePositionIndex = 1;
+        private const int _accentResourcePositionIndex = 0;
 
         static ThemeManager()
         {
-            _resourceFilePath = Path.Combine(_ResourcesDirectory, _ResourceFileName);
+            // build image resource lib
+            _imageResources = new[]
+            {
+                new _ImageResource
+                {
+                    InternalPath = $"{_BaseResourcePath}.{_DefaultBackgroundImageResourcePathPiece}",
+                    ExternalPath = Path.Combine(_ResourcesDirectoryName, Path.ChangeExtension("b", _ResourcesFileExtension)),
+                    ResourceKey = _ResourceKeyBackgroundImage
+                },
+                new _ImageResource
+                {
+                    InternalPath = $"{_BaseResourcePath}.{_DefaultBF3CardImageResourcePathPiece}",
+                    ExternalPath = Path.Combine(_ResourcesDirectoryName, Path.ChangeExtension("3", _ResourcesFileExtension)),
+                    ResourceKey = _ResourceKeyBF3CardImage
+                },
+                new _ImageResource
+                {
+                    InternalPath = $"{_BaseResourcePath}.{_DefaultBF4CardImageResourcePathPiece}",
+                    ExternalPath = Path.Combine(_ResourcesDirectoryName, Path.ChangeExtension("4", _ResourcesFileExtension)),
+                    ResourceKey = _ResourceKeyBF4CardImage
+                },
+                new _ImageResource
+                {
+                    InternalPath = $"{_BaseResourcePath}.{_DefaultBFHCardImageResourcePathPiece}",
+                    ExternalPath = Path.Combine(_ResourcesDirectoryName, Path.ChangeExtension("h", _ResourcesFileExtension)),
+                    ResourceKey = _ResourceKeyBFHCardImage
+                }
+            };
         }
 
-        private static ResourceDictionary _entryPoint;
-        private static ResourceDictionary _applicationResourceDictionary;
-        private static ThemeResourceDictionary _currentThemeDictionary;
-        private static AccentResourceDictionary _currentAccentDictionary;
-        private static BitmapImage _backgroundImage;
-
-        private static LauncherTheme _currentTheme;
-        private static AccentEnum _currentAccent;
-        private static BackgroundImageEnum _imageSourceType;
-
-        private static BitmapImage _LoadImageFromStream(Stream source)
+        private static BitmapImage _CreateImageFromStream(Stream source)
         {
             var image = new BitmapImage();
 
@@ -41,194 +357,9 @@ namespace Launcher.XamlThemes.Theming
             return image;
         }
 
-        private static void _SetupImage(BitmapImage image)
+        private static void OnError(Exception e)
         {
-            _entryPoint.Remove(_BackgroundImageResourceKey);
-            _entryPoint.Add(_BackgroundImageResourceKey, image);
-        }
-
-        private static void _TryDeleteCustomImage()
-        {
-            try
-            {
-                File.Delete(_resourceFilePath);
-            }
-            catch (Exception e)
-            {
-                // ignore
-            }
-        }
-
-        private static bool _ValidateImageFile(string source)
-        {
-            var stream = File.OpenRead(source);
-            if ((stream.Length * .000001d) > ImageFileSizeLimit) return false;
-
-            var customImage = _LoadImageFromStream(stream);
-            if (customImage.PixelHeight > ImagePixelHeightLimit ||
-                customImage.PixelWidth > ImagePixelWightLimit) return false;
-
-            return true;
-        }
-
-        #region Public interface
-
-        public static LauncherTheme CurrentTheme => _currentTheme;
-        public static AccentEnum CurrentAccent => _currentAccent;
-
-        public const float ImageFileSizeLimit = 10f;
-        public const float ImagePixelHeightLimit = 1080f;
-        public const float ImagePixelWightLimit = 2048f;
-
-        public static void Initialize(Application application)
-        {
-            _entryPoint = new ResourceDictionary();
-            _applicationResourceDictionary = application.Resources;
-            _applicationResourceDictionary.MergedDictionaries.Add(_entryPoint);
-        }
-
-        public static void ApplyAccent(AccentEnum accent)
-        {
-            if (_currentAccent == accent) return;
-
-            var newAccentDictionary = new AccentResourceDictionary
-                { Source = new Uri($"/Launcher.Theme;component/Accents/{accent}.xaml", UriKind.Relative) };
-
-            _entryPoint.MergedDictionaries.Insert(0, newAccentDictionary);
-            _entryPoint.MergedDictionaries.Remove(_currentAccentDictionary);
-
-            _currentAccentDictionary = newAccentDictionary;
-            _currentAccent = accent;
-        }
-
-        public static void ApplyTheme(LauncherTheme theme)
-        {
-            if (_currentTheme == theme) return;
-
-            var newThemeDictionary = new ThemeResourceDictionary
-                { Source = new Uri($"/Launcher.Theme;component/Themes/Theme.{theme}.xaml", UriKind.Relative) };
-
-            _entryPoint.MergedDictionaries.Insert(1, newThemeDictionary);
-            _entryPoint.MergedDictionaries.Remove(_currentThemeDictionary);
-
-            _currentThemeDictionary = newThemeDictionary;
-            _currentTheme = theme;
-        }
-
-        public static void ApplyBackgroundImage()
-        {
-            var pathToCustomResource = Path.Combine(_ResourcesDirectory, _ResourceFileName);
-            var isCustom = File.Exists(pathToCustomResource);
-            var pathToResource = isCustom
-                ? pathToCustomResource
-                : "Launcher.Resources.Images.bg_default.jpg";
-            var resourceStream = isCustom
-                ? File.OpenRead(pathToResource)
-                : Assembly.LoadFrom(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Launcher.Resources.dll"))
-                    .GetManifestResourceStream(pathToResource);
-
-            var image = _LoadImageFromStream(resourceStream);
-
-            _SetupImage(image);
-
-            resourceStream.Close();
-            resourceStream.Dispose();
-
-            _backgroundImage = image;
-        }
-
-        public static bool TrySetBackgroundImage(BackgroundImageEnum imageSource, string path)
-        {
-            switch (imageSource)
-            {
-                case BackgroundImageEnum.Default:
-                {
-                    var filePath = Path.Combine(_ResourcesDirectory, _ResourceFileName);
-                    if (File.Exists(filePath))
-                    {
-                        _backgroundImage?.StreamSource.Dispose();
-                        File.Delete(filePath);
-                    }
-
-                    return true;
-                }
-                case BackgroundImageEnum.Custom:
-                {
-                    var stream = File.OpenRead(path);
-                    var image = _LoadImageFromStream(stream);
-
-                    if ((image.StreamSource.Length * .000001) > ImageFileSizeLimit) // image size over 10Mb
-                    {
-                        return false;
-                    }
-
-                    if (image.PixelHeight > ImagePixelHeightLimit || image.PixelWidth > ImagePixelWightLimit) // image pixel size over 2k 2048x1080
-                    {
-                        return false;
-                    }
-
-                    stream.Dispose();
-
-                    var filePath = Path.Combine(_ResourcesDirectory, _ResourceFileName);
-                    File.Copy(path, filePath, true);
-
-                    return true;
-                }
-                case BackgroundImageEnum.None:
-                default: throw new ArgumentOutOfRangeException(nameof(imageSource));
-            }
-        }
-
-        public static bool TrySetupBackgroundImage(BackgroundImageEnum imageSource, string source = null)
-        {
-            var image = default(BitmapImage);
-            var stream = default(Stream);
-
-            switch (imageSource)
-            {
-                case BackgroundImageEnum.Default:
-                    stream = Assembly.LoadFrom(
-                            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Launcher.Resources.dll"))
-                        .GetManifestResourceStream("Launcher.Resources.Images.bg_default.jpg");
-                    image = _LoadImageFromStream(stream);
-
-                    stream.Close();
-                    stream.Dispose();
-                    
-                    _TryDeleteCustomImage();
-
-                    break;
-                case BackgroundImageEnum.Custom:
-                    if (string.IsNullOrEmpty(source)) return false;
-
-                    try
-                    {
-                        var validationResult = _ValidateImageFile(source);
-                        if (!validationResult) return false;
-
-                        File.Copy(source, _resourceFilePath, false);
-
-                        stream = File.OpenRead(_resourceFilePath);
-                        image = _LoadImageFromStream(stream);
-
-                        stream.Close();
-                        stream.Dispose();
-                    }
-                    catch (Exception e)
-                    {
-                        return false;
-                    }
-
-                    break;
-                case BackgroundImageEnum.None:
-                default: throw new ArgumentOutOfRangeException();
-            }
-
-            _SetupImage(image);
-            _backgroundImage = image;
-
-            return true;
+            Error?.Invoke(null, e);
         }
 
         #endregion
