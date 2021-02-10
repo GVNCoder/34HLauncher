@@ -41,10 +41,10 @@ namespace Launcher.XamlThemes.Theming
             // load image resources
             foreach (var imageResource in _imageResources)
             {
-                imageResource.IsDefault = File.Exists(imageResource.ExternalPath);
+                imageResource.IsDefault = ! File.Exists(imageResource.ExternalPath);
 
                 // check if we have access to external image resource
-                var imageStream = imageResource.IsDefault
+                var imageStream = ! imageResource.IsDefault
                     ? File.OpenRead(imageResource.ExternalPath)
                     : _resourceAssemblyRef.GetManifestResourceStream(imageResource.InternalPath);
 
