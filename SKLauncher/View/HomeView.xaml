@@ -56,7 +56,7 @@
                 <Grid>
                     <!--  Image layer  -->
                     <Grid x:Name="BF3ImageContent" Background="{DynamicResource Theme800Brush}">
-                        <Image IsHitTestVisible="False" Source="{DynamicResource BF3CardImageSource}" />
+                        <Image IsHitTestVisible="False" Source="{DynamicResource BF3MenuCardImage}" />
                     </Grid>
 
                     <Grid
@@ -236,7 +236,7 @@
                 <Grid>
                     <!--  Image layer  -->
                     <Grid x:Name="BF4ImageContent" Background="{DynamicResource Theme800Brush}">
-                        <Image IsHitTestVisible="False" Source="{DynamicResource BF4CardImageSource}" />
+                        <Image IsHitTestVisible="False" Source="{DynamicResource BF4MenuCardImage}" />
                     </Grid>
 
                     <Grid
@@ -418,7 +418,7 @@
                 <Grid>
                     <!--  Image layer  -->
                     <Grid x:Name="BFHImageContent" Background="{DynamicResource Theme800Brush}">
-                        <Image IsHitTestVisible="False" Source="{DynamicResource BFHCardImageSource}" />
+                        <Image IsHitTestVisible="False" Source="{DynamicResource BFHMenuCardImage}" />
                     </Grid>
 
                     <Grid

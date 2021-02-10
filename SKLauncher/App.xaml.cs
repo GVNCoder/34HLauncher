@@ -78,9 +78,9 @@ namespace Launcher
             LocManager.SetLocale(settings.DataLocalization);
 
             ThemeManager.Initialize(Resources);
-            ThemeManager.LoadCustomResourcesIfExists();
             ThemeManager.ApplyAccent(AccentEnum.OrangeRed);
             ThemeManager.ApplyTheme(settings.DataTheme);
+            ThemeManager.ApplyImages();
 
             ProcessService.HandleUpdate(settings, e.Args);
         }

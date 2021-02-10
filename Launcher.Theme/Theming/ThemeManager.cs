@@ -16,8 +16,8 @@ namespace Launcher.XamlThemes.Theming
         // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
         public static LauncherTheme CurrentTheme => _currentTheme;
 
-        public const float BackgroundImageWightLimit = 1080f;
-        public const float BackgroundImageHeightLimit = 2048f;
+        public const float BackgroundImageWightLimit = 2048f;
+        public const float BackgroundImageHeightLimit = 1080f;
 
         public const float MenuCardImageWightLimit = 200f;
         public const float MenuCardImageHeightLimit = 330f;
@@ -303,18 +303,18 @@ namespace Launcher.XamlThemes.Theming
         private static readonly _ImageResource[] _imageResources;
 
         private const string _ResourceKeyBackgroundImage = "BackgroundImage";
-        private const string _ResourceKeyBF3CardImage = "BF3CardImage";
-        private const string _ResourceKeyBF4CardImage = "BF4CardImage";
-        private const string _ResourceKeyBFHCardImage = "BFHCardImage";
+        private const string _ResourceKeyBF3CardImage = "BF3MenuCardImage";
+        private const string _ResourceKeyBF4CardImage = "BF4MenuCardImage";
+        private const string _ResourceKeyBFHCardImage = "BFHMenuCardImage";
 
         private const string _ResourcesDirectoryName = "resources";
         private const string _ResourcesFileExtension = "34h";
 
         private const string _BaseResourcePath = "Launcher.Resources.Images";
         private const string _DefaultBackgroundImageResourcePathPiece = "bg_default.jpg";
-        private const string _DefaultBF3CardImageResourcePathPiece = "MainMenu.BF3MenuCard.png";
-        private const string _DefaultBF4CardImageResourcePathPiece = "MainMenu.BF4MenuCard.png";
-        private const string _DefaultBFHCardImageResourcePathPiece = "MainMenu.BFHMenuCard.png";
+        private const string _DefaultBF3CardImageResourcePathPiece = "MainMenu.BF3MenuCardImage.png";
+        private const string _DefaultBF4CardImageResourcePathPiece = "MainMenu.BF4MenuCardImage.png";
+        private const string _DefaultBFHCardImageResourcePathPiece = "MainMenu.BFHMenuCardImage.png";
 
         private const int _themeResourcePositionIndex = 1;
         private const int _accentResourcePositionIndex = 0;

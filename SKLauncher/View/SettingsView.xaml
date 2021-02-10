@@ -40,11 +40,11 @@
     <Page.Resources>
         <x:Array x:Key="LocalizationGenericInnerTypes" Type="{x:Type system:Type}">
             <x:Type TypeName="system:String" />
-            <x:Type TypeName="loc:LocalizationEnum" />
+            <x:Type TypeName="loc:LauncherLocalization" />
         </x:Array>
         <x:Array x:Key="ThemeGenericInnerTypes" Type="{x:Type system:Type}">
             <x:Type TypeName="system:String" />
-            <x:Type TypeName="theming:ThemeEnum" />
+            <x:Type TypeName="theming:LauncherTheme" />
         </x:Array>
         <x:Array x:Key="AccentSchemeGenericInnerTypes" Type="{x:Type system:Type}">
             <x:Type TypeName="theming:AccentEnum" />
@@ -183,14 +183,17 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
-                            Text="{DynamicResource settView_Accent}" />
+                            Text="{DynamicResource settView_Accent}"
+                            Visibility="Collapsed" />
 
                         <ComboBox
                             Grid.Row="2"
                             Grid.Column="1"
                             Margin="0,5,0,0"
+                            IsEnabled="False"
                             ItemsSource="{Binding Source={x:Static theming:AccentCollection.Accents}}"
-                            SelectedItem="{Binding AccentScheme}">
+                            SelectedItem="{Binding AccentScheme}"
+                            Visibility="Collapsed">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate DataType="{StaticResource AccentSchemeTypeDescription}">
                                     <Grid>

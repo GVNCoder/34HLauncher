@@ -100,19 +100,16 @@ namespace Launcher.Core.SettingsViewModelParts
 
             if (! dlgResult.GetValueOrDefault()) return;
 
-            var result = ThemeManager.TrySetBackgroundImage(BackgroundImageEnum.Custom, dialog.FileName);
+            var result = ThemeManager.SetCustomBackgroundImage(dialog.FileName);
             if (! result)
             {
                 _eventService.WarnEvent(SLM.CannotSetImageHeader, SLM.CannotSetImage);
             }
-
-            ThemeManager.ApplyBackgroundImage();
         });
 
         public ICommand ResetImageCommand => new DelegateCommand(obj =>
         {
-            ThemeManager.TrySetBackgroundImage(BackgroundImageEnum.Default, null);
-            ThemeManager.ApplyBackgroundImage();
+            ThemeManager.ResetBackgroundImage();
         });
     }
 }

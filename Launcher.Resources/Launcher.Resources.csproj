@@ -489,12 +489,9 @@
     <EmbeddedResource Include="Images\Maps\BF4\bf4_TestRange.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\MainMenu\BF3MenuCardDark.png" />
-    <Resource Include="Images\MainMenu\BF3MenuCardLight.png" />
-    <Resource Include="Images\MainMenu\BF4MenuCardDark.png" />
-    <Resource Include="Images\MainMenu\BF4MenuCardLight.png" />
-    <Resource Include="Images\MainMenu\BFHMenuCardDark.png" />
-    <Resource Include="Images\MainMenu\BFHMenuCardLight.png" />
+    <EmbeddedResource Include="Images\MainMenu\BF3MenuCardImage.png" />
+    <EmbeddedResource Include="Images\MainMenu\BF4MenuCardImage.png" />
+    <EmbeddedResource Include="Images\MainMenu\BFHMenuCardImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

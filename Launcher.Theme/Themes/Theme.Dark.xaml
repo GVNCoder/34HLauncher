@@ -6,7 +6,7 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="DarkResource/Images.xaml" />
+        <!--<ResourceDictionary Source="DarkResource/Images.xaml" />-->
         <ResourceDictionary Source="DarkResource/Brushes.xaml" />
         <ResourceDictionary Source="Theme.Independent.xaml" />
     </ResourceDictionary.MergedDictionaries>
