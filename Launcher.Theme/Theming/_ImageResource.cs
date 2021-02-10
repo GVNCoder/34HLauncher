@@ -7,6 +7,7 @@ namespace Launcher.XamlThemes.Theming
         public string ResourceKey;
         public string InternalPath;
         public string ExternalPath;
+        public bool IsDefault;
 
         public BitmapImage ImageRef;
     }

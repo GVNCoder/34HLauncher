@@ -41,8 +41,10 @@ namespace Launcher.XamlThemes.Theming
             // load image resources
             foreach (var imageResource in _imageResources)
             {
+                imageResource.IsDefault = File.Exists(imageResource.ExternalPath);
+
                 // check if we have access to external image resource
-                var imageStream = File.Exists(imageResource.ExternalPath)
+                var imageStream = imageResource.IsDefault
                     ? File.OpenRead(imageResource.ExternalPath)
                     : _resourceAssemblyRef.GetManifestResourceStream(imageResource.InternalPath);
 
@@ -95,6 +97,12 @@ namespace Launcher.XamlThemes.Theming
             // get image resource instance
             var imageResource = _imageResources.Single(ir => ir.ResourceKey == _ResourceKeyBackgroundImage);
 
+            // check if we need to reset or not
+            if (imageResource.IsDefault)
+            {
+                return;
+            }
+
             // load resource steam in mem
             var imageStream = _resourceAssemblyRef
                 .GetManifestResourceStream(imageResource.InternalPath);
@@ -111,6 +119,20 @@ namespace Launcher.XamlThemes.Theming
 
             // update image ref
             imageResource.ImageRef = image;
+
+            // update resource status
+            imageResource.IsDefault = true;
+
+            // try delete external resource
+            try
+            {
+                File.Delete(imageResource.ExternalPath);
+            }
+            catch (Exception e)
+            {
+                // raise Error event
+                OnError(e);
+            }
         }
 
         public static bool SetCustomBackgroundImage(string path)
@@ -154,6 +176,9 @@ namespace Launcher.XamlThemes.Theming
 
                 // update image ref
                 imageResource.ImageRef = image;
+
+                // update resource status
+                imageResource.IsDefault = false;
             }
             catch (Exception exception)
             {
@@ -232,6 +257,9 @@ namespace Launcher.XamlThemes.Theming
 
                 // update image ref
                 imageResource.ImageRef = image;
+
+                // update resource status
+                imageResource.IsDefault = false;
             }
             catch (Exception exception)
             {
@@ -266,6 +294,12 @@ namespace Launcher.XamlThemes.Theming
             // get image resource instance
             var imageResource = _imageResources.Single(ir => ir.ResourceKey == resourceKey);
 
+            // check if we need to reset or not
+            if (imageResource.IsDefault)
+            {
+                return;
+            }
+
             // load resource steam in mem
             var imageStream = _resourceAssemblyRef
                 .GetManifestResourceStream(imageResource.InternalPath);
@@ -282,6 +316,20 @@ namespace Launcher.XamlThemes.Theming
 
             // update image ref
             imageResource.ImageRef = image;
+
+            // update resource status
+            imageResource.IsDefault = true;
+
+            // try delete external resource
+            try
+            {
+                File.Delete(imageResource.ExternalPath);
+            }
+            catch (Exception e)
+            {
+                // raise Error event
+                OnError(e);
+            }
         }
 
         public static BitmapImage GetImageResourceByKey(string key)
