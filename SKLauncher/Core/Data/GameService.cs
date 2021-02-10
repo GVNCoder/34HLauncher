@@ -65,7 +65,7 @@ namespace Launcher.Core.Data
                 var runParams = new ZMultiParams
                 {
                     Game = parameters.Game,
-                    PreferredArchitecture = settings.PreferredArchitecture,
+                    PreferredArchitecture = settings.DataArchitecture,
                     Role = parameters.PlayerRole,
                     ServerId = parameters.ServerModel.Id
                 };
@@ -119,7 +119,7 @@ namespace Launcher.Core.Data
                 var runParams = new ZSingleParams
                 {
                     Game = parameters.Game,
-                    PreferredArchitecture = settings.PreferredArchitecture
+                    PreferredArchitecture = settings.DataArchitecture
                 };
 
                 try
@@ -171,7 +171,7 @@ namespace Launcher.Core.Data
                 var runParams = new ZTestRangeParams
                 {
                     Game = parameters.Game,
-                    PreferredArchitecture = settings.PreferredArchitecture
+                    PreferredArchitecture = settings.DataArchitecture
                 };
 
                 try
@@ -222,7 +222,7 @@ namespace Launcher.Core.Data
                 // create run params
                 var runParams = new ZCoopParams
                 {
-                    PreferredArchitecture = settings.PreferredArchitecture,
+                    PreferredArchitecture = settings.DataArchitecture,
                     Difficulty = parameters.CoopMission?.Difficulty,
                     Level = parameters.CoopMission?.Level,
                     Mode = parameters.Mode,
@@ -290,10 +290,11 @@ namespace Launcher.Core.Data
                 .FirstOrDefault(p => __IsX64GameProcess(p) || __IsX86GameProcess(p));
         }
 
-        private GameSetting _GetGameSettings(ZGame target)
+        private GameSettings _GetGameSettings(ZGame target)
             => _settingsService
-                .GetGameSettings()
-                .Settings[(int)target];
+                .Current
+                .DataCollectionGameSettings
+                .Single(i => i.DataGame == target);
 
         #endregion
     }

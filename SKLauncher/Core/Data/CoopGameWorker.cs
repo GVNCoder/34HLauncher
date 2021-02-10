@@ -25,7 +25,7 @@ namespace Launcher.Core.Data
         private readonly ILog _logger;
 
         private IZGameProcess _gameProcess;
-        private GameSetting _gameSettings;
+        private GameSettings _gameSettings;
 
         public CoopGameWorker(
             ISettingsService settingsService
@@ -43,7 +43,7 @@ namespace Launcher.Core.Data
 
         #region IGameWorker
 
-        public async Task Begin(IZGameProcess gameProcess, GameSetting gameSettings, CreateGameParametersBase parameters)
+        public async Task Begin(IZGameProcess gameProcess, GameSettings gameSettings, CreateGameParametersBase parameters)
         {
             _gameProcess = gameProcess;
             _gameSettings = gameSettings;
@@ -131,9 +131,9 @@ namespace Launcher.Core.Data
                     _OnGameLoadingCompleted();
 
                     // inject selected dll`s
-                    if (!_settingsService.GlobalBlock)
+                    if (_settingsService.CanGetAccess())
                     {
-                        _zloApi.InjectDll(_gameSettings.Game, _gameSettings.Dlls);
+                        _zloApi.InjectDll(_gameSettings.DataGame, _gameSettings.DataCollectionInjectableDlls);
                     }
 
                     break;
@@ -153,9 +153,9 @@ namespace Launcher.Core.Data
             // unfold game window
             else if (states.Contains(ZGameState.State_GameLoading) || states.Contains(ZGameState.State_WaitForPeerClient))
             {
-                var launcherSettings = _settingsService.GetLauncherSettings();
+                var launcherSettings = _settingsService.Current;
                 // ReSharper disable once InvertIf
-                if (!_settingsService.GlobalBlock && launcherSettings.UnfoldGameWindow)
+                if (_settingsService.CanGetAccess() && launcherSettings.AutoUnfoldGameWindow)
                 {
                     var unfoldResult = _gameProcess.TryUnfoldGameWindow();
                     // ReSharper disable once InvertIf
