@@ -45,19 +45,19 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (UpdatesSectionViewModel) d;
             var value = (bool) e.NewValue;
 
-            viewModel._settings.DisableChangelogAutoOpen = value;
+            viewModel._settings.AutoOpenChangelog = value;
         }
         
         #endregion
 
         private void _AssignSettings(LauncherSettings settings)
         {
-            DisableChangelogAutoOpen = settings.DisableChangelogAutoOpen;
+            DisableChangelogAutoOpen = settings.AutoOpenChangelog;
         }
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            _settings = _settingsService.GetLauncherSettings();
+            _settings = _settingsService.Current;
             _AssignSettings(_settings);
             _isLoaded = true;
         });
@@ -66,7 +66,7 @@ namespace Launcher.Core.SettingsViewModelParts
 
         public ICommand OpenChangelogCommand => new DelegateCommand(async obj =>
         {
-            var changelogFileName = $"{__changelogFileName}{_settings.Localization}.txt";
+            var changelogFileName = $"{__changelogFileName}{_settings.DataLocalization}.txt";
             if (File.Exists(changelogFileName))
             {
                 Process.Start(changelogFileName);

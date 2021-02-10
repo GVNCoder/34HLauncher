@@ -64,8 +64,8 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (GeneralSectionViewModel) d;
             var value = (int) e.NewValue;
 
-            viewModel._settings.Localization = viewModel.LocalizationEnumerable[value].Value;
-            LocManager.SetLocale(viewModel._settings.Localization);
+            viewModel._settings.DataLocalization = viewModel.LocalizationEnumerable[value].Value;
+            LocManager.SetLocale(viewModel._settings.DataLocalization);
         }
 
         public bool UnfoldGameWindow
@@ -81,7 +81,7 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (GeneralSectionViewModel) d;
             var value = (bool) e.NewValue;
 
-            viewModel._settings.UnfoldGameWindow = value;
+            viewModel._settings.AutoUnfoldGameWindow = value;
         }
 
         public string ZClientPath
@@ -97,7 +97,7 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (GeneralSectionViewModel) d;
             var value = (string) e.NewValue;
 
-            viewModel._settings.PathToZClient = value;
+            viewModel._settings.DataZClientPath = value;
         }
 
         public bool AutorunZClient
@@ -113,7 +113,7 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (GeneralSectionViewModel) d;
             var value = (bool) e.NewValue;
 
-            viewModel._settings.RunZClient = value;
+            viewModel._settings.AutoRunZClient = value;
         }
 
         public bool UseDiscordPresence
@@ -138,7 +138,7 @@ namespace Launcher.Core.SettingsViewModelParts
                 viewModel._discord.Stop();
             }
 
-            viewModel._settings.UseDiscordPresence = value;
+            viewModel._settings.UseDiscordRPC = value;
             if (viewModel._isLoaded) await _WaitToggleAsync(viewModel);
         }
 
@@ -168,7 +168,7 @@ namespace Launcher.Core.SettingsViewModelParts
                     DialogButtons.Ok);
             }
 
-            viewModel._settings.TryToConnect = value;
+            viewModel._settings.AutoConnectToZClient = value;
         }
 
         public bool CanUseDiscordPresence
@@ -192,29 +192,29 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (GeneralSectionViewModel) d;
             var value = (bool) e.NewValue;
 
-            viewModel._settings.CloseZClientWithLauncher = value;
+            viewModel._settings.AutoCloseZClientWithLauncher = value;
         }
 
         #endregion
 
         private void _AssignSettings(LauncherSettings settings)
         {
-            UnfoldGameWindow = settings.UnfoldGameWindow;
-            LocalizationIndex = Array.FindIndex(LocalizationEnumerable, p => p.Value == settings.Localization);
-            ZClientPath = string.IsNullOrEmpty(settings.PathToZClient)
+            UnfoldGameWindow = settings.AutoUnfoldGameWindow;
+            LocalizationIndex = Array.FindIndex(LocalizationEnumerable, p => p.Value == settings.DataLocalization);
+            ZClientPath = string.IsNullOrEmpty(settings.DataZClientPath)
                 ? ZClientPath
-                : settings.PathToZClient;
-            AutorunZClient = settings.RunZClient;
-            UseDiscordPresence = settings.UseDiscordPresence;
-            TryToConnect = settings.TryToConnect;
-            CloseZClientWithLauncher = settings.CloseZClientWithLauncher;
+                : settings.DataZClientPath;
+            AutorunZClient = settings.AutoRunZClient;
+            UseDiscordPresence = settings.UseDiscordRPC;
+            TryToConnect = settings.AutoConnectToZClient;
+            CloseZClientWithLauncher = settings.AutoCloseZClientWithLauncher;
         }
 
         public KeyValuePair<string, LauncherLocalization>[] LocalizationEnumerable { get; }
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            _settings = _settingsService.GetLauncherSettings();
+            _settings = _settingsService.Current;
             _AssignSettings(_settings);
             _isLoaded = true;
         });

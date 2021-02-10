@@ -46,8 +46,8 @@ namespace Launcher.Core.Services
             if (commandArgs.Length == 0 || commandArgs.Last() != UPDATE_FLAG) return;
 
             // open change log
-            var fileName = $"ChangeLog_{settings.Localization}.txt";
-            if (File.Exists(fileName) && !settings.DisableChangelogAutoOpen) Process.Start(fileName);
+            var fileName = $"ChangeLog_{settings.DataLocalization}.txt";
+            if (File.Exists(fileName) && !settings.AutoOpenChangelog) Process.Start(fileName);
             // delete update.exe
             var uProcess = Process.GetProcessesByName(_updaterName).FirstOrDefault();
             void __delUpdate()

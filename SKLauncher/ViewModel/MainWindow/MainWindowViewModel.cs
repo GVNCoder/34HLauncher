@@ -169,15 +169,15 @@ namespace Launcher.ViewModel
             }
 
             // try to detect ZClient location
-            var settings = _settingsService.GetLauncherSettings();
+            var settings = _settingsService.Current;
 
             // check, do we need to find a way at all?
-            if (string.IsNullOrEmpty(settings.PathToZClient))
+            if (string.IsNullOrEmpty(settings.DataZClientPath))
             {
-                settings.PathToZClient = ZClientProcessHelper.TryGetPathFromProcess(process);
+                settings.DataZClientPath = ZClientProcessHelper.TryGetPathFromProcess(process);
             }
 
-            if (_settingsService.GetLauncherSettings().TryToConnect)
+            if (_settingsService.Current.AutoConnectToZClient)
             {
                 _apiConnection.Connect();
             }
@@ -225,26 +225,26 @@ namespace Launcher.ViewModel
             _navigator.Navigate("View\\HomeView.xaml"); // default page is Home ;)
             BottomBarDataContext.UpdateDisconnected();  // for error message showing
 
-            var settings = _settingsService.GetLauncherSettings();
+            var settings = _settingsService.Current;
 
             // try to get zClient path
-            var zClientPath = settings.PathToZClient;
+            var zClientPath = settings.DataZClientPath;
             if (string.IsNullOrEmpty(zClientPath))
             {
                 var process = Process.GetProcessesByName(_ZClientProcessName)
                     .FirstOrDefault();
 
-                settings.PathToZClient = process != null
+                settings.DataZClientPath = process != null
                     ? ZClientProcessHelper.TryGetPathFromProcess(process)
                     : ZClientProcessHelper.TryGetPathFromRegistry();
             }
 
-            if (settings.RunZClient)
+            if (settings.AutoRunZClient)
             {
                 // try to run zClient
-                if (! string.IsNullOrEmpty(settings.PathToZClient))
+                if (! string.IsNullOrEmpty(settings.DataZClientPath))
                 {
-                    _runZClient(settings.PathToZClient);
+                    _runZClient(settings.DataZClientPath);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace Launcher.ViewModel
                 }
             }
 
-            if (settings.UseDiscordPresence)
+            if (settings.UseDiscordRPC)
             {
                 _discordPresence.Start();
             }
@@ -291,8 +291,8 @@ namespace Launcher.ViewModel
         public ICommand RunZClientCommand => new DelegateCommand(async obj =>
         {
             _menuService.Close();
-            var launcherSettings = _settingsService.GetLauncherSettings();
-            if (!string.IsNullOrEmpty(launcherSettings.PathToZClient))
+            var launcherSettings = _settingsService.Current;
+            if (!string.IsNullOrEmpty(launcherSettings.DataZClientPath))
             {
                 if (Process.GetProcessesByName(_ZClientProcessName).Length > 0)
                 {
@@ -300,7 +300,7 @@ namespace Launcher.ViewModel
                 }
                 else
                 {
-                    _runZClient(launcherSettings.PathToZClient);
+                    _runZClient(launcherSettings.DataZClientPath);
                 }
             }
             else
@@ -337,10 +337,10 @@ namespace Launcher.ViewModel
             // check, we are going to close or not
             if (e.Cancel) return;
 
-            var settings = _settingsService.GetLauncherSettings();
+            var settings = _settingsService.Current;
 
             // handle settings actions
-            if (settings.CloseZClientWithLauncher && _zClientProcessTracker.IsRun)
+            if (settings.AutoCloseZClientWithLauncher && _zClientProcessTracker.IsRun)
             {
                 try
                 {

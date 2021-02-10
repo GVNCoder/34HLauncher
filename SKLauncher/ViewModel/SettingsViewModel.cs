@@ -40,7 +40,7 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            _settingsService.SetGlobalLock();
+            _settingsService.SetLock();
             _discord.UpdateAFK();
         });
 
@@ -52,7 +52,7 @@ namespace Launcher.ViewModel
                 _eventService.WarnEvent(SLM.SaveSettingsHeader, SLM.SaveSettings);
             }
 
-            _settingsService.FreeGlobalLock();
+            _settingsService.FreeLock();
         });
     }
 }

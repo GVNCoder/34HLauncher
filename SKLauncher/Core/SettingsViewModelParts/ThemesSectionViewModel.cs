@@ -50,27 +50,8 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (ThemesSectionViewModel) d;
             var value = (int) e.NewValue;
 
-            viewModel._settings.Theme = viewModel.ThemeEnumerable[value].Value;
-            ThemeManager.ApplyTheme(viewModel._settings.Theme);
-        }
-
-        public KeyValuePair<AccentEnum, Color>? AccentScheme
-        {
-            get => (KeyValuePair<AccentEnum, Color>?)GetValue(AccentSchemeProperty);
-            set => SetValue(AccentSchemeProperty, value);
-        }
-        public static readonly DependencyProperty AccentSchemeProperty =
-            DependencyProperty.Register("AccentScheme", typeof(KeyValuePair<AccentEnum, Color>?), typeof(ThemesSectionViewModel), new PropertyMetadata(null, _accentSchemeChangedCallback));
-
-        private static void _accentSchemeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var viewModel = (ThemesSectionViewModel) d;
-            var value = (KeyValuePair<AccentEnum, Color>?) e.NewValue;
-
-            if (value == null) return;
-
-            viewModel._settings.Accent = value.Value.Key;
-            ThemeManager.ApplyAccent(value.Value.Key);
+            viewModel._settings.DataTheme = viewModel.ThemeEnumerable[value].Value;
+            ThemeManager.ApplyTheme(viewModel._settings.DataTheme);
         }
 
         public int GameCardOpacity
@@ -86,23 +67,23 @@ namespace Launcher.Core.SettingsViewModelParts
             var viewModel = (ThemesSectionViewModel) d;
             var value = (double) ((int)e.NewValue);
 
-            viewModel._settings.CardTransparency = value / 100;
+            viewModel._settings.DataMainMenuCardTransparency = value / 100;
         }
 
         #endregion
 
         private void _AssignSettings(LauncherSettings settings)
         {
-            ThemeIndex = Array.FindIndex(ThemeEnumerable, p => p.Value == settings.Theme);
-            AccentScheme = AccentCollection.Accents.FirstOrDefault(a => a.Key == settings.Accent);
-            GameCardOpacity = (int) (settings.CardTransparency * 100);
+            ThemeIndex = Array.FindIndex(ThemeEnumerable, p => p.Value == settings.DataTheme);
+            //AccentScheme = AccentCollection.Accents.FirstOrDefault(a => a.Key == settings.Accent);
+            GameCardOpacity = (int) (settings.DataMainMenuCardTransparency * 100);
         }
 
         public KeyValuePair<string, LauncherTheme>[] ThemeEnumerable { get; }
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            _settings = _settingsService.GetLauncherSettings();
+            _settings = _settingsService.Current;
             _AssignSettings(_settings);
         });
 

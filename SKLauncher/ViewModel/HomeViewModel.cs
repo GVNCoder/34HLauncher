@@ -90,8 +90,8 @@ namespace Launcher.ViewModel
 
         public override ICommand LoadedCommand => new DelegateCommand(obj =>
         {
-            var settings = _settingsService.GetLauncherSettings();
-            CardTransparency = settings.CardTransparency;
+            var settings = _settingsService.Current;
+            CardTransparency = settings.DataMainMenuCardTransparency;
 
             _discord.UpdateAFK();
         });
@@ -103,7 +103,7 @@ namespace Launcher.ViewModel
         private void _OpenSettingsExec(object obj)
         {
             var targetGame = EnumUtil.Parse<ZGame>((string) obj);
-            var settings = _settingsService.GetGameSettings().Settings[(int) targetGame];
+            var settings = _settingsService.Current.DataCollectionGameSettings[(int) targetGame];
             var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame != ZGame.BF3);
 
             _dialogService.OpenPresenter<DialogGameSettings>(viewModel).Forget();

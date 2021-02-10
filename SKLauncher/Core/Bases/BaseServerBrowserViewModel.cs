@@ -144,7 +144,7 @@ namespace Launcher.Core.Bases
             _eventService = eventService;
             _application = application;
             _dialogService = dialogService;
-            _settingsInstance = settingsService.GetLauncherSettings();
+            _settingsInstance = settingsService.Current;
         }
 
         #region Protected members
