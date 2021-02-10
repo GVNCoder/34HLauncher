@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
 namespace Launcher.XamlThemes.Theming
@@ -283,6 +282,14 @@ namespace Launcher.XamlThemes.Theming
 
             // update image ref
             imageResource.ImageRef = image;
+        }
+
+        public static BitmapImage GetImageResourceByKey(string key)
+        {
+            // try get image resource by key
+            var imageResource = _imageResources.FirstOrDefault(ir => ir.ResourceKey == key);
+
+            return imageResource.ImageRef;
         }
 
         #endregion
