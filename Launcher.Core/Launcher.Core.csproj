@@ -64,10 +64,7 @@
     <Compile Include="Service\IPageNavigator.cs" />
     <Compile Include="Service\IViewModelSource.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Model\Shared\" />
-    <Folder Include="Internal\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Zlo4NET\src\Zlo4NET\Zlo4NET.csproj">
       <Project>{b7b8b004-cb76-442f-bcab-7f0dbcf11bdd}</Project>

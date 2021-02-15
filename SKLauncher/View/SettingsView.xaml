@@ -21,7 +21,6 @@
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SettingsViewModel}"
     TextElement.FontFamily="{StaticResource OpenSans}"
     TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
-    TextOptions.TextRenderingMode="ClearType"
     mc:Ignorable="d">
 
     <!--  Load/Unload  -->
@@ -46,10 +45,6 @@
             <x:Type TypeName="system:String" />
             <x:Type TypeName="theming:LauncherTheme" />
         </x:Array>
-        <x:Array x:Key="AccentSchemeGenericInnerTypes" Type="{x:Type system:Type}">
-            <x:Type TypeName="theming:AccentEnum" />
-            <x:Type TypeName="Color" />
-        </x:Array>
         <helpers:GenericType
             x:Key="LocalizationTypeDescription"
             BaseType="{x:Type generic:KeyValuePair`2}"
@@ -58,18 +53,9 @@
             x:Key="ThemeTypeDescription"
             BaseType="{x:Type generic:KeyValuePair`2}"
             InnerTypes="{StaticResource ThemeGenericInnerTypes}" />
-        <helpers:GenericType
-            x:Key="AccentSchemeTypeDescription"
-            BaseType="{x:Type generic:KeyValuePair`2}"
-            InnerTypes="{StaticResource AccentSchemeGenericInnerTypes}" />
     </Page.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
         <i:Interaction.Behaviors>
             <behaviors:AcrylicControlBehavior
                 AdjustmentLevel="NoAdjust"
@@ -77,210 +63,8 @@
                 VisualContext="Page" />
         </i:Interaction.Behaviors>
 
-        <!--#region Left panel-->
-
-        <!--  Content panel  -->
-        <StackPanel
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="5,5,3,5"
-            Orientation="Vertical">
-
-            <controls1:FlatGroup
-                DataContext="{Binding ThemeSectionViewModel}"
-                Header="{DynamicResource settView_ThemesHeader}"
-                HeaderIcon="">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Unloaded">
-                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
-
-                    <!--  Background image  -->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource settView_BackgroundImage}" />
-                        <Button
-                            Grid.Column="1"
-                            Margin="5,0,5,0"
-                            Command="{Binding SelectImageCommand}"
-                            Content="{DynamicResource settView_Set}" />
-                        <Button
-                            Grid.Column="2"
-                            Command="{Binding ResetImageCommand}"
-                            Content="{DynamicResource settView_Reset}" />
-                    </Grid>
-
-                    <Grid Margin="0,7,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource settView_GameCardOpacity}" />
-
-                        <Slider
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            IsSnapToTickEnabled="True"
-                            Maximum="100"
-                            Minimum="10"
-                            TickFrequency="10"
-                            TickPlacement="BottomRight"
-                            Value="{Binding GameCardOpacity}" />
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,5,5,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            IsEnabled="False"
-                            Text="{DynamicResource settView_Theme}" />
-
-                        <ComboBox
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="0,5,0,0"
-                            IsEnabled="False"
-                            ItemsSource="{Binding ThemeEnumerable}"
-                            SelectedIndex="{Binding ThemeIndex}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="{StaticResource ThemeTypeDescription}">
-                                    <TextBlock Text="{Binding Key}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                        <TextBlock
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Margin="0,5,5,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource settView_Accent}"
-                            Visibility="Collapsed" />
-
-                        <ComboBox
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Margin="0,5,0,0"
-                            IsEnabled="False"
-                            ItemsSource="{Binding Source={x:Static theming:AccentCollection.Accents}}"
-                            SelectedItem="{Binding AccentScheme}"
-                            Visibility="Collapsed">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="{StaticResource AccentSchemeTypeDescription}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle
-                                            Grid.Column="0"
-                                            Width="25"
-                                            Height="15"
-                                            HorizontalAlignment="Right"
-                                            RadiusX="2"
-                                            RadiusY="2">
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="{Binding Value}" />
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Margin="5,0,0,0"
-                                            Text="{Binding Key}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
-                </StackPanel>
-            </controls1:FlatGroup>
-
-            <controls1:FlatGroup
-                Margin="0,5,0,0"
-                DataContext="{Binding UpdatesSectionViewModel}"
-                Header="{DynamicResource settView_UpdatesHeader}"
-                HeaderIcon="">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Loaded">
-                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Unloaded">
-                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
-
-                    <!--  Background image  -->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Button
-                            Grid.Column="0"
-                            Margin="0,0,5,0"
-                            Command="{Binding OpenChangelogCommand}"
-                            Content="{DynamicResource settView_Changelog}" />
-                        <Button
-                            Grid.Column="1"
-                            Command="{Binding DeleteCacheCommand}"
-                            Content="{DynamicResource settView_DeleteCache}" />
-                    </Grid>
-
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="{DynamicResource settView_DisableChangelogAutoOpen}"
-                        IsChecked="{Binding DisableChangelogAutoOpen}" />
-                </StackPanel>
-            </controls1:FlatGroup>
-        </StackPanel>
-
-        <!--#endregion Left panel-->
-
-        <!--#region Right panel-->
-
-        <StackPanel
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="3,5,5,3"
-            Orientation="Vertical">
-
-            <controls1:FlatGroup
-                DataContext="{Binding GeneralSectionViewModel}"
-                Header="{DynamicResource settView_MainHeader}"
-                HeaderIcon="">
-
+        <TabControl TabStripPlacement="Left">
+            <TabItem DataContext="{Binding GeneralSectionViewModel}" Header="General">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Loaded">
                         <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
@@ -365,12 +149,127 @@
                         IsChecked="{Binding CloseZClientWithLauncher}" />
 
                 </StackPanel>
+            </TabItem>
+            <TabItem DataContext="{Binding ThemeSectionViewModel}" Header="Themes">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unloaded">
+                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
-            </controls1:FlatGroup>
+                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
+                    <!--  Background image  -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource settView_BackgroundImage}" />
+                        <Button
+                            Grid.Column="1"
+                            Margin="5,0,5,0"
+                            Command="{Binding SelectImageCommand}"
+                            Content="{DynamicResource settView_Set}" />
+                        <Button
+                            Grid.Column="2"
+                            Command="{Binding ResetImageCommand}"
+                            Content="{DynamicResource settView_Reset}" />
+                    </Grid>
 
-        </StackPanel>
+                    <Grid Margin="0,7,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-        <!--#endregion Right panel-->
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource settView_GameCardOpacity}" />
 
+                        <Slider
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsSnapToTickEnabled="True"
+                            Maximum="100"
+                            Minimum="10"
+                            TickFrequency="10"
+                            TickPlacement="BottomRight"
+                            Value="{Binding GameCardOpacity}" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,5,5,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            IsEnabled="False"
+                            Text="{DynamicResource settView_Theme}" />
+
+                        <ComboBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="0,5,0,0"
+                            IsEnabled="False"
+                            ItemsSource="{Binding ThemeEnumerable}"
+                            SelectedIndex="{Binding ThemeIndex}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="{StaticResource ThemeTypeDescription}">
+                                    <TextBlock Text="{Binding Key}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem DataContext="{Binding UpdatesSectionViewModel}" Header="Updates">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unloaded">
+                        <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            Command="{Binding OpenChangelogCommand}"
+                            Content="{DynamicResource settView_Changelog}" />
+                        <Button
+                            Grid.Column="1"
+                            Command="{Binding DeleteCacheCommand}"
+                            Content="{DynamicResource settView_DeleteCache}" />
+                    </Grid>
+
+                    <CheckBox
+                        Margin="0,5,0,0"
+                        Content="{DynamicResource settView_DisableChangelogAutoOpen}"
+                        IsChecked="{Binding DisableChangelogAutoOpen}" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>

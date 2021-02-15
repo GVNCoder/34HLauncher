@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows;
+using System.Diagnostics;
+
 using Launcher.Core.Shared;
 
 namespace Launcher.Core.Services
