@@ -311,6 +311,68 @@
 
     <!--#region TabControl`s-->
 
+    <Style x:Key="SettingsToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Viewbox>
+                        <Border
+                            x:Name="Border"
+                            Width="40"
+                            Height="20"
+                            Background="#FFFFFFFF"
+                            CornerRadius="2">
+                            <Rectangle
+                                x:Name="Ellipse"
+                                Margin="2,1,2,1"
+                                HorizontalAlignment="Stretch"
+                                Fill="#FFFFFFFF"
+                                RadiusX="2"
+                                RadiusY="2"
+                                Stretch="Uniform"
+                                Stroke="Gray"
+                                StrokeThickness="0.2" />
+                        </Border>
+                    </Viewbox>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Checked">
+                            <BeginStoryboard>
+                                <Storyboard DesiredFrameRate="30">
+                                    <ColorAnimation
+                                        Storyboard.TargetName="Border"
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                        To="#FF4CD661"
+                                        Duration="0:0:0.1" />
+                                    <ThicknessAnimation
+                                        Storyboard.TargetName="Ellipse"
+                                        Storyboard.TargetProperty="Margin"
+                                        To="20 1 2 1"
+                                        Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard DesiredFrameRate="30">
+                                    <ColorAnimation
+                                        Storyboard.TargetName="Border"
+                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                        To="White"
+                                        Duration="0:0:0.1" />
+                                    <ThicknessAnimation
+                                        Storyboard.TargetName="Ellipse"
+                                        Storyboard.TargetProperty="Margin"
+                                        To="2 1 2 1"
+                                        Duration="0:0:0.1" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--<Style TargetType="{x:Type TabControl}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

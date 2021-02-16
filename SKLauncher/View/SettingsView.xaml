@@ -20,7 +20,7 @@
     Height="{StaticResource WindowContentAreaHeight}"
     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SettingsViewModel}"
     TextElement.FontFamily="{StaticResource OpenSans}"
-    TextElement.Foreground="{DynamicResource ThemeForegroundBrush}"
+    TextElement.FontSize="14"
     mc:Ignorable="d">
 
     <!--  Load/Unload  -->
@@ -53,6 +53,48 @@
             x:Key="ThemeTypeDescription"
             BaseType="{x:Type generic:KeyValuePair`2}"
             InnerTypes="{StaticResource ThemeGenericInnerTypes}" />
+
+        <system:Double x:Key="ToggleButtonWidth">40</system:Double>
+        <system:Double x:Key="ToggleButtonHeight">20</system:Double>
+
+        <Thickness
+            x:Key="TabItemInnerContentPadding"
+            Bottom="0"
+            Left="20"
+            Right="20"
+            Top="0" />
+        <Thickness x:Key="SettingsItemInnerContentPadding">10</Thickness>
+        <Thickness
+            x:Key="NextElementMargin"
+            Bottom="0"
+            Left="0"
+            Right="0"
+            Top="7" />
+        <Thickness
+            x:Key="SameElementMargin"
+            Bottom="0"
+            Left="0"
+            Right="0"
+            Top="3" />
+        <Thickness
+            x:Key="LogicalSectionSeparatorMargin"
+            Bottom="15"
+            Left="0"
+            Right="0"
+            Top="15" />
+        <Thickness
+            x:Key="NextLogicalSectionMargin"
+            Bottom="0"
+            Left="0"
+            Right="0"
+            Top="20" />
+        <Thickness
+            x:Key="LastLogicalElementMargin"
+            Bottom="20"
+            Left="0"
+            Right="0"
+            Top="20" />
+        <Thickness x:Key="AsideDescriptionTextMargin">20</Thickness>
     </Page.Resources>
 
     <Grid>
@@ -74,81 +116,260 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
+                <ScrollViewer Padding="{StaticResource TabItemInnerContentPadding}" VerticalScrollBarVisibility="Auto">
 
-                    <Grid VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
 
-                        <TextBlock
-                            Grid.Column="0"
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource settView_Language}" />
+                        <Grid Margin="{StaticResource NextLogicalSectionMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                        <ComboBox
-                            Grid.Column="1"
-                            ItemsSource="{Binding LocalizationEnumerable}"
-                            SelectedIndex="{Binding LocalizationIndex}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="{StaticResource LocalizationTypeDescription}">
-                                    <TextBlock Text="{Binding Key}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
 
-                    <Grid Margin="0,5,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource settView_PathToZClient}" />
-                        <Button
-                            Grid.Column="1"
-                            Margin="5,0,0,0"
-                            Command="{Binding SelectZClientCommand}"
-                            Content="{DynamicResource settView_Set}"
-                            ToolTip="{DynamicResource settView_ManuallySetZClientTip}" />
-                    </Grid>
-                    <TextBlock
-                        Margin="0,3,0,0"
-                        FontSize="12"
-                        Text="{Binding ZClientPath}" />
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
 
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="{DynamicResource settView_AutorunZClient}"
-                        IsChecked="{Binding AutorunZClient}" />
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="ZClient" />
 
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="{DynamicResource settView_Unfold}"
-                        IsChecked="{Binding UnfoldGameWindow}" />
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
 
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="{DynamicResource settView_TryToConnect}"
-                        IsChecked="{Binding TryToConnect}" />
+                                <TextBlock Text="ZClient location:" />
 
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="{DynamicResource settView_UseDiscordPresence}"
-                        IsChecked="{Binding UseDiscordPresence}"
-                        IsEnabled="{Binding CanUseDiscordPresence}" />
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
 
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="Close ZClient with the launcher"
-                        IsChecked="{Binding CloseZClientWithLauncher}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Width="70"
+                                            HorizontalAlignment="Left"
+                                            Command="{Binding SelectZClientCommand}"
+                                            Content="Choose"
+                                            Style="{x:Null}" />
 
-                </StackPanel>
+                                        <TextBlock
+                                            Margin="10,0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ZClientPath}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap" />
+                                    </StackPanel>
+                                </Border>
+
+                                <TextBlock Margin="{StaticResource NextElementMargin}" Text="Automation:" />
+
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Run ZClient with launcher start" />
+
+                                        <ToggleButton
+                                            Grid.Column="1"
+                                            Width="{StaticResource ToggleButtonWidth}"
+                                            Height="{StaticResource ToggleButtonHeight}"
+                                            Style="{DynamicResource SettingsToggleButtonStyle}" />
+                                    </Grid>
+                                </Border>
+
+                                <Border
+                                    Margin="{StaticResource NextElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Close ZClient with launcher" />
+
+                                        <ToggleButton
+                                            Grid.Column="1"
+                                            Width="{StaticResource ToggleButtonWidth}"
+                                            Height="{StaticResource ToggleButtonHeight}"
+                                            Style="{DynamicResource SettingsToggleButtonStyle}" />
+                                    </Grid>
+                                </Border>
+
+                                <Border
+                                    Margin="{StaticResource NextElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Try to connect to ZClient with launcher start" />
+
+                                        <ToggleButton
+                                            Grid.Column="1"
+                                            Width="{StaticResource ToggleButtonWidth}"
+                                            Height="{StaticResource ToggleButtonHeight}"
+                                            Style="{DynamicResource SettingsToggleButtonStyle}" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="{StaticResource LastLogicalElementMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Other" />
+
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
+
+                                <TextBlock Text="Localization:" />
+
+                                <ComboBox
+                                    Margin="{StaticResource SameElementMargin}"
+                                    ItemsSource="{Binding LocalizationEnumerable}"
+                                    SelectedIndex="{Binding LocalizationIndex}"
+                                    Style="{x:Null}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate DataType="{StaticResource LocalizationTypeDescription}">
+                                            <TextBlock Text="{Binding Key}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                                <TextBlock Margin="{StaticResource NextElementMargin}" Text="Other:" />
+
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Auto maximize game window" />
+
+                                        <ToggleButton
+                                            Grid.Column="1"
+                                            Width="{StaticResource ToggleButtonWidth}"
+                                            Height="{StaticResource ToggleButtonHeight}"
+                                            Style="{DynamicResource SettingsToggleButtonStyle}" />
+                                    </Grid>
+                                </Border>
+
+                                <Border
+                                    Margin="{StaticResource NextElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Use Discord RPC" />
+
+                                        <ToggleButton
+                                            Grid.Column="1"
+                                            Width="{StaticResource ToggleButtonWidth}"
+                                            Height="{StaticResource ToggleButtonHeight}"
+                                            Style="{DynamicResource SettingsToggleButtonStyle}" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+
             </TabItem>
             <TabItem DataContext="{Binding ThemeSectionViewModel}" Header="Themes">
                 <i:Interaction.Triggers>
