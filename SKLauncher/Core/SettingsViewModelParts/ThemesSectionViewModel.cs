@@ -37,6 +37,47 @@ namespace Launcher.Core.SettingsViewModelParts
 
         #region Dependency properties
 
+        public ImageSource BackgroundImageSource
+        {
+            get => (ImageSource)GetValue(BackgroundImageSourceProperty);
+            set => SetValue(BackgroundImageSourceProperty, value);
+        }
+        public static readonly DependencyProperty BackgroundImageSourceProperty =
+            DependencyProperty.Register("BackgroundImageSource", typeof(ImageSource), typeof(ThemesSectionViewModel), new PropertyMetadata(null));
+
+        public ImageSource BF3CardImageSource
+        {
+            get { return (ImageSource)GetValue(BF3CardImageSourceProperty); }
+            set { SetValue(BF3CardImageSourceProperty, value); }
+        }
+        public static readonly DependencyProperty BF3CardImageSourceProperty =
+            DependencyProperty.Register("BF3CardImageSource", typeof(ImageSource), typeof(ThemesSectionViewModel), new PropertyMetadata(null));
+
+        public ImageSource BF4CardImageSource
+        {
+            get { return (ImageSource)GetValue(BF4CardImageSourceProperty); }
+            set { SetValue(BF4CardImageSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BF4CardImageSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BF4CardImageSourceProperty =
+            DependencyProperty.Register("BF4CardImageSource", typeof(ImageSource), typeof(ThemesSectionViewModel), new PropertyMetadata(null));
+
+
+
+        public ImageSource BFHCardImageSource
+        {
+            get { return (ImageSource)GetValue(BFHCardImageSourceProperty); }
+            set { SetValue(BFHCardImageSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BFHCardImageSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BFHCardImageSourceProperty =
+            DependencyProperty.Register("BFHCardImageSource", typeof(ImageSource), typeof(ThemesSectionViewModel), new PropertyMetadata(null));
+
+
+
+
         public int ThemeIndex
         {
             get => (int)GetValue(ThemeIndexProperty);
@@ -85,6 +126,11 @@ namespace Launcher.Core.SettingsViewModelParts
         {
             _settings = _settingsService.Current;
             _AssignSettings(_settings);
+
+            BackgroundImageSource = ThemeManager.GetImageResourceByKey("BackgroundImage");
+            BF3CardImageSource = ThemeManager.GetImageResourceByKey("BF3MenuCardImage");
+            BF4CardImageSource = ThemeManager.GetImageResourceByKey("BF4MenuCardImage");
+            BFHCardImageSource = ThemeManager.GetImageResourceByKey("BFHMenuCardImage");
         });
 
         public override ICommand UnloadedCommand => new DelegateCommand(obj =>

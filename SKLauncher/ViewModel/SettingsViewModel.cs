@@ -8,6 +8,7 @@ using Launcher.Core.Services;
 using Launcher.Core.SettingsViewModelParts;
 
 using Ninject;
+
 using SLM = Launcher.Localization.Loc.inCodeLocalizationMap.SharedLocalizationMap;
 
 namespace Launcher.ViewModel

@@ -11,6 +11,12 @@
         <ResourceDictionary Source="Theme.Independent.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!--#region-->
+
+    <SolidColorBrush x:Key="SettingsPageAcrylicTintBrush" Color="Black" />
+
+    <!--#endregion-->
+
     <!--#region ContextMenu`s-->
 
     <!--  MenuItem style  -->

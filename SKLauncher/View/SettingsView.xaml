@@ -3,9 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="clr-namespace:Launcher.Core.Behaviors"
-    xmlns:controls="clr-namespace:Launcher.Styles.Controls"
-    xmlns:controls1="clr-namespace:Launcher.XamlThemes.Controls;assembly=Launcher.Theme"
-    xmlns:converters="clr-namespace:Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
     xmlns:helpers="clr-namespace:Launcher.Helpers"
@@ -13,7 +10,6 @@
     xmlns:loc="clr-namespace:Launcher.Localization.Loc;assembly=Launcher.Localization"
     xmlns:local="clr-namespace:Launcher.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:shared="clr-namespace:Launcher.Core.Shared"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:theming="clr-namespace:Launcher.XamlThemes.Theming;assembly=Launcher.Theme"
     Width="{StaticResource WindowWidth}"
@@ -23,7 +19,6 @@
     TextElement.FontSize="14"
     mc:Ignorable="d">
 
-    <!--  Load/Unload  -->
     <i:Interaction.Triggers>
 
         <i:EventTrigger EventName="Loaded">
@@ -56,7 +51,14 @@
 
         <system:Double x:Key="ToggleButtonWidth">40</system:Double>
         <system:Double x:Key="ToggleButtonHeight">20</system:Double>
+        <system:Double x:Key="FileSelectorButtonWith">70</system:Double>
 
+        <Thickness
+            x:Key="NextSelectorButtonMargin"
+            Bottom="0"
+            Left="3"
+            Right="0"
+            Top="0" />
         <Thickness
             x:Key="TabItemInnerContentPadding"
             Bottom="0"
@@ -101,7 +103,8 @@
         <i:Interaction.Behaviors>
             <behaviors:AcrylicControlBehavior
                 AdjustmentLevel="NoAdjust"
-                TintBrush="{StaticResource PageBackgroundTintBrush}"
+                ForceTintOpacity=".5"
+                TintBrush="{StaticResource SettingsPageAcrylicTintBrush}"
                 VisualContext="Page" />
         </i:Interaction.Behaviors>
 
@@ -381,82 +384,343 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
-                    <!--  Background image  -->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource settView_BackgroundImage}" />
-                        <Button
-                            Grid.Column="1"
-                            Margin="5,0,5,0"
-                            Command="{Binding SelectImageCommand}"
-                            Content="{DynamicResource settView_Set}" />
-                        <Button
-                            Grid.Column="2"
-                            Command="{Binding ResetImageCommand}"
-                            Content="{DynamicResource settView_Reset}" />
-                    </Grid>
+                <ScrollViewer Padding="{StaticResource TabItemInnerContentPadding}" VerticalScrollBarVisibility="Auto">
 
-                    <Grid Margin="0,7,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Vertical">
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource settView_GameCardOpacity}" />
+                        <Grid Margin="{StaticResource NextLogicalSectionMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                        <Slider
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            IsSnapToTickEnabled="True"
-                            Maximum="100"
-                            Minimum="10"
-                            TickFrequency="10"
-                            TickPlacement="BottomRight"
-                            Value="{Binding GameCardOpacity}" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
 
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,5,5,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            IsEnabled="False"
-                            Text="{DynamicResource settView_Theme}" />
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
 
-                        <ComboBox
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="0,5,0,0"
-                            IsEnabled="False"
-                            ItemsSource="{Binding ThemeEnumerable}"
-                            SelectedIndex="{Binding ThemeIndex}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="{StaticResource ThemeTypeDescription}">
-                                    <TextBlock Text="{Binding Key}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
-                </StackPanel>
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Images" />
+
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
+
+                                <TextBlock Text="Background (2000x1080 10Mb):" />
+
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button
+                                            Grid.Column="0"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding SelectZClientCommand}"
+                                            Content="Choose"
+                                            Style="{x:Null}" />
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            Margin="{StaticResource NextSelectorButtonMargin}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Content="Reset"
+                                            Style="{x:Null}" />
+
+                                        <Image
+                                            Grid.Column="2"
+                                            Width="150"
+                                            Height="85"
+                                            MaxWidth="150"
+                                            MaxHeight="85"
+                                            Source="{Binding BackgroundImageSource}" />
+                                    </Grid>
+                                </Border>
+
+                                <TextBlock Margin="{StaticResource NextElementMargin}" Text="Main menu cards:" />
+
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button
+                                            Grid.Column="0"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding SelectZClientCommand}"
+                                            Content="Choose"
+                                            Style="{x:Null}" />
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            Margin="{StaticResource NextSelectorButtonMargin}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Content="Reset"
+                                            Style="{x:Null}" />
+
+                                        <Image
+                                            Grid.Column="2"
+                                            Width="150"
+                                            Height="85"
+                                            MaxWidth="150"
+                                            MaxHeight="85"
+                                            Source="{Binding BF3CardImageSource}" />
+                                    </Grid>
+                                </Border>
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button
+                                            Grid.Column="0"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding SelectZClientCommand}"
+                                            Content="Choose"
+                                            Style="{x:Null}" />
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            Margin="{StaticResource NextSelectorButtonMargin}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Content="Reset"
+                                            Style="{x:Null}" />
+
+                                        <Image
+                                            Grid.Column="2"
+                                            Width="150"
+                                            Height="85"
+                                            MaxWidth="150"
+                                            MaxHeight="85"
+                                            Source="{Binding BF4CardImageSource}" />
+                                    </Grid>
+                                </Border>
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button
+                                            Grid.Column="0"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding SelectZClientCommand}"
+                                            Content="Choose"
+                                            Style="{x:Null}" />
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Width="{StaticResource FileSelectorButtonWith}"
+                                            Margin="{StaticResource NextSelectorButtonMargin}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Content="Reset"
+                                            Style="{x:Null}" />
+
+                                        <Image
+                                            Grid.Column="2"
+                                            Width="150"
+                                            Height="85"
+                                            MaxWidth="150"
+                                            MaxHeight="85"
+                                            Source="{Binding BFHCardImageSource}" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="{StaticResource NextLogicalSectionMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Theming" />
+
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
+
+                                <TextBlock Text="Theme:" />
+
+                                <ComboBox
+                                    Margin="{StaticResource SameElementMargin}"
+                                    IsEnabled="False"
+                                    ItemsSource="{Binding ThemeEnumerable}"
+                                    SelectedIndex="{Binding ThemeIndex}"
+                                    Style="{x:Null}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate DataType="{StaticResource ThemeTypeDescription}">
+                                            <TextBlock Text="{Binding Key}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="{StaticResource LastLogicalElementMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Other" />
+
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
+
+                                <TextBlock Margin="{StaticResource NextElementMargin}" Text="Other:" />
+
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Main menu card opacity" />
+
+                                        <Slider
+                                            Grid.Column="1"
+                                            IsSnapToTickEnabled="True"
+                                            Maximum="100"
+                                            Minimum="10"
+                                            Style="{x:Null}"
+                                            TickFrequency="10"
+                                            TickPlacement="BottomRight"
+                                            Value="{Binding GameCardOpacity}" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem DataContext="{Binding UpdatesSectionViewModel}" Header="Updates">
                 <i:Interaction.Triggers>
@@ -468,28 +732,126 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <StackPanel Orientation="Vertical" TextElement.FontSize="14">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Button
-                            Grid.Column="0"
-                            Margin="0,0,5,0"
-                            Command="{Binding OpenChangelogCommand}"
-                            Content="{DynamicResource settView_Changelog}" />
-                        <Button
-                            Grid.Column="1"
-                            Command="{Binding DeleteCacheCommand}"
-                            Content="{DynamicResource settView_DeleteCache}" />
-                    </Grid>
+                <ScrollViewer Padding="{StaticResource TabItemInnerContentPadding}" VerticalScrollBarVisibility="Auto">
 
-                    <CheckBox
-                        Margin="0,5,0,0"
-                        Content="{DynamicResource settView_DisableChangelogAutoOpen}"
-                        IsChecked="{Binding DisableChangelogAutoOpen}" />
-                </StackPanel>
+                    <StackPanel Orientation="Vertical">
+
+                        <Grid Margin="{StaticResource NextLogicalSectionMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Quick Actions" />
+
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
+
+                                <TextBlock Text="Actions:" />
+
+                                <Button Margin="{StaticResource SameElementMargin}" Content="Open Changelog" />
+
+                                <Button Margin="{StaticResource NextElementMargin}" Content="Clear cache" />
+
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid Margin="{StaticResource NextLogicalSectionMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="{StaticResource AsideDescriptionTextMargin}"
+                                Text="A lot of text here allowed to describe left settings logical section..."
+                                TextWrapping="WrapWithOverflow" />
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Text="Other" />
+
+                                <Rectangle
+                                    Height="1"
+                                    Margin="{StaticResource LogicalSectionSeparatorMargin}"
+                                    Fill="Gray" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Orientation="Vertical">
+
+                                <TextBlock Text="Other:" />
+
+                                <Border
+                                    Margin="{StaticResource SameElementMargin}"
+                                    Padding="{StaticResource SettingsItemInnerContentPadding}"
+                                    Background="Gray"
+                                    CornerRadius="{StaticResource CornerRadius}">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="Do not open change log after update" />
+
+                                        <ToggleButton
+                                            Grid.Column="1"
+                                            Width="{StaticResource ToggleButtonWidth}"
+                                            Height="{StaticResource ToggleButtonHeight}"
+                                            Style="{DynamicResource SettingsToggleButtonStyle}" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>
