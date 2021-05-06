@@ -183,7 +183,7 @@ namespace Launcher.ViewModel
             }
         }
 
-        private void _apiConnectionConnectionChangedHandler(object sender, ZConnectionChangedArgs e)
+        private void _apiConnectionConnectionChangedHandler(object sender, ZConnectionChangedEventArgs e)
             => _RefreshAppState();
 
         private void _runZClient(string path)
