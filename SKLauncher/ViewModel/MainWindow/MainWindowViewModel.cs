@@ -239,7 +239,10 @@ namespace Launcher.ViewModel
                     : ZClientProcessHelper.TryGetPathFromRegistry();
             }
 
-            if (settings.RunZClient)
+            var zlientProcesses = Process.GetProcessesByName("ZClient");
+            var isAlreadyRun = zlientProcesses.Length != 0;
+
+            if (settings.RunZClient && !isAlreadyRun)
             {
                 // try to run zClient
                 if (! string.IsNullOrEmpty(settings.PathToZClient))
