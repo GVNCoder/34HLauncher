@@ -37,7 +37,7 @@ namespace Launcher.ViewModel.Stats
         private void _OpenStatsExec(object obj)
         {
             Process.Start("https://bf3.zloemu.net/stats");
-            Clipboard.CopyToClipboard(_api.Connection.AuthorizedUser.Name);
+            Clipboard.CopyToClipboard(_api.Connection.GetCurrentUserInfo().UserName);
         }
 
         public override ICommand LoadedCommand => new DelegateCommand(_LoadedExec);

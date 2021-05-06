@@ -5,8 +5,7 @@ using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Service.Base;
 using Launcher.Helpers;
-
-using Zlo4NET.Api.Models.Shared;
+using Zlo4NET.Api.DTO;
 
 using Clipboard = Launcher.Helpers.Clipboard;
 
@@ -86,7 +85,7 @@ namespace Launcher.ViewModel.UserControl
 
         #region Public methods
 
-        public void SetUserData(ZUser user) => Dispatcher.Invoke(() =>
+        public void SetUserData(ZUserDTO user) => Dispatcher.Invoke(() =>
         {
             // setup unauthorized user
             if (user == null)
@@ -99,8 +98,8 @@ namespace Launcher.ViewModel.UserControl
             }
             else // setup user
             {
-                UserName = user.Name;
-                UserId = user.Id.ToString();
+                UserName = user.UserName;
+                UserId = user.UserId.ToString();
                 IsEnabled = true;
             }
         });

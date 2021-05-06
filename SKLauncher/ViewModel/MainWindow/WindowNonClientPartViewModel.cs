@@ -13,6 +13,7 @@ using Launcher.Core.Shared;
 using Launcher.ViewModel.UserControl;
 using Ninject;
 using Zlo4NET.Api;
+using Zlo4NET.Api.DTO;
 using Zlo4NET.Api.Models.Shared;
 
 using Clipboard = Launcher.Helpers.Clipboard;
@@ -30,7 +31,7 @@ namespace Launcher.ViewModel
         private readonly IUpdateService _updateService;
         private readonly IPageNavigator _navigator;
 
-        private ZUser _authorizedUser;
+        private ZUserDTO _authorizedUser;
 
         public WindowNonClientPartViewModel(
             IMainMenuService mainMenuService,
@@ -58,7 +59,7 @@ namespace Launcher.ViewModel
             if (_mainMenuService.CanUse) _mainMenuService.Close();
         }
 
-        private void _handler(object sender, ZConnectionChangedArgs e)
+        private void _handler(object sender, ZConnectionChangedEventArgs e)
         {
             _api.Connection.ConnectionChanged -= _handler;
             Dispatcher.Invoke(() => ConnectIsEnabled = true);
@@ -161,7 +162,7 @@ namespace Launcher.ViewModel
         {
             if (_authorizedUser != null) return;
 
-            _authorizedUser = _api.Connection.AuthorizedUser;
+            _authorizedUser = _api.Connection.GetCurrentUserInfo();
 
             UserPresenterViewModel.SetUserData(_authorizedUser);
             CanBackNavigation = true;
