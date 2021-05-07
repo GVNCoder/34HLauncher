@@ -156,6 +156,9 @@ namespace Launcher.ViewModel
             // refresh some UI states
             _RefreshAppState();
 
+            // temp disable this feature
+            return;
+
             // pause briefly if necessary before continuing
             var startTime = process.StartTime.ToUniversalTime();
             var currentTime = DateTime.UtcNow;
