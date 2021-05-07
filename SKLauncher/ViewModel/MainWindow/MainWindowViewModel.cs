@@ -165,7 +165,7 @@ namespace Launcher.ViewModel
             if (Math.Floor((decimal) timeDifference.TotalSeconds) < 3m)
             {
                 // wait 3.5 seconds for full ZClient start
-                await Task.Delay(6000);
+                await Task.Delay(3500);
             }
 
             // try to detect ZClient location
