@@ -85,7 +85,7 @@ namespace Launcher.ViewModel.UserControl
 
         #region Public methods
 
-        public void SetUserData(ZUserDTO user) => Dispatcher.Invoke(() =>
+        public void SetUserData(ZUserDto user) => Dispatcher.Invoke(() =>
         {
             // setup unauthorized user
             if (user == null)

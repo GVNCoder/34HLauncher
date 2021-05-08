@@ -31,7 +31,7 @@ namespace Launcher.ViewModel
         private readonly IUpdateService _updateService;
         private readonly IPageNavigator _navigator;
 
-        private ZUserDTO _authorizedUser;
+        private ZUserDto _authorizedUser;
 
         public WindowNonClientPartViewModel(
             IMainMenuService mainMenuService,
