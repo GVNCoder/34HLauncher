@@ -22,7 +22,7 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
-
+using Zlo4NET.Core.Data;
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Bases
@@ -236,7 +236,11 @@ namespace Launcher.Core.Bases
         {
             _serversService.InitialSizeReached -= _serverListInitialSizeReached;
             _serversService.ServersCollection.CollectionChanged -= _collectionChangedHandler;
-            _serversService.StopReceiving();
+
+            if (_api.Connection.IsConnected)
+            {
+                _serversService.StopReceiving();
+            }
 
             _ResetFilter(false);
 
