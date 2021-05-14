@@ -113,8 +113,9 @@ namespace Launcher
         {
             // setup API logger
             var logger = instance.Logger;
-            logger.SetMessageFilter(ZLogLevel.Error | ZLogLevel.Warning);
-            logger.OnMessage += (sender, e) => applicationLoggerInstance.Info($"Zlo4NET: {e.Message}");
+
+            logger.SetLogLevelFiltering(ZLogLevel.Error | ZLogLevel.Warning);
+            logger.LogMessage += (sender, e) => applicationLoggerInstance.Info($"Zlo4NET: {e.Message}");
 
             // set other loggers
         }
