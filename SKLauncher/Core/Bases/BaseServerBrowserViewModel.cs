@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -236,11 +237,7 @@ namespace Launcher.Core.Bases
         {
             _serversService.InitialSizeReached -= _serverListInitialSizeReached;
             _serversService.ServersCollection.CollectionChanged -= _collectionChangedHandler;
-
-            if (_api.Connection.IsConnected)
-            {
-                _serversService.StopReceiving();
-            }
+            _serversService.StopReceiving();
 
             _ResetFilter(false);
 
