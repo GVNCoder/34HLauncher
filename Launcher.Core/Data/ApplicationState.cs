@@ -55,11 +55,6 @@ namespace Launcher.Core.Data
         private void _OnStateChanged(string key, object state)
             => StateChanged?.Invoke(this, new ApplicationStateEventArgs(key, state));
 
-        private void _ThrowIfExists(string key)
-        {
-            if (State.ContainsKey(key)) throw new InvalidOperationException($"The key({key}) already exists.");
-        }
-
         #endregion
     }
 }

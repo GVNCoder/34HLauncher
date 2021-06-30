@@ -32,9 +32,9 @@ namespace Launcher.Helpers
             return fullPath;
         }
 
-        public static string TryGetPathFromProcess(Process process)
+        public static string GetExecutionFilePath(Process process)
         {
-            return process.MainModule.FileName;
+            return process?.MainModule?.FileName;
         }
     }
 }
