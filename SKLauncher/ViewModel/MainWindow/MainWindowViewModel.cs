@@ -38,7 +38,13 @@ namespace Launcher.ViewModel
 {
     public class MainWindowViewModel : BasePageViewModel
     {
-        private const string _ZClientProcessName = "ZClient";
+        #region Constants
+
+        private const string ZClientProcessName = "ZClient";
+        private const int ZClientWorkTimeSecondsThreshold = 5;
+        private const int WaitForZClientLoadTime = 8000;
+
+        #endregion
 
         private readonly ZProcessTracker _zClientProcessTracker;
         private readonly ISettingsService _settingsService;
@@ -76,15 +82,13 @@ namespace Launcher.ViewModel
             IViewModelSource viewModelSource,
             IDialogService dialogService,
             IDialogSystemBase dialogSystemBase,
-            IBusyIndicatorBase busyIndicatorBase
-            /*IBusyIndicatorService busyIndicatorService*/)
+            IBusyIndicatorBase busyIndicatorBase)
         {
             _navigator = navigator;
             _state = state;
             _dialogSystemBase = dialogSystemBase;
             _dialogService = dialogService;
             _busyIndicatorBase = busyIndicatorBase;
-            //_busyIndicatorService = busyIndicatorService;
             _eventService = eventService;
 
             _menuService = menuService;
@@ -103,7 +107,7 @@ namespace Launcher.ViewModel
 
             _apiConnection.ConnectionChanged += _apiConnectionConnectionChangedHandler;
 
-            _zClientProcessTracker = new ZProcessTracker(_ZClientProcessName, TimeSpan.FromSeconds(3), true, processes => processes
+            _zClientProcessTracker = new ZProcessTracker(ZClientProcessName, TimeSpan.FromSeconds(3), true, processes => processes
                 .OrderByDescending(process => process.StartTime)
                 .First());
             _zClientProcessTracker.ProcessDetected += _zClientProcessDetectedHandler;
@@ -120,53 +124,19 @@ namespace Launcher.ViewModel
             _log.Warn(e.Message);
         }
 
-        //private void _RefreshAppState()
-        //{
-        //    var connectionState = _apiConnection.IsConnected;
-        //    if (connectionState)
-        //    {
-        //        // update data contexts state
-        //        NonClientDataContext.UpdateConnected();
-        //        BottomBarDataContext.UpdateConnected();
-        //    }
-        //    else
-        //    {
-        //        // update data contexts state
-        //        NonClientDataContext.UpdateDisconnected();
-        //        BottomBarDataContext.UpdateDisconnected();
-
-        //        // goto Home ;)
-        //        _navigator.Navigate("View\\HomeView.xaml");
-        //    }
-
-        //    // update app state
-        //    _state.SetState(Constants.ZCLIENT_CONNECTION, connectionState);
-        //}
-
-        //private void _zClientProcessLostHandler(object sender, EventArgs e)
-        //{
-        //    _RefreshAppState();
-
-        //    // reset connection
-        //    _apiConnection.Disconnect();
-        //}
-
         private async void _zClientProcessDetectedHandler(object sender, Process process)
         {
-            // refresh some UI states
-            //_RefreshAppState();
-
             var settings = _settingsService.GetLauncherSettings();
             if (settings.TryToConnect)
             {
                 // pause briefly if necessary before continuing
-                var timeDelta = process.StartTime - DateTime.Now;
+                var timeDelta = DateTime.Now - process.StartTime;
 
                 // if the process was started less than three seconds ago
-                if (timeDelta.TotalSeconds < 5)
+                if (timeDelta.TotalSeconds < ZClientWorkTimeSecondsThreshold)
                 {
                     // wait 8 seconds for full ZClient start
-                    await Task.Delay(8000);
+                    await Task.Delay(WaitForZClientLoadTime);
                 }
 
                 // check, do we need to find a way at all?
@@ -227,7 +197,6 @@ namespace Launcher.ViewModel
 
             // initial actions
             _navigator.Navigate("View\\HomeView.xaml"); // default page is Home ;)
-            //BottomBarDataContext.UpdateDisconnected();  // for error message showing
 
             var settings = _settingsService.GetLauncherSettings();
 
@@ -235,7 +204,7 @@ namespace Launcher.ViewModel
             var zClientPath = settings.PathToZClient;
             if (string.IsNullOrEmpty(zClientPath))
             {
-                var process = Process.GetProcessesByName(_ZClientProcessName)
+                var process = Process.GetProcessesByName(ZClientProcessName)
                     .FirstOrDefault();
 
                 settings.PathToZClient = process != null
@@ -243,8 +212,8 @@ namespace Launcher.ViewModel
                     : ZClientProcessHelper.TryGetPathFromRegistry();
             }
 
-            var zlientProcesses = Process.GetProcessesByName("ZClient");
-            var isAlreadyRun = zlientProcesses.Length != 0;
+            var zClientProcess = Process.GetProcessesByName("ZClient");
+            var isAlreadyRun = zClientProcess.Length != 0;
 
             if (settings.RunZClient && !isAlreadyRun)
             {
@@ -302,7 +271,7 @@ namespace Launcher.ViewModel
             var launcherSettings = _settingsService.GetLauncherSettings();
             if (!string.IsNullOrEmpty(launcherSettings.PathToZClient))
             {
-                if (Process.GetProcessesByName(_ZClientProcessName).Length > 0)
+                if (Process.GetProcessesByName(ZClientProcessName).Length > 0)
                 {
                     _eventService.WarnEvent("Run ZClient", "ZClient already run.");
                 }
