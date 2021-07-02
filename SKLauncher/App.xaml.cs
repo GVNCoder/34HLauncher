@@ -115,7 +115,23 @@ namespace Launcher
             var logger = instance.Logger;
 
             logger.SetLogLevelFiltering(ZLogLevel.Error | ZLogLevel.Warning);
-            logger.LogMessage += (sender, e) => applicationLoggerInstance.Info($"Zlo4NET: {e.Message}");
+            logger.LogMessage += (sender, e) =>
+            {
+                switch (e.Level)
+                {
+                    case ZLogLevel.Info:
+                    case ZLogLevel.Debug:
+                        break;
+                    case ZLogLevel.Warning:
+                        applicationLoggerInstance.Warn($"Zlo4NET: {e.Message}");
+                        break;
+                    case ZLogLevel.Error:
+                        applicationLoggerInstance.Error($"Zlo4NET: {e.Message}");
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            };
 
             // set other loggers
         }
