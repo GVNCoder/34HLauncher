@@ -9,8 +9,6 @@ using System.Windows.Input;
 
 using log4net;
 
-//using Ninject.Syntax;
-
 using Launcher.Core.Interaction;
 using Launcher.Core.Service;
 using Launcher.Core.Services;
