@@ -147,7 +147,7 @@
                             Grid.Column="1"
                             IsSnapToTickEnabled="True"
                             Maximum="100"
-                            Minimum="10"
+                            Minimum="30"
                             TickFrequency="10"
                             TickPlacement="BottomRight"
                             Value="{Binding GameCardOpacity}" />
