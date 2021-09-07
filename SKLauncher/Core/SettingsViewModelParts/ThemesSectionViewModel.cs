@@ -79,7 +79,7 @@ namespace Launcher.Core.SettingsViewModelParts
             set => SetValue(GameCardOpacityProperty, value);
         }
         public static readonly DependencyProperty GameCardOpacityProperty =
-            DependencyProperty.Register("GameCardOpacity", typeof(int), typeof(ThemesSectionViewModel), new PropertyMetadata(10, _gameCardOpacityPropertyChangedCallback));
+            DependencyProperty.Register("GameCardOpacity", typeof(int), typeof(ThemesSectionViewModel), new PropertyMetadata(30, _gameCardOpacityPropertyChangedCallback));
 
         private static void _gameCardOpacityPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

@@ -37,7 +37,7 @@ namespace Launcher.Core.Shared
                 RunZClient = false,
                 UnfoldGameWindow = false,
                 UseDiscordPresence = false,
-                CardTransparency = .1d,
+                CardTransparency = .3d,
                 TryToConnect = false,
                 IsDefault = true,
                 DisableChangelogAutoOpen = false,
