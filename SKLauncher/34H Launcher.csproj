@@ -238,7 +238,6 @@
     <Compile Include="Core\Services\UIHostService.cs" />
     <Compile Include="Core\Services\VersionService.cs" />
     <Compile Include="Helpers\LoggingHelper.cs" />
-    <Compile Include="Helpers\ServerPingCalculator.cs" />
     <Compile Include="Helpers\SettingsDialogHelper.cs" />
     <Compile Include="Helpers\TaskExtension.cs" />
     <Compile Include="Helpers\WebClientWithTimeout.cs">

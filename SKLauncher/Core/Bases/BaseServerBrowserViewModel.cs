@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable InvertIf
+
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 using Launcher.Core.Data;
 using Launcher.Core.Dialog;
@@ -23,7 +24,7 @@ using Zlo4NET.Api;
 using Zlo4NET.Api.Models.Server;
 using Zlo4NET.Api.Models.Shared;
 using Zlo4NET.Api.Service;
-using Zlo4NET.Core.Data;
+
 using IDiscord = Launcher.Core.RPC.IDiscord;
 
 namespace Launcher.Core.Bases
@@ -127,6 +128,8 @@ namespace Launcher.Core.Bases
 
         #endregion
 
+        #region Ctor
+
         protected BaseServerBrowserViewModel(
             IZApi api,
             IGameService gameService,
@@ -135,7 +138,8 @@ namespace Launcher.Core.Bases
             Application application,
             ISettingsService settingsService,
             IPageNavigator navigator,
-            IDialogService dialogService)
+            IDialogService dialogService,
+            IBusyIndicatorService busyIndicatorService)
         {
             _navigator = navigator;
             _discord = discord;
@@ -146,7 +150,10 @@ namespace Launcher.Core.Bases
             _application = application;
             _dialogService = dialogService;
             _settingsInstance = settingsService.GetLauncherSettings();
+            _busyIndicatorService = busyIndicatorService;
         }
+
+        #endregion
 
         #region Protected members
 
@@ -159,24 +166,16 @@ namespace Launcher.Core.Bases
         protected readonly Application _application;
         protected readonly IEventService _eventService;
         protected readonly LauncherSettings _settingsInstance;
+        protected readonly IBusyIndicatorService _busyIndicatorService;
         
         protected IZServersListService _serversService;
         protected CollectionViewSource _collectionViewSource;
         protected CollectionViewFiltrationExtension<ZServerBase> _viewFiltration;
+        protected ObservableCollection<ZServerBase> _internalServersCollection;
 
         #endregion
 
         #region Protected methods
-
-        protected CollectionViewSource _ExtractCollectionViewSource(Page ui)
-        {
-            return (CollectionViewSource) ui.Resources["CollectionViewSource"];
-        }
-
-        protected void _AssignCollectionViewSource(object source)
-        {
-            _collectionViewSource.Source = source;
-        }
 
         protected void _JoinGame(ZServerBase server, ZRole role)
         {
@@ -187,6 +186,7 @@ namespace Launcher.Core.Bases
                 PlayerRole = role,
                 ServerModel = server
             };
+
             // run game
             _gameService.RunMultiplayer(runParams).Forget();
         }
@@ -220,23 +220,66 @@ namespace Launcher.Core.Bases
 
         #region Command impl
 
-        protected void OnLoadImpl(ZGame game, Page ui)
+        protected void OnLoadImpl(ZGame game, Page viewRef)
         {
-            _collectionViewSource = _ExtractCollectionViewSource(ui);
+            _busyIndicatorService.Open();
+            _collectionViewSource = (CollectionViewSource) viewRef.Resources["CollectionViewSource"];
             _serversService = _api.CreateServersListService(game);
-            _serversService.InitialSizeReached += _serverListInitialSizeReached;
+            _internalServersCollection = new ObservableCollection<ZServerBase>();
 
             _BuildViewFiltration(_collectionViewSource);
-            _AssignCollectionViewSource(_serversService.ServersCollection);
-            _serversService.StartReceiving();
+            _collectionViewSource.Source = _internalServersCollection;
 
-            _navigator.NavigationInitiated += _LeaveServerBrowserInitiated;
+            _serversService.ServersCollection.CollectionChanged += _serversCollectionChangedBusyHandler;
+            _serversService.ServersCollection.CollectionChanged += (sender, args) =>
+            {
+                switch (args.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+
+                        // https://stackoverflow.com/questions/15281311/find-item-in-ilist-with-linq
+                        var addedItem = args.NewItems.Cast<ZServerBase>()
+                            .Single();
+                        var insertPosition = 0;
+
+                        for (var i = 0; i < _internalServersCollection.Count; i++)
+                        {
+                            // sync insert position
+                            insertPosition = i;
+
+                            var currentItem = _internalServersCollection[i];
+                            if (currentItem.Ping >= addedItem.Ping)
+                            {
+                                break;
+                            }
+                        }
+
+                        // insert to correct place
+                        _internalServersCollection.Insert(insertPosition, addedItem);
+
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+
+                        var removedItem = args.OldItems.Cast<ZServerBase>()
+                            .Single();
+
+                        _internalServersCollection.Remove(removedItem);
+
+                        break;
+                    case NotifyCollectionChangedAction.Replace:
+                    case NotifyCollectionChangedAction.Move:
+                    case NotifyCollectionChangedAction.Reset:
+                    default:
+                        return;
+                }
+            };
+
+            _serversService.StartReceiving();
+            _discord.UpdateServerBrowser(game);
         }
 
         protected void OnUnloadedImpl()
         {
-            _serversService.InitialSizeReached -= _serverListInitialSizeReached;
-            _serversService.ServersCollection.CollectionChanged -= _collectionChangedHandler;
             _serversService.StopReceiving();
 
             _ResetFilter(false);
@@ -259,25 +302,13 @@ namespace Launcher.Core.Bases
 
         #region Private methods
 
-        private async void _collectionChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
+        private void _serversCollectionChangedBusyHandler(object sender, NotifyCollectionChangedEventArgs e)
         {
-            await ServerPingCalculator.CalculateAsync(_serversService.ServersCollection);
-        }
-
-        private void _serverListInitialSizeReached(object sender, EventArgs e)
-        {
-            var collection = _serversService.ServersCollection;
-
-            _serversService.InitialSizeReached -= _serverListInitialSizeReached;
-            collection.CollectionChanged += _collectionChangedHandler;
-
-            // begin ping calculation
-            _collectionChangedHandler(null, null);
-        }
-
-        private void _LeaveServerBrowserInitiated(object sender, NavigatingCancelEventArgs e)
-        {
-            _navigator.NavigationInitiated -= _LeaveServerBrowserInitiated;
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                _busyIndicatorService.Close();
+                _serversService.ServersCollection.CollectionChanged -= _serversCollectionChangedBusyHandler;
+            }
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Input;
 using System.Windows.Controls;
+
 using Launcher.Core;
 using Launcher.Core.Bases;
 using Launcher.Core.Dialog;
@@ -18,6 +19,8 @@ namespace Launcher.ViewModel
 {
     public class BFHServerBrowserViewModel : BaseServerBrowserViewModel
     {
+        #region Ctor
+
         public BFHServerBrowserViewModel(
             IZApi api,
             IEventService eventService,
@@ -26,8 +29,9 @@ namespace Launcher.ViewModel
             App application,
             IPageNavigator navigator,
             ISettingsService settingsService,
-            IDialogService dialogService)
-            : base(api, gameService, eventService, discord, application,settingsService, navigator, dialogService)
+            IDialogService dialogService,
+            IBusyIndicatorService busyIndicatorService)
+            : base(api, gameService, eventService, discord, application, settingsService, navigator, dialogService, busyIndicatorService)
         {
             MapNames = new[] { "All" }
                 .Concat(ZResource.GetBFHMapNames())
@@ -37,13 +41,11 @@ namespace Launcher.ViewModel
                 .ToArray();
         }
 
+        #endregion
+
         #region Overrides
 
-        public override ICommand LoadedCommand => new DelegateCommand(obj =>
-        {
-            base.OnLoadImpl(ZGame.BFH, obj as Page);
-            _discord.UpdateServerBrowser(ZGame.BFH);
-        });
+        public override ICommand LoadedCommand => new DelegateCommand(obj => OnLoadImpl(ZGame.BFH, (Page) obj));
 
         public override ICommand UnloadedCommand => new DelegateCommand(obj => OnUnloadedImpl());
 
