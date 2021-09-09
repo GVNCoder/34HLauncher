@@ -240,22 +240,30 @@ namespace Launcher.Core.Bases
                         // https://stackoverflow.com/questions/15281311/find-item-in-ilist-with-linq
                         var addedItem = args.NewItems.Cast<ZServerBase>()
                             .Single();
-                        var insertPosition = 0;
+                        var serversCount = _internalServersCollection.Count;
 
-                        for (var i = 0; i < _internalServersCollection.Count; i++)
+                        if (serversCount == 0)
                         {
-                            // sync insert position
-                            insertPosition = i;
-
-                            var currentItem = _internalServersCollection[i];
-                            if (currentItem.Ping >= addedItem.Ping)
+                            _internalServersCollection.Add(addedItem);
+                        }
+                        else
+                        {
+                            for (var i = 0; i < serversCount; i++)
                             {
-                                break;
+                                var item = _internalServersCollection[i];
+
+                                if (addedItem.Ping <= item.Ping)
+                                {
+                                    _internalServersCollection.Insert(i, addedItem);
+                                    break;
+                                }
+                                
+                                if (serversCount - 1 == i)
+                                {
+                                    _internalServersCollection.Add(addedItem);
+                                }
                             }
                         }
-
-                        // insert to correct place
-                        _internalServersCollection.Insert(insertPosition, addedItem);
 
                         break;
                     case NotifyCollectionChangedAction.Remove:
