@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -222,7 +223,7 @@ namespace Launcher.Core.Bases
 
         protected void OnLoadImpl(ZGame game, Page viewRef)
         {
-            _busyIndicatorService.Open();
+            //_busyIndicatorService.Open();
             _collectionViewSource = (CollectionViewSource) viewRef.Resources["CollectionViewSource"];
             _serversService = _api.CreateServersListService(game);
             _internalServersCollection = new ObservableCollection<ZServerBase>();
@@ -230,7 +231,7 @@ namespace Launcher.Core.Bases
             _BuildViewFiltration(_collectionViewSource);
             _collectionViewSource.Source = _internalServersCollection;
 
-            _serversService.ServersCollection.CollectionChanged += _serversCollectionChangedBusyHandler;
+            //_serversService.ServersCollection.CollectionChanged += _serversCollectionChangedBusyHandler;
             _serversService.ServersCollection.CollectionChanged += (sender, args) =>
             {
                 switch (args.Action)
