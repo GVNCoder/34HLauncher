@@ -1,6 +1,7 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable InvertIf
 
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -152,6 +153,15 @@ namespace Launcher.Core.Bases
             _dialogService = dialogService;
             _settingsInstance = settingsService.GetLauncherSettings();
             _busyIndicatorService = busyIndicatorService;
+
+            _serverListLoadTimeoutTimer = new Timer(TimeSpan.FromMilliseconds(600).TotalMilliseconds)
+            {
+                Enabled = false,
+                AutoReset = false
+            };
+
+            _serverListLoadTimeoutTimer.Elapsed += (s, e)
+                => Dispatcher.Invoke(() => _busyIndicatorService.Close());
         }
 
         #endregion
@@ -173,6 +183,8 @@ namespace Launcher.Core.Bases
         protected CollectionViewSource _collectionViewSource;
         protected CollectionViewFiltrationExtension<ZServerBase> _viewFiltration;
         protected ObservableCollection<ZServerBase> _internalServersCollection;
+
+        private readonly Timer _serverListLoadTimeoutTimer;
 
         #endregion
 
@@ -231,7 +243,6 @@ namespace Launcher.Core.Bases
             _BuildViewFiltration(_collectionViewSource);
             _collectionViewSource.Source = _internalServersCollection;
 
-            //_serversService.ServersCollection.CollectionChanged += _serversCollectionChangedBusyHandler;
             _serversService.ServersCollection.CollectionChanged += (sender, args) =>
             {
                 switch (args.Action)
@@ -281,9 +292,15 @@ namespace Launcher.Core.Bases
                     default:
                         return;
                 }
+
+                // https://stackoverflow.com/questions/1042312/how-to-reset-a-timer-in-c
+                _serverListLoadTimeoutTimer.Stop();
+                _serverListLoadTimeoutTimer.Start();
             };
 
             _serversService.StartReceiving();
+            _busyIndicatorService.Open("Wait for server list loading...");
+            _serverListLoadTimeoutTimer.Start();
             _discord.UpdateServerBrowser(game);
         }
 
