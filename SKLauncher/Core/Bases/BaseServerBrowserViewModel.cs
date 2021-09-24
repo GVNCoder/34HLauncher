@@ -154,7 +154,7 @@ namespace Launcher.Core.Bases
             _settingsInstance = settingsService.GetLauncherSettings();
             _busyIndicatorService = busyIndicatorService;
 
-            _serverListLoadTimeoutTimer = new Timer(TimeSpan.FromMilliseconds(600).TotalMilliseconds)
+            _serverListLoadTimeoutTimer = new Timer(TimeSpan.FromMilliseconds(800).TotalMilliseconds)
             {
                 Enabled = false,
                 AutoReset = false
