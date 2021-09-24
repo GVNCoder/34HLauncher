@@ -328,15 +328,6 @@ namespace Launcher.Core.Bases
 
         #region Private methods
 
-        private void _serversCollectionChangedBusyHandler(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                _busyIndicatorService.Close();
-                _serversService.ServersCollection.CollectionChanged -= _serversCollectionChangedBusyHandler;
-            }
-        }
-
         #endregion
 
         #region Commands
