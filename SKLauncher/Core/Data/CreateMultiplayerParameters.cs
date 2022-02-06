@@ -7,5 +7,6 @@ namespace Launcher.Core.Data
     {
         public ZServerBase ServerModel { get; set; }
         public ZRole PlayerRole { get; set; }
+        public string ServerPassword { get; set; }
     }
 }

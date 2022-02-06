@@ -67,7 +67,8 @@ namespace Launcher.Core.Data
                     Game = parameters.Game,
                     PreferredArchitecture = settings.PreferredArchitecture,
                     Role = parameters.PlayerRole,
-                    ServerId = parameters.ServerModel.Id
+                    ServerId = parameters.ServerModel.Id,
+                    Password = parameters.ServerPassword
                 };
 
                 try
