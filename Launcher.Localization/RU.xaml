@@ -29,7 +29,7 @@
     <system:String x:Key="homeView_TipCoop">Кооперативная игра</system:String>
     <system:String x:Key="homeView_TipStats">Статистика игрока</system:String>
     <system:String x:Key="homeView_TipSettings">Настройки</system:String>
-    <system:String x:Key="homeView_TipPlayground">Полигон</system:String>
+    <system:String x:Key="homeView_TipPlayground">Тренировочный полигон</system:String>
 
     <!--  WindowView  -->
     <system:String x:Key="wndView_TipMenu">Меню</system:String>

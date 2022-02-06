@@ -104,7 +104,7 @@ namespace Launcher.ViewModel
         {
             var targetGame = EnumUtil.Parse<ZGame>((string) obj);
             var settings = _settingsService.GetGameSettings().Settings[(int) targetGame];
-            var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame != ZGame.BF3);
+            var viewModel = new GameSettingsViewModel(settings, _settingsService, targetGame == ZGame.BF4);
 
             _dialogService.OpenPresenter<DialogGameSettings>(viewModel).Forget();
         }
