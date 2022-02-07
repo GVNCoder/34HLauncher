@@ -321,18 +321,20 @@ namespace Launcher.Core.Bases
 
         protected async Task OnJoinImpl(ZRole role)
         {
-            if (SelectedServer == null) return;
+            if (SelectedServer == null)
+            {
+                return;
+            }
 
             var serverAttributes = SelectedServer.Attributes;
-
             if (serverAttributes.ServerType == "PRIVATE")
             {
                 var viewModel = new PasswordImputDialogViewModel("Private server", "Please, enter server password:");
                 var dialogResult = await _dialogService.Show<DialogPasswordImputControl>(viewModel);
 
-                if (dialogResult?.Action == DialogAction.Primary)
+                if (dialogResult.Action == DialogAction.Primary)
                 {
-                    var serverPassword = dialogResult?.GetResult<string>();
+                    var serverPassword = dialogResult.GetResult<string>();
                     if (ZServerPassword.Verify(serverAttributes.ServerSecret, serverPassword))
                     {
                         _JoinGame(SelectedServer, role, serverPassword);
