@@ -11,6 +11,50 @@
         <ResourceDictionary Source="Theme.Independent.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="{x:Type PasswordBox}"
+       TargetType="{x:Type PasswordBox}">
+        <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="true" />
+        <Setter Property="KeyboardNavigation.TabNavigation"
+          Value="None" />
+        <Setter Property="FocusVisualStyle"
+          Value="{x:Null}" />
+        <Setter Property="MinWidth"
+          Value="120" />
+        <Setter Property="MinHeight"
+          Value="20" />
+        <Setter Property="AllowDrop"
+          Value="true" />
+        <Setter Property="CaretBrush" Value="{StaticResource Theme500Brush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="Border"
+                            CornerRadius="2"
+                            Padding="2"
+                            BorderThickness="1">
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource Theme850Color}" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{StaticResource Theme800Color}" />
+                        </Border.BorderBrush>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="MouseOver" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--#region ContextMenu`s-->
 
     <!--  MenuItem style  -->

@@ -171,9 +171,13 @@
     <Compile Include="Core\Dialog\DialogTextViewModel.cs" />
     <Compile Include="Core\Dialog\IDialogService.cs" />
     <Compile Include="Core\Dialog\IDialogSystemBase.cs" />
+    <Compile Include="Core\Dialog\PasswordImputDialogViewModel.cs" />
     <Compile Include="Core\Dialog\_InternalDialog.cs" />
     <Compile Include="Core\EventItem.cs" />
     <Compile Include="Helpers\ZClientProcessHelper.cs" />
+    <Compile Include="UserControls\DialogPasswordImputControl.xaml.cs">
+      <DependentUpon>DialogPasswordImputControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\EventsButtonControl.xaml.cs">
       <DependentUpon>EventsButtonControl.xaml</DependentUpon>
     </Compile>
@@ -331,6 +335,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\DialogGameSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\DialogPasswordImputControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

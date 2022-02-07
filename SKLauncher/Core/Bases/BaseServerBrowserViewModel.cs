@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -190,14 +191,15 @@ namespace Launcher.Core.Bases
 
         #region Protected methods
 
-        protected void _JoinGame(ZServerBase server, ZRole role)
+        protected void _JoinGame(ZServerBase server, ZRole role, string password)
         {
             // create run params
             var runParams = new CreateMultiplayerParameters
             {
                 Game = server.Game,
                 PlayerRole = role,
-                ServerModel = server
+                ServerModel = server,
+                ServerPassword = password
             };
 
             // run game
@@ -317,11 +319,36 @@ namespace Launcher.Core.Bases
             SelectedServer = null;
         }
 
-        protected void OnJoinImpl(ZRole role)
+        protected async Task OnJoinImpl(ZRole role)
         {
-            if (SelectedServer == null) return;
+            if (SelectedServer == null)
+            {
+                return;
+            }
 
-            _JoinGame(SelectedServer, role);
+            var serverAttributes = SelectedServer.Attributes;
+            if (serverAttributes.ServerType == "PRIVATE")
+            {
+                var viewModel = new PasswordImputDialogViewModel("Private server", "Please, enter server password:");
+                var dialogResult = await _dialogService.Show<DialogPasswordImputControl>(viewModel);
+
+                if (dialogResult.Action == DialogAction.Primary)
+                {
+                    var serverPassword = dialogResult.GetResult<string>();
+                    if (ZServerPassword.Verify(serverAttributes.ServerSecret, serverPassword))
+                    {
+                        _JoinGame(SelectedServer, role, serverPassword);
+                    }
+                    else
+                    {
+                        _eventService.ErrorEvent("Game run", "Invalid password");
+                    }
+                }
+            }
+            else
+            {
+                _JoinGame(SelectedServer, role, string.Empty);
+            }
         }
 
         #endregion

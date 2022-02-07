@@ -7,7 +7,7 @@ namespace Launcher.Core.Dialog
 {
     public interface IDialogSystemBase : IUIHostDependency
     {
-        Task<DialogResult?> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new();
+        Task<DialogResult> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new();
         void Close();
     }
 }

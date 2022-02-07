@@ -110,10 +110,11 @@
                     SortMemberPath="CurrentPlayersNumber">
 
                     <DataGridTextColumn.Binding>
-                        <MultiBinding StringFormat="{}{0}/{1}">
+                        <MultiBinding StringFormat="{}{0}/{1} ({2})">
 
                             <Binding Path="CurrentPlayersNumber" UpdateSourceTrigger="PropertyChanged" />
                             <Binding Path="PlayersCapacity" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="SpectatorsCapacity" UpdateSourceTrigger="PropertyChanged" />
 
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
@@ -213,6 +214,17 @@
                                 IconSize="16"
                                 Style="{DynamicResource JoinButton}"
                                 Text="{DynamicResource sbView_JOIN}" />
+                            <controls:IconButton
+                                Height="25"
+                                Margin="3,0,0,0"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.JoinCommand}"
+                                CommandParameter="{x:Static shared:ZRole.Spectator}"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource Theme800Brush}"
+                                Icon=""
+                                IconSize="18"
+                                Style="{DynamicResource JoinButton}"
+                                Text="{DynamicResource sbView_Spectator}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
