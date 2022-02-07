@@ -24,11 +24,11 @@ namespace Launcher.Core.Dialog
 
         #region IDialogControlManager
 
-        public Task<DialogResult?> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new ()
+        public Task<DialogResult> Show<TUserControl>(BaseDialogViewModel viewModel) where TUserControl : UserControl, new ()
         {
             // create control
             var control = new TUserControl { DataContext = viewModel };
-            var completionSource = new TaskCompletionSource<DialogResult?>();
+            var completionSource = new TaskCompletionSource<DialogResult>();
             var dialog = new Dialog(completionSource, this);
 
             // pass dialog for remote control

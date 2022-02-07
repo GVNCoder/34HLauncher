@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Controls;
+
 using Launcher.UserControls;
 
 namespace Launcher.Core.Dialog
@@ -17,7 +18,7 @@ namespace Launcher.Core.Dialog
             _ = await dialogService.Show<DialogContentPresenter>(dialogViewModel);
         }
 
-        public static Task<DialogResult?> OpenTextDialog(this IDialogService dialogService, string title,
+        public static Task<DialogResult> OpenTextDialog(this IDialogService dialogService, string title,
             string text, DialogButtons buttons, bool showDontAsk = false)
         {
             // create view model
