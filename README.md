@@ -2,6 +2,9 @@
 
 ## UI Examples
 
-![Main Menu](assets/example1.png)
-![Server Browser](assets/example2.png)
-![Settings Menu](assets/example3.png)
+![](assets/splash.png)
+![](assets/example1.png)
+![](assets/example2.png)
+![](assets/example3.png)
+![](assets/example4.png)
+![](assets/example5.png)
